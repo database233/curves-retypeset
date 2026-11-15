@@ -1,0 +1,68 @@
+% ==============================================================================
+% 版权页与内容提要（忠实还原原书封底内页 / 版权页）
+% ==============================================================================
+\clearpage
+\thispagestyle{empty}
+\vspace*{6mm}
+
+\noindent
+\begin{minipage}[t]{31mm}
+  \vspace{0pt}
+  % 矢量重绘“中学生文库”圆弧徽标
+  \begin{tikzpicture}[x=1mm, y=1mm]
+    \fill[black] (0, 0) rectangle (24, 24);
+    % 上方弧形排列“中学生文库”
+    \foreach \ang/\hanzi in {142/中, 116/学, 90/生, 64/文, 38/库} {
+      \node[white, font=\sffamily\bfseries\fontsize{6.2}{6.2}\selectfont,
+            rotate={\ang-90}] at ({12 + 9.4*cos(\ang)}, {10.4 + 9.4*sin(\ang)}) {\hanzi};
+    }
+    % 顶部小花苞与花托
+    \draw[white, line width=0.8pt] (10.4, 15.6) .. controls (10.4, 17.8) and (13.6, 17.8) .. (13.6, 15.6);
+    \draw[white, line width=0.8pt] (12.0, 14.3) -- (12.0, 17.4);
+    \draw[white, line width=0.8pt] (9.8, 16.0) -- (12.0, 14.1) -- (14.2, 16.0);
+    % 下方三角形书本轮廓与 ZXS 徽记
+    \draw[white, line width=1.0pt] (3.4, 3.0) -- (12.0, 13.0) -- (20.6, 3.0) -- cycle;
+    \draw[white, line width=0.8pt] (5.3, 3.8) -- (12.0, 11.4) -- (18.7, 3.8) -- cycle;
+    \draw[white, line width=0.9pt] (12.0, 3.0) -- (12.0, 4.7);
+    \draw[white, line width=0.9pt] (12.0, 7.8) -- (12.0, 13.0);
+    \node[white, font=\scriptsize\sffamily\bfseries] at (12.0, 6.25) {ZXS};
+  \end{tikzpicture}
+
+  \vspace{5mm}
+  {\footnotesize
+  \begin{tabular}{@{}l@{\hspace{0.7em}}l@{}}
+    \textbf{\sffamily 责任编辑} & 赵\hspace{1em}斌 \\
+                                & 韩希塘 \\[1.5mm]
+    \textbf{\sffamily 封面设计} & 姜品珠
+  \end{tabular}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{66mm}
+  \vspace{0pt}
+  \begin{center}
+    {\normalsize\sffamily\bfseries 内\quad 容\quad 提\quad 要}
+  \end{center}
+  \vspace{1.5mm}
+  {\small\setlength{\parindent}{2em}
+  本书运用高中平面解析几何和微积分初步知识，讨论形形色色曲线的性质和应用。叙述深入浅出，可供高中生阅读和供中学数学教师参考。书中介绍的曲线种类较多，有些还是第一次在中文资料里出现，因而对有关专业的大学生也有一定参考价值。\par}
+\end{minipage}
+
+\vfill
+
+\begin{center}
+  {\normalsize\sffamily\bfseries 中学生文库\qquad 形形色色的曲线}\\[2mm]
+  \rule{96mm}{0.8pt}\\[2.5mm]
+  {\small
+  \begin{tabular}{@{}c@{}}
+    蒋\quad 声\qquad\qquad 上海教育出版社出版 \\[-0.5mm]
+    \hspace*{8.2em}{\footnotesize （上海永福路 123 号）} \\[1.5mm]
+    江苏启东印刷厂印刷\quad 新华书店上海发行所发行 \\[1mm]
+    开本 $787\times 1092$ 1/32\quad 印张 6\quad 字数 124,000 \\[1mm]
+    1985 年 2 月第 1 版\quad 1985 年 2 月第 1 次印刷 \\[1mm]
+    印数 1\text{--}27,000 本
+  \end{tabular}}\\[2mm]
+  \rule{96mm}{0.8pt}\\[2mm]
+  {\small 统一书号：7150\textperiodcentered 3320\qquad 定价：0.58 元}
+\end{center}
+\vspace*{6mm}
+\clearpage

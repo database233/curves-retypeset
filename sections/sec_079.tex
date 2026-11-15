@@ -1,0 +1,46 @@
+\section{曳物线与伪球面}
+\markboth{79. 曳物线与伪球面}{79. 曳物线与伪球面}
+
+\noindent
+\begin{minipage}[t]{0.57\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}曳物线绕它的渐近线旋转一周，得到的曲面叫做伪球面。图 79.1 中画出了伪球面的一部分，它是由半支曳物线旋转得到的，形状有点像广播用的大喇叭。整个伪球面有点像两只大喇叭口对口地合在一起。伪球面是一种非常重要的曲面。曳物线经常被人们谈论，主要就是因为它与伪球面联系在一起。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.39\textwidth}
+  \vspace{2pt}
+  \centering
+  \begin{tikzpicture}[scale=0.84, line cap=round, line join=round]
+    \def\a{1.35}
+    % 底部椭圆 (t=90, r=a, z=0)
+    \draw[thick, curveblue] (-\a, 0) arc (180:360:{\a} and {0.26*\a});
+    \draw[densely dashed, curveblue!65] (\a, 0) arc (0:180:{\a} and {0.26*\a});
+
+    % 顶部小口椭圆 (t=8 deg)
+    \pgfmathsetmacro{\rt}{\a*sin(8)}
+    \pgfmathsetmacro{\zt}{-\a*(ln(tan(4)) + cos(8))}
+    \draw[thick, curveblue] (0, \zt) ellipse ({\rt} and {0.25*\rt});
+
+    % 左右母线 (曳物线轮廓)
+    \draw[very thick, curveblue, domain=8:90, samples=90, variable=\t]
+      plot ({\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))});
+    \draw[very thick, curveblue, domain=8:90, samples=90, variable=\t]
+      plot ({-\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))});
+
+    % 经线与纬线轻描，凸显三维喇叭曲面质感
+    \foreach \ang in {135, 160, 200, 225, 255, 285, 315, 340} {
+      \draw[thin, curveblue!38, domain=8:90, samples=60, variable=\t]
+        plot ({\a*sin(\t)*cos(\ang)}, {-\a*(ln(tan(\t/2)) + cos(\t)) + 0.26*\a*sin(\t)*sin(\ang)});
+    }
+    \foreach \tv in {22, 38, 56, 74} {
+      \pgfmathsetmacro{\rv}{\a*sin(\tv)}
+      \pgfmathsetmacro{\zv}{-\a*(ln(tan(\tv/2)) + cos(\tv))}
+      \draw[thin, curveblue!42] (-\rv, \zv) arc (180:360:{\rv} and {0.26*\rv});
+    }
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 79.1}
+\end{minipage}
+
+在一个曲面上连结两点的最短曲线，叫做这个曲面的测地线。因为在平面里直线是连结两点的最短线，所以在一个曲面上也可把测地线看成这个曲面的“直线”。曲面上任意两条曲线的交角，像通常一样，定义成它们在交点处的切线的夹角。这样一来，在每个曲面上就可建立它自己的一套几何学，叫做这个曲面的内蕴几何。曲面的几何学依赖于曲面的弯曲情况，因而一般说来，很难指望平面几何的定理在曲面几何中同样成立。但是在球面的几何学和伪球面的几何学里，却有很多定理与平面几何完全相同。当然也有本质区别，例如在球面几何里三角形的内角之和大于 $180^\circ$，在伪球面的几何里三角形内角和小于 $180^\circ$；在球面几何里任意两条“直线”（大圆）必定相交，在伪球面的几何里过一条“直线”外的一点可作无穷多条“直线”不与它相交。这些结论都是利用微积分研究几何问题得到的结果。
+
+另一方面，运用平面几何中传统的逻辑推理方法，研究所谓“欧几里得第五公设”能否从公理行列中剔除出去，发现了一种新的几何。1829 年俄国喀山大学教授罗巴切夫斯基首先发表这种几何，所以后来把这种几何叫做罗巴切夫斯基几何，习惯上简称为罗氏几何。在罗氏几何里，假定在平面内过直线外一点可作无穷多条直线不与它相交，把这个假定作为一条公理，代替欧几里得第五公设，同时假定其它各条几何公理仍旧成立。这样得到的几何理论，很多定理与经验相距太远，所以发表后长期受到怀疑。直到 1868 年意大利数学家贝尔脱拉米证明伪球面上的几何学是罗氏几何，才驱散疑云，使人们相信罗氏几何确实反映了现实世界的某些客观规律，同时也对几何学的意义有了新的更深入的了解。所以，曳物线和伪球面在几何发展史上曾经有过特殊的贡献。

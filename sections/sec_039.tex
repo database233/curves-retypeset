@@ -1,0 +1,83 @@
+\section{四叶玫瑰线与星形线}
+\markboth{39. 四叶玫瑰线与星形线}{39. 四叶玫瑰线与星形线}
+
+考虑一个简单的轨迹问题：
+
+定长线段 $AB$ 的两端分别在 $x$ 轴和 $y$ 轴上滑动，由原点 $O$ 作这线段的垂线，求垂足 $M$ 的轨迹。
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+    % 2a = 2.50, phi = 36 deg => A = (2.02, 0), B = (0, 1.47)
+    \def\lenAB{2.50}
+    \def\ang{36}
+    \pgfmathsetmacro{\Ax}{\lenAB*cos(\ang)}
+    \pgfmathsetmacro{\By}{\lenAB*sin(\ang)}
+    % M = (lenAB * sin^2 * cos, lenAB * sin * cos^2)
+    \pgfmathsetmacro{\Mx}{\lenAB*sin(\ang)*sin(\ang)*cos(\ang)}
+    \pgfmathsetmacro{\My}{\lenAB*sin(\ang)*cos(\ang)*cos(\ang)}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\Ax, 0);
+    \coordinate (B) at (0, \By);
+    \coordinate (M) at (\Mx, \My);
+    \coordinate (P) at (\Mx, 0);
+
+    \draw[->] (-0.35, 0) -- (2.40, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -0.30) -- (0, 1.75) node[left, font=\footnotesize] {$y$};
+
+    \draw[thick] (B) -- (A);
+    \draw (O) -- (M);
+    \draw (M) -- (P);
+
+    % 直角符号（OM perp AB, MP perp OA）
+    \draw ($(M)!0.13!(O)$) -- ($($(M)!0.13!(O)$) + ($(M)!0.13!(A)$) - (M)$) -- ($(M)!0.13!(A)$);
+    \draw ($(P)+(0, 0.12)$) -- ++(0.12, 0) -- ++(0, -0.12);
+
+    \fill (O) circle (1.2pt) node[below left=-1pt, font=\footnotesize] {$O$};
+    \fill (A) circle (1.2pt) node[below, font=\footnotesize] {$A$};
+    \fill (B) circle (1.2pt) node[left, font=\footnotesize] {$B$};
+    \fill (M) circle (1.3pt) node[above right=-1pt, font=\footnotesize] {$M$};
+    \fill (P) circle (1.2pt) node[below, font=\footnotesize] {$P$};
+
+    \node[below, font=\scriptsize] at ({0.5*\Mx}, 0) {$x$};
+    \node[right, font=\scriptsize] at (\Mx, {0.5*\My}) {$y$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 39.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 39.1，设垂足为 $M(x, y)$。先考虑 $M$ 在第一象限的情形。作 $MP\perp OA$，垂足为 $P$，则 $OP=x$，$PM=y$，因而从直角三角形 $OMA$ 得到 $y^2 = x\cdot PA$，所以
+  \[
+    PA = \frac{y^2}{x},
+  \]
+\end{minipage}
+
+\[
+  MA = \sqrt{y^2 + PA^2} = \sqrt{y^2 + \frac{y^4}{x^2}} = \frac{y}{x}\sqrt{x^2 + y^2}.
+\]
+又从 $PM \parallel OB$，得到
+\[
+  \frac{MA}{BA} = \frac{PA}{OA}.
+\]
+记 $AB = 2a$，并将各有关线段的表达式代入，得
+\[
+  \frac{\dfrac{y}{x}\sqrt{x^2+y^2}}{2a} = \frac{\dfrac{y^2}{x}}{x + \dfrac{y^2}{x}},
+\]
+化简后得到
+\[
+  (\sqrt{x^2+y^2})^3 = 2axy.
+\]
+化为极坐标方程，得到
+\[
+  \rho^3 = 2a\cdot\rho\cos\theta\cdot\rho\sin\theta,
+\]
+即
+\[
+  \rho = a\sin 2\theta,
+\]
+上式正是四叶玫瑰线的方程（见第 38 节），可见轨迹在第一象限内的部分是四叶玫瑰线的一叶，因而整个轨迹就是四叶玫瑰线。
+
+另一方面，根据星形线的性质（第 25 节），两端在坐标轴上且有定长 $2a$ 的线段 $AB$，是星形线 $x=2a\cos^3\varphi$，$y=2a\sin^3\varphi$ 的切线。所以从上面的轨迹问题推出，四叶玫瑰线 $\rho = a\sin 2\theta$ 是星形线 $x=2a\cos^3\varphi$，$y=2a\sin^3\varphi$ 关于其对称中心的垂足曲线。

@@ -1,0 +1,172 @@
+\section{尼哥米德蚌线}
+\markboth{57. 尼哥米德蚌线}{57. 尼哥米德蚌线}
+
+已知直线 $c$ 和线外一点 $O$，过 $O$ 任意作直线交 $c$ 于 $K$，在所作直线上向 $K$ 点两侧取 $KM = KM_1 = l$，这里 $l$ 为定长，则 $M$ 和 $M_1$ 的轨迹叫做尼哥米德蚌线。图 57.1 所示为三种不同类型的尼哥米德蚌线：设点 $O$ 到直线 $c$ 的距离为 $a$，
+
+\noindent
+\begin{minipage}[c]{0.47\textwidth}
+  \centering
+  % 公共绘制命令：#1=a, #2=l, #3=条件标签, #4=O标签位置, #5=M1标签位置
+  \newcommand{\conchoidpanel}[5]{%
+    \begin{tikzpicture}[scale=0.72, >=Stealth, line cap=round, line join=round]
+      \def\aa{#1}
+      \def\ll{#2}
+      \def\angK{48}
+      \coordinate (O) at (0, 0);
+      \coordinate (K) at ({\aa/tan(\angK)}, \aa);
+      \coordinate (M) at ({\aa/tan(\angK)+\ll*cos(\angK)}, {\aa+\ll*sin(\angK)});
+      \coordinate (M1) at ({\aa/tan(\angK)-\ll*cos(\angK)}, {\aa-\ll*sin(\angK)});
+
+      % 坐标轴与直线 c
+      \draw[->] (-1.55, 0) -- (1.65, 0) node[below, font=\tiny] {$x$};
+      \draw[->] (0, -0.36) -- (0, {\aa+\ll+0.30}) node[left, font=\tiny] {$y$};
+      \draw[thin] (-1.55, \aa) -- (1.65, \aa);
+      \node[left=-1pt, font=\tiny] at (-1.55, \aa) {$c$};
+
+      % 割线（穿过 O, K, M, M1；当 a < l 时延伸穿过 M1）
+      \coordinate (lineStart) at (O);
+      \ifdim #1pt < #2pt
+        \coordinate (lineStart) at ($(M1)!-0.15!(M)$);
+      \fi
+      \draw[thin] (lineStart) -- ($(O)!1.15!(M)$);
+
+      % 上支与下支曲线
+      \draw[thick, curveblue, domain=22:158, samples=80, variable=\t]
+        plot ({\aa/tan(\t) + \ll*cos(\t)}, {\aa + \ll*sin(\t)});
+      \draw[thick, curveblue, domain=22:158, samples=80, variable=\t]
+        plot ({\aa/tan(\t) - \ll*cos(\t)}, {\aa - \ll*sin(\t)});
+
+      % 标点
+      \fill (O) circle (1pt) node[#4, font=\tiny] {$O$};
+      \fill (K) circle (1pt) node[above left=-2pt, font=\tiny] {$K$};
+      \fill (M) circle (1pt) node[above right=-2pt, font=\tiny] {$M$};
+      \fill (M1) circle (1pt) node[#5, font=\tiny] {$M_1$};
+      \node[font=\scriptsize] at (-0.90, {\aa+\ll+0.12}) {$#3$};
+    \end{tikzpicture}%
+  }
+
+  \conchoidpanel{0.58}{0.32}{a > l}{below left=-2pt}{right=1pt}
+
+  \vspace{2pt}
+  \conchoidpanel{0.48}{0.48}{a = l}{below left=-2pt}{right=1pt}
+
+  \vspace{2pt}
+  \conchoidpanel{0.32}{0.62}{a < l}{left=1pt, yshift=3pt}{below left=-1pt}
+  \captionof*{figure}{图\ 57.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.50\textwidth}
+当 $a > l$ 时（上图），曲线形如两片合拢在一起的蚌壳；当 $a = l$ 时（中图），曲线有一个尖点；当 $a < l$ 时（下图），曲线有一个绕扣。
+
+\hspace*{2em}选取极坐标系，使 $O$ 为极点，并使极轴 $Ox$ 平行于直线 $c$（图 57.1），设 $\angle xOM = \theta$，则 $OK = \frac{a}{\sin\theta}$。设 $M$ 的极坐标是 $(\rho,\theta)$，则
+\begin{align*}
+  \rho &= OM = OK + KM \\
+       &= \frac{a}{\sin\theta} + l.
+\end{align*}
+\end{minipage}
+
+把 $M_1$ 的极角看成 $\theta_1 = \theta + \pi$，则其极半径为
+\begin{align*}
+  \rho_1 &= -OM_1 = -(OK - KM_1) \\
+         &= -\left(\frac{a}{\sin\theta} - l\right) = -\frac{a}{\sin(\theta_1 - \pi)} + l \\
+         &= \frac{a}{\sin\theta_1} + l.
+\end{align*}
+因而点 $M(\rho,\theta)$ 和 $M_1(\rho_1,\theta_1)$ 都满足方程
+\[
+  \rho = \frac{a}{\sin\theta} + l,
+\]
+这就是尼哥米德蚌线的极坐标方程。
+
+尼哥米德大约是公元前 200 年的人，他研究这种形如蚌壳的曲线，是要解决三等分任意角问题。
+
+\noindent
+\begin{minipage}[c]{0.45\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    \def\ll{0.92}
+    \def\alp{50}
+    \pgfmathsetmacro{\aa}{\ll*sin(\alp)}
+    \pgfmathsetmacro{\angM}{\alp/3}
+    \coordinate (O) at (0, 0);
+    \coordinate (C) at ({\ll*cos(\alp)}, \aa);
+    \coordinate (N) at ({\aa/tan(\angM)}, \aa);
+    \coordinate (M) at ({\aa/tan(\angM) - \ll*cos(\angM)}, {\aa - \ll*sin(\angM)});
+
+    % 坐标轴与直线 c
+    \draw[->] (-1.45, 0) -- (2.15, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.45) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
+    \draw[thin] (-1.45, \aa) -- (2.15, \aa);
+    \node[left=-1pt, font=\scriptsize] at (-1.45, \aa) {$c$};
+
+    % 以 C 为圆心、l 为半径的圆
+    \draw[thin] (C) circle (\ll);
+
+    % 蚌线上下两支
+    \draw[thick, curveblue, domain=25:155, samples=80, variable=\t]
+      plot ({\aa/tan(\t) + \ll*cos(\t)}, {\aa + \ll*sin(\t)});
+    \draw[thick, curveblue, domain=25:155, samples=80, variable=\t]
+      plot ({\aa/tan(\t) - \ll*cos(\t)}, {\aa - \ll*sin(\t)});
+
+    % 射线 OC、OMN 与线段 CM
+    \draw (O) -- (C);
+    \draw (O) -- ($(O)!1.25!(N)$);
+    \draw (C) -- (M);
+
+    % 角度 alpha
+    \draw (0.28, 0) arc (0:\alp:0.28);
+    \node[font=\tiny, fill=white, inner sep=0.2pt] at ({0.74*\alp}:0.45) {$\alpha$};
+
+    % 标点
+    \fill (O) circle (1.1pt) node[below left=0pt, font=\scriptsize] {$O$};
+    \fill (C) circle (1.2pt) node[above right=-2pt, font=\scriptsize] {$C$};
+    \fill (M) circle (1.2pt) node[below right=0.5pt, fill=white, inner sep=0.2pt, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[above right=-2pt, font=\scriptsize] {$N$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 57.2}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.52\textwidth}
+\hspace*{2em}如图 57.2，设 $\alpha$ 是任一已知角，要把它分成相等的三部分。为此，取角的一边 $Ox$ 为极轴，顶点 $O$ 为极点，在角的另一边上取一点 $C$，记 $OC = l$。过 $C$ 作直线 $c \parallel Ox$。以 $O$ 为定点、$c$ 为定直线、$l$ 为定长，作尼哥米德蚌线。以 $C$ 为圆心，$l$ 为半径画圆弧，与尼哥米德蚌线夹在角 $\alpha$ 内的部分交于点 $M$，则 $\angle xOM = \frac{\alpha}{3}$。
+\end{minipage}
+
+要证明 $\angle xOM = \frac{\alpha}{3}$，只须延长 $OM$，交直线 $c$ 于点 $N$，则 $MN = l$（根据尼哥米德蚌线的定义），因而 $MN = CM = OC$，由此推出
+\[
+  \angle xOM = \angle CNM = \angle MCN = \frac{1}{2}\angle CMO = \frac{1}{2}\angle CON.
+\]
+而 $\angle xOM + \angle CON = \alpha$，所以 $\angle xOM = \frac{\alpha}{3}$。
+
+在数学史上，尼哥米德蚌线还有一件值得纪念的事，就是解析几何的创始人笛卡儿在其名著《几何学》中，曾经用尼哥米德蚌线作为例子，来说明作曲线的切线和法线的一般方法。
+
+\noindent
+\begin{minipage}[c]{0.60\textwidth}
+  \hspace*{2em}在建筑上，某些古代教堂的柱子采用尼哥米德蚌线做轮廓曲线，柱子从下向上逐渐变细（如图 57.3，$QP$ 为定长），使人产生错觉，似乎柱子显得格外高大，因而肃然起敬。
+\end{minipage}\hfill
+\begin{minipage}[c]{0.36\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.90, line cap=round, line join=round]
+    \def\aa{1.30}
+    \def\ll{0.62}
+    \coordinate (A) at (0, 0);
+
+    % 垂直线 c 及延长线
+    \draw[thick] (\aa, -0.10) -- (\aa, 2.25);
+
+    % 蚌线轮廓
+    \draw[very thick, curveblue, domain=2:54, samples=60, variable=\t]
+      plot ({\aa + \ll*cos(\t)}, {(\aa + \ll*cos(\t))*tan(\t)});
+
+    % 若干射线与点 Q, P（11度间隔留足标注空间）
+    \foreach \ang in {4, 15, 26, 37, 48} {
+      \coordinate (Qi) at (\aa, {\aa*tan(\ang)});
+      \coordinate (Pi) at ({\aa + \ll*cos(\ang)}, {(\aa + \ll*cos(\ang))*tan(\ang)});
+      \draw[thin] (A) -- (Pi);
+      \fill (Qi) circle (1.2pt);
+      \fill (Pi) circle (1.2pt);
+    }
+
+    \fill (A) circle (1.3pt) node[left, font=\scriptsize] {$A$};
+    \node[anchor=west, font=\scriptsize] at (\aa+0.02, {\aa*tan(26)+0.12}) {$Q$};
+    \node[above right=-1pt, font=\scriptsize] at ({\aa + \ll*cos(26)}, {(\aa + \ll*cos(26))*tan(26)}) {$P$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 57.3}
+\end{minipage}

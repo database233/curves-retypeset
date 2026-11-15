@@ -1,0 +1,58 @@
+\section{阿基米德螺线}
+\markboth{53. 阿基米德螺线}{53. 阿基米德螺线}
+
+如图 53.1，若直线 $l$ 绕着它上面的一点 $O$ 匀速旋转，同时 $l$ 上一个动点 $M$ 沿着 $l$ 作匀速直线运动，那么点 $M$ 的轨迹叫做阿基米德螺线。
+
+\noindent
+\begin{minipage}[c]{0.47\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    \def\a{0.095}
+    \def\angL{48}
+    \pgfmathsetmacro{\radL}{\angL*pi/180}
+    \coordinate (O) at (0, 0);
+
+    % 极轴 Ox 与旋转射线 l
+    \draw[->] (O) -- (2.35, 0) node[below, font=\scriptsize] {$x$};
+    \draw[thick] (O) -- (\angL:2.35) node[above right=-2pt, font=\scriptsize] {$l$};
+
+    % 阿基米德螺线 rho = a * theta, 0 <= theta <= 6.5*pi
+    \draw[very thick, curveblue, domain=0:20.4, samples=260, variable=\t]
+      plot ({\a*\t*cos(\t r)}, {\a*\t*sin(\t r)});
+
+    % 射线 l 上的三个导程间隔标注
+    \pgfmathsetmacro{\rOne}{\a*\radL}
+    \pgfmathsetmacro{\rTwo}{\a*(\radL + 2*pi)}
+    \pgfmathsetmacro{\rThr}{\a*(\radL + 4*pi)}
+    \pgfmathsetmacro{\rFou}{\a*(\radL + 6*pi)}
+
+    \node[rotate=\angL, below=1.5pt, fill=white, inner sep=0.2pt, font=\tiny] at (\angL:{0.56*\rTwo + 0.44*\rOne}) {$\scriptscriptstyle 2\pi a$};
+    \node[rotate=\angL, below=1pt, font=\tiny] at (\angL:{0.5*(\rTwo+\rThr)}) {$\scriptscriptstyle 2\pi a$};
+    \node[rotate=\angL, below=1pt, font=\tiny] at (\angL:{0.5*(\rThr+\rFou)}) {$\scriptscriptstyle 2\pi a$};
+
+    % 动点 M 位于第三圈与射线 l 的交点
+    \coordinate (M) at (\angL:\rThr);
+    \fill (M) circle (1.3pt) node[above=2pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$M$};
+    \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 53.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.50\textwidth}
+\hspace*{2em}选取极坐标系，使极点为 $O$，极轴是从 $O$ 出发的任意射线 $Ox$，并设当 $\theta = 0$ 时 $\rho = b$，由于当 $\theta$ 匀速变化时 $\rho$ 也匀速变化，$\rho$ 应是 $\theta$ 的一次函数：
+\[
+  \rho = a\theta + b,
+\]
+其中 $a$ 和 $b$ 是常数，这就是阿基米德螺线的方程。通常为了简化，选取极轴的位置，使得当 $\theta = 0$ 时 $\rho = 0$，因而 $b = 0$，曲线方程简化为
+\[
+  \rho = a\theta.
+\]
+\end{minipage}
+
+从曲线方程立刻得到，当 $\theta$ 每增大 $2\pi$，$\rho$ 就增大一个定值 $2\pi a$（图 53.1）。定值 $2\pi a$ 叫做阿基米德螺线 $\rho = a\theta$ 的导程，记为 $d$。当动点 $M$ 沿阿基米德螺线运动时，极半径 $OM$ 每旋转一周，$OM$ 的长度的变化就等于一个导程。
+
+把厚度为 $d$ 的纸或发条卷紧，然后从侧面看去，就会看到阿基米德螺线的形象。一盘蚊香、一张唱片也都提供了阿基米德螺线的实例。
+
+阿基米德螺线虽然以阿基米德命名，却不是阿基米德最早发现的。大约公元前 260 年左右，阿基米德的朋友科嫩首先研究螺线 $\rho = a\theta$。科嫩死后，阿基米德继续研究，又发现许多重要性质，因而螺线 $\rho = a\theta$ 就与阿基米德的名字联系起来了。
+
+把凸轮的轮廓曲线做成阿基米德螺线的弧，可以把匀速旋转运动转化成匀速直线运动。车床上的三爪卡盘里面齿圈上的平面螺纹，就具有阿基米德螺线的形状。阿基米德螺线是在生产中有广泛应用的一种曲线。

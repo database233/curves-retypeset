@@ -1,0 +1,61 @@
+\section{悬链线}
+\markboth{81. 悬链线}{81. 悬链线}
+
+设 $e$ 是自然对数的底，$a$ 是任一正数，由下述方程表示的曲线叫做悬链线：
+\[
+  y = \frac{a}{2}\left(e^{\frac{x}{a}} + e^{-\frac{x}{a}}\right).
+\]
+曲线的形状如图 81.1 所示。如果利用双曲余弦（第 80 节）
+\[
+  \ch u = \frac{e^{u} + e^{-u}}{2},
+\]
+就可把悬链线方程简化成
+\[
+  y = a \ch \frac{x}{a}.
+\]
+
+在一些数学手册里可以找到双曲函数数值表，例如在上海教育出版社出版的《简明数学手册》里，就有根据 $u$ 值查 $\sh u$、$\ch u$ 和 $\thyp u$ 的详表，利用这种数值表很容易计算出悬链线上若干点的坐标，因而能描出连结这些点的光滑曲线。
+
+从图 81.1 看，悬链线的形状很象抛物线。然而当我们把悬链线和抛物线画在同一幅图中加以比较时，就会发现它们之间的区别。例如在图 81.2 中，实线是悬链线，虚线是抛物线。尽管图中画出的这段悬链线弧和对应的抛物线弧在最高点和最低点都互相重合，但是在曲线的其它部分却露出明显的间隙。
+
+\begin{center}
+  \begin{minipage}[b]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.0, >=Stealth, line cap=round, line join=round]
+      \draw[->] (-1.3, 0) -- (1.3, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -0.25) -- (0, 2.05) node[left, font=\footnotesize] {$y$};
+      \node[below left, font=\footnotesize] at (0, 0) {$O$};
+      \draw[very thick, curveblue, domain=-0.95:0.95, samples=60]
+        plot (\x, {0.55 * cosh(\x / 0.55)});
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 81.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.0, >=Stealth, line cap=round, line join=round]
+      \draw[->] (-1.3, 0) -- (1.3, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -0.25) -- (0, 2.25) node[left, font=\footnotesize] {$y$};
+      \node[below left, font=\footnotesize] at (0, 0) {$O$};
+      % 悬链线 y = 0.45 * ch(x/0.45)，x0 = 0.95 => y0 = 1.8832
+      \draw[very thick, curveblue, domain=-0.95:0.95, samples=60]
+        plot (\x, {0.45 * cosh(\x / 0.45)});
+      % 抛物线 y = 0.45 + ((1.8832 - 0.45)/0.95^2) * x^2
+      \draw[thick, dashed, domain=-0.95:0.95, samples=60]
+        plot (\x, {0.45 + 1.5880 * \x * \x});
+      % 两端重合点小空心圆
+      \filldraw[fill=white, draw=black, thick] (-0.95, 1.8832) circle (1.3pt);
+      \filldraw[fill=white, draw=black, thick] (0.95, 1.8832) circle (1.3pt);
+      % 标注
+      \node[font=\scriptsize] at (0.43, 1.72) {抛物线};
+      \draw[thin] (0.63, 1.63) -- (0.79, 1.48);
+      \node[font=\scriptsize, right] at (0.72, 0.72) {悬链线};
+      \draw[thin] (0.73, 0.72) -- (0.48, 0.73);
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 81.2}
+  \end{minipage}
+\end{center}
+
+一般桥梁的拱轴线，当桥拱跨度很小时采用圆弧，跨度较小时采用抛物线，跨度较大时就要采用悬链线了。
+
+把悬链线 $y = a \ch \frac{x}{a}$ 绕 $x$ 轴旋转一周，所得到的曲面叫做悬链面。用两个垂直于旋转轴的平面去截悬链面，得到两个圆周。可以证明，在以这两个圆周为边界的一切曲面中，悬链面的面积最小。用铅丝弯制两个圆圈，并且把它们连在一起，使得两个圆圈的平面都垂直于它们的连心线。把这两个圆圈在肥皂水里浸一浸，拿出来以后，就会有一层肥皂膜张在两个铅丝圈之间。由于液体的表面张力使肥皂膜的面积缩成最小，肥皂膜就呈现悬链面的形状。

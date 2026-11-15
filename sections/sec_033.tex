@@ -1,0 +1,117 @@
+\section{蜗线也是外摆线}
+\markboth{33. 蜗线也是外摆线}{33. 蜗线也是外摆线}
+
+如图 33.1，设动圆 $C$ 和定圆 $O$ 的半径相等，$P$ 是在动圆平面内与动圆固定连接的一点。当圆 $C$ 在圆 $O$ 外面绕着圆 $O$ 无滑动地滚动时，$P$ 点的轨迹是一条帕斯卡蜗线，证明如下。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+      % l/2 = 0.45, l = 0.90, r = 0.68, theta = 36 deg
+      \def\l{0.90}
+      \def\r{0.68}
+      \def\th{36}
+      \coordinate (O) at (0,0);
+      \coordinate (C) at ({\l*cos(\th)}, {\l*sin(\th)});
+      \coordinate (P) at ({\l*cos(\th) + \r*cos(2*\th)}, {\l*sin(\th) + \r*sin(2*\th)});
+
+      % 坐标轴
+      \draw[->] (-1.15, 0) -- (1.85, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -1.65) -- (0, 1.65) node[left, font=\footnotesize] {$y$};
+
+      % 定圆 O 与动圆 C
+      \draw (O) circle (0.5*\l);
+      \draw (C) circle (0.5*\l);
+      \draw (O) -- (C) -- (P);
+
+      % 帕斯卡蜗线轨迹
+      \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+        plot ({\l*cos(\t) + \r*cos(2*\t)}, {\l*sin(\t) + \r*sin(2*\t)});
+
+      \fill (O) circle (1.2pt) node[below right=-1pt, font=\footnotesize] {$O$};
+      \fill (C) circle (1.2pt) node[below right=-1pt, font=\footnotesize] {$C$};
+      \fill (P) circle (1.4pt) node[above right=-1pt, font=\footnotesize] {$P$};
+    \end{tikzpicture}
+    \caption*{图\ 33.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
+      % l/2 = 0.65 => l = 1.30, r = 0.85, theta = 40 deg
+      \def\l{1.30}
+      \def\r{0.85}
+      \def\th{40}
+      \pgfmathsetmacro{\Cx}{\l*cos(\th)}
+      \pgfmathsetmacro{\Cy}{\l*sin(\th)}
+      \pgfmathsetmacro{\Gx}{\Cx - \Cy*cos(2*\th)/sin(2*\th)}
+      \coordinate (O) at (0,0);
+      \coordinate (O1) at (-\r, 0);
+      \coordinate (E) at (0.5*\l, 0);
+      \coordinate (C0) at (\l, 0);
+      \coordinate (P0) at (\l+\r, 0);
+      \coordinate (D) at ({0.5*\l*cos(\th)}, {0.5*\l*sin(\th)});
+      \coordinate (C) at (\Cx, \Cy);
+      \coordinate (F) at ({\Cx - 0.5*\l*cos(2*\th)}, {\Cy - 0.5*\l*sin(2*\th)});
+      \coordinate (G) at (\Gx, 0);
+      \coordinate (P) at ({\Cx + \r*cos(2*\th)}, {\Cy + \r*sin(2*\th)});
+
+      % 坐标轴
+      \draw[->] (-1.15, 0) -- (2.45, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -0.95) -- (0, 1.95) node[left, font=\footnotesize] {$y$};
+
+      % 定圆 O、初始圆 C0（虚线）与当前动圆 C
+      \draw (O) circle (0.5*\l);
+      \draw[densely dashed] (C0) circle (0.5*\l);
+      \draw (C) circle (0.5*\l);
+
+      % 辅助线段
+      \draw (O) -- (C) -- (P);
+      \draw (O1) -- (P);
+      \draw (C) -- (G);
+      \draw[densely dashed] (C) -- ++(0.72, 0);
+
+      % 角度标注
+      \draw (0.34, 0) arc (0:\th:0.34);
+      \node[font=\scriptsize] at ({0.5*\th}:0.49) {$\theta$};
+
+      \draw ($(C) + ({180+\th}:0.28)$) arc ({180+\th}:{180+2*\th}:0.28);
+      \node[font=\scriptsize, fill=white, inner sep=0.4pt] at ($(C) + ({180+1.5*\th}:0.47)$) {$\theta$};
+
+      \draw ($(C) + (0:0.30)$) arc (0:{2*\th}:0.30);
+      \node[font=\scriptsize] at ($(C) + (\th:0.46)$) {$\alpha$};
+
+      % 关键点与标签
+      \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
+      \fill (O1) circle (1.1pt) node[below, font=\scriptsize] {$O_1$};
+      \fill (E) circle (1.1pt) node[below right=-1.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$E$};
+      \fill (G) circle (1.1pt) node[below=-1pt, font=\scriptsize] {$G$};
+      \fill (C0) circle (1.1pt) node[below right=-2pt, font=\scriptsize] {$C_0$};
+      \fill (P0) circle (1.1pt) node[below, font=\scriptsize] {$P_0$};
+      \fill (D) circle (1.1pt) node[above left=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$D$};
+      \fill (C) circle (1.1pt) node[above left=-2pt, font=\scriptsize] {$C$};
+      \fill (F) circle (1.1pt) node[above right=-2pt, font=\scriptsize] {$F$};
+      \fill (P) circle (1.3pt) node[above, font=\scriptsize] {$P$};
+    \end{tikzpicture}
+    \caption*{图\ 33.2}
+  \end{minipage}
+\end{figure}
+
+设圆 $O$ 和圆 $C$ 的半径为 $\frac{l}{2}$，$CP=r$。如图 33.2，$C$ 和 $P$ 的初始位置 $C_0$ 和 $P_0$ 在 $x$ 轴上，$E$ 是圆 $O$ 和圆 $C_0$ 的切点。当圆 $C$ 滚动到图 33.2 的位置时，因为圆 $C$ 和圆 $O$ 相等，$\arc{DE}=\arc{DF}$，所以可设 $\angle COE=\angle OCF=\theta$，于是 $\overrightarrow{CP}$ 的幅角 $\alpha=2\theta$，由 $\overrightarrow{OP}=\overrightarrow{OC}+\overrightarrow{CP}$ 得向量 $\overrightarrow{OP}$ 的坐标表示式为
+\begin{align*}
+  (x, y) &= (l\cos\theta,\, l\sin\theta) + (r\cos\alpha,\, r\sin\alpha) \\
+         &= (l\cos\theta + r\cos 2\theta,\, l\sin\theta + r\sin 2\theta).
+\end{align*}
+在图 33.2 中，取 $OO_1=CP=r$，把坐标原点平移到 $O_1$，得到 $P$ 点的新坐标为
+\begin{align*}
+  X &= l\cos\theta + r\cos 2\theta + r, \\
+  Y &= l\sin\theta + r\sin 2\theta.
+\end{align*}
+取 $O_1$ 为极点，$O_1O$ 为极轴，设 $P$ 点的极坐标为 $(\rho, \theta)$，则易证
+\[
+  \angle OO_1P = \theta,\quad O_1P = \rho = \sqrt{X^2+Y^2} = 2r\cos\theta + l.
+\]
+这就证明了 $P$ 点的轨迹是帕斯卡蜗线 $\rho=2r\cos\theta+l$。
+
+当 $P$ 点在动圆外部时，$P$ 到圆心 $C$ 的距离 $r$ 大于圆 $C$ 的半径 $\frac{l}{2}$，即 $2r>l$，这时得到带绕扣的蜗线。当 $P$ 在动圆的圆周上时，$r=\frac{l}{2}$，即 $2r=l$，这时得到带尖点的蜗线，即心脏线。当 $P$ 在动圆内部时，$r<\frac{l}{2}$，即 $2r<l$，这时得到无绕扣又无尖点的蜗线。

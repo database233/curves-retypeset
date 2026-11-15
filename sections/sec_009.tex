@@ -1,0 +1,110 @@
+\section{用三角板画椭圆}
+\markboth{9. 用三角板画椭圆}{9. 用三角板画椭圆}
+
+画一个辅助圆，设圆心是 $O$；在圆内另外再取一点 $F$。如图 9.1，让三角板的一条直角边通过 $F$ 点，直角顶点 $M$ 落在辅助圆周上的任意位置，然后沿着另一条直角边 $MN$ 画出一条直线。照这样画法画出若干条直线以后，再画一条与这些直线都相切的光滑曲线，就得到一个椭圆。
+
+\begin{center}
+  \begin{minipage}[t]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.98]
+      % 辅助圆 a=1.25, O=(0,0), F=(0.75, 0), 椭圆 b=1.00
+      \def\a{1.25}
+      \def\b{1.00}
+      \coordinate (O) at (0,0);
+      \coordinate (F) at (0.75,0);
+
+      \draw[line width=0.7pt] (O) circle (\a);
+      \draw[line width=0.9pt, curveblue] (O) ellipse [x radius=\a, y radius=\b];
+
+      % 上部几条切线(由圆周点 M0 产生)
+      \foreach \ang in {55, 85, 115, 145} {
+        \pgfmathsetmacro{\mx}{\a*cos(\ang)}
+        \pgfmathsetmacro{\my}{\a*sin(\ang)}
+        % 垂直于 FM=(mx-0.75, my) 的方向 (-my, mx-0.75)
+        \pgfmathsetmacro{\tx}{-\my}
+        \pgfmathsetmacro{\ty}{\mx - 0.75}
+        \pgfmathsetmacro{\len}{sqrt(\tx*\tx + \ty*\ty)}
+        \pgfmathsetmacro{\ux}{\tx/\len}
+        \pgfmathsetmacro{\uy}{\ty/\len}
+        \draw[line width=0.45pt, black!75] ({\mx - 0.95*\ux}, {\my - 0.95*\uy}) -- ({\mx + 0.95*\ux}, {\my + 0.95*\uy});
+        \draw[line width=0.4pt, dashed, black!60] (F) -- (\mx, \my);
+      }
+
+      % 三角板: M 在圆周 -38 度处
+      \coordinate (M) at ({\a*cos(-38)},{\a*sin(-38)});
+      % FM 方向: M - F = (0.985 - 0.75, -0.7696) = (0.235, -0.7696)
+      % 从 M 向上指向 F 方向: (-0.2921, 0.9564)
+      % 向左下垂直方向: (-0.9564, -0.2921)
+      \coordinate (L) at ($(M) + 1.38*(-0.2921, 0.9564)$);
+      \coordinate (N) at ($(M) + 1.55*(-0.9564, -0.2921)$);
+      \draw[line width=0.7pt, fill=white, fill opacity=0.85] (M) -- (L) -- (N) -- cycle;
+      % 内部镂空三角形
+      \coordinate (M1) at ($(M) + 0.25*(-0.2921, 0.9564) + 0.25*(-0.9564, -0.2921)$);
+      \coordinate (L1) at ($(M) + 0.92*(-0.2921, 0.9564) + 0.22*(-0.9564, -0.2921)$);
+      \coordinate (N1) at ($(M) + 0.22*(-0.2921, 0.9564) + 1.05*(-0.9564, -0.2921)$);
+      \draw[line width=0.5pt] (M1) -- (L1) -- (N1) -- cycle;
+
+      \draw[fill=white, line width=0.7pt] (O) circle (1.3pt) node[left=1pt] {\footnotesize $O$};
+      \fill (F) circle (1.3pt) node[right=1pt] {\footnotesize $F$};
+      \fill (M) circle (1.1pt) node[right=1pt] {\footnotesize $M$};
+      \node[above] at (L) {\footnotesize $L$};
+      \node[below left=-1pt] at (N) {\footnotesize $N$};
+    \end{tikzpicture}
+    \par\vspace{3pt}{\footnotesize 图\ 9.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.98]
+      % 辅助圆 a=1.25, O=(0,0), F=(0.75, 0), F1=(-0.75, 0), 椭圆 b=1.00
+      \def\a{1.25}
+      \def\b{1.00}
+      \coordinate (O) at (0,0);
+      \coordinate (F) at (0.75,0);
+      \coordinate (F1) at (-0.75,0);
+
+      \draw[line width=0.7pt] (O) circle (\a);
+      \draw[line width=0.9pt, curveblue] (O) ellipse [x radius=\a, y radius=\b];
+
+      % M 在 -42 度: M = (0.9289, -0.8364)
+      \coordinate (M) at ({\a*cos(-42)},{\a*sin(-42)});
+      % Q = 2M - F = (1.1079, -1.6728)
+      \coordinate (Q) at ($(M) + (M) - (F)$);
+      % 切线 MN 方向垂直于 FM = (0.1789, -0.8364) -> (-0.8364, -0.1789), 单位化 (-0.9779, -0.2091)
+      \coordinate (N) at ($(M) + 1.45*(-0.9779, -0.2091)$);
+      % P 是 F1Q 与 MN 的交点
+      \path[name path=f1q] (F1) -- (Q);
+      \path[name path=mn] (M) -- (N);
+      \path[name intersections={of=f1q and mn, by=P}];
+
+      \draw[line width=0.6pt] (-1.25,0) -- (1.25,0);
+      \draw[line width=0.55pt] (F) -- (Q);
+      \draw[line width=0.55pt] (F1) -- (Q);
+      \draw[line width=0.55pt] (O) -- (M);
+      \draw[line width=0.55pt] (F) -- (P);
+      \draw[line width=0.65pt] (M) -- (N);
+
+      % 等长刻度标志 (FM = MQ)
+      \coordinate (K1) at ($(F)!0.5!(M)$);
+      \coordinate (K2) at ($(M)!0.5!(Q)$);
+      \draw[line width=0.5pt] ($(K1) + (-0.06,-0.01)$) -- ($(K1) + (0.06,0.01)$);
+      \draw[line width=0.5pt] ($(K2) + (-0.06,-0.01)$) -- ($(K2) + (0.06,0.01)$);
+
+      % 标记点
+      \fill (F1) circle (1.2pt) node[above=1pt] {\footnotesize $F_1$};
+      \fill (O) circle (1.2pt) node[above=1pt] {\footnotesize $O$};
+      \fill (F) circle (1.2pt) node[above=1pt] {\footnotesize $F$};
+      \fill (M) circle (1.2pt) node[right=1pt] {\footnotesize $M(M')$};
+      \fill (P) circle (1.2pt) node[below=2pt] {\footnotesize $P$};
+      \fill (Q) circle (1.2pt) node[below right=-1pt] {\footnotesize $Q$};
+      \node[below left=-1pt] at (N) {\footnotesize $N$};
+    \end{tikzpicture}
+    \par\vspace{3pt}{\footnotesize 图\ 9.2}
+  \end{minipage}
+\end{center}
+
+椭圆的这种画法是根据椭圆的切线的性质设计出来的。如图 9.2，设 $\odot O$ 的半径为 $a$，$F$ 是圆内一点，$F_1$ 与 $O$、$F$ 在一直线上，且 $F_1O = OF$。$M$ 为 $\odot O$ 上任意一点，作 $\angle FMN = 90^\circ$，现证 $MN$ 是椭圆的一条切线。
+
+延长 $FM$ 至 $Q$，使 $MQ = FM$，连结 $F_1Q$，交 $MN$ 于 $P$ 点，连 $FP$。因为 $\angle FMP = 90^\circ$，所以 $\triangle FMP \cong \triangle QMP$，$PF = PQ$，$\angle FPM = \angle QPM$。又因为 $O$ 点是 $F_1F$ 的中点，所以 $F_1Q \parallel OM$，且 $F_1Q = 2OM = 2a$，即 $PF_1 + PF = PF_1 + PQ = 2a$，所以 $P$ 点在以 $F$、$F_1$ 为焦点的，长轴为 $2a$ 的椭圆上。过 $P$ 点作此椭圆的切线 $PM'$，由切线的性质知，$\angle FPM' = \angle QPM'$，可见 $PM$ 与 $PM'$ 重合，$MN$ 就是椭圆在 $P$ 点的切线。
+
+若图 9.1 中的 $F$ 点在圆外，那末用同样的作法得到的就是双曲线的一支。读者有兴趣可以仿照上面写出证明，试试自己举一反三的本领。

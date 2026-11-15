@@ -1,0 +1,168 @@
+\section{滑绳线}
+\markboth{77. 滑绳线}{77. 滑绳线}
+
+考虑一个物理问题。如图 77.1，有一根绳子，一端结牢在天花板上的一点 $O$，另一端穿过固定在天花板上的定滑轮 $M$ 以后，在下端挂一个重物 $K$。在 $O$ 与 $M$ 之间的一段绳子上套了一个小环，可以沿绳子滑动，环下面挂了另一重物 $G$。设重物 $K$ 在某高度时，小环滑到一点 $A$ 处使整个系统平衡。求当 $K$ 改变高度时，平衡点 $A$ 的轨迹。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+      % 天花板水平线
+      \draw (-0.85, 0) -- (2.55, 0);
+
+      % 滑绳线 y^2 = x^2 (l-x)^2 / (a^2 - x^2), 取 l=1.45, a=1.95
+      \def\l{1.45}
+      \def\a{1.95}
+      % 虚线：完整滑绳线 (下半支超出 [0,l] 部分与上半支)
+      \draw[densely dashed, curveblue, domain=-0.62:0, samples=60, variable=\x]
+        plot ({\x}, {\x*(\l-\x)/sqrt(\a*\a-\x*\x)});
+      \draw[densely dashed, curveblue, domain=-0.62:\l+0.36, samples=120, variable=\x]
+        plot ({\x}, {-\x*(\l-\x)/sqrt(\a*\a-\x*\x)});
+      \draw[densely dashed, curveblue, domain=\l:\l+0.36, samples=50, variable=\x]
+        plot ({\x}, {\x*(\l-\x)/sqrt(\a*\a-\x*\x)});
+
+      % 实线：平衡点 A 所在下半弧 (0 <= x <= l)
+      \draw[very thick, curveblue, domain=0:\l, samples=90, variable=\x]
+        plot ({\x}, {\x*(\l-\x)/sqrt(\a*\a-\x*\x) * (-1)});
+
+      % 点 O, D(l,0), A(xa, ya), 定滑轮 M (坐标单位半径, 严格相切)
+      \coordinate (O) at (0,0);
+      \coordinate (D) at (\l, 0);
+      \def\xa{1.02}
+      \pgfmathsetmacro{\ya}{-\xa*(\l-\xa)/sqrt(\a*\a-\xa*\xa)}
+      \coordinate (A) at (\xa, \ya);
+      \def\rpul{0.105}
+      \coordinate (M) at (1.92, -\rpul); % 滑轮紧贴天花板下方
+
+      % 定滑轮 M
+      \fill[white] (M) circle (\rpul);
+      \draw (M) circle (\rpul);
+      \fill (M) circle (0.028);
+
+      % 绳子 OA, AM (精确切于滑轮外缘并绕顶弧) 与右缘竖直下垂挂 K
+      \draw[thick] (O) -- (A) -- ($(M)+(107:\rpul)$) arc (107:0:\rpul) -- ({1.92+\rpul}, -1.15);
+
+      % 小环 A 与重物 G
+      \fill (A) circle (1.5pt);
+      \draw (A) -- (\xa, \ya - 0.55);
+      \fill[pattern=north east lines] (\xa-0.07, \ya-0.55) rectangle (\xa+0.07, \ya-0.82);
+      \draw (\xa-0.07, \ya-0.55) rectangle (\xa+0.07, \ya-0.82);
+      \node[right=1pt, font=\scriptsize] at (\xa+0.06, \ya-0.68) {$G$};
+
+      % 重物 K (对准竖直下垂绳 x = 1.92 + rpul)
+      \fill[pattern=north east lines] ({1.92+\rpul-0.09}, -1.15) rectangle ({1.92+\rpul+0.09}, -1.42);
+      \draw ({1.92+\rpul-0.09}, -1.15) rectangle ({1.92+\rpul+0.09}, -1.42);
+      \node[right=1pt, font=\scriptsize] at ({1.92+\rpul+0.09}, -1.28) {$K$};
+
+      % 标注 O, A, D, M
+      \fill (O) circle (1.4pt) node[below=2.5pt, font=\scriptsize] {$O$};
+      \node[below right=-1pt, font=\scriptsize] at (A) {$A$};
+      \fill (D) circle (1.2pt) node[above=1pt, font=\scriptsize] {$D$};
+      \node[above right=1pt, font=\scriptsize] at (M) {$M$};
+    \end{tikzpicture}
+    \caption*{图\ 77.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+      % 坐标轴
+      \draw[->] (-0.25, 0) -- (2.55, 0) node[below, font=\scriptsize] {$x$};
+      \draw[->] (0, -1.60) -- (0, 0.45) node[left, font=\scriptsize] {$y$};
+
+      \coordinate (O) at (0,0);
+      \def\rpul{0.105}
+      % 绳 AM 沿力 K 方向 (斜率 0.4602/0.39 = 1.180), 与 x 轴交于 Xbeta = 1.35 + 0.62/1.180 = 1.8754
+      \coordinate (M) at (1.865, -\rpul);
+      \coordinate (B) at (1.35, 0);
+      \coordinate (A) at (1.35, -0.62);
+
+      % 垂线 AB
+      \draw (B) -- (A);
+
+      % 滑轮 M
+      \fill[white] (M) circle (\rpul);
+      \draw (M) circle (\rpul);
+      \fill (M) circle (0.028);
+
+      % 绳子 OA, AM (精确切于滑轮左上缘并绕顶弧) 与右缘竖直下垂挂 K
+      \draw[thick] (O) -- (A) -- ($(M)+(143.3:\rpul)$) arc (143.3:0:\rpul) -- ({1.865+\rpul}, -1.12);
+      \fill[pattern=north east lines] ({1.865+\rpul-0.09}, -1.12) rectangle ({1.865+\rpul+0.09}, -1.39);
+      \draw ({1.865+\rpul-0.09}, -1.12) rectangle ({1.865+\rpul+0.09}, -1.39);
+      \node[right=1pt, font=\scriptsize] at ({1.865+\rpul+0.09}, -1.26) {$K$};
+
+      % 受力平行四边形: G 向下, K 沿 AM, S 沿 OA 延长线 (适当放大矢量以便标注)
+      \coordinate (Kend) at ($(A) + (0.39, 0.4602)$);
+      \coordinate (Send) at ($(A) + (0.39, -0.1791)$);
+      \coordinate (Gend) at ($(A) + (0, -0.6393)$);
+
+      \draw[->, thick, curveblue] (A) -- (Gend);
+      \draw[->, thick, curveblue] (A) -- (Kend);
+      \draw[->, thick, curveblue] (A) -- (Send);
+      \draw[densely dashed] (Gend) -- (Send) -- (Kend);
+
+      % 下悬重物 G
+      \draw (Gend) -- (1.35, -1.42);
+      \fill[pattern=north east lines] (1.28, -1.42) rectangle (1.42, -1.66);
+      \draw (1.28, -1.42) rectangle (1.42, -1.66);
+      \node[right=1pt, font=\scriptsize] at (1.42, -1.54) {$G$};
+
+      % 角 alpha, beta (均在 x 轴下方, 顶点分别在 O 与 AM-x轴交点 1.8754)
+      \draw (0.42, 0) arc (0:-24.7:0.42);
+      \node[font=\scriptsize] at (0.56, -0.12) {$\alpha$};
+      \draw ($(1.8754, 0) + (180:0.26)$) arc (180:229.7:0.26);
+      \node[font=\scriptsize] at (1.52, -0.11) {$\beta$};
+
+      % 节点标注 (互不碰撞)
+      \node[below left=-1pt, font=\scriptsize] at (O) {$O$};
+      \node[above=1pt, font=\scriptsize] at (B) {$B$};
+      \node[left=1.5pt, font=\scriptsize] at (A) {$A$};
+      \node[above=2pt, font=\scriptsize] at (M) {$M$};
+      \node[below right=-1pt, font=\scriptsize] at ($(A)!0.55!(Kend)$) {$K$};
+      \node[right=1.5pt, font=\scriptsize] at (Send) {$C$};
+      \node[below left=-0.5pt, xshift=-2pt, font=\scriptsize] at ($(A)!0.55!(Send)$) {$S$};
+      \node[left=1.5pt, font=\scriptsize] at ($(A)!0.55!(Gend)$) {$G$};
+    \end{tikzpicture}
+    \caption*{图\ 77.2}
+  \end{minipage}
+\end{figure}
+
+为了解答这个问题，我们注意，在平衡点 $A$ 处，究竟受到哪些力的作用？首先由于悬挂重物 $G$，使环 $A$ 受到一个竖直向下的力，记成 $\vec{G}$。其次由于绳子穿过滑轮 $M$ 后悬挂重物 $K$，使得点 $A$ 受到一个沿着 $AM$ 方向的力，记成 $\vec{K}$。这两个力的合力把 $OA$ 这段绳子拉直，并在 $A$ 点处与 $AO$ 这段绳子的张力达到平衡，可见合力 $\vec{S}$ 是沿着射线 $OA$ 的方向（图 77.2）。设在运动的某一瞬间，绳子的 $OA$ 部分与水平面的夹角为 $\alpha$，$AM$ 与水平面的夹角为 $\beta$。由于力 $\vec{S}$ 是力 $\vec{G}$ 和力 $\vec{K}$ 的合力，根据力的合成法则，从图 77.2 中的平行四边形得到
+\begin{gather*}
+  |\vec{S}|\cos\alpha = |\vec{K}|\cos\beta, \\
+  |\vec{S}|\sin\alpha + |\vec{K}|\sin\beta = |\vec{G}|.
+\end{gather*}
+将其中第一式乘以 $-\sin\alpha$，第二式乘以 $\cos\alpha$，然后相加，整理得
+\begin{equation*}
+  |\vec{G}|\cos\alpha = |\vec{K}|(\sin\beta\cos\alpha + \cos\beta\sin\alpha). \tag{1}
+\end{equation*}
+
+现在设线段 $OM$ 的长度为 $l$\footnote{重排校订：原书图 77.1 将曲线与天花板交点标为 $D(l,0)$（正文未提及此字母），而将定滑轮 $M$ 稍偏右绘出；力学推导中取理想质点近似，视滑轮中心与绳交天花板处 $D$ 重合（$OM=l$），本版保留原图记号并加注说明。}。选取直角坐标系，使 $O$ 为原点，$OM$ 为 $x$ 轴正方向，$y$ 轴的正方向竖直向上。设 $A$ 的坐标为 $(x,y)$，则从图 77.2 得
+\begin{gather*}
+  \sin\alpha = \frac{|y|}{\sqrt{x^2+y^2}},\quad \cos\alpha = \frac{x}{\sqrt{x^2+y^2}}, \\
+  \sin\beta = \frac{|y|}{\sqrt{(l-x)^2+y^2}},\quad \cos\beta = \frac{l-x}{\sqrt{(l-x)^2+y^2}}.
+\end{gather*}
+把它们代入 (1) 式，得到
+\[
+  |\vec{G}|x = \frac{|\vec{K}|l|y|}{\sqrt{(l-x)^2+y^2}}.
+\]
+记 $\dfrac{|\vec{K}|l}{|\vec{G}|}=a$，上式化为
+\[
+  x^2 = \frac{a^2y^2}{(l-x)^2+y^2}.
+\]
+化简后得到
+\begin{equation*}
+  y^2 = x^2\frac{(l-x)^2}{a^2-x^2}. \tag{2}
+\end{equation*}
+这就是所求轨迹的方程，这个方程所表示的曲线叫做滑绳线。本问题中小环 $A$ 的轨迹只是滑绳线的一段弧。
+
+在滑绳线的方程中，如果 $l=a$（这时 $|\vec{K}|=|\vec{G}|$），方程可约简为
+\[
+  y^2 = x^2\frac{a-x}{a+x}.
+\]
+把坐标轴绕原点旋转 $180^\circ$，$x$ 变成 $-x$，$y$ 变成 $-y$，方程化为
+\[
+  y^2 = x^2\frac{a+x}{a-x},
+\]
+这正是第 73 节中导出的环索线方程。所以环索线是滑绳线的特例。

@@ -1,0 +1,132 @@
+\section{利用滚动得到玫瑰线}
+\markboth{41. 利用滚动得到玫瑰线}{41. 利用滚动得到玫瑰线}
+
+玫瑰线是变幅内摆线和变幅外摆线的特殊情形。要证明这个事实并不困难。先看变幅内摆线，在第 35 节的推导过程中，我们取 $h=R-mR=R-r$ 的特殊情形。如图 41.1，设定圆半径为 $R$，动圆半径为 $r$，$\frac{r}{R}=m$，$O_1M=OO_1=R-r=h$，$\angle MO_1N=t$，$\angle xON=mt$，若设 $O$ 点为极点，$Ox$ 轴为极轴，$M$ 点的极坐标为 $(\rho,\theta)$，则
+
+\noindent
+\begin{minipage}[c]{0.54\textwidth}
+\begin{align*}
+  \rho = OM &= 2OO_1\cos\angle O_1OM \\
+            &= 2(R-r)\cos\frac{t}{2} = 2h\cos\frac{t}{2}.
+\end{align*}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.43\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    \def\R{1.50}
+    \def\mt{65}
+    \def\tang{70}
+    \pgfmathsetmacro{\h}{\R/2}
+    \coordinate (O) at (0,0);
+    \coordinate (O1) at ({\h*cos(\mt)}, {\h*sin(\mt)});
+    \coordinate (N) at ({\R*cos(\mt)}, {\R*sin(\mt)});
+    \coordinate (M) at ($ (O1) + ({\mt-\tang}:\h) $);
+
+    % 坐标轴
+    \draw[->] (-1.75, 0) -- (1.85, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.75) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
+
+    % 定圆与动圆
+    \draw[thick] (O) circle (\R);
+    \draw[thick, curveblue] (O1) circle (\h);
+
+    % 连线
+    \draw (O) -- (N);
+    \draw (O1) -- (M);
+    \draw[thick] (O) -- (M);
+
+    % 角度弧
+    \draw (0.32, 0) arc (0:\mt:0.32);
+    \node[font=\scriptsize] at (35:0.48) {$mt$};
+
+    \draw ($(O1)+(\mt:0.22)$) arc (\mt:{\mt-\tang}:0.22);
+    \node[font=\scriptsize] at ($(O1)+({\mt-\tang/2}:0.35)$) {$t$};
+
+    \pgfmathsetmacro{\th}{\mt-\tang/2}
+    \draw (0.58, 0) arc (0:\th:0.58);
+    \node[font=\scriptsize] at ({0.5*\th}:0.74) {$\theta$};
+
+    % 标点与标签
+    \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (O1) circle (1.3pt) node[left, font=\scriptsize] {$O_1$};
+    \fill (N) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$N$};
+    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 41.1}
+\end{minipage}
+
+因为 $\theta=\angle xOM=mt-\frac{t}{2}$，所以 $\frac{t}{2}=\frac{\theta}{2m-1}$。记 $b=\frac{1}{2m-1}$，得 $\rho=2h\cos b\theta$。再旋转极轴，使新坐标系中的极角 $\theta_1$ 由下式决定：
+\[
+  \theta_1=\theta+\frac{\pi}{2b},
+\]
+就使曲线方程化成
+\[
+  \rho=2h\sin b\theta_1,
+\]
+可见曲线是玫瑰线。由于这时 $0<m<1$，所以从 $b=\frac{1}{2m-1}$ 得到对应的 $|b|>1$。
+
+\noindent
+\begin{minipage}[c]{0.43\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.78, >=Stealth, line cap=round, line join=round]
+    \def\R{0.75}
+    \def\r{0.45}
+    \pgfmathsetmacro{\h}{\R+\r}
+    \def\mt{62}
+    \def\tang{80}
+    \coordinate (O) at (0,0);
+    \coordinate (O1) at ({\h*cos(\mt)}, {\h*sin(\mt)});
+    \coordinate (M) at ($ (O1) + ({\mt+180-\tang}:\h) $);
+
+    % 坐标轴
+    \draw[->] (-1.10, 0) -- (2.25, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.05) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
+
+    % 圆 O 与圆 O1 (外切)
+    \draw[thick] (O) circle (\R);
+    \draw[thick, curveblue] (O1) circle (\r);
+
+    % 连线
+    \draw (O) -- (O1) -- (M);
+    \draw[thick] (O) -- (M);
+
+    % 角度弧
+    \draw (0.35, 0) arc (0:\mt:0.35);
+    \node[font=\scriptsize] at (34:0.52) {$mt$};
+
+    \pgfmathsetmacro{\th}{\mt+\tang/2-90}
+    \draw (0.75, 0) arc (0:\th:0.75);
+    \node[font=\scriptsize] at ({0.5*\th}:0.95) {$\theta$};
+
+    \draw ($(O1)+({\mt+180}:0.24)$) arc ({\mt+180}:{\mt+180-\tang}:0.24);
+    \node[font=\scriptsize] at ($(O1)+({\mt+180-\tang/2}:0.38)$) {$t$};
+
+    % 标点与标签
+    \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (O1) circle (1.3pt) node[above, font=\scriptsize] {$O_1$};
+    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 41.2}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.54\textwidth}
+再看变幅外摆线，在第 34 节的推导过程中，我们取 $h=R+mR=R+r$ 的特殊情形。如图 41.2，$O_1M=OO_1=R+r=h$，$\angle MO_1O=t$，$\frac{r}{R}=m$，$\angle xOO_1=mt$，若设 $O$ 为极点，$Ox$ 为极轴，$M$ 点的极坐标为 $(\rho,\theta)$，则
+\end{minipage}
+\[
+  \rho = OM = 2OO_1\sin\frac{t}{2} = 2h\sin\frac{t}{2}.
+\]
+
+因为 $mt-\theta=\frac{\pi}{2}-\frac{t}{2}$，所以
+\[
+  \theta=mt+\frac{t}{2}-\frac{\pi}{2},\qquad \frac{t}{2}=\frac{\pi+2\theta}{2(2m+1)},
+\]
+记 $b=\frac{1}{2m+1}$，得 $\rho=2h\sin\left(\frac{b\pi}{2}+b\theta\right)$，再旋转极轴，使新坐标系中的极角 $\theta_1=\frac{\pi}{2}+\theta$，就使曲线方程化成
+\[
+  \rho=2h\sin b\theta_1,
+\]
+所以这时也得到玫瑰线。由于现在 $m>0$，所以从 $b=\frac{1}{2m+1}$ 得到 $0<b<1$。
+
+因而最后结论是：玫瑰线 $\rho=a\sin b\theta$，当 $0<b<1$ 时是变幅外摆线，$b>1$ 时是变幅内摆线。当 $b=1$ 时曲线化为圆周 $\rho=a\sin\theta$。
+
+例如，最常见的三叶玫瑰线（$b=3$）和四叶玫瑰线（$b=2$）都是变幅内摆线。

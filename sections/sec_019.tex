@@ -1,0 +1,117 @@
+\section{直线运动和旋转运动的合成}
+\markboth{19. 直线运动和旋转运动的合成}{19. 直线运动和旋转运动的合成}
+
+在摆线和变幅摆线的定义中，$M$ 点的运动是由两种简单运动合成的：一个是圆心 $C$ 沿着 $l$ 的一条平行线作直线运动，另一个是线段 $CM$ 绕 $C$ 点旋转。设直线运动的速度是 $u$，旋转的角速度是 $\omega$，那么由于动圆 $C$ 沿定直线 $l$ 滚动时没有滑动，这里的 $u$ 和 $\omega$ 总是满足关系式 $u = \omega r$。
+
+在日常生活和工农业生产中，还容易看到很多物体，它们一面绕自己的旋转轴作旋转运动，一面又随着汽车、轮船、拖拉机、自行车等作直线运动。这些同时作旋转运动和直线运动的物体，促使我们考虑一个更复杂的轨迹问题：
+
+动点 $C$ 沿直线 $m$ 匀速运动，速度为 $u$，同时有一定长线段 $CM$ 绕 $C$ 点匀速旋转，角速度为 $\omega$，求 $M$ 的轨迹。
+
+注意，这个问题与摆线中 $M$ 点运动的区别在于直线运动的速度 $u$ 和旋转的角速度 $\omega$ 是互相独立的，并不一定满足 $u = \omega r$。通俗地讲，就是在试图形成摆线的过程中，圆 $C$ 与直线产生了滑动。
+
+\noindent
+\begin{minipage}[c]{0.43\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, font=\footnotesize]
+    \def\a{0.78}
+    \def\cx{2.05}
+    \def\th{0.85}
+    \pgfmathsetmacro{\mx}{\cx - \a*sin(\th r)}
+    \pgfmathsetmacro{\my}{-\a*cos(\th r)}
+    \pgfmathsetmacro{\angM}{deg(1.5*pi - \th)}
+
+    % 坐标轴
+    \draw[->] (-1.1, 0) -- ({\cx + \a + 0.55}, 0) node[below] {$x$};
+    \draw[->] (0, {-\a - 0.35}) -- (0, {\a + 0.45}) node[left] {$y$};
+    \node[above left] at (0, 0) {$O$};
+
+    % 两个辅助虚圆
+    \draw[thick, dashed] (0, 0) circle (\a);
+    \draw[thick, dashed] (\cx, 0) circle (\a);
+
+    % 向量与辅助线段
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (0, -\a);
+    \coordinate (C) at (\cx, 0);
+    \coordinate (M) at (\mx, \my);
+
+    \draw[->, thick] (O) -- (A);
+    \draw[->, thick] (O) -- (M);
+    \draw[->, thick] (C) -- (M);
+    \draw[dashed, mutedgray] (C) -- (\cx, -\a);
+
+    % 角度 theta 与 alpha
+    \draw (C) ++(270:0.28) arc (270:\angM:0.28);
+    \node at ($(C)+({0.5*(270+\angM)}:0.44)$) {\scriptsize$\theta$};
+    \draw (C) ++(0:0.24) arc (0:\angM:0.24);
+    \node at ($(C)+(82:0.42)$) {\scriptsize$\alpha$};
+
+    \fill (A) circle (1.2pt) node[below left, inner sep=1.5pt] {$A$};
+    \fill (C) circle (1.2pt) node[below right, inner sep=1.5pt] {$C$};
+    \fill (M) circle (1.2pt) node[below left, inner sep=1.5pt] {$M$};
+    \node[above left, inner sep=0.8pt] at ($(C)!0.52!(M)$) {\scriptsize$a$};
+  \end{tikzpicture}
+  \captionof*{figure}{图 19.1}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.54\textwidth}
+  \hspace*{2em}如图 19.1，选取定直线 $m$ 为 $x$ 轴，$C$ 点前进的方向为 $x$ 轴的正向，并且这样选择计算时间 $t$ 的起点：使当 $t = 0$ 时 $C$ 在原点 $O$，同时 $M$ 在 $y$ 轴的负半轴上的点 $A$ 处。记 $CM = a$。又设在时刻 $t$，向量 $\overrightarrow{OA}$ 运动到了图中 $\overrightarrow{CM}$ 的位置。这时 $OC = ut$，$\theta = \omega t$。设 $M$ 点的坐标为 $(x, y)$，则由 $\overrightarrow{OM} = \overrightarrow{OC} + \overrightarrow{CM}$ 及 $\alpha = \frac{3}{2}\pi - \theta$ 得
+\end{minipage}
+\begin{align*}
+  (x, y) &= (ut, 0) + (CM\cos\alpha, CM\sin\alpha) \\
+         &= (ut - a\sin\theta, -a\cos\theta).
+\end{align*}
+记 $\frac{u}{\omega} = r$（注意，这里的 $r$ 不一定等于图 19.1 中的辅助圆的半径），则 $ut = \omega rt = r\theta$，于是 $M$ 点的坐标化为
+\[
+  x = r\theta - a\sin\theta,\quad y = -a\cos\theta.
+\]
+再把 $x$ 轴向下平移 $r$（图 19.2），则点 $M$ 在新坐标系中的坐标 $(x', y')$ 为
+
+\noindent
+\begin{minipage}[c]{0.55\textwidth}
+  \[
+    x' = x,\quad y' = y + r,
+  \]
+  因而曲线方程化为
+  \begin{gather*}
+    x' = r\theta - a\sin\theta, \\
+    y' = r - a\cos\theta.
+  \end{gather*}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, font=\footnotesize]
+    \def\r{1.05}
+    \def\a{0.72}
+    \def\th{0.70}
+    \pgfmathsetmacro{\cx}{\r*\th}
+    \pgfmathsetmacro{\mx}{\r*\th - \a*sin(\th r)}
+    \pgfmathsetmacro{\my}{-\a*cos(\th r)}
+
+    % 坐标轴与平移后的 x' 轴
+    \draw[->] (-0.45, 0) -- ({\cx + \a + 0.55}, 0) node[below] {$x$};
+    \draw[->] (-0.45, -\r) -- ({\cx + \a + 0.55}, -\r) node[below] {$x'$};
+    \draw[->] (0, {-\r - 0.25}) -- (0, {\a + 0.45}) node[left] {$y$};
+    \node[above left] at (0, 0) {$O$};
+    \node[below left] at (0, -\r) {$O'$};
+
+    % 辅助圆与线段
+    \draw[thick, dashed] (\cx, 0) circle (\a);
+    \coordinate (C) at (\cx, 0);
+    \coordinate (M) at (\mx, \my);
+    \coordinate (E) at (\cx, -\r);
+    \draw[thin] (C) -- (M);
+    \draw[thin] (C) -- (E);
+
+    % 轨迹曲线（参数方程精确绘制）
+    \draw[very thick, curveblue, smooth, domain=-0.35:2.25, samples=60]
+      plot ({\r*\x - \a*sin(\x r)}, {-\a*cos(\x r)});
+
+    \fill (C) circle (1.2pt) node[below right, inner sep=1.5pt] {$C$};
+    \fill (M) circle (1.2pt) node[below, yshift=-1.5pt] {$M$};
+    \fill (E) circle (1.2pt) node[below] {$E$};
+    \node[above left, inner sep=0.8pt] at ($(C)!0.52!(M)$) {\scriptsize$a$};
+    \node[right, inner sep=1.5pt] at ($(C)!0.55!(E)$) {\scriptsize$r$};
+  \end{tikzpicture}
+  \captionof*{figure}{图 19.2}
+\end{minipage}
+从方程看出，所求的曲线仍为摆线或变幅摆线，式中 $r$ 是辅助量，定义为直线运动速度 $u$ 与旋转角速度 $\omega$ 之比。因而结论是：当 $a = \frac{u}{\omega}$ 时，轨迹是摆线；当 $a < \frac{u}{\omega}$ 时，轨迹是短幅摆线；当 $a > \frac{u}{\omega}$ 时，轨迹是长幅摆线。

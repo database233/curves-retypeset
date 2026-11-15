@@ -1,0 +1,110 @@
+\section{斜环索线}
+\markboth{75. 斜环索线}{75. 斜环索线}
+
+在机械产品设计过程中，需要很多理论知识，其中有一个理论分支叫做机构综合学。在机构综合学中用到很多有关曲线的知识，特别是常常讨论一种所谓布尔密斯特曲线，也就是斜环索线。它是环索线的一种直接推广。
+
+\noindent
+\begin{minipage}[t]{0.52\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}如图 75.1，已知定直线 $l$，$l$ 上的定点 $O$ 和不在 $l$ 上的定点 $A$。设 $B$ 是 $l$ 上的动点，在直线 $AB$ 上向 $B$ 点两侧取 $BM=BN=BO$，则 $M$ 和 $N$ 的轨迹就叫做斜环索线。特例当 $AO\perp l$ 时，斜环索线化为前面已讨论过的环索线。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \vspace{2pt}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    % 取 a=1.22, b=0.58, th=52 deg:
+    % atan(b/a) = 25.4 deg，因此 theta=52 deg 与 AO 夹角达 26.6 deg，角度空间宽裕
+    \def\a{1.22}
+    \def\b{0.58}
+    \def\th{52}
+    \coordinate (A) at (0,0);
+    \coordinate (D) at (\a, 0);
+    \coordinate (O) at (\a, \b);
+    \coordinate (B) at (\a, {\a*tan(\th)});
+    \pgfmathsetmacro{\rhoM}{\a/cos(\th) + \a*tan(\th) - \b}
+    \pgfmathsetmacro{\rhoN}{\a/cos(\th) - \a*tan(\th) + \b}
+    \coordinate (M) at ({\rhoM*cos(\th)}, {\rhoM*sin(\th)});
+    \coordinate (N) at ({\rhoN*cos(\th)}, {\rhoN*sin(\th)});
+    \coordinate (K) at ({\a*1.75}, {\b*1.75});
+
+    % 斜环索线：分支 1 涵盖完整套扣环与右上渐近分支，分支 2 涵盖套扣上弧与右下渐近分支
+    \begin{scope}
+      \clip (-0.35, -1.55) rectangle (2.35, 2.25);
+      \draw[very thick, curveblue, domain=-89.6:63, samples=220, variable=\t]
+        plot ({\a + \a*sin(\t) - \b*cos(\t)}, {(\a + \a*sin(\t) - \b*cos(\t))*tan(\t)});
+      \draw[very thick, curveblue, domain=-45:89.6, samples=220, variable=\t]
+        plot ({\a - \a*sin(\t) + \b*cos(\t)}, {(\a - \a*sin(\t) + \b*cos(\t))*tan(\t)});
+    \end{scope}
+
+    % 极轴与定直线 l
+    \draw[->] (-0.32, 0) -- (2.35, 0);
+    \draw (\a, -1.48) -- (\a, 2.18);
+    \node[left=2pt, font=\scriptsize] at (\a, -1.30) {$l$};
+
+    % 射线 ABM 与 AO 延长线 AK
+    \draw (A) -- ($(A)!1.14!(M)$);
+    \draw (A) -- (K);
+
+    % 标注角 theta (落在 AO 上方与 AB 下方之间，绝不碰任何直线)
+    \draw (0.50, 0) arc (0:\th:0.50);
+    \node[font=\scriptsize] at (38:0.68) {$\theta$};
+
+    % 长度 a 与 b 标注在清晰空白处
+    \node[below=1.5pt, font=\scriptsize] at (0.55*\a, 0) {$a$};
+    \node[right=1.5pt, font=\scriptsize] at (\a, 0.30*\b) {$b$};
+
+    % 各点标注
+    \fill (A) circle (1.2pt) node[below left=0pt, font=\scriptsize] {$A$};
+    \fill (D) circle (1.2pt) node[below right=0.5pt, font=\scriptsize] {$D$};
+    \fill (O) circle (1.2pt) node[right=1.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$O$};
+    \fill (B) circle (1.2pt) node[left=1.5pt, font=\scriptsize] {$B$};
+    \fill (M) circle (1.2pt) node[right=1.5pt, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[above left=0.5pt, font=\scriptsize] {$N$};
+    \node[above right=0pt, font=\scriptsize] at (K) {$K$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 75.1}
+\end{minipage}
+
+作 $AD\perp l$，垂足为 $D$。我们取 $A$ 为极点，$AD$ 为极轴，来求斜环索线的极坐标方程。为此，记 $AD=a$，$OD=|b|$，其中 $b$ 的符号根据点 $O$ 的位置决定：当 $O$ 在极轴上方时 $b>0$，$O$ 在极轴下方时 $b<0$，$O$ 在极轴上（即与 $D$ 重合）时 $b=0$。
+
+设 $\angle DAB=\theta$，则
+\[
+  AB = \frac{a}{\cos\theta},\quad DB = a\tg\theta,
+\]
+\[
+  OB = DB - DO = a\tg\theta - b.
+\]
+这时点 $M$ 的极角是 $\theta$，极半径是
+\begin{align*}
+  \rho &= AM = AB + BM = AB + BO \\
+       &= \frac{a}{\cos\theta} + a\tg\theta - b.
+\end{align*}
+把点 $N$ 的极角看成 $\theta_1=\theta+\pi$，则其极半径为
+\begin{align*}
+  \rho_1 &= -AN = -(AB - BN) = -(AB - BO) \\
+         &= -\frac{a}{\cos\theta} + a\tg\theta - b = \frac{a}{\cos\theta_1} + a\tg\theta_1 - b.
+\end{align*}
+因而点 $M$ 和 $N$ 的极坐标都满足方程
+\[
+  \rho = \frac{a}{\cos\theta} + a\tg\theta - b,
+\]
+这就是斜环索线的极坐标方程。
+
+把斜环索线的极坐标方程改写成
+\[
+  \rho\cos\theta - a = a\sin\theta - b\cos\theta,
+\]
+两边同乘以 $\rho$，然后平方，得到
+\[
+  \rho^2(\rho\cos\theta - a)^2 = (a\rho\sin\theta - b\rho\cos\theta)^2.
+\]
+化为直角坐标，取 $A$ 为坐标原点，$AD$ 为 $x$ 轴，则有 $\rho\cos\theta=x$，$\rho\sin\theta=y$，方程化为
+\[
+  (x^2+y^2)(x-a)^2 = (ay-bx)^2.
+\]
+化简后得到
+\[
+  (x^2+y^2)(x-2a) + (a^2-b^2)x + 2aby = 0.
+\]
+这就是斜环索线的直角坐标方程。

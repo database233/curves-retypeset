@@ -1,0 +1,176 @@
+\section{史留斯蚌线}
+\markboth{65. 史留斯蚌线}{65. 史留斯蚌线}
+
+史留斯蚌线是蔓叶线的直接推广。设有任意直线 $l$ 和圆 $C$。作圆 $C$ 的直径，使它垂直于 $l$，设 $O$ 是这条直径的一个端点，但 $O$ 不在 $l$ 上。过 $O$ 作任意直线，交 $l$ 于 $K$，交圆周于 $N$；在直线 $OK$ 上取点 $M$，使 $OM=NK$，并且 $OM$ 与 $NK$ 同向，点 $M$ 的轨迹就叫做史留斯蚌线。在史留斯（1622 $\sim$ 1685）写给惠更斯的一封信里，第一次出现了这种曲线。
+
+当直线 $l$ 与圆 $C$ 相切时，史留斯蚌线化为蔓叶线，有一个尖点（图 65.1）；当 $l$ 与圆 $C$ 相交时，史留斯蚌线有一个绕扣，叫做长幅蔓叶线（图 65.2）；当 $l$ 与圆 $C$ 相离时，史留斯蚌线没有尖点和绕扣，叫做短幅蔓叶线（图 65.3、65.4）。无论哪种情形，直线 $l$ 都是史留斯蚌线的渐近线。
+
+\begin{figure}[htbp]
+  \centering
+  % 图 65.1: a = 2r
+  \begin{minipage}[b]{0.24\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.52, >=Stealth, line cap=round, line join=round]
+      \def\r{0.75}
+      \def\a{1.50}
+      \def\th{35}
+      \pgfmathsetmacro{\Nx}{2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\Ny}{2*\r*cos(\th)*sin(\th)}
+      \pgfmathsetmacro{\Kx}{\a}
+      \pgfmathsetmacro{\Ky}{\a*tan(\th)}
+      \pgfmathsetmacro{\Mx}{\a - 2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\My}{(\a - 2*\r*cos(\th)*cos(\th))*tan(\th)}
+
+      \draw (-0.35, 0) -- (1.85, 0);
+      \draw (\r, 0) circle (\r);
+      \draw (\a, -1.35) -- (\a, 1.35);
+      \node[right, font=\tiny] at (\a, -1.15) {$l$};
+
+      \draw[very thick, curveblue, domain=-52:52, samples=90, variable=\t]
+        plot ({\a - 2*\r*cos(\t)*cos(\t)}, {(\a - 2*\r*cos(\t)*cos(\t))*tan(\t)});
+
+      \draw (0,0) -- ({\Kx*1.12}, {\Ky*1.12});
+      \fill (0,0) circle (1.5pt) node[below left=-2pt, font=\tiny] {$O$};
+      \fill (\r,0) circle (1.5pt) node[below, font=\tiny] {$C$};
+      \fill (\a,0) circle (1.5pt) node[below right=-2pt, font=\tiny] {$D$};
+      \fill (\Mx,\My) circle (1.5pt) node[left=1pt, font=\tiny] {$M$};
+      \fill (\Nx,\Ny) circle (1.5pt) node[above=1pt, font=\tiny] {$N$};
+      \fill (\Kx,\Ky) circle (1.5pt) node[right, font=\tiny] {$K$};
+    \end{tikzpicture}
+    \caption*{图\ 65.1}
+  \end{minipage}
+  \hfill
+  % 图 65.2: 0 < a < 2r
+  \begin{minipage}[b]{0.24\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.52, >=Stealth, line cap=round, line join=round]
+      \def\r{0.75}
+      \def\a{1.00}
+      \def\th{21}
+      \pgfmathsetmacro{\Nx}{2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\Ny}{2*\r*cos(\th)*sin(\th)}
+      \pgfmathsetmacro{\Kx}{\a}
+      \pgfmathsetmacro{\Ky}{\a*tan(\th)}
+      \pgfmathsetmacro{\Mx}{\a - 2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\My}{(\a - 2*\r*cos(\th)*cos(\th))*tan(\th)}
+
+      \draw (-0.75, 0) -- (1.85, 0);
+      \draw (\r, 0) circle (\r);
+      \draw (\a, -1.35) -- (\a, 1.35);
+      \node[right, font=\tiny] at (\a, -1.15) {$l$};
+
+      \draw[very thick, curveblue, domain=-58:58, samples=100, variable=\t]
+        plot ({\a - 2*\r*cos(\t)*cos(\t)}, {(\a - 2*\r*cos(\t)*cos(\t))*tan(\t)});
+
+      \draw ({\Mx*1.25}, {\My*1.25}) -- ({\Nx*1.12}, {\Ny*1.12});
+      \fill (0,0) circle (1.5pt);
+      \node[below=1pt, xshift=3.5pt, font=\tiny] at (0,0) {$O$};
+      \fill (\r,0) circle (1.5pt) node[below, font=\tiny] {$C$};
+      \fill (\a,0) circle (1.5pt) node[below right=-2pt, font=\tiny] {$D$};
+      \fill (\Mx,\My) circle (1.5pt) node[below=1pt, font=\tiny] {$M$};
+      \fill (\Nx,\Ny) circle (1.5pt) node[above right=-1pt, font=\tiny] {$N$};
+      \fill (\Kx,\Ky) circle (1.5pt) node[below right=-1pt, fill=white, inner sep=0.2pt, font=\tiny] {$K$};
+    \end{tikzpicture}
+    \caption*{图\ 65.2}
+  \end{minipage}
+  \hfill
+  % 图 65.3: a > 2r
+  \begin{minipage}[b]{0.24\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.52, >=Stealth, line cap=round, line join=round]
+      \def\r{0.68}
+      \def\a{1.75}
+      \def\th{28}
+      \pgfmathsetmacro{\Nx}{2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\Ny}{2*\r*cos(\th)*sin(\th)}
+      \pgfmathsetmacro{\Kx}{\a}
+      \pgfmathsetmacro{\Ky}{\a*tan(\th)}
+      \pgfmathsetmacro{\Mx}{\a - 2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\My}{(\a - 2*\r*cos(\th)*cos(\th))*tan(\th)}
+
+      \draw (-0.25, 0) -- (2.05, 0);
+      \draw (\r, 0) circle (\r);
+      \draw (\a, -1.35) -- (\a, 1.35);
+      \node[right, font=\tiny] at (\a, -1.15) {$l$};
+
+      \draw[very thick, curveblue, domain=-46:46, samples=90, variable=\t]
+        plot ({\a - 2*\r*cos(\t)*cos(\t)}, {(\a - 2*\r*cos(\t)*cos(\t))*tan(\t)});
+
+      \draw (0,0) -- ({\Kx*1.12}, {\Ky*1.12});
+      \fill (0,0) circle (1.5pt) node[below, font=\tiny] {$O$};
+      \fill (\r,0) circle (1.5pt) node[below, font=\tiny] {$C$};
+      \fill (\a,0) circle (1.5pt) node[below right=-2pt, font=\tiny] {$D$};
+      \fill (\Mx,\My) circle (1.5pt) node[below right=-2pt, font=\tiny] {$M$};
+      \fill (\Nx,\Ny) circle (1.5pt) node[above left=-1pt, font=\tiny] {$N$};
+      \fill (\Kx,\Ky) circle (1.5pt) node[right, font=\tiny] {$K$};
+    \end{tikzpicture}
+    \caption*{图\ 65.3}
+  \end{minipage}
+  \hfill
+  % 图 65.4: a < 0
+  \begin{minipage}[b]{0.24\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.52, >=Stealth, line cap=round, line join=round]
+      \def\r{0.58}
+      \def\a{-0.52}
+      \def\th{35}
+      \pgfmathsetmacro{\Nx}{2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\Ny}{2*\r*cos(\th)*sin(\th)}
+      \pgfmathsetmacro{\Kx}{\a}
+      \pgfmathsetmacro{\Ky}{\a*tan(\th)}
+      \pgfmathsetmacro{\Mx}{\a - 2*\r*cos(\th)*cos(\th)}
+      \pgfmathsetmacro{\My}{(\a - 2*\r*cos(\th)*cos(\th))*tan(\th)}
+
+      \draw (-1.85, 0) -- (1.40, 0);
+      \draw (\r, 0) circle (\r);
+      \draw (\a, -1.35) -- (\a, 1.35);
+      \node[right, font=\tiny] at (\a, -1.15) {$l$};
+
+      \draw[very thick, curveblue, domain=-52:52, samples=90, variable=\t]
+        plot ({\a - 2*\r*cos(\t)*cos(\t)}, {(\a - 2*\r*cos(\t)*cos(\t))*tan(\t)});
+
+      \draw ({\Mx*1.15}, {\My*1.15}) -- ({\Nx*1.18}, {\Ny*1.18});
+      \fill (0,0) circle (1.5pt) node[above right=-2pt, font=\tiny] {$O$};
+      \fill (\r,0) circle (1.5pt) node[below, font=\tiny] {$C$};
+      \fill (\a,0) circle (1.5pt) node[above left=-2pt, font=\tiny] {$D$};
+      \fill (\Mx,\My) circle (1.5pt) node[below left=-2pt, font=\tiny] {$M$};
+      \fill (\Nx,\Ny) circle (1.5pt) node[above right=-2pt, font=\tiny] {$N$};
+      \fill (\Kx,\Ky) circle (1.5pt) node[below right=-2pt, font=\tiny] {$K$};
+    \end{tikzpicture}
+    \caption*{图\ 65.4}
+  \end{minipage}
+\end{figure}
+
+选取极坐标系，使 $O$ 为极点，$OC$ 为极轴。记圆 $C$ 的半径为 $r$，$\angle CON = \theta$，$ON = \rho_1$，则
+\[
+  \rho_1 = 2r\cos\theta.
+\]
+又设直线 $OC$ 和 $l$ 交于 $D$，记 $OD = |a|$，这里当 $OD$ 与 $OC$ 同向时 $a>0$，异向时 $a<0$。$a<0$ 的情形只有在直线 $l$ 与圆 $C$ 相离时才可能出现（图 65.4）。
+
+因为 $K$ 是直线 $ON$ 与 $l$ 的交点，设 $K$ 的极坐标是 $(\rho_2, \theta)$，这里
+\[
+  \rho_2 = \frac{a}{\cos\theta}.
+\]
+设点 $M$ 的极坐标是 $(\rho, \theta)$，其中 $\rho = \rho_2 - \rho_1$。把 $\rho_2$ 和 $\rho_1$ 的表达式代入，得到
+\[
+  \rho = \frac{a}{\cos\theta} - 2r\cos\theta,
+\]
+其中 $a\neq 0$，$r>0$。这就是史留斯蚌线的极坐标方程。当 $0<a<2r$ 时曲线为长幅蔓叶线，$a=2r$ 时为蔓叶线，$a>2r$ 或 $a<0$ 时为短幅蔓叶线。
+
+把上述极坐标方程两边同乘以 $\rho$，化为
+\[
+  \rho^2 = \frac{a\rho^2}{\rho\cos\theta} - 2r\rho\cos\theta.
+\]
+利用关系式
+\[
+  x = \rho\cos\theta,\quad x^2+y^2 = \rho^2,
+\]
+得到
+\[
+  x^2+y^2 = \frac{a(x^2+y^2)}{x} - 2rx.
+\]
+化简后得到
+\[
+  y^2 = \frac{x+2r-a}{a-x}x^2,
+\]
+这就是史留斯蚌线的直角坐标方程。

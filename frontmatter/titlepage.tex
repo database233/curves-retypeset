@@ -1,0 +1,43 @@
+% ==============================================================================
+% 扉页（忠实还原“中学生文库”扉页排版）
+% ==============================================================================
+\clearpage
+\thispagestyle{empty}
+\vspace*{14mm}
+
+\noindent
+\begin{minipage}[c]{20mm}
+  % 矢量重绘“中学生文库”经典徽标
+  \begin{tikzpicture}[scale=0.85]
+    \fill[black] (0, 0) rectangle (2.1, 2.1);
+    % 下方三角形书本与钢笔尖
+    \draw[white, line width=1.1pt] (0.32, 0.35) -- (1.05, 1.48) -- (1.78, 0.35) -- cycle;
+    \draw[white, line width=0.9pt] (0.52, 0.45) -- (1.05, 1.25) -- (1.58, 0.45) -- cycle;
+    % 中央笔尖与字母轮廓
+    \draw[white, line width=1.0pt] (1.05, 0.35) -- (1.05, 1.48);
+    \node[white, font=\scriptsize\sffamily\bfseries] at (1.05, 0.72) {ZXS};
+    % 顶部花苞图案
+    \draw[white, line width=0.9pt] (0.88, 1.65) .. controls (0.88, 1.92) and (1.22, 1.92) .. (1.22, 1.65);
+    \draw[white, line width=0.9pt] (0.82, 1.72) -- (1.05, 1.52) -- (1.28, 1.72);
+  \end{tikzpicture}
+\end{minipage}
+\hspace{2mm}
+\begin{minipage}[c]{76mm}
+  \begin{center}
+    {\sffamily\bfseries\fontsize{11.5}{14}\selectfont 中\hspace{0.5em}学\hspace{0.5em}生\hspace{0.5em}文\hspace{0.5em}库}\\[2mm]
+    \rule{\linewidth}{0.6pt}
+  \end{center}
+  \vspace{6mm}
+  \begin{center}
+    {\bfseries\fontsize{19}{24}\selectfont 形\,形\,色\,色\,的\,曲\,线}\\[5mm]
+    {\large 蒋\quad 声}
+  \end{center}
+\end{minipage}
+
+\vfill
+
+\begin{center}
+  {\sffamily\normalsize 上\,海\,教\,育\,出\,版\,社}
+\end{center}
+\vspace*{14mm}
+\clearpage

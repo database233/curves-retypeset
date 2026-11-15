@@ -1,0 +1,111 @@
+\section{曲线之心}
+\markboth{28. 曲线之心}{28. 曲线之心}
+
+当动圆半径与定圆半径相等时，外摆线的形状像一颗心脏（图 28.1），叫做心脏线。心脏线的发现者是荷兰数学家考尔斯玛（十七世纪末），命名者是意大利学者卡斯提龙（十八世纪）。
+
+用手指按住一枚分币不动，并使另一枚同样大小的分币绕着它滚动，第二枚分币边缘上的每一点都画出一条心脏线。
+
+在第 27 节导出的外摆线的参数方程中令 $R=r$，$m=1$，就得到心脏线的参数方程：
+\[
+  x = 2r\cos t - r\cos 2t,\quad y = 2r\sin t - r\sin 2t.
+\]
+
+心脏线的方程可以化成很简单的形式。为此，首先平移坐标轴，把坐标原点移到点 $A(r, 0)$。因而曲线上任意点 $M(x, y)$ 在新坐标系中的坐标成为 $(X, Y)$，这里
+\begin{align*}
+  X &= x - r = 2r\cos t - r\cos 2t - r \\
+    &= 2r\cos t - 2r\cos^2 t \\
+    &= 2r\cos t\,(1-\cos t), \\
+  Y &= y = 2r\sin t - r\sin 2t \\
+    &= 2r\sin t - 2r\sin t\cos t \\
+    &= 2r\sin t\,(1-\cos t).
+\end{align*}
+由此得到
+\begin{gather*}
+  \frac{Y}{X} = \tg t, \\
+  X^2 + Y^2 = 4r^2(1-\cos t)^2.
+\end{gather*}
+再化到极坐标 $(\rho, \theta)$，由于
+\[
+  \tg\theta = \frac{Y}{X},\quad \rho = \sqrt{X^2+Y^2},
+\]
+就得到心脏线的极坐标方程是
+\[
+  \rho = 2r(1-\cos\theta).
+\]
+这时极坐标系的极点是图 28.1 中的尖点 $A$，极轴是图中的射线 $Ax$。
+
+有时也把极轴旋转 $180^\circ$，即极点还是 $A$，极轴改为射线 $AO$。这时要把 $\theta$ 换成 $\pi+\theta$，因而 $\cos\theta$ 换成 $-\cos\theta$，心脏线的极坐标方程变成
+\[
+  \rho = 2r(1+\cos\theta).
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.56, >=Stealth, line cap=round, line join=round]
+      \def\r{1.0}
+      \def\ang{42}
+      \draw[->] (-3.4, 0) -- (2.3, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -2.9) -- (0, 2.9) node[left, font=\footnotesize] {$y$};
+
+      \draw (0,0) circle (\r);
+      \draw ({2*\r*cos(\ang)}, {2*\r*sin(\ang)}) circle (\r);
+
+      \draw[very thick, curveblue, domain=0:360, samples=200, variable=\t]
+        plot ({2*\r*cos(\t) - \r*cos(2*\t)},
+              {2*\r*sin(\t) - \r*sin(2*\t)});
+
+      \fill (0,0) circle (1.6pt) node[below left, font=\footnotesize] {$O$};
+      \fill (\r, 0) circle (1.6pt) node[below=2pt, font=\footnotesize] {$A$};
+      \node[above, font=\scriptsize] at (0.5*\r, 0) {$r$};
+    \end{tikzpicture}
+    \caption*{图\ 28.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.47\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.72, >=Stealth, line cap=round, line join=round]
+      \def\r{0.75}
+      \def\th{48}
+      \def\thb{15}
+      \coordinate (A) at (0,0);
+      \coordinate (C) at (\r, 0);
+      \coordinate (B) at (2*\r, 0);
+      \coordinate (P) at ({2*\r*cos(\th)*cos(\th)}, {2*\r*cos(\th)*sin(\th)});
+      \coordinate (M) at ({2*\r*(1+cos(\th))*cos(\th)}, {2*\r*(1+cos(\th))*sin(\th)});
+      \coordinate (N) at ({2*\r*(1-cos(\th))*cos(\th+180)}, {2*\r*(1-cos(\th))*sin(\th+180)});
+      \coordinate (P2) at ({2*\r*cos(\thb)*cos(\thb)}, {2*\r*cos(\thb)*sin(\thb)});
+      \coordinate (M2) at ({2*\r*(1+cos(\thb))*cos(\thb)}, {2*\r*(1+cos(\thb))*sin(\thb)});
+
+      % 心脏线 rho = 2r(1 + cos theta)
+      \draw[very thick, curveblue, domain=0:360, samples=200, variable=\t]
+        plot ({2*\r*(1+cos(\t))*cos(\t)}, {2*\r*(1+cos(\t))*sin(\t)});
+
+      % 圆 C 与直径射线
+      \draw (C) circle (\r);
+      \draw (A) -- ({4*\r}, 0);
+      \draw (N) -- (M);
+      \draw (A) -- (M2);
+
+      % 等长双短线记号 (PM 与 P2M2 与直径)
+      \coordinate (midPM) at ($(P)!0.5!(M)$);
+      \draw ($(midPM)+(\th+90:0.08)$) -- ($(midPM)+(\th-90:0.08)$);
+      \draw ($(midPM)+(\th:0.05)+(\th+90:0.08)$) -- ($(midPM)+(\th:0.05)+(\th-90:0.08)$);
+
+      \coordinate (midPMb) at ($(P2)!0.5!(M2)$);
+      \draw ($(midPMb)+(\thb+90:0.08)$) -- ($(midPMb)+(\thb-90:0.08)$);
+      \draw ($(midPMb)+(\thb:0.05)+(\thb+90:0.08)$) -- ($(midPMb)+(\thb:0.05)+(\thb-90:0.08)$);
+
+      \fill[white] (A) circle (1.5pt); \draw (A) circle (1.5pt) node[below right=1pt, font=\footnotesize] {$A$};
+      \fill (C) circle (1.4pt) node[below, font=\footnotesize] {$C$};
+      \fill[white] (B) circle (1.5pt); \draw (B) circle (1.5pt) node[below, font=\footnotesize] {$B$};
+      \fill[white] (P) circle (1.5pt); \draw (P) circle (1.5pt) node[above left=-1pt, font=\footnotesize] {$P$};
+      \fill[white] (M) circle (1.5pt); \draw (M) circle (1.5pt) node[above right=-1pt, font=\footnotesize] {$M$};
+      \fill[white] (N) circle (1.5pt); \draw (N) circle (1.5pt) node[left, font=\footnotesize] {$N$};
+    \end{tikzpicture}
+    \caption*{图\ 28.2}
+  \end{minipage}
+\end{figure}
+
+从极坐标方程可得到心脏线的一种简便画法。如图 28.2，作圆 $C$，使它的半径为 $r$。在圆周上取一个定点 $A$。过 $A$ 任意作直线，交圆 $C$ 于点 $P$。在直线 $AP$ 上向 $P$ 点两侧取 $PM=PN=AB$，这里 $AB$ 是圆 $C$ 的直径，则 $M$ 和 $N$ 是心脏线上的两个点。继续这样作出若干个点，便可根据它们描出心脏线来。

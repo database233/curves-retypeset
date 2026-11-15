@@ -1,0 +1,100 @@
+\section{正方形的渐伸线}
+\markboth{46. 正方形的渐伸线}{46. 正方形的渐伸线}
+
+蚊香盒的底面是一个正方形，拿一张旧报纸放在桌上，把蚊香盒放在报纸上，盒底的轮廓就在报纸上显示出一个正方形，记为 $ABCD$，并设其边长为 $a$。再取一根细线绕到蚊香盒外侧的下部，线的一端结上一支铅笔，使笔尖正好位于正方形的一个顶点 $A$ 处。然后手执铅笔拉紧细线，并且把线从盒底上逐渐松开，铅笔就在报纸上画出一条螺旋形曲线，这条曲线叫做正方形的渐伸线（图 46.1）。
+
+\begin{wrapfigure}[11]{l}{0.43\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.90, line cap=round, line join=round]
+    \def\a{0.38}
+    \coordinate (D) at (0, 0);
+    \coordinate (C) at (\a, 0);
+    \coordinate (B) at (\a, \a);
+    \coordinate (A) at (0, \a);
+    \coordinate (E) at (\a, {2*\a});
+    \coordinate (F) at ({3*\a}, 0);
+    \coordinate (G) at (0, {-3*\a});
+    \coordinate (H) at ({-4*\a}, \a);
+
+    % 正方形 ABCD
+    \draw[thick] (D) -- (C) -- (B) -- (A) -- cycle;
+
+    % 虚线辅助线
+    \draw[densely dashed] (B) -- (E);
+    \draw[densely dashed] (C) -- (F);
+    \draw[densely dashed] (D) -- (G);
+    \draw[densely dashed] (A) -- (H);
+
+    % 渐伸线四段圆弧
+    \draw[very thick, curveblue]
+      (A) arc (180:90:\a)
+          arc (90:0:{2*\a})
+          arc (0:-90:{3*\a})
+          arc (-90:-180:{4*\a});
+
+    % 顶点与字母标签
+    \fill (A) circle (1.2pt) node[above left=-1pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.2pt) node[right, font=\scriptsize] {$B$};
+    \fill (C) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$C$};
+    \fill (D) circle (1.2pt) node[left, font=\scriptsize] {$D$};
+    \node[above, font=\scriptsize] at (E) {$E$};
+    \node[right, font=\scriptsize] at (F) {$F$};
+    \node[below, font=\scriptsize] at (G) {$G$};
+    \node[left, font=\scriptsize] at (H) {$H$};
+  \end{tikzpicture}
+  \caption*{图\ 46.1}
+\end{wrapfigure}
+
+根据作法知道，正方形的渐伸线是由一些不同半径的圆弧光滑连接而成的。例如在图 46.1 中，$\arc{AE}$ 的圆心是 $B$，半径是 $a$；$\arc{EF}$ 的圆心是 $C$，半径是 $2a$；$\arc{FG}$ 的圆心是 $D$，半径是 $3a$，等等。
+
+还可用类似的方法画出圈数更多的螺旋形曲线，而且通过适当选择各个圆心的位置，螺旋形曲线的形状也可以千变万化。例如图 46.2 中画出的螺旋形曲线，也是由一些圆弧光滑地连接而成的，各段圆弧的圆心顺次是 $A$、$B$、$C$、$D$ 等等。这种画螺旋形曲线的方法非常简便，在机械制图和建筑工程中常被采用。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.92, line cap=round, line join=round]
+    \begin{scope}[rotate=45]
+      \def\w{0.28}
+      \def\h{0.18}
+      \def\rzero{0.16}
+      \pgfmathsetmacro{\rone}{\rzero}
+      \pgfmathsetmacro{\rtwo}{\rone + \h}
+      \pgfmathsetmacro{\rthree}{\rtwo + \w}
+      \pgfmathsetmacro{\rfour}{\rthree + \h}
+      \pgfmathsetmacro{\rfive}{\rfour + \w}
+
+      \coordinate (A) at (0, 0);
+      \coordinate (B) at (0, \h);
+      \coordinate (C) at (\w, \h);
+      \coordinate (D) at (\w, 0);
+
+      % 中心多边形与圆心射线延长虚线
+      \draw[densely dashed, black!65] (A) -- (B) -- (C) -- (D) -- cycle;
+      \draw[densely dashed, black!55] (A) -- (\rone, 0);
+      \draw[densely dashed, black!55] (B) -- (0, -\rone);
+      \draw[densely dashed, black!55] (C) -- (-\rtwo, \h);
+      \draw[densely dashed, black!55] (D) -- (\w, \h + \rthree);
+      \draw[densely dashed, black!55] (A) -- (\w + \rfour, 0);
+      \draw[densely dashed, black!55] (A) -- (0, -\rfive);
+
+      % 顺次以 A, B, C, D, A 为圆心光滑连接的 90° 圆弧螺旋
+      \draw[very thick, curveblue]
+        (\rone, 0) arc (0:-90:\rone)
+                   arc (-90:-180:\rtwo)
+                   arc (-180:-270:\rthree)
+                   arc (90:0:\rfour)
+                   arc (0:-90:\rfive);
+
+      % 圆心标记
+      \fill (A) circle (1.1pt);
+      \fill (B) circle (1.1pt);
+      \fill (C) circle (1.1pt);
+      \fill (D) circle (1.1pt);
+      \node[below=1pt, font=\scriptsize] at (A) {$A$};
+      \node[left=1pt, font=\scriptsize] at (B) {$B$};
+      \node[above=1pt, font=\scriptsize] at (C) {$C$};
+      \node[right=1pt, font=\scriptsize] at (D) {$D$};
+    \end{scope}
+  \end{tikzpicture}
+  \caption*{图\ 46.2}
+\end{figure}

@@ -1,0 +1,206 @@
+\section{变幅外摆线}
+\markboth{34. 变幅外摆线}{34. 变幅外摆线}
+
+设圆 $O$ 是一个定圆，圆 $O_1$ 是与圆 $O$ 相切的动圆，$M$ 是固定在圆 $O_1$ 平面内的一点，但不在圆 $O_1$ 的圆周上。当圆 $O_1$ 在圆 $O$ 外面绕圆 $O$ 无滑动地滚动时，$M$ 的轨迹叫做变幅外摆线。
+
+变幅外摆线可分成两类：当 $M$ 在动圆 $O_1$ 内部时，曲线叫做短幅外摆线；当 $M$ 在动圆 $O_1$ 外部时，曲线叫做长幅外摆线。
+
+例如，当动圆与定圆相等时，根据第 33 节可知长幅外摆线成为带绕扣的帕斯卡蜗线，短幅外摆线是无绕扣又无尖点的蜗线，而外摆线则是带尖点的蜗线，即心脏线。
+
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    % R = 1.15, r = 0.55, h = 0.34, angle(AON) = 45 deg
+    \def\R{1.15}
+    \def\r{0.55}
+    \def\h{0.34}
+    \def\angAON{45}
+    \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
+    \pgfmathsetmacro{\alp}{\angAON - 180 + \tdeg}
+    \coordinate (O) at (0,0);
+    \coordinate (O1) at ({(\R+\r)*cos(\angAON)}, {(\R+\r)*sin(\angAON)});
+    \coordinate (M) at ({(\R+\r)*cos(\angAON) + \h*cos(\alp)}, {(\R+\r)*sin(\angAON) + \h*sin(\alp)});
+
+    \draw[->] (-1.35, 0) -- (2.45, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.35) -- (0, 2.05) node[left, font=\footnotesize] {$y$};
+
+    % 定圆 O，当前动圆 O1，初始动圆（虚线）
+    \draw[thick] (O) circle (\R);
+    \draw (O1) circle (\r);
+    \draw[densely dashed] (\R+\r, 0) circle (\r);
+    \fill (\R+\r, 0) circle (1.2pt);
+    \fill (\R+\r-\h, 0) circle (1.2pt);
+
+    % 连线与半径标示
+    \draw (O) -- (O1) node[midway, above left=-2pt, font=\scriptsize] {$R$};
+    \draw (O1) -- (M);
+    \draw[thin] (O1) -- ++(0.65, 0);
+    \draw (O1) -- ($(O1) + (75:\r)$) node[midway, left=-1pt, font=\scriptsize] {$r$};
+
+    % 角 t 与 角 alpha
+    \draw ($(O1) + ({\angAON-180}:0.18)$) arc ({\angAON-180}:\alp:0.18);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*(\angAON-180+\alp)}:0.29)$) {$t$};
+    \draw ($(O1) + (0:0.28)$) arc (0:\alp:0.28);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.42)$) {$\alpha$};
+
+    \fill (O) circle (1.3pt) node[below left, font=\footnotesize] {$O$};
+    \fill (O1) circle (1.3pt) node[above left=-2pt, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.4pt) node[below=-1pt, font=\footnotesize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 34.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 34.1，设定圆 $O$ 的半径为 $R$，动圆 $O_1$ 的半径为 $r$，点 $M$ 到 $O_1$ 的距离为 $h$。取 $O$ 为坐标原点，并且选取 $x$ 轴，使当 $O_1$ 转动到 $x$ 轴正半轴上时，射线 $O_1M$ 与 $O_1O$ 同向。又设当圆 $O_1$ 滚动到图 34.1 中的任意位置时，点 $M$ 的坐标为 $(x, y)$，$\angle OO_1M = t$。仿照 27 节外摆线的求法，知 $\overrightarrow{O_1M}$ 的幅角 $\alpha = \frac{r}{R}t - \pi + t$。因为 $\overrightarrow{OM} = \overrightarrow{OO_1} + \overrightarrow{O_1M}$，所以向量 $\overrightarrow{OM}$ 的坐标表示式为
+\end{minipage}
+
+\begin{align*}
+  (x, y) &= \Bigl((R+r)\cos\frac{r}{R}t,\, (R+r)\sin\frac{r}{R}t\Bigr) + (h\cos\alpha,\, h\sin\alpha) \\
+         &= \biggl((R+r)\cos\frac{r}{R}t - h\cos\Bigl(t + \frac{r}{R}t\Bigr), \\
+         &\qquad\ (R+r)\sin\frac{r}{R}t - h\sin\Bigl(t + \frac{r}{R}t\Bigr)\biggr).
+\end{align*}
+令 $\frac{r}{R}=m$，就得到曲线的参数方程为
+\[
+  \begin{aligned}
+    x &= (R+mR)\cos mt - h\cos(t+mt), \\
+    y &= (R+mR)\sin mt - h\sin(t+mt).
+  \end{aligned}
+  \quad (m>0)
+\]
+当 $h>mR$ 时曲线为长幅外摆线，$h<mR$ 时为短幅外摆线。若 $h=mR$，则上述方程化为外摆线的方程。
+
+在图 34.2～34.4 中分别画出了 $m=\frac{1}{4}$ 时的长幅外摆线、外摆线和短幅外摆线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.72, line cap=round, line join=round]
+      % m = 1/4, R = 1, r = 0.25, h = 0.42 (长幅外摆线)
+      \def\R{1.0}
+      \def\r{0.25}
+      \def\h{0.42}
+      \def\ang{28}
+      \pgfmathsetmacro{\tdeg}{\R/\r*\ang}
+      \pgfmathsetmacro{\alp}{\ang - 180 + \tdeg}
+      \draw (0,0) circle (\R);
+      \draw ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) circle (\r);
+      \draw ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) -- ({(\R+\r)*cos(\ang)+\h*cos(\alp)}, {(\R+\r)*sin(\ang)+\h*sin(\alp)});
+      \fill ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) circle (0.9pt);
+      \fill ({(\R+\r)*cos(\ang)+\h*cos(\alp)}, {(\R+\r)*sin(\ang)+\h*sin(\alp)}) circle (1.3pt);
+      \draw[very thick, curveblue, domain=0:1440, samples=260, variable=\s]
+        plot ({(\R+\r)*cos(0.25*\s) - \h*cos(1.25*\s)},
+              {(\R+\r)*sin(0.25*\s) - \h*sin(1.25*\s)});
+    \end{tikzpicture}
+    \caption*{图\ 34.2}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.72, line cap=round, line join=round]
+      % m = 1/4, R = 1, r = 0.25, h = 0.25 (外摆线)
+      \def\R{1.0}
+      \def\r{0.25}
+      \def\h{0.25}
+      \def\ang{28}
+      \pgfmathsetmacro{\tdeg}{\R/\r*\ang}
+      \pgfmathsetmacro{\alp}{\ang - 180 + \tdeg}
+      \draw (0,0) circle (\R);
+      \draw ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) circle (\r);
+      \draw ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) -- ({(\R+\r)*cos(\ang)+\h*cos(\alp)}, {(\R+\r)*sin(\ang)+\h*sin(\alp)});
+      \fill ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) circle (0.9pt);
+      \fill ({(\R+\r)*cos(\ang)+\h*cos(\alp)}, {(\R+\r)*sin(\ang)+\h*sin(\alp)}) circle (1.3pt);
+      \draw[very thick, curveblue, domain=0:1440, samples=260, variable=\s]
+        plot ({(\R+\r)*cos(0.25*\s) - \h*cos(1.25*\s)},
+              {(\R+\r)*sin(0.25*\s) - \h*sin(1.25*\s)});
+    \end{tikzpicture}
+    \caption*{图\ 34.3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.72, line cap=round, line join=round]
+      % m = 1/4, R = 1, r = 0.25, h = 0.14 (短幅外摆线)
+      \def\R{1.0}
+      \def\r{0.25}
+      \def\h{0.14}
+      \def\ang{28}
+      \pgfmathsetmacro{\tdeg}{\R/\r*\ang}
+      \pgfmathsetmacro{\alp}{\ang - 180 + \tdeg}
+      \draw (0,0) circle (\R);
+      \draw ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) circle (\r);
+      \draw ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) -- ({(\R+\r)*cos(\ang)+\h*cos(\alp)}, {(\R+\r)*sin(\ang)+\h*sin(\alp)});
+      \fill ({(\R+\r)*cos(\ang)}, {(\R+\r)*sin(\ang)}) circle (0.9pt);
+      \fill ({(\R+\r)*cos(\ang)+\h*cos(\alp)}, {(\R+\r)*sin(\ang)+\h*sin(\alp)}) circle (1.3pt);
+      \draw[very thick, curveblue, domain=0:1440, samples=260, variable=\s]
+        plot ({(\R+\r)*cos(0.25*\s) - \h*cos(1.25*\s)},
+              {(\R+\r)*sin(0.25*\s) - \h*sin(1.25*\s)});
+    \end{tikzpicture}
+    \caption*{图\ 34.4}
+  \end{minipage}
+\end{figure}
+
+由于变幅外摆线和外摆线的方程可以写成上面的统一形式，所以有时也把它们统称为外摆线族曲线。
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace{2em}外摆线族曲线的方程还可写成其它形式。例如，设 $W$ 是与 $M$ 关于 $O_1$ 对称的点，那么 $W$ 的轨迹与 $M$ 的轨迹形状相同，仅仅是位置不同。如图 34.5，有
+  \begin{gather*}
+    \angle OO_1M = t,\quad O_1W = h, \\
+    \text{向量 }\overrightarrow{O_1W}\text{ 的幅角 }\beta = t + \frac{r}{R}t = t + mt,
+  \end{gather*}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    % R = 1.15, r = 0.55, h = 0.34, angle(AON) = 45 deg
+    \def\R{1.15}
+    \def\r{0.55}
+    \def\h{0.34}
+    \def\angAON{45}
+    \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
+    \pgfmathsetmacro{\alp}{\angAON - 180 + \tdeg}
+    \pgfmathsetmacro{\bet}{\angAON + \tdeg}
+    \coordinate (O) at (0,0);
+    \coordinate (O1) at ({(\R+\r)*cos(\angAON)}, {(\R+\r)*sin(\angAON)});
+    \coordinate (M) at ({(\R+\r)*cos(\angAON) + \h*cos(\alp)}, {(\R+\r)*sin(\angAON) + \h*sin(\alp)});
+    \coordinate (W) at ({(\R+\r)*cos(\angAON) + \h*cos(\bet)}, {(\R+\r)*sin(\angAON) + \h*sin(\bet)});
+
+    \draw[->] (-1.30, 0) -- (2.40, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.30) -- (0, 2.00) node[left, font=\footnotesize] {$y$};
+
+    \draw[thick] (O) circle (\R);
+    \draw (O1) circle (\r);
+    \draw (O) -- (O1);
+    \draw (M) -- (W);
+    \draw[thin] (O1) -- ++(0.68, 0);
+
+    % 角 t 与 角 beta
+    \draw ($(O1) + ({\angAON-180}:0.20)$) arc ({\angAON-180}:\alp:0.20);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*(\angAON-180+\alp)}:0.32)$) {$t$};
+    \draw ($(O1) + (0:0.25)$) arc (0:\bet:0.25);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\bet}:0.38)$) {$\beta$};
+
+    \fill (O) circle (1.2pt) node[below left, font=\footnotesize] {$O$};
+    \fill (O1) circle (1.2pt) node[left=1pt, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.2pt) node[below, font=\footnotesize] {$M$};
+    \fill (W) circle (1.3pt) node[above left=-1pt, font=\footnotesize] {$W$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 34.5}
+\end{minipage}
+
+\noindent
+所以由 $\overrightarrow{OW}=\overrightarrow{OO_1}+\overrightarrow{O_1W}$ 可以得到点 $W$ 的坐标是
+\[
+  \begin{aligned}
+    x &= (R+mR)\cos mt + h\cos(t+mt), \\
+    y &= (R+mR)\sin mt + h\sin(t+mt).
+  \end{aligned}
+  \quad (m>0)
+\]

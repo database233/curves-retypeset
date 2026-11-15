@@ -1,0 +1,155 @@
+\section{曲线的反演变换}
+\markboth{66. 曲线的反演变换}{66. 曲线的反演变换}
+
+设 $O$ 是平面内的一个定点，$R^2$ 是一个确定的正数。对于这平面内的任意点 $A$，在射线 $OA$ 上取点 $B$，使 $OA\cdot OB = R^2$，把 $B$ 作为 $A$ 的对应点。把任意点 $A$ 变到它的对应点 $B$ 的变换，叫做反演；定点 $O$ 叫做反演极，常数 $R^2$ 叫做反演幂，$B$ 叫做 $A$ 的反演对应点，简称为反点。根据定义得出，当 $B$ 是 $A$ 的反点时，$A$ 也是 $B$ 的反点。在反演变换之下，反演极没有对应点。
+
+\noindent
+\begin{minipage}[t]{0.41\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=Stealth, line cap=round, line join=round]
+    % 坐标轴
+    \draw[->] (-0.35, 0) -- (2.15, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.35) -- (0, 2.05) node[left, font=\scriptsize] {$y$};
+
+    % 曲线 C: rho = 0.96 / (1 + 0.35*t) (t 为弧度), 反形 C1: rho1 = 1.46*(1 + 0.35*t), R^2 = 1.40
+    \draw[thick, curveblue, domain=0:62, samples=60, variable=\t]
+      plot ({(0.96/(1+0.35*\t*pi/180))*cos(\t)}, {(0.96/(1+0.35*\t*pi/180))*sin(\t)});
+    \draw[thick, curveblue, domain=0:54, samples=60, variable=\t]
+      plot ({(1.46*(1+0.35*\t*pi/180))*cos(\t)}, {(1.46*(1+0.35*\t*pi/180))*sin(\t)});
+
+    % 射线 OB (取 theta = 46 度)
+    \def\th{46}
+    \pgfmathsetmacro{\radA}{0.96/(1+0.35*\th*pi/180)}
+    \pgfmathsetmacro{\radB}{1.46*(1+0.35*\th*pi/180)}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at ({\radA*cos(\th)}, {\radA*sin(\th)});
+    \coordinate (B) at ({\radB*cos(\th)}, {\radB*sin(\th)});
+
+    \draw (O) -- ($(O)!1.12!(B)$);
+    \draw (0.35, 0) arc (0:\th:0.35);
+    \node[font=\scriptsize] at ({0.5*\th}:0.50) {$\theta$};
+
+    \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.1pt) node[above right=-1pt, font=\scriptsize] {$B$};
+    \node[font=\scriptsize] at (0.76, 0.22) {$C$};
+    \node[font=\scriptsize] at (1.52, 0.50) {$C_1$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 66.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 66.1，选取极坐标系，使反演极 $O$ 为极点。设点 $A(\rho, \theta)$ 的反点是 $B(\rho_1, \theta_1)$，根据定义得到
+  \[
+    \theta_1 = \theta,\quad \rho_1 = \frac{R^2}{\rho}.
+  \]
+\end{minipage}
+
+\medskip
+\noindent
+如果化成直角坐标，设 $A(x,y)$ 的反点是 $B(x_1, y_1)$，则有
+\begin{align*}
+  x_1 &= \rho_1\cos\theta_1 = \frac{R^2}{\rho}\cos\theta = \frac{R^2}{\rho^2}\rho\cos\theta = \frac{R^2 x}{x^2+y^2}, \\
+  y_1 &= \rho_1\sin\theta_1 = \frac{R^2}{\rho}\sin\theta = \frac{R^2}{\rho^2}\rho\sin\theta = \frac{R^2 y}{x^2+y^2}.
+\end{align*}
+由于 $A$ 也是 $B$ 的反点，所以上列各式中的 $(\rho, \theta)$ 与 $(\rho_1, \theta)$、$(x,y)$ 与 $(x_1, y_1)$ 可以互换，结果得到
+\[
+  \theta = \theta_1,\quad \rho = \frac{R^2}{\rho_1};
+\]
+\[
+  x = \frac{R^2 x_1}{x_1^2+y_1^2},\quad y = \frac{R^2 y_1}{x_1^2+y_1^2}.
+\]
+
+对于任一图形 $C$，由它的每一点的反点所组成的图形 $C_1$，叫做 $C$ 的反演图形，简称为 $C$ 的反形。当 $C_1$ 是 $C$ 的反形时，$C$ 也是 $C_1$ 的反形。
+
+为了运算方便，下面我们都把反演极取成坐标原点或极点，并且总是用 $R^2$ 表示反演幂。根据任一点与其反点的坐标间的相互关系，可以得到下面的法则：
+
+若曲线 $C$ 由极坐标方程给出，只须把其中的极半径 $\rho$ 换成 $\frac{R^2}{\rho}$，就得到反形 $C_1$ 的方程；
+
+若曲线 $C$ 由直角坐标方程给出，只须把其中的 $x$ 换成 $\frac{R^2 x}{x^2+y^2}$，$y$ 换成 $\frac{R^2 y}{x^2+y^2}$，就得到反形 $C_1$ 的方程；
+
+若曲线 $C$ 具有参数方程 $x=f(t)$，$y=\varphi(t)$，则其反形 $C_1$ 可用参数方程表示成
+\[
+  x = \frac{R^2 f(t)}{[f(t)]^2 + [\varphi(t)]^2},\quad y = \frac{R^2 \varphi(t)}{[f(t)]^2 + [\varphi(t)]^2}.
+\]
+
+例如，若 $C$ 的极坐标方程为 $\theta=\theta_0$，$\theta_0$ 为常数，则 $C_1$ 的方程仍为 $\theta=\theta_0$。这说明在反演变换下，通过反演极的直线仍变为原直线（但在直线上点的位置发生变化）。
+
+作为第二个例子，考虑直线
+\[
+  \rho = \frac{a}{\cos\theta},\quad (a>0)
+\]
+其反形 $C_1$ 的方程为
+\[
+  \rho = \frac{R^2}{a}\cos\theta.
+\]
+
+\noindent
+\begin{minipage}[t]{0.41\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=Stealth, line cap=round, line join=round]
+    \def\rc{0.68}
+    \def\xm{1.65}
+    \def\th{32}
+    \pgfmathsetmacro{\Bx}{2*\rc*cos(\th)*cos(\th)}
+    \pgfmathsetmacro{\By}{2*\rc*cos(\th)*sin(\th)}
+    \pgfmathsetmacro{\Ax}{\xm}
+    \pgfmathsetmacro{\Ay}{\xm*tan(\th)}
+
+    \coordinate (O) at (0,0);
+    \coordinate (N) at ({2*\rc}, 0);
+    \coordinate (M) at (\xm, 0);
+    \coordinate (B) at (\Bx, \By);
+    \coordinate (A) at (\Ax, \Ay);
+
+    % 圆 C1 与直线 C
+    \draw[thick, curveblue] (\rc, 0) circle (\rc);
+    \draw[thick, curveblue] (\xm, -0.95) -- (\xm, 1.25);
+    \draw (-0.15, 0) -- (2.00, 0);
+    \draw (O) -- ({\Ax*1.08}, {\Ay*1.08});
+
+    % 角度 theta
+    \draw (0.36, 0) arc (0:\th:0.36);
+    \node[font=\scriptsize] at ({0.5*\th}:0.52) {$\theta$};
+
+    % 点与标注
+    \fill (O) circle (1.1pt) node[left, font=\scriptsize] {$O$};
+    \fill (N) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$N$};
+    \fill (M) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$M$};
+    \fill (B) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$B$};
+    \fill (A) circle (1.1pt) node[right, font=\scriptsize] {$A$};
+    \node[below, font=\scriptsize] at (0.82, -0.68) {$C_1$};
+    \node[right, font=\scriptsize] at (\xm, -0.78) {$C$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 66.2}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+  \vspace{0pt}
+  \hspace{2em}这说明在反演变换下，不通过反演极的直线变成通过反演极的圆。由于一对图形互为反形，所以通过反演极的圆也变成不通过反演极的直线（图 66.2）。这时反演极 $O$ 到直线 $C$ 的最短距离 $OM$ 对应于圆中通过 $O$ 点的最大弦 $ON$。因此，垂线 $OM$ 的垂足 $M$，对应于直径 $ON$ 的端点 $N$。
+\end{minipage}
+
+\medskip
+\noindent
+再考虑一个例子：设 $C$ 是不通过反演极的圆，因而可表示成直角坐标方程
+\[
+  x^2+y^2+ax+by+F=0.\quad (F\neq 0)
+\]
+其反形 $C_1$ 的方程是
+\begin{align*}
+  \frac{R^4 x^2}{(x^2+y^2)^2} + \frac{R^4 y^2}{(x^2+y^2)^2}
+  &+ \frac{aR^2 x}{x^2+y^2} \\
+  &+ \frac{bR^2 y}{x^2+y^2} + F = 0.
+\end{align*}
+两边同乘以 $\frac{x^2+y^2}{F}$，化简后得到
+\[
+  x^2+y^2 + \frac{aR^2}{F}x + \frac{bR^2}{F}y + \frac{R^4}{F} = 0,
+\]
+这个方程说明反形也是不通过反演极的圆。因而反演变换把不通过反演极的圆仍变到不通过反演极的圆。
+
+一般说来，对于同一条曲线，选取不同的点做反演极，反演后得到的曲线的形状也不同。反演变换能把简单的曲线与复杂的曲线联系起来，又能从已知曲线导出新的曲线，是一种很有用的几何变换。
+
+严格说来，上面所说的反演变换应该叫做顺反演变换。还有一种逆反演变换，是把任意点 $A$ 变到 $OA$ 反向延长线上的点 $B_1$，使 $OA\cdot OB_1$ 等于定值。同一点 $A$ 的顺反演对应点 $B$ 和逆反演对应点 $B_1$ 关于反演极对称。因而，只要把顺反演变换的问题搞清楚了，再作一个中心对称变换，就可以知道逆反演变换的情形。正因为这样，所以本书中只研究顺反演变换。

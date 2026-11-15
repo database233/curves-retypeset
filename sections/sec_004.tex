@@ -1,0 +1,66 @@
+\section{双曲线为摄影师帮忙}
+\markboth{4. 双曲线为摄影师帮忙}{4. 双曲线为摄影师帮忙}
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \setlength{\parindent}{2em}
+  现在该来谈谈双曲线了。双曲线是到两个定点的距离之差等于定长的点的轨迹。这两个定点叫做双曲线的焦点。把双曲线绕着两个焦点的连线在空间旋转一周，所得到的曲面叫做双叶旋转双曲面。有一种灯具的反射镜的表面就是做成这种曲面的形状（如图 4.1）。这种镜面有一个特点，把光源放在一个焦点上，那么它所发出的光线经过镜面反射以后，好像都是从另一个焦点发出来似的。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \centering
+  \vspace{-2pt}
+  \begin{tikzpicture}[scale=0.80]
+    % 双叶旋转双曲面反射镜: a=0.65, b=0.65, c=0.9192, t in [-1.1, 1.1]
+    % 右叶顶点 (0.65, 0), 左叶顶点 (-0.65, 0)
+    % 虚焦点 F1=(-0.9192, 0), 实光源焦点 F2=(0.9192, 0)
+    % 开口位置 x_rim = 0.65*cosh(1.1) = 1.0845, y_rim = 0.65*sinh(1.1) = 0.8682
+    \def\a{0.65}
+    \def\b{0.65}
+    \def\c{0.9192}
+
+    % 右叶金属外壳阴影(左叶侧视外表面)与开口凹面内壁
+    \fill[black!10]
+      plot[domain=-1.1:1.1, samples=40] ({\a*cosh(\x)}, {\b*sinh(\x)})
+      -- (1.0845, -0.8682) arc[start angle=-90, end angle=90, x radius=0.20, y radius=0.8682]
+      -- cycle;
+    \fill[pattern=north east lines, pattern color=black!50]
+      plot[domain=-1.1:1.1, samples=40] ({\a*cosh(\x)}, {\b*sinh(\x)})
+      arc[start angle=90, end angle=270, x radius=0.20, y radius=0.8682]
+      -- cycle;
+    \fill[black!6] (1.0845,0) ellipse [x radius=0.20, y radius=0.8682];
+    \draw[line width=0.75pt]
+      plot[domain=-1.1:1.1, samples=40] ({\a*cosh(\x)}, {\b*sinh(\x)});
+    \draw[line width=0.7pt] (1.0845,0) ellipse [x radius=0.20, y radius=0.8682];
+
+    % 左叶轮廓
+    \draw[line width=0.75pt]
+      plot[domain=-1.1:1.1, samples=40] ({-\a*cosh(\x)}, {\b*sinh(\x)});
+    \draw[line width=0.7pt] (-1.0845,0) ellipse [x radius=0.20, y radius=0.8682];
+
+    % 从左焦点 F1 出发的反向延长虚线止于右叶轮廓, 实线光线从右叶开口端净射出(不穿透镜背)
+    \coordinate (F1) at (-\c, 0);
+    \foreach \t in {-0.95, -0.71, -0.47, -0.23, 0, 0.23, 0.47, 0.71, 0.95} {
+      \pgfmathsetmacro{\px}{\a*cosh(\t)}
+      \pgfmathsetmacro{\py}{\b*sinh(\t)}
+      \pgfmathsetmacro{\vx}{\px + \c}
+      \pgfmathsetmacro{\vy}{\py}
+      \pgfmathsetmacro{\len}{sqrt(\vx*\vx + \vy*\vy)}
+      \pgfmathsetmacro{\ux}{\vx/\len}
+      \pgfmathsetmacro{\uy}{\vy/\len}
+      % 出射光线穿过开口椭圆右半缘(近似截断到开口外侧, 避免穿过实体镜背阴影)
+      \pgfmathsetmacro{\kexit}{max(0, (1.0845 + 0.20*sqrt(max(0, 1 - (\py/0.8682)*(\py/0.8682))) - \px)/\ux)}
+      \pgfmathsetmacro{\ex}{\px + \kexit*\ux}
+      \pgfmathsetmacro{\ey}{\py + \kexit*\uy}
+      \draw[dashed, line width=0.45pt] (F1) -- (\px, \py);
+      \draw[dashed, line width=0.4pt, black!45] (\px, \py) -- (\ex, \ey);
+      \draw[line width=0.55pt] (\ex, \ey) -- ({\px + (\kexit + 0.72)*\ux}, {\py + (\kexit + 0.72)*\uy});
+    }
+    % 左焦点(虚焦点)与右焦点(灯丝位置)小圆圈
+    \draw[fill=white, line width=0.7pt] (F1) circle (1.4pt);
+    \fill[black] (\c, 0) circle (1.3pt);
+  \end{tikzpicture}
+  \par\vspace{4pt}{\footnotesize 图\ 4.1}
+\end{minipage}
+
+这样做出的灯具有什么好处呢？原来在室内拍照片时，由于自然光线不足，常常需要借助闪光灯或其它照明灯具。为了把被摄对象照得更亮，摄影师总想把灯尽可能放近些。但是一般自然光线接近于平行光线，因而均匀柔和；而灯光则是中心放射式的，灯放得越近，光线的放射性效应越明显。为了既获得足够的亮度，又使光线尽量地均匀柔和，专门为摄影师设计的照明灯，就往往利用双曲线的光学性质，把反光镜的表面做成双叶旋转双曲面的形状，并让灯丝恰好位于焦点。

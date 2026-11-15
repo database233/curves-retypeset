@@ -1,0 +1,102 @@
+\section{让光线多跑两趟}
+\markboth{5. 让光线多跑两趟}{5. 让光线多跑两趟}
+
+\noindent
+\begin{minipage}[t]{0.46\textwidth}
+  \centering
+  \vspace{-2pt}
+  \begin{tikzpicture}[scale=0.88]
+    % 镜筒范围 x in [0, 3.2], y in [-0.9, 0.9]
+    % 抛物线主镜: x = 3.1 - y^2/13.6, F1 = (-0.3, 0)
+    % 双曲线副镜: F1=(-0.3,0), F2=(3.55,0), a=1.005, c=1.925, b^2=2.6956
+
+    % 镜筒外壁(筒底紧贴主镜小洞外框, 无断开空隙)
+    \draw[line width=0.75pt] (0,0.9) -- (3.20,0.9) -- (3.20,0.16) -- (3.28,0.16);
+    \draw[line width=0.75pt] (0,-0.9) -- (3.20,-0.9) -- (3.20,-0.16) -- (3.28,-0.16);
+    \draw[dashed, line width=0.5pt] (0,-0.9) -- (0,0.9);
+
+    % 抛物线主镜(实心玻璃体+镜背斜线阴影, 上下两半, 中间留小洞 |y| < 0.16)
+    \fill[black!10]
+      plot[domain=0.16:0.86, samples=25] ({3.1 - \x*\x/13.6}, \x)
+      -- plot[domain=0.86:0.16, samples=25] ({3.18 - \x*\x/13.6}, \x) -- cycle;
+    \fill[pattern=north east lines, pattern color=black!50]
+      plot[domain=0.16:0.86, samples=25] ({3.1 - \x*\x/13.6}, \x)
+      -- plot[domain=0.86:0.16, samples=25] ({3.18 - \x*\x/13.6}, \x) -- cycle;
+    \fill[black!10]
+      plot[domain=-0.86:-0.16, samples=25] ({3.1 - \x*\x/13.6}, \x)
+      -- plot[domain=-0.16:-0.86, samples=25] ({3.18 - \x*\x/13.6}, \x) -- cycle;
+    \fill[pattern=north east lines, pattern color=black!50]
+      plot[domain=-0.86:-0.16, samples=25] ({3.1 - \x*\x/13.6}, \x)
+      -- plot[domain=-0.16:-0.86, samples=25] ({3.18 - \x*\x/13.6}, \x) -- cycle;
+
+    \draw[line width=0.85pt, curveblue, domain=0.16:0.86, samples=25]
+      plot ({3.1 - \x*\x/13.6}, \x);
+    \draw[line width=0.85pt, curveblue, domain=-0.86:-0.16, samples=25]
+      plot ({3.1 - \x*\x/13.6}, \x);
+    \draw[line width=0.6pt, domain=0.16:0.86, samples=25]
+      plot ({3.18 - \x*\x/13.6}, \x);
+    \draw[line width=0.6pt, domain=-0.86:-0.16, samples=25]
+      plot ({3.18 - \x*\x/13.6}, \x);
+    \draw[line width=0.6pt] ({3.1-0.86*0.86/13.6},0.86) -- ({3.18-0.86*0.86/13.6},0.86);
+    \draw[line width=0.6pt] ({3.1-0.16*0.16/13.6},0.16) -- (3.20,0.16);
+    \draw[line width=0.6pt] ({3.1-0.86*0.86/13.6},-0.86) -- ({3.18-0.86*0.86/13.6},-0.86);
+    \draw[line width=0.6pt] ({3.1-0.16*0.16/13.6},-0.16) -- (3.20,-0.16);
+
+    % 双曲线副镜(实心反射镜+背面支杆止于镜缘, 不穿透镜体)
+    \fill[black!10]
+      plot[domain=-0.30:0.30, samples=25] ({1.625 - 1.005*sqrt(1 + \x*\x/2.6956)}, \x)
+      -- plot[domain=0.30:-0.30, samples=25] ({1.555 - 1.005*sqrt(1 + \x*\x/2.6956)}, \x) -- cycle;
+    \fill[pattern=north east lines, pattern color=black!50]
+      plot[domain=-0.30:0.30, samples=25] ({1.625 - 1.005*sqrt(1 + \x*\x/2.6956)}, \x)
+      -- plot[domain=0.30:-0.30, samples=25] ({1.555 - 1.005*sqrt(1 + \x*\x/2.6956)}, \x) -- cycle;
+    \draw[line width=0.85pt, curveblue, domain=-0.30:0.30, samples=25]
+      plot ({1.625 - 1.005*sqrt(1 + \x*\x/2.6956)}, \x);
+    \draw[line width=0.6pt, domain=-0.30:0.30, samples=25]
+      plot ({1.555 - 1.005*sqrt(1 + \x*\x/2.6956)}, \x);
+    \pgfmathsetmacro{\secFrontX}{1.625 - 1.005*sqrt(1 + 0.09/2.6956)}
+    \pgfmathsetmacro{\secBackX}{1.555 - 1.005*sqrt(1 + 0.09/2.6956)}
+    \pgfmathsetmacro{\secMidX}{0.5*(\secFrontX + \secBackX)}
+    \draw[line width=0.6pt] (\secFrontX,0.30) -- (\secBackX,0.30);
+    \draw[line width=0.6pt] (\secFrontX,-0.30) -- (\secBackX,-0.30);
+    \draw[line width=0.5pt] (\secMidX,0.30) -- (\secMidX,0.9);
+    \draw[line width=0.5pt] (\secMidX,-0.30) -- (\secMidX,-0.9);
+
+    % 光学路径
+    \coordinate (InT) at (-0.45, 0.68);
+    \coordinate (InB) at (-0.45, -0.68);
+    \coordinate (P1T) at (3.066, 0.68);
+    \coordinate (P1B) at (3.066, -0.68);
+    \coordinate (P2T) at (0.614, 0.183);
+    \coordinate (P2B) at (0.614, -0.183);
+    \coordinate (OutT) at (3.95, -0.025);
+    \coordinate (OutB) at (3.95, 0.025);
+
+    \begin{scope}[
+      dash pattern=on 4pt off 2pt on 1pt off 2pt,
+      line width=0.55pt,
+      decoration={markings, mark=at position 0.52 with {\arrow{Stealth[length=4pt]}}}
+    ]
+      \draw[postaction={decorate}] (InT) -- (P1T);
+      \draw[postaction={decorate}] (InB) -- (P1B);
+      \draw[postaction={decorate}] (P1T) -- (P2T);
+      \draw[postaction={decorate}] (P1B) -- (P2B);
+      \draw[postaction={decorate}] (P2T) -- (OutT);
+      \draw[postaction={decorate}] (P2B) -- (OutB);
+    \end{scope}
+
+    % 聚焦处加注清晰会聚交点(去除空白遮挡椭圆)
+    \fill (3.55,0) circle (0.9pt);
+  \end{tikzpicture}
+  \par\vspace{4pt}{\footnotesize 图\ 5.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.51\textwidth}
+  \setlength{\parindent}{2em}
+  1672 年，卡塞格林发明了一种天文望远镜，这种望远镜巧妙地利用了曲线的性质，被人们叫做卡塞格林反射式天文望远镜。图 5.1 就是这种望远镜的示意图。
+\end{minipage}
+
+图中的矩形边框表示望远镜的镜筒，左边是筒口，右边是筒底。紧靠筒底的曲线表示一面口径很大的反射镜，它的截面是抛物线弧。大反射镜的正中有一个小洞，和筒底正中的小窗口连在一起。左边靠近筒口的地方还有一面较小的反射镜，小反射镜的截面是双曲线弧，并且双曲线的一个焦点恰好与抛物线的焦点重合，双曲线的另一个焦点在镜筒底部中心的小窗附近。
+
+这种望远镜的工作原理是这样的：假定图 5.1 中的点划线表示光线，箭头表示光线前进的方向。来自遥远星空的平行光线，进入卡塞格林望远镜的镜筒以后，直奔筒底，在那里受到抛物线大反射镜的反射，掉转头来，朝着筒口方向，对准抛物线的焦点射去。在到达目的地之前，就已遇到拦路的双曲线小反射镜。由于这些光线的投射目标恰好也是双曲线的一个焦点，所以在小反射镜的反射之下，这些光线转身重新射向镜筒底部，并且对准双曲线的第二个焦点射去（为什么？读者自己想一想），在那里聚焦成像。而成象处附近正是镜筒底部的小窗口，所以在镜筒后面的观测者可以透过目镜观测到天空的景象。
+
+卡塞格林反射式天文望远镜最巧妙的地方，在于它把抛物线和双曲线组合起来，让进入镜筒的光线在聚焦过程中往返奔波，多跑两趟，因而镜筒的长度比光线实际走过的路程短得多，这样就能使仪器的体积缩小，重量减轻，既经济，又方便。所以，在现代的激光雷达和无线电接收装置中也都很喜欢采用卡塞格林的反射系统。

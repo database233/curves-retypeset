@@ -1,0 +1,123 @@
+\section{美丽的玫瑰线}
+\markboth{38. 美丽的玫瑰线}{38. 美丽的玫瑰线}
+
+意大利数学家格兰弟（1671～1742）发现了一种象花朵一样美丽的曲线，叫做玫瑰线。他在 1713 年写给莱布尼兹的信中，用语言描述了这种曲线的作法。
+
+玫瑰线的极坐标方程可以写成
+\[
+  \rho = a\sin b\theta,
+\]
+其中常数 $a$ 和 $b$ 都是任意正数。玫瑰线的形状由 $b$ 的数值决定。图 38.1 中分别画出了 $b=3$、$2$、$\frac{5}{3}$、$\frac{4}{3}$ 时的玫瑰线\footnote{重排校订：原书图 38.1(3)（$b=\frac{5}{3}$）五叶玫瑰线方位上下颠倒（竖直一瓣朝上）；按极坐标方程 $\rho = a\sin\frac{5}{3}\theta$，$\theta=\frac{3\pi}{2}$ 时 $\rho=a$ 对应正下方（$270^\circ$），本版据方程真实方位重绘。}。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.92, line cap=round, line join=round]
+      \draw[thick, curveblue, domain=0:180, samples=180, variable=\t]
+        plot ({sin(3*\t)*cos(\t)}, {sin(3*\t)*sin(\t)});
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (1)}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.92, line cap=round, line join=round]
+      \draw[thick, curveblue, domain=0:360, samples=240, variable=\t]
+        plot ({sin(2*\t)*cos(\t)}, {sin(2*\t)*sin(\t)});
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (2)}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.92, line cap=round, line join=round]
+      \draw[thick, curveblue, domain=0:540, samples=300, variable=\t]
+        plot ({sin(5/3*\t)*cos(\t)}, {sin(5/3*\t)*sin(\t)});
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (3)}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.92, line cap=round, line join=round]
+      \draw[thick, curveblue, domain=0:1080, samples=420, variable=\t]
+        plot ({sin(4/3*\t)*cos(\t)}, {sin(4/3*\t)*sin(\t)});
+    \end{tikzpicture}
+    \\[2pt]{\footnotesize (4)}
+  \end{minipage}
+  \caption*{图\ 38.1}
+\end{figure}
+
+从图中看出，$b=3$ 的玫瑰线有三个花瓣，叫做三叶玫瑰线；$b=2$ 的玫瑰线有四个花瓣，叫做四叶玫瑰线。三叶玫瑰线和四叶玫瑰线的方程和图形都比较简单，所以人们谈到玫瑰线时，常用三叶玫瑰线和四叶玫瑰线做例子。
+
+玫瑰线的一个花瓣叫做一叶。常数 $b$ 的数值可以决定玫瑰线的叶数：
+
+若 $b$ 为奇数，则 $\rho = a\sin b\theta$ 有 $b$ 叶；
+
+若 $b$ 为偶数，则 $\rho = a\sin b\theta$ 有 $2b$ 叶；
+
+若 $b$ 可化为既约分数 $\frac{n}{m}$，则当 $n$ 和 $m$ 都是奇数时，$\rho = a\sin b\theta$ 有 $n$ 叶，当 $n$ 和 $m$ 一奇一偶时，$\rho = a\sin b\theta$ 有 $2n$ 叶；
+
+若 $b$ 为无理数，则 $\rho = a\sin b\theta$ 有无穷多叶。
+
+例如 $\rho = a\sin 3\theta$、$\rho = a\sin\frac{3\theta}{5}$ 等有 3 叶（不过习惯上已把“三叶玫瑰线”作为 $\rho = a\sin 3\theta$ 的专用名词了）；$\rho = a\sin 2\theta$、$\rho = a\sin\frac{2\theta}{3}$、$\rho = a\sin\frac{2\theta}{5}$ 等有四叶；$\rho = a\sin\sqrt{2}\theta$、$\rho = a\sin\pi\theta$ 等有无穷多叶。
+
+为了证明上述计算叶数的法则的正确性，我们注意玫瑰线 $\rho = a\sin b\theta$ 的每一叶上有且仅有一个点到极点的距离等于 $a$。要计算这条曲线有几叶，只需看曲线上有多少个点满足 $|\rho|=a$，即 $\sin b\theta = \pm 1$。这些点所对应的 $\theta$ 值应满足
+\[
+  b\theta = k\pi + \frac{\pi}{2},\quad \text{（$k$ 为整数）}
+\]
+由此得到
+\[
+  \theta = \frac{2k+1}{2b}\pi.\quad \text{（$k$ 为整数）}
+\]
+上式决定的 $\theta$ 值有无穷多个。但是由于不同的极坐标 $(\rho, \theta)$ 可能对应于同一个点，所以还要判断这些 $\theta$ 值究竟对应于曲线上多少个不同的点。考虑到直角坐标 $(x, y)$ 与平面上的点一一对应，所以我们试把极坐标化成直角坐标：
+\begin{align*}
+  x &= \rho\cos\theta = a\sin b\theta\cos\theta \\
+    &= \frac{a}{2}[\sin(b+1)\theta + \sin(b-1)\theta], \\
+  y &= \rho\sin\theta = a\sin b\theta\sin\theta \\
+    &= \frac{a}{2}[\cos(b-1)\theta - \cos(b+1)\theta].
+\end{align*}
+函数 $\sin(b+1)\theta$ 和 $\cos(b+1)\theta$ 的周期都是
+\[
+  T_1 = \frac{2\pi}{b+1},
+\]
+函数 $\sin(b-1)\theta$ 和 $\cos(b-1)\theta$ 的周期是
+\[
+  T_2 = \frac{2\pi}{|b-1|}.
+\]
+如果 $\frac{T_1}{T_2}$ 是有理数，把它表示成既约分数 $\frac{q}{p}$，令
+\[
+  T = pT_1 = qT_2,\quad \text{（$p$ 与 $q$ 互质）}
+\]
+则 $x$ 和 $y$ 都是以 $T$ 为周期的函数，因而只要看从 $0$ 到 $T$ 这一个周期内有多少个形如 $\frac{2k+1}{2b}\pi$ 的 $\theta$ 值，就能知道曲线有多少叶。如果 $\frac{T_1}{T_2}$ 是无理数，那么 $x$ 和 $y$ 不是周期函数，因而每个形如 $\frac{2k+1}{2b}\pi$ 的 $\theta$ 值都对应于曲线的一叶，共有无穷多叶。
+
+如果 $b$ 是无理数，那么 $\frac{T_1}{T_2}$ 不可能是有理数。这是因为如果 $\frac{T_1}{T_2}$ 是有理数 $\frac{q}{p}$（既约分数）的话，那么从
+\[
+  \frac{q}{p} = \frac{T_1}{T_2} = \frac{|b-1|}{b+1},
+\]
+可得出 $b$ 也是个有理数，矛盾。所以这时 $\frac{T_1}{T_2}$ 是无理数，从而玫瑰线有无穷多叶。
+
+如果 $b$ 是奇数，由于
+\[
+  \frac{q}{p} = \frac{T_1}{T_2} = \frac{|b-1|}{b+1} = \frac{|(b+1)-2|}{b+1},
+\]
+上式右端分子分母的最大公约数是 $2$，约简成既约分数后得到
+\[
+  p = \frac{b+1}{2},\quad q = \frac{|b-1|}{2},
+\]
+\[
+  \therefore\ T = pT_1 = \frac{b+1}{2}\cdot\frac{2\pi}{b+1} = \pi.
+\]
+满足 $0 \leqslant \theta < \pi$，且形如 $\frac{2k+1}{2b}\pi$ 的 $\theta$ 值共有 $b$ 个（$k=0, 1, \cdots, b-1$），因而这时玫瑰线有 $b$ 叶。
+
+如果 $b$ 是偶数，则 $\frac{|b-1|}{b+1}$ 的分子与分母互质，所以
+\[
+  p = b+1,\quad q = |b-1|,
+\]
+\[
+  \therefore\ T = pT_1 = (b+1)\cdot\frac{2\pi}{b+1} = 2\pi.
+\]
+满足 $0 \leqslant \theta < 2\pi$，并且形如 $\frac{2k+1}{2b}\pi$ 的 $\theta$ 值共有 $2b$ 个（$k=0, 1, \cdots, 2b-1$），因而这时玫瑰线共有 $2b$ 叶。
+
+如果 $b$ 不是整数，但是能表示成既约分数 $\frac{n}{m}$，我们同样能证明法则的正确，不过在这个细节处，我们不想多花笔墨了，喜欢寻根究底的读者不妨自己试着证一证。

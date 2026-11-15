@@ -1,0 +1,98 @@
+\section{环索线}
+\markboth{73. 环索线}{73. 环索线}
+
+如图 73.1，已知定点 $A$ 和定直线 $l$。作 $AO\perp l$，垂足为 $O$。设 $B$ 是直线 $l$ 上的动点，在直线 $AB$ 上向 $B$ 点两侧取 $BM=BN=BO$，则 $M$ 和 $N$ 的轨迹叫做环索线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    \def\a{1.05}
+    \def\th{35}
+    \coordinate (A) at (-\a, 0);
+    \coordinate (O) at (0, 0);
+    \coordinate (B) at (0, {\a*tan(\th)});
+    \pgfmathsetmacro{\rhoM}{\a*(1+sin(\th))/cos(\th)}
+    \pgfmathsetmacro{\rhoN}{\a*(1-sin(\th))/cos(\th)}
+    \coordinate (M) at ({-\a + \rhoM*cos(\th)}, {\rhoM*sin(\th)});
+    \coordinate (N) at ({-\a + \rhoN*cos(\th)}, {\rhoN*sin(\th)});
+
+    % 坐标轴与定直线 l
+    \draw[->] (-1.35, 0) -- (0.75, 0) node[below, font=\scriptsize] {$x$};
+    \draw (0, -1.15) -- (0, 1.35);
+    \node[right, font=\scriptsize] at (0, -1.02) {$l$};
+
+    % 环索线 rho = a(1 +/- sin t)/cos t 以 A(-a,0) 为极点
+    \draw[very thick, curveblue, domain=-89.5:52, samples=180, variable=\t]
+      plot ({-\a + \a*(1+sin(\t))}, {\a*(1+sin(\t))*tan(\t)});
+    \draw[very thick, curveblue, domain=-52:89.5, samples=180, variable=\t]
+      plot ({-\a + \a*(1-sin(\t))}, {\a*(1-sin(\t))*tan(\t)});
+
+    % 射线 ABM
+    \draw (A) -- ($(A)!1.18!(M)$);
+
+    % 角度 theta 与直角符号
+    \draw ($(A)+(0:0.38)$) arc (0:\th:0.38);
+    \node[font=\scriptsize] at ($(A)+({0.5*\th}:0.52)$) {$\theta$};
+    \draw (-0.12, 0) -- (-0.12, 0.12) -- (0, 0.12);
+
+    % 标注点
+    \fill (A) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$A$};
+    \fill (O) circle (1.2pt) node[below right=1pt, font=\scriptsize] {$O$};
+    \fill (B) circle (1.2pt) node[left, font=\scriptsize] {$B$};
+    \fill (M) circle (1.2pt) node[right, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[above left=-1pt, font=\scriptsize] {$N$};
+  \end{tikzpicture}
+  \caption*{图\ 73.1}
+\end{figure}
+
+环索线是 1645 年发现的，第一个研究这种曲线的人是意大利数学家托里拆利，因而这种曲线在很长时间里被叫做“托里拆利的翅膀”，只是到了十九世纪，数学文献里才采用现在的名称 strophoid，这个术语来源于希腊词，原意是“旋转”。在中文里，考虑到这种曲线的形状像绕了一环的绳索，所以把它形象化地称为“环索线”。
+
+根据定义容易导出环索线的极坐标方程。如图 73.1，设 $AO=a$，$\angle OAB=\theta$，则 $AB=\dfrac{a}{\cos\theta}$，$BO=a\tg\theta$。取 $A$ 为极点，$AO$ 为极轴，则点 $M$ 的极坐标是 $(\rho,\theta)$，这里
+\begin{align*}
+  \rho &= AM = AB+BM = AB+BO \\
+       &= \frac{a}{\cos\theta} + a\tg\theta = \frac{a}{\cos\theta}(1+\sin\theta).
+\end{align*}
+把 $N$ 的极角看成 $\theta_1=\theta+\pi$，则其极半径为
+\begin{align*}
+  \rho_1 &= -AN = -(AB-BN) = -(AB-BO) \\
+         &= -\frac{a}{\cos\theta} + a\tg\theta = \frac{a}{\cos(\theta+\pi)} + a\tg(\theta+\pi) \\
+         &= \frac{a}{\cos\theta_1} + a\tg\theta_1 = \frac{a}{\cos\theta_1}(1+\sin\theta_1).
+\end{align*}
+由此可见，$M$ 和 $N$ 的坐标都满足方程
+\[
+  \rho = a\frac{1+\sin\theta}{\cos\theta},
+\]
+这就是环索线的极坐标方程。
+
+在同一个极坐标系中，如果我们改变考虑方法，认为点 $N$ 的极角是 $\theta$，极半径 $\rho=AN$，点 $M$ 的极角是 $\theta_1=\theta+\pi$，极半径 $\rho_1=-AM$，仿照上面的讨论过程，可得
+\[
+  \rho = a\frac{1-\sin\theta}{\cos\theta},
+\]
+这是环索线极坐标方程的另一种形式。
+
+把环索线的极坐标方程改写成形式
+\[
+  \rho\cos\theta - a = a\sin\theta,
+\]
+两边乘以 $\rho$，然后平方，得到
+\[
+  \rho^2(\rho\cos\theta-a)^2 = a^2(\rho\sin\theta)^2.
+\]
+化为直角坐标，这里坐标原点是极点 $A$，$x$ 轴是极轴 $AO$，得到
+\[
+  (x^2+y^2)(x-a)^2 = a^2y^2.
+\]
+化简后成为
+\[
+  y^2 = (x-a)^2\frac{x}{2a-x}.
+\]
+
+通常应用环索线的方程时，是选取图 73.1 中的定直线 $l$ 做 $y$ 轴，$O$ 为坐标原点。这时只要把上述方程中的 $x-a$ 换成 $x$，$y$ 不变，得到
+\[
+  y^2 = x^2\frac{a+x}{a-x}.
+\]
+在第 65 节中已经知道史留斯蚌线的方程是
+\[
+  y^2 = \frac{x+2r-a}{a-x}x^2,
+\]
+当 $r=a$ 时化为环索线的方程。可见环索线是史留斯蚌线的特例，属于其中的长幅蔓叶线。

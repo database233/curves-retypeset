@@ -1,0 +1,133 @@
+\section{套藤圈}
+\markboth{37. 套藤圈}{37. 套藤圈}
+
+\noindent
+\begin{minipage}[t]{0.38\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.86, >=Stealth, line cap=round, line join=round]
+    % 底座圆盘（椭圆透视及厚度）
+    \draw[thick] (-0.75, -1.05) arc (180:360:0.75 and 0.25);
+    \draw[thick, fill=white] (0, -0.96) ellipse (0.75 and 0.25);
+    \draw[thick] (-0.75, -0.96) -- (-0.75, -1.05);
+    \draw[thick] (0.75, -0.96) -- (0.75, -1.05);
+
+    % 藤圈后半段（内切于小圆柱右内侧，被圆柱遮挡部分先画）
+    \begin{scope}[shift={(-0.48, 0.35)}, rotate=-12]
+      \draw[very thick, curveblue] (20:0.60 and 0.24) arc (20:195:0.60 and 0.24);
+    \end{scope}
+
+    % 小圆柱（白底遮挡藤圈后段）
+    \fill[white] (-0.055, -0.96) rectangle (0.055, 1.38);
+    \draw[thick] (-0.055, -0.96) -- (-0.055, 1.38);
+    \draw[thick] (0.055, -0.96) -- (0.055, 1.38);
+    \draw[thick] (0, 1.38) ellipse (0.055 and 0.02);
+    \draw[thick] (-0.055, -0.96) arc (180:360:0.055 and 0.025);
+
+    % 藤圈前半段（在圆柱前方绕过）
+    \begin{scope}[shift={(-0.48, 0.35)}, rotate=-12]
+      \draw[very thick, curveblue] (195:0.60 and 0.24) arc (195:380:0.60 and 0.24);
+    \end{scope}
+
+    % 旋转方向箭头（依原书在小圆柱右侧顺时针向下环绕）
+    \draw[->, thick] ($(0.05, 0.35) + (65:0.16 and 0.22)$) arc (65:-45:0.16 and 0.22);
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 37.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.58\textwidth}
+  \vspace{0pt}
+  \hspace{2em}在节日游艺会上常常做套藤圈的游戏，在地上竖几个小圆柱，手里拿一把藤圈，一只一只地对准小圆柱掷过去。如果有一只藤圈套中小圆柱，这只藤圈就会借着运动的惯性在圆柱周围绕上若干圈（图 37.1）。这种有趣的现象，引起下面一个轨迹问题：
+\end{minipage}
+
+\medskip
+
+设动圆 $C$ 的半径大于定圆 $O$ 的半径。当动圆 $C$ 保持与定圆 $O$ 内切，并且绕圆 $O$ 无滑动地滚动时，圆 $C$ 的圆周上一点 $B$ 画出什么曲线？动圆 $C$ 的平面内与圆 $C$ 固定连结的一点 $M$ 画出什么曲线？
+
+这个问题解决了，就可以想象出当藤圈套在小圆柱外面绕圈子的时候，藤圈上的一点画出的是什么曲线。
+
+前面在讨论内摆线族曲线时，动圆总是在定圆的内部，而现在动圆 $C$ 却在定圆 $O$ 的外部，看来所求的轨迹不大像是内摆线族曲线。
+
+前面在讨论外摆线族曲线时，不但动圆的圆周在定圆外部，而且动圆所包围的圆形区域也整个地位于定圆外部，动圆与定圆的接触方式是外切；而现在的情形，虽然动圆 $C$ 的圆周在定圆 $O$ 的外部，但是动圆 $C$ 所包围的圆形区域却有一部分出现在定圆 $O$ 的内部，动圆 $C$ 与定圆 $O$ 的接触方式是内切。所以，也很难贸然断定所求的轨迹一定是外摆线族曲线。
+
+\noindent
+\begin{minipage}[t]{0.52\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 37.2，设圆 $O$ 的半径是 $R$，圆 $C$ 的半径是 $mR$，这里 $m>1$。又设 $\angle NCB=t$，则从圆 $C$ 的 $\arc{NB}$ 的长度等于圆 $O$ 的 $\arc{NA}$ 的长度，得到
+  \begin{gather*}
+    \angle AON = mt, \\
+    \overrightarrow{OC}\text{ 的幅角 }\alpha = mt - \pi, \\
+    \overrightarrow{CM}\text{ 的幅角 }\beta = mt - t.
+  \end{gather*}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    % R = 0.46, m = 3.13 => mR = 1.44, mt = 58 deg, t = 15 deg, h = 1.80
+    \def\R{0.46}
+    \def\mR{1.44}
+    \def\mt{58}
+    \def\tdeg{15}
+    \def\h{1.80}
+    \pgfmathsetmacro{\alp}{\mt - 180}
+    \pgfmathsetmacro{\bet}{\mt - \tdeg}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\R, 0);
+    \coordinate (N) at ({\R*cos(\mt)}, {\R*sin(\mt)});
+    \coordinate (C) at ({(\mR-\R)*cos(\alp)}, {(\mR-\R)*sin(\alp)});
+    \coordinate (B) at ({(\mR-\R)*cos(\alp) + \mR*cos(\bet)}, {(\mR-\R)*sin(\alp) + \mR*sin(\bet)});
+    \coordinate (M) at ({(\mR-\R)*cos(\alp) + \h*cos(\bet)}, {(\mR-\R)*sin(\alp) + \h*sin(\bet)});
+
+    % 坐标轴
+    \draw[->] (-2.10, 0) -- (1.25, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -2.40) -- (0, 0.95) node[left, font=\footnotesize] {$y$};
+
+    % 定圆 O 与动圆 C
+    \draw[thick] (O) circle (\R);
+    \draw (C) circle (\mR);
+
+    % 射线 CN, CM 与水平辅助线
+    \draw (C) -- (N);
+    \draw (C) -- (M);
+    \draw[thin] (C) -- ++(0.75, 0);
+
+    % 角度 alpha 与 beta
+    \draw (0.17, 0) arc (0:\alp:0.17);
+    \node[font=\scriptsize, fill=white, inner sep=0.3pt] at (-52:0.32) {$\alpha$};
+    \draw ($(C) + (0:0.25)$) arc (0:\bet:0.25);
+    \node[font=\scriptsize] at ($(C) + ({0.5*\bet}:0.43)$) {$\beta$};
+
+    % 关键点与标签
+    \fill (O) circle (1.3pt) node[above left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.3pt) node[below right=-2pt, font=\scriptsize] {$A$};
+    \fill (N) circle (1.3pt) node[above right=-2pt, font=\scriptsize] {$N$};
+    \fill (C) circle (1.3pt) node[below left=-1pt, font=\scriptsize] {$C$};
+    \fill (B) circle (1.3pt) node[right=1pt, font=\scriptsize] {$B$};
+    \fill (M) circle (1.4pt) node[above right=-2pt, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 37.2}
+\end{minipage}
+
+\noindent
+设 $CM=h$，$M$ 点的坐标为 $(x, y)$，由 $\overrightarrow{OM}=\overrightarrow{OC}+\overrightarrow{CM}$，得到向量 $\overrightarrow{OM}$ 的坐标表示式为
+\begin{align*}
+  (x, y) &= \bigl((mR-R)\cos\alpha,\, (mR-R)\sin\alpha\bigr) + (h\cos\beta,\, h\sin\beta) \\
+         &= \bigl(-(mR-R)\cos mt,\, -(mR-R)\sin mt\bigr) \\
+         &\quad + \bigl(h\cos(mt-t),\, h\sin(mt-t)\bigr).
+\end{align*}
+所以
+\[
+  \begin{aligned}
+    x &= (R-mR)\cos mt + h\cos(t-mt), \\
+    y &= (R-mR)\sin mt - h\sin(t-mt).
+  \end{aligned}
+  \quad (m>1)
+\]
+从方程的形式（与 59 页的形式一致）% 原书 59 页对应第 36 节
+和条件 $m>1$，知道所求的轨迹是外摆线族曲线。特别，当 $h=mR$，即 $M$ 点在动圆圆周上时，轨迹是外摆线（只要令 $m'=m-1$，就可从上面的参数方程得出 44 页上的外摆线参数方程）。% 原书 44 页对应第 27 节
+
+上面的轨迹问题，虽然是从套藤圈的游戏说起的，但在工业生产中却有很具体的应用价值。从这个问题知道，有两种不同的形成外摆线族曲线的方法：一种是让动圆在滚动过程中保持与定圆外切，叫做无包心形成法，因为用这种方法形成曲线时，定圆的圆心始终不会包含在动圆内部；另一种是动圆比定圆大，并且使动圆在滚动过程中保持与定圆内切，叫做包心形成法，因为用这种方法形成曲线时，定圆的圆心始终包含在动圆内部。
+
+工厂里制造具有外摆线轮廓的零件时，常需根据具体情况，适当选用包心形成法或无包心形成法。

@@ -1,0 +1,87 @@
+\section{玫瑰线的反演图形}
+\markboth{68. 玫瑰线的反演图形}{68. 玫瑰线的反演图形}
+
+在第 38 节曾经介绍玫瑰线，其方程为
+\[
+  \rho = a\sin b\theta.
+\]
+以极点为反演极，任意正数 $R^2$ 为反演幂，把玫瑰线 $\rho = a\sin b\theta$ 反演，所得的曲线叫做柯特斯螺线。记 $\frac{R^2}{a} = h$，柯特斯螺线的方程可以写成
+\[
+  \rho = \frac{h}{\sin b\theta}.
+\]
+把坐标轴旋转适当角度后，也可把柯特斯螺线的方程化成
+\[
+  \rho = \frac{h}{\cos b\theta}.
+\]
+当 $b=\frac{1}{3}$ 时，柯特斯螺线就是第 58 节中介绍的麦克劳林三等分角曲线，所以麦克劳林三等分角曲线可从玫瑰线 $\rho = a\sin\frac{\theta}{3}$ 反演得到。
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.95, >=Stealth, line cap=round, line join=round]
+    \def\r{0.52}
+    \def\arose{0.46}
+
+    % 坐标轴
+    \draw[->] (-1.65, 0) -- (1.65, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.65) -- (0, 1.65) node[left, font=\scriptsize] {$y$};
+
+    % 四条渐近线 x = ±r, y = ±r
+    \draw[densely dashed] (\r, -1.55) -- (\r, 1.55);
+    \draw[densely dashed] (-\r, -1.55) -- (-\r, 1.55);
+    \draw[densely dashed] (-1.55, \r) -- (1.55, \r);
+    \draw[densely dashed] (-1.55, -\r) -- (1.55, -\r);
+
+    % 中心四叶玫瑰线 rho = a sin(2*theta)
+    \draw[thick, domain=0:360, samples=180, variable=\t]
+      plot ({\arose*sin(2*\t)*cos(\t)}, {\arose*sin(2*\t)*sin(\t)});
+
+    % 四支十字线 (r/cos t, r/sin t)
+    \foreach \ta/\tb in {19.6/70.4, 109.6/160.4, 199.6/250.4, 289.6/340.4} {
+      \draw[very thick, curveblue, domain=\ta:\tb, samples=50, variable=\t]
+        plot ({\r/cos(\t)}, {\r/sin(\t)});
+    }
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 68.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  \hspace{2em}在图 68.1 中，四条虚线围成的正方形内部有一条花朵似的曲线，那是四叶玫瑰线 $\rho = a\sin 2\theta$。在四条虚线织成的十字带状区域的外面，四个角上各有一支曲线，合在一起成为一条形如空心“十”字的曲线，叫做十字线，它是由中心部分那条四叶玫瑰线反演得到的，方程是
+  \[
+    \rho = \frac{h}{\sin 2\theta}.
+  \]
+\end{minipage}
+
+\medskip
+\noindent
+这是柯特斯螺线当 $b=2$ 时的特例。上述方程可以化成
+\[
+  \frac{1}{h} = \frac{\rho}{2\rho^2\sin\theta\cos\theta}.
+\]
+两边同乘以 $2$，平方后化为
+\[
+  \frac{4}{h^2} = \frac{\rho^2}{(\rho^2\sin^2\theta)\cdot(\rho^2\cos^2\theta)}.
+\]
+化为直角坐标，得到
+\[
+  \frac{4}{h^2} = \frac{x^2+y^2}{y^2 x^2}.
+\]
+令 $\frac{h}{2} = r$，化为
+\[
+  \frac{1}{x^2} + \frac{1}{y^2} = \frac{1}{r^2}.
+\]
+这个方程很容易记住，只要把圆的标准方程 $x^2+y^2=r^2$ 各项取倒数，就得到上述方程了。
+
+一般地，把椭圆的标准方程 $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$ 的各项取倒数，成为
+\[
+  \frac{a^2}{x^2} + \frac{b^2}{y^2} = 1,
+\]
+所得到的方程表示的曲线仍然叫做十字线。这时曲线的形状仍然像一个空心的十字，不过当 $a\neq b$ 时，十字形的横与竖不一样宽，因而不再属于柯特斯螺线，也不再是四叶玫瑰线的反演图形了。
+
+顺便提起，如果把双曲线标准方程 $\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1$ 的各项颠倒过来，成为
+\[
+  \frac{a^2}{x^2} - \frac{b^2}{y^2} = 1,
+\]
+所得到的方程表示的曲线叫做炭锭线，又叫弹鼻线。

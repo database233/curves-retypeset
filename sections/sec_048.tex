@@ -1,0 +1,167 @@
+\section{圆的渐伸线的切线和法线}
+\markboth{48. 圆的渐伸线的切线和法线}{48. 圆的渐伸线的切线和法线}
+
+\noindent
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.86, >=Stealth, line cap=round, line join=round]
+    \def\a{0.70}
+    \def\phideg{72}
+    \pgfmathsetmacro{\phirad}{\phideg*pi/180}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\a, 0);
+    \coordinate (B) at ({\a*cos(\phideg)}, {\a*sin(\phideg)});
+    \coordinate (P) at ({\a*(cos(\phideg)+\phirad*sin(\phideg))},
+                        {\a*(sin(\phideg)-\phirad*cos(\phideg))});
+    % C 为从 O 向切线 PT 所作垂线的垂足: OC 方向为 phideg - 90, 长度 a*phirad
+    \coordinate (C) at ({\a*\phirad*cos(\phideg-90)}, {\a*\phirad*sin(\phideg-90)});
+    % T 在 PT 延长线上
+    \coordinate (T) at ($(P)+(\phideg:0.48)$);
+
+    % 坐标轴
+    \draw[->] (-0.92, 0) -- (1.65, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.92) -- (0, 1.30) node[left, font=\scriptsize] {$y$};
+
+    % 基圆与渐伸线
+    \draw[thick] (O) circle (\a);
+    \draw[very thick, curveblue, domain=0:92, samples=60, variable=\t]
+      plot ({\a*(cos(\t)+(\t*pi/180)*sin(\t))},
+            {\a*(sin(\t)-(\t*pi/180)*cos(\t))});
+
+    % 线段 OB, BP, OC, 切线 CT
+    \draw (O) -- node[above left=-2pt, font=\scriptsize] {$a$} (B);
+    \draw (B) -- (P);
+    \draw (O) -- (C);
+    \draw[thick] (C) -- (T);
+
+    % C 处直角标记
+    \coordinate (Cu) at ($(C)+({\phideg}:0.12)$);
+    \coordinate (Cv) at ($(C)+({\phideg+90}:0.12)$);
+    \draw (Cu) -- ($(Cu)+(Cv)-(C)$) -- (Cv);
+
+    % 角度 phi 与 alpha
+    \draw (0.20, 0) arc (0:\phideg:0.20);
+    \node[font=\scriptsize] at (36:0.32) {$\varphi$};
+
+    % 切线 PT 与 x 轴交点 Q
+    \pgfmathsetmacro{\Qx}{\a*\phirad/sin(\phideg)}
+    \coordinate (Q) at (\Qx, 0);
+    \draw ($(Q)+(0:0.19)$) arc (0:\phideg:0.19);
+    \node[font=\scriptsize] at ($(Q)+(34:0.31)$) {$\alpha$};
+
+    % 标点与标签
+    \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.1pt) node[above right=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$B$};
+    \fill (P) circle (1.2pt) node[right, font=\scriptsize] {$P$};
+    \node[above right=-1pt, font=\scriptsize] at (T) {$T$};
+    \fill (C) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$C$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 48.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.53\textwidth}
+如图 48.1，设 $P(x,y)$ 是圆的渐伸线上的任意点，$B$ 是基圆上的对应点，则 $PB$ 是基圆的切线，因而 $PB$ 垂直于半径 $OB$。又设
+\[
+  \angle AOB = \varphi,
+\]
+则由第 47 节的结果得到
+\begin{align*}
+  x &= a(\cos\varphi + \varphi\sin\varphi), \\
+  y &= a(\sin\varphi - \varphi\cos\varphi).
+\end{align*}
+用撇号表示对参数 $\varphi$ 的导数，对 $\varphi$ 求导得
+\end{minipage}
+\begin{align*}
+  x' &= a(-\sin\varphi + \sin\varphi + \varphi\cos\varphi) \\
+     &= a\varphi\cos\varphi, \\
+  y' &= a(\cos\varphi - \cos\varphi + \varphi\sin\varphi) \\
+     &= a\varphi\sin\varphi.
+\end{align*}
+设 $PT$ 是圆的渐伸线在点 $P$ 的切线，$PT$ 与 $x$ 轴的夹角为 $\alpha$，则
+\[
+  \tg\alpha = \frac{dy}{dx} = \frac{y'\dd\varphi}{x'\dd\varphi} = \frac{a\varphi\sin\varphi}{a\varphi\cos\varphi} = \tg\varphi,
+\]
+所以 $\alpha=\varphi$，由此推出
+\[
+  PT \parallel OB.
+\]
+
+又因 $PB\perp OB$，所以 $PB\perp PT$，这说明 $PB$ 是圆的渐伸线在 $P$ 点的法线。这样就证明了圆的渐伸线的法线的一个基本性质：
+
+圆的渐伸线在任意点的法线，同时也是基圆的切线。
+
+又因为两平行线间的距离处处相等，所以作切线 $PT$ 的垂线 $OC$（图 48.1），必有 $OC=BP$。而 $BP$ 等于 $\arc{BA}$ 的弧长 $a\varphi$，这里 $a$ 是基圆的半径，所以推出 $OC=a\varphi$。这样就证明了圆的渐伸线的切线的一个重要性质：
+
+从基圆圆心到圆的渐伸线在任意点的切线的距离，与该点的参数值 $\varphi$ 成正比，比例系数等于基圆的半径 $a$。
+
+由于参数值 $\varphi$ 等于切线 $PT$ 与 $x$ 轴的夹角（图 48.1），所以上述性质又可叙述成：
+
+从基圆圆心到圆的渐伸线在任意点的切线的距离，与这切线对 $x$ 轴的倾斜角 $\varphi$ 成正比（设 $x$ 轴通过圆的渐伸线与基圆的交点），比例系数等于基圆半径 $a$。
+
+\begin{wrapfigure}[16]{r}{0.38\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.86, line cap=round, line join=round]
+    % 捣矿机凸轮机构
+    % 垂直捣杆: x in [-0.36, -0.06], y in [-1.55, 1.75]
+    \draw[thick, fill=white] (-0.36, -1.55) -- (-0.36, 1.75)
+      .. controls (-0.28, 1.80) and (-0.21, 1.70) .. (-0.06, 1.75)
+      -- (-0.06, -1.55)
+      .. controls (-0.14, -1.50) and (-0.21, -1.60) .. (-0.36, -1.55) -- cycle;
+    % 顶部断口补全波形
+    \draw[thick] (-0.36, 1.75) .. controls (-0.28, 1.70) and (-0.21, 1.80) .. (-0.06, 1.75);
+    \draw[thick] (-0.36, -1.55) .. controls (-0.28, -1.60) and (-0.21, -1.50) .. (-0.06, -1.55);
+
+    % 台阶（凸肩）
+    \draw[thick, fill=white] (-0.48, 0.84) rectangle (0.14, 1.38);
+    \draw[thick, fill=white, rounded corners=2pt] (-0.54, 0.74) rectangle (0.20, 0.85);
+    \draw[thick, fill=white, rounded corners=2pt] (-0.54, 1.37) rectangle (0.20, 1.48);
+    % 捣杆穿过台阶的虚线
+    \draw[densely dashed] (-0.36, 0.74) -- (-0.36, 1.48);
+    \draw[densely dashed] (-0.06, 0.74) -- (-0.06, 1.48);
+
+    % 凸轮中心 O_c = (0.39, 0)
+    \coordinate (Oc) at (0.39, 0);
+
+    % 上下两个鹦鹉嘴凸起（外凸面严格采用以基圆 rb=0.27 生成的圆的渐伸线）
+    % 上凸起 (旋转起点 th0=22 deg, t=76..158 deg，尖端在 y=0.74 附近顶住台阶)
+    \def\rbcam{0.27}
+    \def\thcam{22}
+    \pgfmathsetmacro{\tcamend}{158}
+    \pgfmathsetmacro{\tipx}{0.39 + \rbcam*(cos(\thcam+\tcamend)+(\tcamend*pi/180)*sin(\thcam+\tcamend))}
+    \pgfmathsetmacro{\tipy}{\rbcam*(sin(\thcam+\tcamend)-(\tcamend*pi/180)*cos(\thcam+\tcamend))}
+    \draw[thick, fill=curveblue!6]
+      (Oc) --
+      plot[domain=76:\tcamend, samples=36, variable=\t]
+        ({0.39 + \rbcam*(cos(\thcam+\t)+(\t*pi/180)*sin(\thcam+\t))},
+         {\rbcam*(sin(\thcam+\t)-(\t*pi/180)*cos(\thcam+\t))})
+      .. controls (0.24, 0.56) and (0.22, 0.42) .. ($(Oc)+(122:0.44)$) -- cycle;
+    \draw[thin] ($(Oc)+(68:0.44)$)
+      .. controls (0.58, 0.50) and (0.34, 0.64) .. (\tipx, \tipy);
+
+    % 下凸起（中心对称 180 度）
+    \pgfmathsetmacro{\btipx}{0.39 - \rbcam*(cos(\thcam+\tcamend)+(\tcamend*pi/180)*sin(\thcam+\tcamend))}
+    \pgfmathsetmacro{\btipy}{-\rbcam*(sin(\thcam+\tcamend)-(\tcamend*pi/180)*cos(\thcam+\tcamend))}
+    \draw[thick, fill=curveblue!6]
+      (Oc) --
+      plot[domain=76:\tcamend, samples=36, variable=\t]
+        ({0.39 - \rbcam*(cos(\thcam+\t)+(\t*pi/180)*sin(\thcam+\t))},
+         {-\rbcam*(sin(\thcam+\t)-(\t*pi/180)*cos(\thcam+\t))})
+      .. controls (0.54, -0.56) and (0.56, -0.42) .. ($(Oc)+(302:0.44)$) -- cycle;
+    \draw[thin] ($(Oc)+(248:0.44)$)
+      .. controls (0.20, -0.50) and (0.44, -0.64) .. (\btipx, \btipy);
+
+    % 凸轮圆毂与轴孔
+    \draw[thick, fill=white] (Oc) circle (0.44);
+    \draw[thick] (Oc) circle (0.24);
+    % 中心十字线
+    \draw[densely dash dot, thin] (-0.22, 0) -- (1.02, 0);
+    \draw[densely dash dot, thin] (0.39, -0.66) -- (0.39, 0.66);
+    % 杆穿过圆毂后方的虚线
+    \draw[densely dashed] (-0.06, -0.74) -- (-0.06, 0.74);
+  \end{tikzpicture}
+  \caption*{图\ 48.2}
+\end{wrapfigure}
+
+从上面这些性质推出，当圆的渐伸线的法线 $PB$ 绕基圆圆心匀速旋转时，基圆圆心到对应切线的距离 $OC$ 匀速增大或匀速减小，因此，圆的渐伸线用来作为凸轮的轮廓曲线，可以把匀速旋转变成匀速直线运动。例如图 48.2 所示的是捣矿机中的凸轮机构，图中右下方为凸轮，它带有两个像鹦鹉嘴一样的凸起部分，鹦鹉嘴的凸的一面的轮廓曲线是圆的渐伸线。图中左边的杆是捣杆，杆上固定连接着一个台阶，台阶的底面垂直于杆的中心线，并且与凸轮的侧面相切。当凸轮匀速旋转时，鹦鹉嘴上的圆的渐伸线弧顶起台阶，带动捣杆匀速上升；等到鹦鹉嘴转动到脱离台阶以后，捣杆失去支承力，就因自己的重量而落下，捣击矿石。

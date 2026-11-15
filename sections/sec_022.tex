@@ -1,0 +1,76 @@
+\section{卡丹的转盘问题}
+\markboth{22. 卡丹的转盘问题}{22. 卡丹的转盘问题}
+
+意大利数学家卡丹（1501～1576）曾经提出如下的转盘问题：当一个圆盘沿着一个半径是它的两倍的圆盘内壁无滑动地旋转时，小圆盘上一点画出怎样的图形？
+
+根据第 21 节的讨论，我们可以知道，小圆盘边缘上任一点的轨迹是大圆盘的一条直径。现在进而证明，小圆盘内部任一点的轨迹是一个椭圆。
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.75, >=Stealth, line cap=round, line join=round]
+    % 参数 r = 1.0, 定圆半径 2r = 2.0, theta = 52 deg, h = 0.55
+    \def\r{1.0}
+    \def\th{52}
+    \def\h{0.55}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (2*\r, 0);
+    \coordinate (B) at ({2*\r*cos(\th)}, {2*\r*sin(\th)});
+    \coordinate (C) at ({\r*cos(\th)}, {\r*sin(\th)});
+    \coordinate (M) at ({2*\r*cos(\th)}, 0);
+    \coordinate (N) at ({\r*cos(\th) + \h*cos(-\th)}, {\r*sin(\th) + \h*sin(-\th)});
+
+    % 坐标轴
+    \draw[->] (-2.25, 0) -- (2.55, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -2.25) -- (0, 2.35) node[left, font=\footnotesize] {$y$};
+
+    % 定圆 O 与动圆 C
+    \draw[thick] (O) circle (2*\r);
+    \draw[thick, curveblue] (C) circle (\r);
+
+    % 辅助线段
+    \draw (O) -- (B);
+    \draw (C) -- (M);
+    \draw (O) -- (N);
+
+    % 角度标注 theta
+    \draw (0.40, 0) arc (0:\th:0.40);
+    \node[font=\scriptsize, fill=white, inner sep=0.5pt] at ({0.56*cos(0.65*\th)}, {0.56*sin(0.65*\th)}) {$\theta$};
+
+    % 关键点与标签
+    \fill (O) circle (1.3pt) node[below left, font=\footnotesize] {$O$};
+    \fill (A) circle (1.3pt) node[below left=-1pt, font=\footnotesize] {$A$};
+    \fill (B) circle (1.3pt) node[above right, font=\footnotesize] {$B$};
+    \fill (C) circle (1.3pt) node[left, font=\footnotesize] {$C$};
+    \fill (M) circle (1.3pt) node[below, font=\footnotesize] {$M$};
+    \fill (N) circle (1.4pt) node[right, font=\footnotesize] {$N$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 22.1}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \setlength{\parindent}{2em}\indent
+  如图 22.1，设动圆 $C$ 的半径是 $r$，定圆 $O$ 的半径是 $2r$，$N$ 是圆 $C$ 内部与圆 $C$ 固定连结的点，$CN=h$，射线 $CN$ 交圆 $C$ 于 $M$。设在圆 $C$ 滚动的某一瞬间，$M$ 落到圆 $O$ 上的 $A$ 点，取 $OA$ 为 $x$ 轴正方向，$O$ 为原点。当圆 $C$ 继续滚动到图中位置时，由 21 节知，$\overrightarrow{CN}$ 的幅角为 $-\theta$，所以由 $\overrightarrow{ON}=\overrightarrow{OC}+\overrightarrow{CN}$ 可得向量 $\overrightarrow{ON}$ 的坐标表示式为：
+\end{minipage}
+\begin{align*}
+  (x, y) &= (r\cos\theta,\, r\sin\theta) + (h\cos(-\theta),\, h\sin(-\theta)) \\
+         &= ((r+h)\cos\theta,\, (r-h)\sin\theta)
+\end{align*}
+所以 $N$ 点的坐标为
+\begin{align*}
+  x &= (r+h)\cos\theta, \\
+  y &= (r-h)\sin\theta.
+\end{align*}
+
+由于点 $N$ 在圆 $C$ 内部，所以 $h<r$，可从上式消去 $\theta$，得到
+\[
+  \frac{x^2}{(r+h)^2} + \frac{y^2}{(r-h)^2} = 1,
+\]
+这说明 $N$ 的轨迹是一个椭圆。
+
+顺便看出，若 $N$ 在圆 $C$ 外部，即 $h>r$，则上列推理全部适用，最后得到 $N$ 的轨迹仍为椭圆，其方程为
+\[
+  \frac{x^2}{(h+r)^2} + \frac{y^2}{(h-r)^2} = 1.
+\]
+
+由于卡丹的转盘问题主要研究两个圆，其中的小圆在大圆内部无滑动地滚动，并且大圆半径恰好是小圆半径的两倍，所以有时也把这样的一对圆叫做卡丹圆偶。

@@ -1,0 +1,79 @@
+\section{摆线}
+\markboth{11. 摆线}{11. 摆线}
+
+当动圆 $C$ 沿着定直线 $l$ 滚动（没有滑动）时，动圆圆周上一点 $M$ 所画出的曲线叫做摆线，又叫旋轮线（图 11.1）。摆线在它与定直线 $l$ 的两个相邻交点之间的部分叫做一个拱；摆线最高点到定直线的距离 $2r$ 叫做拱高。
+
+\begin{center}
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.82, >=Stealth, font=\footnotesize]
+      % 参数 r = 1.15
+      \def\r{1.15}
+      \def\th{2.05}
+      \pgfmathsetmacro{\cx}{\r*\th}
+      \pgfmathsetmacro{\cy}{\r}
+      \pgfmathsetmacro{\mx}{\r*(\th - sin(\th r))}
+      \pgfmathsetmacro{\my}{\r*(1 - cos(\th r))}
+      \pgfmathsetmacro{\angM}{deg(1.5*pi - \th)}
+
+      % 坐标轴
+      \draw[->] (-0.85, 0) -- ({2*pi*\r + 1.55}, 0) node[below left] {$x$};
+      \draw[->] (0, -0.3) -- (0, {2*\r + 0.55}) node[left] {$y$};
+      \node[below left] at (0, 0) {$O$};
+
+      % 摆线（前一拱末端 + 完整一拱 + 后一拱起始）
+      \draw[very thick, curveblue, smooth, domain=-1.2:0, samples=30]
+        plot ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))});
+      \draw[very thick, curveblue, smooth, domain=0:{2*pi}, samples=90]
+        plot ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))});
+      \draw[very thick, curveblue, smooth, domain={2*pi}:{2*pi+1.35}, samples=35]
+        plot ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))});
+
+      % 动圆 C
+      \coordinate (O) at (0, 0);
+      \coordinate (C) at (\cx, \cy);
+      \coordinate (P) at (\cx, 0);
+      \coordinate (M) at (\mx, \my);
+      \coordinate (R) at ({\cx + 0.55}, \cy);
+
+      \draw[thick] (C) circle (\r);
+      \draw[thin] (O) -- (C);
+      \draw[thin] (O) -- (M);
+      \draw[thin] (C) -- (M);
+      \draw[thin] (C) -- (P);
+      \draw[thin] (C) -- (R);
+
+      % 角度标注 theta（从 CP 顺时针到 CM）和 alpha（从向右射线逆时针到 CM）
+      \draw (C) ++(270:0.40) arc (270:\angM:0.40);
+      \node[fill=white, inner sep=0.8pt] at ($(C)+(238:0.54)$) {$\theta$};
+      \draw (C) ++(0:0.26) arc (0:\angM:0.26);
+      \node at ($(C)+(68:0.45)$) {$\alpha$};
+
+      % 拱高 2r 标注
+      \draw[thin] ({\r*pi - 0.12}, {2*\r}) -- ({\r*pi + 0.45}, {2*\r});
+      \draw[<->, thin] ({\r*pi + 0.30}, 0) -- ({\r*pi + 0.30}, {2*\r})
+        node[midway, fill=white, inner sep=1pt] {$2r$};
+
+      % 点与标注
+      \fill (C) circle (1.3pt) node[below right, xshift=-1pt, yshift=1pt] {$C$};
+      \fill (M) circle (1.3pt) node[above left, inner sep=1.5pt] {$M$};
+      \fill (P) circle (1.3pt) node[below] {$P$};
+    \end{tikzpicture}
+    \captionof*{figure}{图 11.1}
+  \end{minipage}
+\end{center}
+
+一个骑自行车的人，滚动的车轮偶然从地面上粘起一张糖纸，当车轮继续向前时，这张糖纸就在空中画出一条摆线。车轮每旋转一周，糖纸就画出摆线的一拱。
+
+现在推导摆线的方程。为了写得紧凑些，这里和以下许多地方将用一点简单的向量写法：用 $(a, b)$ 表示在 $x$ 轴和 $y$ 轴上的分量依次为 $a$、$b$ 的向量；两个向量相加，其对应分量相加。如图 11.1，取定直线 $l$ 为 $x$ 轴，并使动圆位于 $x$ 轴上方。又设动圆的圆心在 $y$ 轴上时，$M$ 恰好在坐标原点。记圆半径为 $r$，则当它滚动到图中位置时，由于 $\overrightarrow{OM} = \overrightarrow{OC} + \overrightarrow{CM}$，$\alpha = \frac{3}{2}\pi - \theta$，所以 $M$ 点的坐标可由向量 $\overrightarrow{OM}$ 的坐标表示式给出：
+\begin{align*}
+  (x, y) &= (OP, PC) + (CM\cos\alpha, CM\sin\alpha) \\
+         &= (r\theta, r) + (-r\sin\theta, -r\cos\theta) \\
+         &= (r\theta - r\sin\theta, r - r\cos\theta).
+\end{align*}
+即 $M$ 点的坐标为
+\begin{gather*}
+  x = r(\theta - \sin\theta), \\
+  y = r(1 - \cos\theta).
+\end{gather*}
+这就是摆线的参数方程。当 $\theta$ 从 $0$ 变化到 $2\pi$ 时，动点 $M(x, y)$ 描绘出摆线的一拱。

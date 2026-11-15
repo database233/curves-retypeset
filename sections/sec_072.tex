@@ -1,0 +1,83 @@
+\section{从圆锥曲线反演得到史留斯蚌线}
+\markboth{72. 从圆锥曲线反演得到史留斯蚌线}{72. 从圆锥曲线反演得到史留斯蚌线}
+
+在第 65 节中曾导出史留斯蚌线的方程是
+\[
+  \rho = \frac{a}{\cos\theta} - 2r\cos\theta,
+\]
+其中 $a\neq 0$，$r>0$；当 $a=2r$ 时为蔓叶线，$0<a<2r$ 时为长幅蔓叶线，$a>2r$ 或 $a<0$ 时为短幅蔓叶线。现在以极点为反演极，正数 $k$ 为反演幂，进行反演变换，这时点 $(\rho,\theta)$ 变成 $\left(\dfrac{k}{\rho},\theta\right)$，因而史留斯蚌线反演得到的图形可表示成极坐标方程
+\begin{align*}
+  \frac{k}{\rho} &= \frac{a}{\cos\theta} - 2r\cos\theta, \\
+  \text{即}\qquad k &= \frac{a\rho^2}{\rho\cos\theta} - 2r\rho\cos\theta.
+\end{align*}
+利用 $\rho\cos\theta=x$，$\rho^2=x^2+y^2$，化成直角坐标方程
+\begin{align}
+  k &= \frac{a(x^2+y^2)}{x} - 2rx, \notag \\
+  \text{即}\qquad (a-2r)x^2 + ay^2 &= kx. \tag{1}
+\end{align}
+
+若 $a=2r$，则 (1) 式成为
+\[
+  ay^2 = kx,
+\]
+这表示一条抛物线，其顶点为坐标原点 $O$。
+
+若 $0<a<2r$，则 (1) 式化成
+\[
+  (2r-a)x^2 + kx - ay^2 = 0,
+\]
+经变形后得到
+\[
+  (2r-a)\left[x + \frac{k}{2(2r-a)}\right]^2 - ay^2 = \frac{k^2}{4(2r-a)},
+\]
+上式可化为形式
+\[
+  \frac{(x+\alpha)^2}{\alpha^2} - \frac{y^2}{\beta^2} = 1,
+\]
+其中
+\[
+  \alpha = \frac{k}{2(2r-a)},\quad \beta = \frac{k}{2\sqrt{a(2r-a)}}.
+\]
+这时曲线为双曲线，原点 $O$ 是它的一个顶点。
+
+若 $a>2r$，则 (1) 式可写成
+\[
+  (a-2r)x^2 - kx + ay^2 = 0.
+\]
+经变形后得到
+\[
+  (a-2r)\left[x - \frac{k}{2(a-2r)}\right]^2 + ay^2 = \frac{k^2}{4(a-2r)}.
+\]
+上式可化为形式
+\[
+  \frac{(x-\alpha)^2}{\alpha^2} + \frac{y^2}{\beta^2} = 1,
+\]
+其中
+\[
+  \alpha = \frac{k}{2(a-2r)},\quad \beta = \frac{k}{2\sqrt{a(a-2r)}} < \alpha,
+\]
+这时曲线为椭圆，原点 $O$ 是它的长轴上的一个顶点。
+
+若 $a<0$，记
+\[
+  a = -b,
+\]
+则 $b>0$。(1) 式可改写成
+\[
+  (b+2r)x^2 + kx + by^2 = 0,
+\]
+经变形后可得
+\[
+  (b+2r)\left[x + \frac{k}{2(b+2r)}\right]^2 + by^2 = \frac{k^2}{4(b+2r)},
+\]
+上式可变成形式
+\[
+  \frac{(x+\alpha)^2}{\alpha^2} + \frac{y^2}{\beta^2} = 1,
+\]
+其中
+\[
+  \alpha = \frac{k}{2(b+2r)},\quad \beta = \frac{k}{2\sqrt{b(b+2r)}} > \alpha.
+\]
+这时曲线也是椭圆，不过原点 $O$ 是它的短轴上的一个顶点。
+
+总之，我们得到了下面的结论：以圆锥曲线的顶点为反演极，作反演变换，结果把这条圆锥曲线变成史留斯蚌线。三种不同类型的圆锥曲线，分别对应于三种不同类型的史留斯蚌线：抛物线反演得到蔓叶线，双曲线反演得到长幅蔓叶线，椭圆反演得到短幅蔓叶线。

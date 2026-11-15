@@ -1,0 +1,97 @@
+\section{两个旋转运动的合成}
+\markboth{43. 两个旋转运动的合成}{43. 两个旋转运动的合成}
+
+设有动点 $A$ 绕定点 $O$ 逆时针匀速旋转，角速度为 $\omega$，同时有一个以 $A$ 为圆心的圆盘绕 $A$ 顺时针匀速旋转，角速度为 $\frac{\omega}{m}$，$m>0$。求圆盘边缘上一点 $M$ 的轨迹。
+
+选取计时起点，使当 $t=0$ 时 $M$ 在线段 $OA$ 的延长线上。再选取坐标系，使 $O$ 为原点，并使 $x$ 轴的正半轴与圆 $O$ 的交点 $D$ 恰好是 $t=0$ 时动点 $A$ 所占据的位置。设在时刻 $t$，点 $A$ 和 $M$ 运动到图 43.1 中的位置，这时 $OA$ 延长线与圆 $A$ 的交点为 $E$。设 $OA=l$，$AM=h$，在这段时间内 $M$ 点顺时针转过的角 $\angle EAM=\theta$，则从 $\theta=\frac{\omega}{m}t=\frac{1}{m}\angle DOA$ 得 $\angle DOA=m\theta$，$\overrightarrow{AM}$ 的幅角 $\alpha=m\theta-\theta$。由 $\overrightarrow{OM}=\overrightarrow{OA}+\overrightarrow{AM}$ 得向量 $\overrightarrow{OM}$ 的坐标表示式为
+\begin{align*}
+  (x,y) &= (l\cos m\theta,\, l\sin m\theta) + (h\cos\alpha,\, h\sin\alpha) \\
+        &= \bigl(l\cos m\theta + h\cos(\theta - m\theta), \\
+        &\qquad l\sin m\theta - h\sin(\theta - m\theta)\bigr).
+\end{align*}
+所以 $M$ 点的坐标为
+\begin{align*}
+  x &= l\cos m\theta + h\cos(\theta - m\theta), \\
+  y &= l\sin m\theta - h\sin(\theta - m\theta).
+\end{align*}
+
+\noindent
+\begin{minipage}[c]{0.52\textwidth}
+在图 43.1 中画出的是 $m>1$ 的情形（$\angle AOD > \angle EAM$），容易验证当 $0<m\leqslant 1$ 时仍有同样结果。
+
+\hspace*{2em}若 $m=1$，则
+\[
+  x = l\cos\theta + h,\quad y = l\sin\theta,
+\]
+即
+\[
+  (x-h)^2 + y^2 = l^2,
+\]
+这时 $M$ 的轨迹是以点 $(h,0)$ 为圆心、$l$ 为半径的圆。
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.45\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    \def\l{1.25}
+    \def\h{0.72}
+    \def\mth{60}
+    \def\th{42}
+    \pgfmathsetmacro{\alp}{\mth-\th}
+    \coordinate (O) at (0,0);
+    \coordinate (D) at (\l, 0);
+    \coordinate (A) at ({\l*cos(\mth)}, {\l*sin(\mth)});
+    \coordinate (E) at ($ (A) + (\mth:\h) $);
+    \coordinate (M) at ($ (A) + (\alp:\h) $);
+
+    % 坐标轴
+    \draw[->] (-1.50, 0) -- (1.75, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.50) -- (0, 2.05) node[left, font=\scriptsize] {$y$};
+
+    % 圆 O 与圆 A
+    \draw[thick] (O) circle (\l);
+    \draw[thick, curveblue] (A) circle (\h);
+
+    % 连线
+    \draw (O) -- (E);
+    \draw (A) -- (M);
+    \draw[thick] (O) -- (M);
+    \draw[thin] (A) -- ++(0.74, 0);
+
+    % 角度弧
+    \draw (0.28, 0) arc (0:\mth:0.28);
+    \node[font=\scriptsize, fill=white, inner sep=0.3pt] at (20:0.48) {$m\theta$};
+
+    \draw ($(A)+(\alp:0.25)$) arc (\alp:\mth:0.25);
+    \node[font=\scriptsize] at ($(A)+({\alp+\th/2}:0.42)$) {$\theta$};
+
+    \draw ($(A)+(0:0.40)$) arc (0:\alp:0.40);
+    \node[font=\scriptsize] at ($(A)+({\alp/2}:0.56)$) {$\alpha$};
+
+    % 标点与标签
+    \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (D) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$D$};
+    \fill (A) circle (1.3pt) node[above left=-1pt, font=\scriptsize] {$A$};
+    \fill (E) circle (1.2pt) node[above, font=\scriptsize] {$E$};
+    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 43.1}
+\end{minipage}
+
+若 $m<1$，则可令 $l=R-mR$，得
+\begin{align*}
+  x &= (R-mR)\cos m\theta + h\cos(\theta - m\theta), \\
+  y &= (R-mR)\sin m\theta - h\sin(\theta - m\theta),
+\end{align*}
+式中 $R$、$h$ 为正数，$0<m<1$，因而轨迹为内摆线或变幅内摆线，视 $h=mR$ 或 $h\neq mR$ 而定（参考第 35 节）。
+
+若 $m>1$，则可令
+\[
+  m-1=m_1,\qquad l=h_1,\qquad h=R+m_1 R,
+\]
+这里 $R$、$h_1$ 和 $m_1$ 都是正数，并且曲线方程化成
+\begin{align*}
+  x &= h_1\cos(\theta + m_1\theta) + (R+m_1 R)\cos m_1\theta, \\
+  y &= h_1\sin(\theta + m_1\theta) + (R+m_1 R)\sin m_1\theta,
+\end{align*}
+所以这时轨迹是外摆线族曲线（参考第 34 节）。

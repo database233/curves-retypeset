@@ -1,0 +1,64 @@
+\section{利用三角板画心脏线}
+\markboth{29. 利用三角板画心脏线}{29. 利用三角板画心脏线}
+
+只要先画一个辅助圆，就能利用三角板画出一条心脏线来。
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    % 圆 C 半径 2r = 1.0, O=(0,0), C=(1.0, 0), theta = 52 deg
+    \def\rr{1.0}
+    \def\th{52}
+    \coordinate (O) at (0,0);
+    \coordinate (C) at (\rr, 0);
+    \coordinate (B) at ({\rr*cos(\th)*cos(\th)}, {\rr*cos(\th)*sin(\th)});
+    \coordinate (M) at ({\rr*(1+cos(\th))*cos(\th)}, {\rr*(1+cos(\th))*sin(\th)});
+    \coordinate (N) at ({\rr*(1+cos(\th))}, {\rr*sin(\th)});
+
+    % 极轴
+    \draw[->] (O) -- (2.55, 0);
+
+    % 辅助圆 C 与心脏线
+    \draw (C) circle (\rr);
+    \draw[very thick, curveblue, domain=0:360, samples=200, variable=\t]
+      plot ({\rr*(1+cos(\t))*cos(\t)}, {\rr*(1+cos(\t))*sin(\t)});
+
+    % 矩形 CBMN 与线段 OM
+    \draw (O) -- (M);
+    \draw (C) -- (B);
+    \draw (M) -- (N);
+    \draw (C) -- (N);
+
+    % 直角记号 (直角顶点 M 与垂足 B)
+    \draw ($(M)+({\th-180}:0.14)$) -- ($(M)+({\th-180}:0.14)+({\th-90}:0.14)$) -- ($(M)+({\th-90}:0.14)$);
+    \draw ($(B)+(\th:0.12)$) -- ($(B)+(\th:0.12)+({\th-90}:0.12)$) -- ($(B)+({\th-90}:0.12)$);
+
+    % 关键点与标签
+    \fill (O) circle (1.3pt) node[below right=1pt, font=\footnotesize] {$O$};
+    \fill (C) circle (1.3pt) node[below, font=\footnotesize] {$C$};
+    \fill (B) circle (1.3pt) node[above left=-1pt, font=\footnotesize] {$B$};
+    \fill (M) circle (1.3pt) node[above, font=\footnotesize] {$M$};
+    \fill[white] (N) circle (1.4pt); \draw (N) circle (1.4pt) node[right, font=\footnotesize] {$N$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 29.1}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \setlength{\parindent}{2em}\indent
+  如图 29.1，设辅助圆为圆 $C$。在圆周上任取一点 $O$。让三角板的一条直角边通过 $O$ 点，另一条直角边与圆 $C$ 相切，这时三角板的直角顶点 $M$ 就是心脏线的一个点。继续这样作出心脏线上的若干个点，最后只要用光滑曲线把这些点连起来就行了（但 $O$ 点处有一个尖角）。
+\end{minipage}
+
+为了证明上述画法的正确性，我们取 $O$ 为极点，$OC$ 为极轴，并设圆 $C$ 的半径为 $2r$。设三角板的一条直角边沿 $MN$ 与圆 $C$ 相切，切点是 $N$。作 $CB\perp OM$，垂足为 $B$（图 29.1），则 $CBMN$ 是矩形。因而
+\begin{align*}
+  \rho = OM &= OB + BM \\
+            &= OC\cos\theta + CN \\
+            &= 2r\cos\theta + 2r,
+\end{align*}
+即
+\[
+  \rho = 2r(1+\cos\theta),
+\]
+这正是心脏线的极坐标方程（见第 28 节）。
+
+利用第 10 节中介绍的垂足曲线概念，上面所证明的事实可以叙述成：心脏线是一个圆关于圆周上一点的垂足曲线。

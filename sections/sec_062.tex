@@ -1,0 +1,88 @@
+\section{利用蔓叶线解倍立方问题}
+\markboth{62. 利用蔓叶线解倍立方问题}{62. 利用蔓叶线解倍立方问题}
+
+蔓叶线大约是在公元前二世纪末的时候，由一位不出名的希腊数学家狄奥克勒斯发现的。当时研究蔓叶线的目的，是要解倍立方问题：求作一个立方体，使它的体积等于已知立方体体积的二倍。为此只须作一条线段，使它等于已知立方体棱长的 $\sqrt[3]{2}$ 倍。
+
+如图 62.1，取蔓叶线的定圆直径 $OA=1$，则蔓叶线方程成为
+\[
+  y^2 = \frac{x^3}{1-x}
+\]
+（参看第 61 节）。上式可改写成
+\[
+  \left(\frac{y}{x}\right)^3 = \frac{y}{1-x}.
+\]
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=1.25, >=Stealth, line cap=round, line join=round]
+    % OA = 1, OC = 2, M = (2/(2+2^{1/3}), 2^{4/3}/(2+2^{1/3})) ≈ (0.6135, 0.7730)
+    \def\Mx{0.6135}
+    \def\My{0.7730}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (1,0);
+    \coordinate (C) at (0,2);
+    \coordinate (M) at (\Mx, \My);
+    \coordinate (N) at (\Mx, 0);
+    \coordinate (D) at (1, 1.2599);
+
+    % 坐标轴
+    \draw[->] (-0.18, 0) -- (1.35, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.18) -- (0, 2.35) node[left, font=\scriptsize] {$y$};
+
+    % 辅助半圆（虚线）
+    \draw[densely dashed] (1,0) arc (0:180:0.5);
+
+    % 蔓叶线 y = sqrt(x^3/(1-x))，参数化 x = t^2/(1+t^2), y = t^3/(1+t^2)
+    \draw[very thick, curveblue, domain=0:1.35, samples=80, variable=\t]
+      plot ({\t*\t/(1+\t*\t)}, {\t*\t*\t/(1+\t*\t)});
+
+    % 线段 AC, OD, AD, MN
+    \draw (A) -- (C);
+    \draw (O) -- (D);
+    \draw (A) -- (D);
+    \draw[densely dashed] (M) -- (N);
+
+    % 右侧大括号标注 \sqrt[3]{2}
+    \draw[decorate, decoration={brace, amplitude=3pt}]
+      (1.06, 1.2599) -- (1.06, 0) node[midway, right=3pt, font=\scriptsize] {$\sqrt[3]{2}$};
+
+    % 长度标注 1 和 2
+    \node[below, font=\scriptsize] at (0.50, 0) {$1$};
+    \node[left, font=\scriptsize] at (0, 1.05) {$2$};
+
+    % 关键点
+    \fill (O) circle (0.9pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (0.9pt) node[below, font=\scriptsize] {$A$};
+    \fill (C) circle (0.9pt) node[left, font=\scriptsize] {$C$};
+    \fill (D) circle (0.9pt) node[above, font=\scriptsize] {$D$};
+    \fill (M) circle (0.9pt) node[left=1pt, font=\scriptsize] {$M$};
+    \fill (N) circle (0.9pt) node[below right=-1pt, font=\scriptsize] {$N$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 62.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  \hspace{2em}在 $y$ 轴上取 $OC=2$，连 $AC$，交蔓叶线于 $M(x,y)$；作 $AD\perp OA$，交 $OM$ 的延长线于 $D$。又作 $MN\perp OA$，垂足为 $N$。从 $\triangle AMN \backsim \triangle ACO$，得到 $\frac{NM}{NA}=\frac{OC}{OA}$，即
+  \[
+    \frac{y}{1-x} = 2.
+  \]
+  代入曲线方程，得到
+  \[
+    \left(\frac{y}{x}\right)^3 = 2,\quad \therefore\ \frac{y}{x} = \sqrt[3]{2}.
+  \]
+\end{minipage}
+
+\medskip
+\noindent
+再从 $\triangle ODA \backsim \triangle OMN$，又得到
+\[
+  \frac{AD}{OA} = \frac{NM}{ON}.
+\]
+而 $OA=1$，$NM=y$，$ON=x$，所以
+\[
+  AD = \sqrt[3]{2}.
+\]
+因而，以 $AD$ 为棱长的立方体的体积，等于以 $OA$ 为棱长的立方体的体积的二倍。

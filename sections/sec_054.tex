@@ -1,0 +1,94 @@
+\section{伸展渐开线}
+\markboth{54. 伸展渐开线}{54. 伸展渐开线}
+
+当一条动直线 $l$ 沿着一个定圆 $O$ 的圆周无滑动地滚动时，平面上与直线 $l$ 固定连结但不一定在 $l$ 上的点 $M$ 的轨迹叫做伸展渐开线，又叫做圆的广义渐伸线。
+
+在凸轮设计和金属切削加工中，常会遇到伸展渐开线形状的轨迹。
+
+\noindent
+\begin{minipage}[c]{0.53\textwidth}
+  \hspace*{2em}如图 54.1，选取坐标系，使定圆的圆心 $O$ 为原点，并且使得当 $l$ 与圆 $O$ 的切点在 $x$ 轴正半轴上时，点 $M$ 落在 $x$ 轴上。设直线 $l$ 滚动到图中任意位置时，与圆 $O$ 的切点为 $N$，并且这时 $M$ 的坐标为 $(x,y)$。设圆 $O$ 的半径为 $a$，$PM = b$，$\angle xON = t$，则 $NP = at$，向量 $\overrightarrow{NP}$ 的幅角为 $t - \frac{\pi}{2}$，向量 $\overrightarrow{PM}$ 的幅角为 $t - \pi$。由 $\overrightarrow{OM} = \overrightarrow{ON} + \overrightarrow{NP} + \overrightarrow{PM}$ 得向量 $\overrightarrow{OM}$ 的坐标表示式为
+\end{minipage}\hfill
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    \def\a{1.12}
+    \def\b{0.36}
+    \def\tdeg{74}
+    \pgfmathsetmacro{\trad}{\tdeg*pi/180}
+    \coordinate (O) at (0, 0);
+    \coordinate (N) at (\tdeg:\a);
+    \coordinate (P) at ({\a*cos(\tdeg) + \a*\trad*sin(\tdeg)},
+                        {\a*sin(\tdeg) - \a*\trad*cos(\tdeg)});
+    \coordinate (M) at ({(\a-\b)*cos(\tdeg) + \a*\trad*sin(\tdeg)},
+                        {(\a-\b)*sin(\tdeg) - \a*\trad*cos(\tdeg)});
+
+    % 坐标轴
+    \draw[->] (-1.35, 0) -- (2.15, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.35) -- (0, 1.55) node[left, font=\scriptsize] {$y$};
+
+    % 定圆 O
+    \draw[thick] (O) circle (\a);
+
+    % 切线 l 与连线
+    \draw[thick] ($(N)!-0.75!(P)$) -- ($(N)!1.28!(P)$);
+    \node[right=1pt, font=\scriptsize] at ($(N)!1.24!(P)$) {$l$};
+    \draw (O) -- (N);
+    \draw[thick] (P) -- (M);
+    \draw[thick, curveblue] (O) -- (M);
+
+    % 水平辅助射线与角度标注
+    \draw[thin] (N) -- ++(0.62, 0);
+    \draw[thin] (P) -- ++(0.55, 0);
+
+    \draw (0.30, 0) arc (0:\tdeg:0.30);
+    \node[font=\scriptsize] at ({\tdeg/2}:0.47) {$t$};
+
+    \draw ($(N)+(0.30,0)$) arc (0:{\tdeg-90}:0.30);
+    \node[right, font=\tiny] at ($(N)+(0.31,-0.10)$) {$t\!-\!\frac{\pi}{2}$};
+
+    \draw ($(P)+(0.26,0)$) arc (0:{\tdeg-180}:0.26);
+    \node[right, font=\tiny] at ($(P)+(0.24,-0.16)$) {$t\!-\!\pi$};
+
+    % 标点与标签
+    \fill (O) circle (1.1pt) node[below left=-2pt, font=\scriptsize] {$O$};
+    \fill (N) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$N$};
+    \fill (P) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$P$};
+    \fill (M) circle (1.3pt) node[above right=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$M$};
+    \node[above left=-2pt, font=\scriptsize] at ($(O)!0.52!(N)$) {$a$};
+    \node[above left=-2pt, font=\scriptsize] at ($(P)!0.50!(M)$) {$b$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 54.1}
+\end{minipage}
+\begin{align*}
+  (x, y) &= (a\cos t,\, a\sin t) \\
+         &\quad + \left(at\cos\left(t - \frac{\pi}{2}\right),\, at\sin\left(t - \frac{\pi}{2}\right)\right) \\
+         &\quad + \bigl(b\cos(t - \pi),\, b\sin(t - \pi)\bigr) \\
+         &= \bigl((a - b)\cos t + at\sin t,\, (a - b)\sin t - at\cos t\bigr),
+\end{align*}
+所以伸展渐开线的参数方程为
+\begin{align*}
+  x &= (a - b)\cos t + at\sin t, \\
+  y &= (a - b)\sin t - at\cos t.
+\end{align*}
+
+若 $b = 0$，即 $M$ 在 $l$ 上时，方程化为
+\begin{align*}
+  x &= a(\cos t + t\sin t), \\
+  y &= a(\sin t - t\cos t),
+\end{align*}
+这时曲线是圆的渐伸线，圆 $O$ 是基圆。
+
+另一种重要特殊情形是
+\[
+  b = a.
+\]
+这时曲线方程简化成
+\[
+  x = at\sin t,\quad y = -at\cos t.
+\]
+从而
+\[
+  \rho^2 = x^2 + y^2 = a^2 t^2,\quad \rho = \pm at,
+\]
+所以这时曲线为阿基米德螺线。

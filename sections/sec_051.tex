@@ -1,0 +1,216 @@
+\section{极坐标系中的微分三角形}
+\markboth{51. 极坐标系中的微分三角形}{51. 极坐标系中的微分三角形}
+
+在第 12 节曾经介绍微分三角形，这是如图 51.1 所示的一个示意图，从图中可以明显地看出下列关系：
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.88, line cap=round, line join=round]
+    \coordinate (M) at (0, 0);
+    \coordinate (P) at (2.4, 0);
+    \coordinate (N) at (2.4, 1.7);
+
+    \draw[thick] (M) -- (P) -- (N);
+    \draw[very thick, curveblue] (M) -- (N);
+
+    % 直角标记
+    \draw ($(P)+(-0.16,0)$) -- ($(P)+(-0.16,0.16)$) -- ($(P)+(0,0.16)$);
+    % 夹角 alpha
+    \pic[draw, angle radius=0.45cm, angle eccentricity=1.38, "\scriptsize$\alpha$"] {angle=P--M--N};
+
+    % 顶点与边标注
+    \node[below left=-1pt, font=\scriptsize] at (M) {$M$};
+    \node[below right=-1pt, font=\scriptsize] at (P) {$P$};
+    \node[above right=-1pt, font=\scriptsize] at (N) {$N$};
+    \node[below, font=\scriptsize] at ($(M)!0.5!(P)$) {$dx$};
+    \node[right, font=\scriptsize] at ($(P)!0.5!(N)$) {$dy$};
+    \node[above left=-1pt, font=\scriptsize] at ($(M)!0.5!(N)$) {$ds$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 51.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \vspace{-4pt}
+  \[
+    ds^2 = dx^2 + dy^2,
+  \]
+  \[
+    \tg\alpha = \frac{dy}{dx},
+  \]
+  其中 $\alpha$ 是曲线的切线与 $x$ 轴的夹角。
+\end{minipage}
+
+\noindent 当一条曲线由直角坐标方程或参数方程给出时，利用上面两个公式可以计算曲线的弧长和讨论曲线的切线的性质。如果一条曲线由极坐标方程给出，就不能直接利用上面两个公式了。现在我们来推导极坐标系中的对应公式，并且设计一个帮助记忆公式的图形。
+
+利用关系式
+\[
+  x = \rho\cos\theta,\quad y = \rho\sin\theta,
+\]
+可得出 $dx$ 及 $dy$。我们把 $x$、$y$、$\rho$、$\theta$ 都看成是参变量 $t$ 的函数，把 $x = \rho\cos\theta$ 的两边对 $t$ 求导，得
+\[
+  \frac{dx}{dt} = \frac{d\rho}{dt}\cos\theta + \rho\frac{d\cos\theta}{dt} = \frac{1}{dt}(\cos\theta\dd\rho - \rho\sin\theta\dd\theta),
+\]
+所以
+\[
+  dx = \cos\theta\dd\rho - \rho\sin\theta\dd\theta,
+\]
+同理可得
+\[
+  dy = \sin\theta\dd\rho + \rho\cos\theta\dd\theta.
+\]
+两式平方后相加，得到
+\[
+  dx^2 + dy^2 = (d\rho)^2 + \rho^2(d\theta)^2.
+\]
+代入公式 $ds^2 = dx^2 + dy^2$，并且省略掉 $d\rho$ 和 $d\theta$ 外面的括弧，就得到极坐标系中计算弧长微分的公式
+\[
+  ds^2 = d\rho^2 + \rho^2\dd\theta^2.
+\]
+上式可变形为
+\[
+  \left(\frac{ds}{d\theta}\right)^2 = \left(\frac{d\rho}{d\theta}\right)^2 + \rho^2.
+\]
+用撇号表示对极角 $\theta$ 的导数，开方后得到
+\[
+  s' = \sqrt{\rho'^2 + \rho^2}.
+\]
+由此积分，可知曲线 $\rho = \rho(\theta)$ 在 $\theta = \theta_1$ 和 $\theta = \theta_2$ 的两点间的弧长可用下式算出：
+\[
+  s = \int_{\theta_1}^{\theta_2} \sqrt{\rho'^2 + \rho^2}\dd\theta.
+\]
+
+\noindent
+\begin{minipage}[c]{0.52\textwidth}
+\hspace*{2em}其次，设曲线在点 $M(\rho,\theta)$ 的切线 $MT$ 与极半径 $OM$ 的夹角为 $\psi$，与 $Ox$ 轴的夹角为 $\alpha$，从图 51.2 中 $\triangle OMT$ 的外角 $\alpha$ 等于两个不相邻的内角 $\theta$、$\psi$ 的和，得到
+\[
+  \psi = \alpha - \theta,
+\]
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.45\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
+    \coordinate (O) at (0, 0);
+    \coordinate (T) at (1.5, 0);
+    \coordinate (M) at (2.1, 1.05);
+
+    % 坐标轴
+    \draw[->] (-0.4, 0) -- (3.1, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.45) -- (0, 1.9) node[left, font=\scriptsize] {$y$};
+    \node[below left=-1pt, font=\scriptsize] at (O) {$O$};
+
+    % 曲线（经 M 点，切线斜率为 1.75）
+    \draw[very thick, curveblue, domain=0.65:2.35, samples=60]
+      plot (\x, {0.55*(\x-1.2)^2 + 0.65*(\x-1.2) + 0.02});
+
+    % 极半径及其延长线
+    \draw[thick] (O) -- ($(O)!1.38!(M)$);
+    % 切线 MT 及其延长线
+    \draw[thick] (1.33, -0.3) -- (2.52, 1.785);
+
+    % 角度标注 theta, alpha, psi
+    \draw (0.45, 0) arc (0:26.565:0.45);
+    \node[font=\scriptsize] at (13.3:0.63) {$\theta$};
+
+    \draw (1.80, 0) arc (0:60.255:0.30);
+    \node[font=\scriptsize] at ($(T)+(30:0.45)$) {$\alpha$};
+
+    \draw ($(M)+(26.565:0.32)$) arc (26.565:60.255:0.32);
+    \node[font=\scriptsize] at ($(M)+(43:0.50)$) {$\psi$};
+
+    \draw ($(M)+(206.565:0.32)$) arc (206.565:240.255:0.32);
+    \node[font=\scriptsize] at ($(M)+(228:0.53)$) {$\psi$};
+
+    % 标点
+    \fill (M) circle (1.3pt) node[right=1pt, font=\scriptsize] {$M$};
+    \node[below right=-1pt, font=\scriptsize] at (T) {$T$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 51.2}
+\end{minipage}
+
+\noindent 因而
+\begin{align*}
+  \tg\psi &= \tg(\alpha - \theta) = \frac{\tg\alpha - \tg\theta}{1 + \tg\alpha\tg\theta} \\
+          &= \frac{\dfrac{dy}{dx} - \dfrac{y}{x}}{1 + \dfrac{dy}{dx}\cdot\dfrac{y}{x}} = \frac{x\dd y - y\dd x}{x\dd x + y\dd y}.
+\end{align*}
+由于
+\[
+  x\dd x + y\dd y = \frac{1}{2}d(x^2 + y^2) = \frac{1}{2}d(\rho^2) = \rho\dd\rho,
+\]
+\begin{align*}
+  x\dd y - y\dd x &= \rho\cos\theta(\sin\theta\dd\rho + \rho\cos\theta\dd\theta) \\
+                  &\quad - \rho\sin\theta(\cos\theta\dd\rho - \rho\sin\theta\dd\theta) = \rho^2\dd\theta,
+\end{align*}
+代入 $\tg\psi$ 的表达式，约去 $\rho$ 后得到公式
+\[
+  \tg\psi = \frac{\rho\dd\theta}{d\rho}.
+\]
+上式右边的分子和分母同除以 $d\theta$，并注意 $\frac{d\rho}{d\theta} = \rho'$，上面的公式化为
+\[
+  \tg\psi = \frac{\rho}{\rho'}.
+\]
+
+\noindent
+\begin{minipage}[c]{0.39\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.86, line cap=round, line join=round]
+    \def\r{2.25}
+    \def\dr{1.35}
+    \def\angM{38}
+    \def\angN{86}
+    \coordinate (O) at (0, 0);
+    \coordinate (M) at (\angM:\r);
+    \coordinate (P) at (\angN:\r);
+    \coordinate (N) at (\angN:{\r+\dr});
+
+    % 射线 OM 及其延长线、ON
+    \draw[thick] (O) -- (\angM:{\r+0.82});
+    \draw[thick] (O) -- (N);
+
+    % 弧 MP 与弧 MN（含切线延长）
+    \draw[thick] (M) arc (\angM:\angN:\r);
+    \draw[very thick, curveblue] (M) .. controls ($(M)+(82:0.85)$) and (0.95, 3.15) .. (N);
+    \draw[thin] (M) -- ($(M)+(82:1.10)$);
+    \draw[thin, densely dashed] (M) -- (P);
+
+    \draw[thin, densely dotted] (M) -- ($(M)+(128:0.78)$);
+
+    % 直角符号
+    \coordinate (P1) at ($(P)+(\angN:0.14)$);
+    \coordinate (P2) at ($(P)+({\angN-90}:0.14)$);
+    \draw (P1) -- ($(P1)+({\angN-90}:0.14)$) -- (P2);
+
+    % 角度标注 dtheta, psi, pi/2 - psi
+    \draw (\angM:0.52) arc (\angM:\angN:0.52);
+    \node[font=\tiny] at (62:0.76) {$d\theta$};
+
+    \draw ($(M)+(\angM:0.34)$) arc (\angM:82:0.34);
+    \node[font=\tiny] at ($(M)+(60:0.52)$) {$\psi$};
+
+    \draw ($(M)+(82:0.40)$) arc (82:128:0.40);
+    \node[font=\tiny, fill=white, inner sep=0.3pt] at ($(M)+(108:0.68)$) {$\scriptscriptstyle\frac{\pi}{2}\!-\!\psi$};
+
+    % 点与标签
+    \fill (O) circle (1.2pt) node[below, font=\scriptsize] {$O$};
+    \fill (M) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$M$};
+    \fill (P) circle (1.2pt) node[left, font=\scriptsize] {$P$};
+    \fill (N) circle (1.2pt) node[above, font=\scriptsize] {$N$};
+
+    \node[left=-1pt, font=\scriptsize] at ($(O)!0.52!(P)$) {$\rho$};
+    \node[left=-1pt, font=\scriptsize] at ($(P)!0.5!(N)$) {$d\rho$};
+    \node[right=1pt, font=\scriptsize] at ($(O)!0.52!(M)$) {$\rho$};
+    \node[below, font=\scriptsize] at (62:{\r-0.24}) {$\rho\dd\theta$};
+    \node[above right=-1pt, font=\scriptsize] at (1.10, 2.95) {$ds$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 51.3}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.58\textwidth}
+  \hspace*{2em}如图 51.3，设 $M$ 和 $N$ 是曲线上邻近的两点，$O$ 为极点，$\arc{MP}$ 是以 $O$ 为圆心的圆弧，点 $M$ 的极坐标为 $(\rho,\theta)$，曲线在 $M$ 处的切线与极半径 $OM$ 的夹角为 $\psi$。记 $\angle MON$ 为 $d\theta$，则 $\arc{MP}$ 的弧长为 $\rho\dd\theta$。由于圆半径垂直于过其外端所作圆的切线，因而 $\arc{MP}$ 与 $PN$ 正交，$\arc{MP}$ 也与 $OM$ 正交。由此得到曲线弧 $\arc{MN}$ 和圆弧 $\arc{MP}$ 在 $M$ 点的切线的夹角为 $\frac{\pi}{2} - \psi$。设想图中的点 $N$ 和 $M$ 非常靠近，因而曲线弧 $\arc{MN}$ 和圆弧 $\arc{MP}$ 都可近似看成线段，这样就得到一个近似的直角三角形 $MPN$，它的斜边是 $ds$，两条直角边是 $\rho\dd\theta$ 和 $d\rho$，一个锐角等于 $\frac{\pi}{2} - \psi$，在这个直角三角形中用勾股定理和锐角三角函数定义，得到
+\end{minipage}
+
+\noindent
+\[
+  ds^2 = d\rho^2 + (\rho\dd\theta)^2,\quad \tg\psi = \ctg\left(\frac{\pi}{2} - \psi\right) = \frac{\rho\dd\theta}{d\rho},
+\]
+这正是前面利用微分法严格证明的两个公式。$MPN$ 可称为极坐标系中的微分三角形。

@@ -1,0 +1,608 @@
+[
+  {
+    "index": 1,
+    "title": "1 用折纸法画抛物线",
+    "start_pdf_page": 9,
+    "end_pdf_page": 10
+  },
+  {
+    "index": 2,
+    "title": "2 用折纸法画椭圆",
+    "start_pdf_page": 10,
+    "end_pdf_page": 11
+  },
+  {
+    "index": 3,
+    "title": "3 百发百中",
+    "start_pdf_page": 11,
+    "end_pdf_page": 13
+  },
+  {
+    "index": 4,
+    "title": "4 双曲线为摄影师帮忙",
+    "start_pdf_page": 13,
+    "end_pdf_page": 14
+  },
+  {
+    "index": 5,
+    "title": "5 让光线多跑两趟",
+    "start_pdf_page": 14,
+    "end_pdf_page": 15
+  },
+  {
+    "index": 6,
+    "title": "6 杰尼西亚的耳朵",
+    "start_pdf_page": 15,
+    "end_pdf_page": 16
+  },
+  {
+    "index": 7,
+    "title": "7 抛物线与屋顶",
+    "start_pdf_page": 16,
+    "end_pdf_page": 18
+  },
+  {
+    "index": 8,
+    "title": "8 用三角板画抛物线",
+    "start_pdf_page": 18,
+    "end_pdf_page": 19
+  },
+  {
+    "index": 9,
+    "title": "9 用三角板画椭圆",
+    "start_pdf_page": 19,
+    "end_pdf_page": 20
+  },
+  {
+    "index": 10,
+    "title": "10 垂足曲线和反垂足曲线",
+    "start_pdf_page": 20,
+    "end_pdf_page": 21
+  },
+  {
+    "index": 11,
+    "title": "11 摆线",
+    "start_pdf_page": 21,
+    "end_pdf_page": 23
+  },
+  {
+    "index": 12,
+    "title": "12 利用微分三角形求曲线的弧长",
+    "start_pdf_page": 23,
+    "end_pdf_page": 25
+  },
+  {
+    "index": 13,
+    "title": "13 摆线滑梯",
+    "start_pdf_page": 25,
+    "end_pdf_page": 28
+  },
+  {
+    "index": 14,
+    "title": "14 最速降线",
+    "start_pdf_page": 28,
+    "end_pdf_page": 29
+  },
+  {
+    "index": 15,
+    "title": "15 滚珠荡秋千",
+    "start_pdf_page": 29,
+    "end_pdf_page": 32
+  },
+  {
+    "index": 16,
+    "title": "16 利用摆线板画摆线",
+    "start_pdf_page": 32,
+    "end_pdf_page": 35
+  },
+  {
+    "index": 17,
+    "title": "17 摆线时钟",
+    "start_pdf_page": 35,
+    "end_pdf_page": 36
+  },
+  {
+    "index": 18,
+    "title": "18 短幅摆线和长幅摆线",
+    "start_pdf_page": 36,
+    "end_pdf_page": 37
+  },
+  {
+    "index": 19,
+    "title": "19 直线运动和旋转运动的合成",
+    "start_pdf_page": 37,
+    "end_pdf_page": 39
+  },
+  {
+    "index": 20,
+    "title": "20 农业机械中的长幅摆线",
+    "start_pdf_page": 39,
+    "end_pdf_page": 40
+  },
+  {
+    "index": 21,
+    "title": "21 熊猫走钢丝",
+    "start_pdf_page": 40,
+    "end_pdf_page": 42
+  },
+  {
+    "index": 22,
+    "title": "22 卡丹的转盘问题",
+    "start_pdf_page": 42,
+    "end_pdf_page": 43
+  },
+  {
+    "index": 23,
+    "title": "23 机器的“护身符”",
+    "start_pdf_page": 43,
+    "end_pdf_page": 44
+  },
+  {
+    "index": 24,
+    "title": "24 内摆线",
+    "start_pdf_page": 44,
+    "end_pdf_page": 46
+  },
+  {
+    "index": 25,
+    "title": "25 曲线之星",
+    "start_pdf_page": 46,
+    "end_pdf_page": 48
+  },
+  {
+    "index": 26,
+    "title": "26 公共汽车的门与星形线",
+    "start_pdf_page": 48,
+    "end_pdf_page": 51
+  },
+  {
+    "index": 27,
+    "title": "27 外摆线",
+    "start_pdf_page": 51,
+    "end_pdf_page": 52
+  },
+  {
+    "index": 28,
+    "title": "28 曲线之心",
+    "start_pdf_page": 52,
+    "end_pdf_page": 54
+  },
+  {
+    "index": 29,
+    "title": "29 利用三角板画心脏线",
+    "start_pdf_page": 54,
+    "end_pdf_page": 55
+  },
+  {
+    "index": 30,
+    "title": "30 帕斯卡的蜗牛",
+    "start_pdf_page": 55,
+    "end_pdf_page": 57
+  },
+  {
+    "index": 31,
+    "title": "31 利用三角板画蜗线",
+    "start_pdf_page": 57,
+    "end_pdf_page": 58
+  },
+  {
+    "index": 32,
+    "title": "32 柴油机与垂足曲线",
+    "start_pdf_page": 58,
+    "end_pdf_page": 60
+  },
+  {
+    "index": 33,
+    "title": "33 蜗线也是外摆线",
+    "start_pdf_page": 60,
+    "end_pdf_page": 61
+  },
+  {
+    "index": 34,
+    "title": "34 变幅外摆线",
+    "start_pdf_page": 61,
+    "end_pdf_page": 64
+  },
+  {
+    "index": 35,
+    "title": "35 变幅内摆线",
+    "start_pdf_page": 64,
+    "end_pdf_page": 66
+  },
+  {
+    "index": 36,
+    "title": "36 内外摆线本是一家",
+    "start_pdf_page": 66,
+    "end_pdf_page": 66
+  },
+  {
+    "index": 37,
+    "title": "37 套藤圈",
+    "start_pdf_page": 66,
+    "end_pdf_page": 70
+  },
+  {
+    "index": 38,
+    "title": "38 美丽的玫瑰线",
+    "start_pdf_page": 70,
+    "end_pdf_page": 73
+  },
+  {
+    "index": 39,
+    "title": "39 四叶玫瑰线与星形线",
+    "start_pdf_page": 73,
+    "end_pdf_page": 75
+  },
+  {
+    "index": 40,
+    "title": "40 电子探针中的四叶玫瑰线",
+    "start_pdf_page": 75,
+    "end_pdf_page": 76
+  },
+  {
+    "index": 41,
+    "title": "41 利用滚动得到玫瑰线",
+    "start_pdf_page": 76,
+    "end_pdf_page": 78
+  },
+  {
+    "index": 42,
+    "title": "42 繁花规",
+    "start_pdf_page": 78,
+    "end_pdf_page": 80
+  },
+  {
+    "index": 43,
+    "title": "43 两个旋转运动的合成",
+    "start_pdf_page": 80,
+    "end_pdf_page": 82
+  },
+  {
+    "index": 44,
+    "title": "44 用三把车刀切削正六边形零件",
+    "start_pdf_page": 82,
+    "end_pdf_page": 85
+  },
+  {
+    "index": 45,
+    "title": "45 用一把车刀切削正多边形零件",
+    "start_pdf_page": 85,
+    "end_pdf_page": 87
+  },
+  {
+    "index": 46,
+    "title": "46 正方形的渐伸线",
+    "start_pdf_page": 87,
+    "end_pdf_page": 89
+  },
+  {
+    "index": 47,
+    "title": "47 圆的渐伸线",
+    "start_pdf_page": 89,
+    "end_pdf_page": 90
+  },
+  {
+    "index": 48,
+    "title": "48 圆的渐伸线的切线和法线",
+    "start_pdf_page": 90,
+    "end_pdf_page": 92
+  },
+  {
+    "index": 49,
+    "title": "49 渐开线齿轮",
+    "start_pdf_page": 92,
+    "end_pdf_page": 93
+  },
+  {
+    "index": 50,
+    "title": "50 摆线齿轮",
+    "start_pdf_page": 93,
+    "end_pdf_page": 96
+  },
+  {
+    "index": 51,
+    "title": "51 极坐标系中的微分三角形",
+    "start_pdf_page": 96,
+    "end_pdf_page": 99
+  },
+  {
+    "index": 52,
+    "title": "52 渐开线变压器",
+    "start_pdf_page": 99,
+    "end_pdf_page": 101
+  },
+  {
+    "index": 53,
+    "title": "53 阿基米德螺线",
+    "start_pdf_page": 101,
+    "end_pdf_page": 103
+  },
+  {
+    "index": 54,
+    "title": "54 伸展渐开线",
+    "start_pdf_page": 103,
+    "end_pdf_page": 104
+  },
+  {
+    "index": 55,
+    "title": "55 摆线族大家庭",
+    "start_pdf_page": 104,
+    "end_pdf_page": 106
+  },
+  {
+    "index": 56,
+    "title": "56 利用阿基米德螺线解作图题",
+    "start_pdf_page": 106,
+    "end_pdf_page": 107
+  },
+  {
+    "index": 57,
+    "title": "57 尼哥米德蚌线",
+    "start_pdf_page": 107,
+    "end_pdf_page": 110
+  },
+  {
+    "index": 58,
+    "title": "58 麦克劳林三等分角曲线",
+    "start_pdf_page": 110,
+    "end_pdf_page": 111
+  },
+  {
+    "index": 59,
+    "title": "59 割圆曲线",
+    "start_pdf_page": 111,
+    "end_pdf_page": 114
+  },
+  {
+    "index": 60,
+    "title": "60 利用抛物线解倍立方问题",
+    "start_pdf_page": 114,
+    "end_pdf_page": 115
+  },
+  {
+    "index": 61,
+    "title": "61 蔓叶线",
+    "start_pdf_page": 115,
+    "end_pdf_page": 117
+  },
+  {
+    "index": 62,
+    "title": "62 种用蔓叶线解倍立方问题",
+    "start_pdf_page": 117,
+    "end_pdf_page": 118
+  },
+  {
+    "index": 63,
+    "title": "63 用三角板画蔓叶线",
+    "start_pdf_page": 118,
+    "end_pdf_page": 121
+  },
+  {
+    "index": 64,
+    "title": "64 笛卡儿叶形线",
+    "start_pdf_page": 121,
+    "end_pdf_page": 122
+  },
+  {
+    "index": 65,
+    "title": "65 史留斯蚌线",
+    "start_pdf_page": 122,
+    "end_pdf_page": 124
+  },
+  {
+    "index": 66,
+    "title": "66 曲线的反演变换",
+    "start_pdf_page": 124,
+    "end_pdf_page": 127
+  },
+  {
+    "index": 67,
+    "title": "67 阿基米德螺线的反演图形",
+    "start_pdf_page": 127,
+    "end_pdf_page": 128
+  },
+  {
+    "index": 68,
+    "title": "68 玫瑰线的反演图形",
+    "start_pdf_page": 128,
+    "end_pdf_page": 130
+  },
+  {
+    "index": 69,
+    "title": "69 反演器",
+    "start_pdf_page": 130,
+    "end_pdf_page": 131
+  },
+  {
+    "index": 70,
+    "title": "70 从圆锥曲线反演得到帕斯卡蜗线",
+    "start_pdf_page": 131,
+    "end_pdf_page": 132
+  },
+  {
+    "index": 71,
+    "title": "71 利用圆规画心脏线",
+    "start_pdf_page": 132,
+    "end_pdf_page": 133
+  },
+  {
+    "index": 72,
+    "title": "72 从圆锥曲线反演得到史留斯蚌线",
+    "start_pdf_page": 133,
+    "end_pdf_page": 136
+  },
+  {
+    "index": 73,
+    "title": "73 环索线",
+    "start_pdf_page": 136,
+    "end_pdf_page": 138
+  },
+  {
+    "index": 74,
+    "title": "74 垂心的轨迹",
+    "start_pdf_page": 138,
+    "end_pdf_page": 139
+  },
+  {
+    "index": 75,
+    "title": "75 斜环索线",
+    "start_pdf_page": 139,
+    "end_pdf_page": 141
+  },
+  {
+    "index": 76,
+    "title": "76 卡帕曲线",
+    "start_pdf_page": 141,
+    "end_pdf_page": 142
+  },
+  {
+    "index": 77,
+    "title": "77 滑绳线",
+    "start_pdf_page": 142,
+    "end_pdf_page": 144
+  },
+  {
+    "index": 78,
+    "title": "78 拖在细线后面的钮扣",
+    "start_pdf_page": 144,
+    "end_pdf_page": 146
+  },
+  {
+    "index": 79,
+    "title": "79 曳物线与伪球面",
+    "start_pdf_page": 146,
+    "end_pdf_page": 148
+  },
+  {
+    "index": 80,
+    "title": "80 双曲线和双曲线函数",
+    "start_pdf_page": 148,
+    "end_pdf_page": 151
+  },
+  {
+    "index": 81,
+    "title": "81 悬链线",
+    "start_pdf_page": 151,
+    "end_pdf_page": 153
+  },
+  {
+    "index": 82,
+    "title": "82 挂在两根钉子中间的绳子",
+    "start_pdf_page": 153,
+    "end_pdf_page": 156
+  },
+  {
+    "index": 83,
+    "title": "83 三次抛物线",
+    "start_pdf_page": 156,
+    "end_pdf_page": 157
+  },
+  {
+    "index": 84,
+    "title": "84 用n次抛物线弧近似代替其它曲线弧",
+    "start_pdf_page": 157,
+    "end_pdf_page": 159
+  },
+  {
+    "index": 85,
+    "title": "85 用圆弧近似代替任意曲线弧",
+    "start_pdf_page": 159,
+    "end_pdf_page": 162
+  },
+  {
+    "index": 86,
+    "title": "86 铁路转弯处的过渡曲线",
+    "start_pdf_page": 162,
+    "end_pdf_page": 165
+  },
+  {
+    "index": 87,
+    "title": "87 双纽线",
+    "start_pdf_page": 165,
+    "end_pdf_page": 166
+  },
+  {
+    "index": 88,
+    "title": "88 相似的曲线",
+    "start_pdf_page": 166,
+    "end_pdf_page": 168
+  },
+  {
+    "index": 89,
+    "title": "89 圆锥曲线相似的条件",
+    "start_pdf_page": 168,
+    "end_pdf_page": 169
+  },
+  {
+    "index": 90,
+    "title": "90 所有双纽线都相似",
+    "start_pdf_page": 169,
+    "end_pdf_page": 170
+  },
+  {
+    "index": 91,
+    "title": "91 对数螺线",
+    "start_pdf_page": 170,
+    "end_pdf_page": 171
+  },
+  {
+    "index": 92,
+    "title": "92 对数螺线的等角性",
+    "start_pdf_page": 171,
+    "end_pdf_page": 172
+  },
+  {
+    "index": 93,
+    "title": "93 对数螺线引起的幻觉",
+    "start_pdf_page": 172,
+    "end_pdf_page": 174
+  },
+  {
+    "index": 94,
+    "title": "94 怎样画对数螺线",
+    "start_pdf_page": 174,
+    "end_pdf_page": 176
+  },
+  {
+    "index": 95,
+    "title": "95 变来变去还是它",
+    "start_pdf_page": 176,
+    "end_pdf_page": 179
+  },
+  {
+    "index": 96,
+    "title": "96 以中国人命名的曲线",
+    "start_pdf_page": 179,
+    "end_pdf_page": 180
+  },
+  {
+    "index": 97,
+    "title": "97 在纸盒里转动的划粉",
+    "start_pdf_page": 180,
+    "end_pdf_page": 182
+  },
+  {
+    "index": 98,
+    "title": "98 女数学家对曲线的贡献",
+    "start_pdf_page": 182,
+    "end_pdf_page": 183
+  },
+  {
+    "index": 99,
+    "title": "99 填满正方形的曲线",
+    "start_pdf_page": 183,
+    "end_pdf_page": 185
+  },
+  {
+    "index": 100,
+    "title": "100 举不胜举",
+    "start_pdf_page": 185,
+    "end_pdf_page": 189
+  },
+  {
+    "index": 101,
+    "title": "附 曲线名称对照表",
+    "start_pdf_page": 189,
+    "end_pdf_page": 193
+  }
+]

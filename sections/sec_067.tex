@@ -1,0 +1,46 @@
+\section{阿基米德螺线的反演图形}
+\markboth{67. 阿基米德螺线的反演图形}{67. 阿基米德螺线的反演图形}
+
+考虑阿基米德螺线 $\rho = a\theta$ $(a>0)$。取极点 $O$ 为反演极，$R^2$ 为反演幂，反演后所得曲线的方程是 $\rho = \frac{R^2}{a\theta}$。记 $\frac{R^2}{a} = b$，化为
+\[
+  \rho = \frac{b}{\theta}.\quad (b>0)
+\]
+
+\begin{wrapfigure}[10]{r}{0.43\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.72, >=Stealth, line cap=round, line join=round]
+    % b = 1.15 => 180*b/pi = 65.8901
+    \def\b{1.15}
+    \def\bdeg{65.8901}
+    \def\thM{45}
+    \pgfmathsetmacro{\rhoM}{\bdeg/\thM}
+    \coordinate (O) at (0,0);
+    \coordinate (M) at ({\rhoM*cos(\thM)}, {\rhoM*sin(\thM)});
+    \coordinate (N) at (\rhoM, 0);
+
+    % 极轴 Ox 与渐近线 l
+    \draw[->] (-1.15, 0) -- (2.85, 0) node[below, font=\scriptsize] {$x$};
+    \draw (-1.15, \b) -- (2.85, \b);
+    \node[above left=-1pt, font=\scriptsize] at (-1.10, \b) {$l$};
+
+    % 双曲螺线 rho = b/theta (theta > 0)
+    \draw[very thick, curveblue, domain=22:760, samples=220, variable=\t]
+      plot ({(\bdeg/\t)*cos(\t)}, {(\bdeg/\t)*sin(\t)});
+
+    % 极径 OM, 角度 theta 与圆弧 MN
+    \draw (O) -- (M) node[midway, above left=-2pt, font=\scriptsize] {$\rho$};
+    \draw[densely dashed] (M) arc (\thM:0:\rhoM);
+    \draw (0.45, 0) arc (0:\thM:0.45);
+    \node[font=\scriptsize] at ({0.5*\thM}:0.65) {$\theta$};
+
+    \fill (O) circle (1.2pt) node[below left=2pt, font=\scriptsize] {$O$};
+    \fill (M) circle (1.2pt) node[below=2pt, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[below, font=\scriptsize] {$N$};
+  \end{tikzpicture}
+  \caption*{图\ 67.1}
+\end{wrapfigure}
+
+所得到的曲线叫做双曲螺线。图 67.1 中画出双曲螺线的 $\theta>0$ 的部分，直线 $l$ 是渐近线，$l$ 平行于极轴 $Ox$。当 $\theta\to 0$ 时曲线绕极点 $O$ 无限止地旋转，无限接近 $O$ 点，但不能到达 $O$ 点，这样的点 $O$ 叫做曲线的渐近点。$\theta<0$ 的部分与 $\theta>0$ 的部分对称，对称轴是过 $O$ 点所作的极轴的垂线。
+
+双曲螺线的几何特性是：对于曲线上的任意点 $M(\rho, \theta)$，把极半径 $OM$ 旋转 $\theta$ 角后落到极轴 $Ox$ 上，$M$ 所走过的路程 $\arc{MN}$ 的弧长等于定长 $b$。

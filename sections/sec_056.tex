@@ -1,0 +1,108 @@
+\section{利用阿基米德螺线解作图题}
+\markboth{56. 利用阿基米德螺线解作图题}{56. 利用阿基米德螺线解作图题}
+
+古代希腊有些人特别强调几何学对于训练逻辑思维的作用，因而主张解作图题时只许有限次地使用两件非常简单的工具：一件是圆规；一件是单边无刻度直尺，即只有一边直的尺，尺上不带刻度，也不允许在尺上做记号。对于圆规和直尺的用法，都有具体规定。在这种严格限制下解作图题的方法，叫做尺规作图法。限制太严，实际上是作茧自缚。有些用其它方法很容易解出的作图题，用尺规作图法却很难解决，甚至根本解决不了。用尺规作图法不可能解决的问题，叫做尺规作图不能问题。例如三等分任意角问题、化圆为方问题和倍立方问题，对于当时主张尺规作图法的人来说，觉得是三大难题，后来都被证明是尺规作图不能问题。但在当时也有一些人不受尺规作图法的约束，利用曲线的性质解答这些作图题。下面介绍怎样利用阿基米德螺线解答三等分任意角问题和化圆为方问题。
+
+\noindent
+\begin{minipage}[c]{0.40\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.86, >=Stealth, line cap=round, line join=round]
+    \def\angB{52}
+    \def\R{2.35}
+    \pgfmathsetmacro{\radB}{\angB*pi/180}
+    \pgfmathsetmacro{\a}{\R/\radB}
+    \coordinate (A) at (0, 0);
+    \coordinate (C) at (2.15, 0);
+    \coordinate (B) at (\angB:\R);
+    \coordinate (N1) at (\angB:{\R/3});
+    \coordinate (N2) at (\angB:{2*\R/3});
+    \coordinate (M1) at ({\angB/3}:{\R/3});
+    \coordinate (M2) at ({2*\angB/3}:{2*\R/3});
+
+    % 角的两边
+    \draw[thick] (A) -- (C);
+    \draw[thick] (A) -- (B);
+
+    % 线段 AB 上的三等分记号（双短线）
+    \foreach \frac in {1/6, 3/6, 5/6} {
+      \coordinate (T) at (\angB:{\frac*\R});
+      \draw ($(T)+(\angB:-0.025)+({\angB+90}:-0.06)$) -- ($(T)+(\angB:-0.025)+({\angB+90}:0.06)$);
+      \draw ($(T)+(\angB:0.025)+({\angB+90}:-0.06)$) -- ($(T)+(\angB:0.025)+({\angB+90}:0.06)$);
+    }
+
+    % 阿基米德螺线
+    \draw[very thick, curveblue, domain=0:\radB, samples=60, variable=\t]
+      plot ({\a*\t*cos(\t r)}, {\a*\t*sin(\t r)});
+
+    % 圆弧与连线（作图辅助圆弧原书为虚线）
+    \draw[densely dashed, thin] (N1) arc (\angB:{\angB/3}:{\R/3});
+    \draw[densely dashed, thin] (N2) arc (\angB:{2*\angB/3}:{2*\R/3});
+    \draw (A) -- (M1);
+    \draw (A) -- (M2);
+
+    % 标点
+    \fill (A) circle (1.1pt) node[below left=-2pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.2pt) node[right=1pt, font=\scriptsize] {$B$};
+    \node[below, font=\scriptsize] at (C) {$C$};
+    \fill (N1) circle (1.1pt) node[above left=-2pt, font=\scriptsize] {$N_1$};
+    \fill (N2) circle (1.1pt) node[above left=-2pt, font=\scriptsize] {$N_2$};
+    \fill (M1) circle (1.1pt) node[right=1pt, yshift=-1pt, font=\scriptsize] {$M_1$};
+    \fill (M2) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$M_2$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 56.1}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.57\textwidth}
+  \hspace*{2em}如图 56.1，已知任意角 $CAB$，要把它分成相等的三部分，选取极坐标系，使 $A$ 为极点，$AC$ 为极轴，作阿基米德螺线 $\rho = a\theta$，交角的另一边于点 $B$。把线段 $AB$ 三等分，设分点为 $N_1$、$N_2$。以 $A$ 为圆心，分别以 $AN_1$、$AN_2$ 为半径画圆弧，交阿基米德螺线于 $M_1$、$M_2$。连 $AM_1$、$AM_2$，则
+  \[
+    \angle CAM_1 = \angle M_1AM_2 = \angle M_2AB,
+  \]
+  这样就解决了三等分任意角问题。
+\end{minipage}
+
+进而，从 $\rho = a\theta$，对 $\theta$ 求导，得 $\rho' = a$。设曲线上任意点处的切线与极半径的夹角为 $\psi$，根据第 51 节的公式，得到
+\[
+  \tg\psi = \frac{\rho}{\rho'} = \frac{a\theta}{a} = \theta.
+\]
+
+\noindent
+\begin{minipage}[c]{0.60\textwidth}
+\hspace*{2em}这样就得到了一个根据圆半径 $r$ 作一线段等于圆周长 $2\pi r$ 的方法。具体作法如下：作线段 $OA = r$，再以 $O$ 为极点、$OA$ 为极轴作阿基米德螺线 $\rho = a\theta$，使其导程为 $r$。作此曲线在点 $A$ 的切线，又过点 $O$ 作 $OA$ 的垂线，两直线交于点 $C$（图 56.2），由于 $OC = OA\tg A = r\tg\psi$，而 $\tg\psi$ 等于 $A$ 点的极角 $2\pi$，所以 $OC = 2\pi r$。
+
+\hspace*{2em}现在就容易解决化圆为方问题了：取线段 $CO$ 的中点 $D$，则 $OD = \pi r$；然后作线段 $x$，使它是 $OD$ 和 $OA$ 的比例中项，则 $x^2 = \pi r^2$，于是以 $x$ 为一边的正方形的面积就等于以 $r$ 为半径的圆的面积。
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.36\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    \def\r{0.56}
+    \pgfmathsetmacro{\a}{\r/(2*pi)}
+    \pgfmathsetmacro{\oc}{2*pi*\r}
+    \coordinate (O) at (0, 0);
+    \coordinate (A) at (\r, 0);
+    \coordinate (C) at (0, -\oc);
+
+    % 极轴 OA 及其延长
+    \draw[->] (O) -- ({\r+0.36}, 0);
+    % 垂线 OC 与原点直角记号
+    \draw (O) -- (C);
+    \draw (0, -0.12) -- (0.12, -0.12) -- (0.12, 0);
+    % 切线 CA 及其延长
+    \draw[->] (C) -- ({\r+0.13}, {0.13*2*pi});
+
+    % 阿基米德螺线一圈 (0 到 2*pi)
+    \draw[very thick, curveblue, domain=0:{2*pi}, samples=90, variable=\t]
+      plot ({\a*\t*cos(\t r)}, {\a*\t*sin(\t r)});
+
+    % 角度 psi
+    \pgfmathsetmacro{\angAC}{180 + deg(atan(2*pi))}
+    \draw ($(A)+(180:0.22)$) arc (180:\angAC:0.22);
+    \node[font=\scriptsize, fill=white, inner sep=0.2pt] at ($(A)+(222:0.35)$) {$\psi$};
+
+    % 标点与标签
+    \fill (O) circle (1.1pt) node[left=3pt, yshift=2pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$A$};
+    \fill (C) circle (1.1pt) node[below left=-2pt, font=\scriptsize] {$C$};
+    \node[above, font=\scriptsize] at (0.34, 0.02) {$r$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 56.2}
+\end{minipage}

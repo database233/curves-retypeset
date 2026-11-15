@@ -1,0 +1,149 @@
+\section{变幅内摆线}
+\markboth{35. 变幅内摆线}{35. 变幅内摆线}
+
+设 $r<R$，当半径为 $r$ 的动圆 $O_1$ 在半径为 $R$ 的定圆 $O$ 内无滑动地滚动时，在圆 $O_1$ 平面内与圆 $O_1$ 固定连结但不在 $O_1$ 圆周上的一点 $M$ 的轨迹叫做变幅内摆线。
+
+变幅内摆线可分成两类：当 $M$ 在圆 $O_1$ 外部时，曲线称为长幅内摆线；而当 $M$ 在圆 $O_1$ 内部时，称为短幅内摆线。
+
+如果 $M$ 在圆 $O_1$ 的圆周上，那么 $M$ 的轨迹成为内摆线，这在前面第 24 节中已经讨论过。内摆线和变幅内摆线统称为内摆线族曲线。
+
+例如，在第 22 节中讨论卡丹的转盘问题时，我们实际上已经证明了，当动圆半径等于定圆半径的一半时，长幅内摆线和短幅内摆线都是椭圆。
+
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    % R = 1.45, r = 0.55, h = 0.30, angle(AON) = 45 deg
+    \def\R{1.45}
+    \def\r{0.55}
+    \def\h{0.30}
+    \def\angAON{45}
+    \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
+    \pgfmathsetmacro{\alp}{\angAON - \tdeg}
+    \coordinate (O) at (0,0);
+    \coordinate (N) at ({\R*cos(\angAON)}, {\R*sin(\angAON)});
+    \coordinate (O1) at ({(\R-\r)*cos(\angAON)}, {(\R-\r)*sin(\angAON)});
+    \coordinate (M) at ({(\R-\r)*cos(\angAON) + \h*cos(\alp)}, {(\R-\r)*sin(\angAON) + \h*sin(\alp)});
+
+    \draw[->] (-1.65, 0) -- (1.80, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.65) -- (0, 1.80) node[left, font=\footnotesize] {$y$};
+
+    \draw[thick] (O) circle (\R);
+    \draw (O1) circle (\r);
+    \fill (\R-\r, 0) circle (1.2pt);
+    \fill (\R-\r+\h, 0) circle (1.2pt);
+
+    \draw (O) -- (N);
+    \draw (O1) -- (M);
+    \draw[thin] (O1) -- ++(0.65, 0);
+
+    % 角 t 与 角 alpha
+    \draw ($(O1) + (\angAON:0.22)$) arc (\angAON:\alp:0.22);
+    \node[font=\scriptsize] at ($(O1) + (22:0.35)$) {$t$};
+    \draw ($(O1) + (0:0.32)$) arc (0:\alp:0.32);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.45)$) {$\alpha$};
+
+    \fill (O) circle (1.2pt) node[below left, font=\footnotesize] {$O$};
+    \fill (N) circle (1.2pt) node[above right=-1pt, font=\footnotesize] {$N$};
+    \fill (O1) circle (1.2pt) node[above left=-2pt, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.3pt) node[below=-1pt, font=\footnotesize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 35.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace{2em}下面推导变幅内摆线的方程。如图 35.1，取定圆的圆心 $O$ 为坐标原点，并且选取 $x$ 轴的方向，使动圆的圆心落在 $x$ 轴正半轴上时，$M$ 的位置离 $O$ 点最远。设动圆 $O_1$ 滚动到图 35.1 中的任意位置，这时 $M$ 的坐标是 $(x, y)$，并且两圆的切点是 $N$。仿 24 节内摆线的求法，设
+  \[
+    \angle MO_1N = t,
+  \]
+\end{minipage}
+
+\noindent
+则 $\overrightarrow{O_1M}$ 的幅角 $\alpha=\frac{r}{R}t-t$，记 $O_1M=h$，由 $\overrightarrow{OM}=\overrightarrow{OO_1}+\overrightarrow{O_1M}$ 得
+\begin{align*}
+  (x, y) &= \Bigl((R-r)\cos\frac{r}{R}t,\, (R-r)\sin\frac{r}{R}t\Bigr) + (h\cos\alpha,\, h\sin\alpha) \\
+         &= \biggl((R-r)\cos\frac{r}{R}t + h\cos\Bigl(t - \frac{r}{R}t\Bigr), \\
+         &\qquad\ (R-r)\sin\frac{r}{R}t - h\sin\Bigl(t - \frac{r}{R}t\Bigr)\biggr).
+\end{align*}
+令 $\frac{r}{R}=m$，就得到曲线的参数方程为
+\[
+  \begin{aligned}
+    x &= (R-mR)\cos mt + h\cos(t-mt), \\
+    y &= (R-mR)\sin mt - h\sin(t-mt).
+  \end{aligned}
+  \quad (0<m<1)
+\]
+这里，由于 $0<r<R$，所以 $0<m<1$。当 $h>mR$ 时得到长幅内摆线，$h<mR$ 时得到短幅内摆线。若 $h=mR$，则得到内摆线。所以上述方程是内摆线族曲线的统一方程。
+
+在图 35.2～35.4 中分别画出了 $m=\frac{1}{4}$ 时的长幅内摆线、内摆线（星形线）和短幅内摆线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.08, line cap=round, line join=round]
+      % m = 1/4, R = 1, r = 0.25, h = 0.45 (长幅内摆线)
+      \def\R{1.0}
+      \def\r{0.25}
+      \def\h{0.45}
+      \def\ang{38}
+      \pgfmathsetmacro{\tdeg}{\R/\r*\ang}
+      \pgfmathsetmacro{\alp}{\ang - \tdeg}
+      \draw (0,0) circle (\R);
+      \draw ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) circle (\r);
+      \draw ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) -- ({(\R-\r)*cos(\ang)+\h*cos(\alp)}, {(\R-\r)*sin(\ang)+\h*sin(\alp)});
+      \fill ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) circle (0.9pt);
+      \fill ({(\R-\r)*cos(\ang)+\h*cos(\alp)}, {(\R-\r)*sin(\ang)+\h*sin(\alp)}) circle (1.1pt);
+      \draw[very thick, curveblue, domain=0:1440, samples=260, variable=\s]
+        plot ({(\R-\r)*cos(0.25*\s) + \h*cos(0.75*\s)},
+              {(\R-\r)*sin(0.25*\s) - \h*sin(0.75*\s)});
+    \end{tikzpicture}
+    \caption*{图\ 35.2}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.08, line cap=round, line join=round]
+      % m = 1/4, R = 1, r = 0.25, h = 0.25 (内摆线/星形线)
+      \def\R{1.0}
+      \def\r{0.25}
+      \def\h{0.25}
+      \def\ang{38}
+      \pgfmathsetmacro{\tdeg}{\R/\r*\ang}
+      \pgfmathsetmacro{\alp}{\ang - \tdeg}
+      \draw (0,0) circle (\R);
+      \draw ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) circle (\r);
+      \draw ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) -- ({(\R-\r)*cos(\ang)+\h*cos(\alp)}, {(\R-\r)*sin(\ang)+\h*sin(\alp)});
+      \fill ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) circle (0.9pt);
+      \fill ({(\R-\r)*cos(\ang)+\h*cos(\alp)}, {(\R-\r)*sin(\ang)+\h*sin(\alp)}) circle (1.1pt);
+      \draw[very thick, curveblue, domain=0:1440, samples=260, variable=\s]
+        plot ({(\R-\r)*cos(0.25*\s) + \h*cos(0.75*\s)},
+              {(\R-\r)*sin(0.25*\s) - \h*sin(0.75*\s)});
+    \end{tikzpicture}
+    \caption*{图\ 35.3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.08, line cap=round, line join=round]
+      % m = 1/4, R = 1, r = 0.25, h = 0.13 (短幅内摆线)
+      \def\R{1.0}
+      \def\r{0.25}
+      \def\h{0.13}
+      \def\ang{38}
+      \pgfmathsetmacro{\tdeg}{\R/\r*\ang}
+      \pgfmathsetmacro{\alp}{\ang - \tdeg}
+      \draw (0,0) circle (\R);
+      \draw ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) circle (\r);
+      \draw ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) -- ({(\R-\r)*cos(\ang)+\h*cos(\alp)}, {(\R-\r)*sin(\ang)+\h*sin(\alp)});
+      \fill ({(\R-\r)*cos(\ang)}, {(\R-\r)*sin(\ang)}) circle (0.9pt);
+      \fill ({(\R-\r)*cos(\ang)+\h*cos(\alp)}, {(\R-\r)*sin(\ang)+\h*sin(\alp)}) circle (1.1pt);
+      \draw[very thick, curveblue, domain=0:1440, samples=260, variable=\s]
+        plot ({(\R-\r)*cos(0.25*\s) + \h*cos(0.75*\s)},
+              {(\R-\r)*sin(0.25*\s) - \h*sin(0.75*\s)});
+    \end{tikzpicture}
+    \caption*{图\ 35.4}
+  \end{minipage}
+\end{figure}

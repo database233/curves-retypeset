@@ -1,0 +1,114 @@
+\section{填满正方形的曲线}
+\markboth{99. 填满正方形的曲线}{99. 填满正方形的曲线}
+
+当我们刚开始学习几何概念时，就知道数学里抽象意义下的线只有长度，没有宽度和厚度；面有长度和宽度，没有厚度。由此推想，觉得恐怕不会有任何曲线能够填满整个一块平面区域，例如正方形内部或圆的内部了。但是意大利数学家皮亚诺（1858～1932）却在 1890 年举出一个例子，说明存在着通过某一正方形内所有各点的连续曲线。这个发现迅速引起广泛重视，很快又找到另外一些具有这种性质的曲线的例子。所有这些填满正方形的曲线，不论是谁作出的，都被叫做皮亚诺曲线，因为皮亚诺最先发现了这种曲线的存在。
+
+下面介绍一个比较简单的皮亚诺曲线的例子，这个例子是波兰数学家谢尔品斯基（1882～1969）作出的。
+
+如图 99.1，先把正方形划分成同样大小的四格，为了叙述方便，约定称它们为第一级格子。画一个如图所示的多边形，使它通过每个第一级格子，约定称这个多边形为第一级曲线。然后像图 99.2 那样，把第一级曲线缩小，在每个第一级格子里画一条第一级曲线，并且像图 99.2 那样把这四条第一级曲线沟通，连成一条较复杂的曲线，叫做第二级曲线。重复这样的过程，顺次得到第三级曲线（图 99.3）、第四级曲线（图 99.4），等等，如此无限继续，在极限情形下就得到填满正方形的曲线。
+
+\begingroup
+% 谢尔品斯基填充正方形曲线递归宏（基于整数网格坐标，零浮点误差）
+\makeatletter
+\newcount\sierp@x
+\newcount\sierp@y
+\def\sierp@step#1#2{%
+  \advance\sierp@x by #1\relax
+  \advance\sierp@y by #2\relax
+  \edef\sierp@path{\sierp@path -- (\the\sierp@x,\the\sierp@y)}%
+}
+\def\sierp@A#1{%
+  \ifnum#1>0
+    \begingroup\count0=#1 \advance\count0 by -1
+    \expandafter\endgroup\expandafter\sierp@A\expandafter{\the\numexpr#1-1\relax}%
+    \sierp@step{1}{-1}%
+    \sierp@B{\the\numexpr#1-1\relax}%
+    \sierp@step{2}{0}%
+    \sierp@D{\the\numexpr#1-1\relax}%
+    \sierp@step{1}{1}%
+    \sierp@A{\the\numexpr#1-1\relax}%
+  \fi
+}
+\def\sierp@B#1{%
+  \ifnum#1>0
+    \sierp@B{\the\numexpr#1-1\relax}%
+    \sierp@step{-1}{-1}%
+    \sierp@C{\the\numexpr#1-1\relax}%
+    \sierp@step{0}{-2}%
+    \sierp@A{\the\numexpr#1-1\relax}%
+    \sierp@step{1}{-1}%
+    \sierp@B{\the\numexpr#1-1\relax}%
+  \fi
+}
+\def\sierp@C#1{%
+  \ifnum#1>0
+    \sierp@C{\the\numexpr#1-1\relax}%
+    \sierp@step{-1}{1}%
+    \sierp@D{\the\numexpr#1-1\relax}%
+    \sierp@step{-2}{0}%
+    \sierp@B{\the\numexpr#1-1\relax}%
+    \sierp@step{-1}{-1}%
+    \sierp@C{\the\numexpr#1-1\relax}%
+  \fi
+}
+\def\sierp@D#1{%
+  \ifnum#1>0
+    \sierp@D{\the\numexpr#1-1\relax}%
+    \sierp@step{1}{1}%
+    \sierp@A{\the\numexpr#1-1\relax}%
+    \sierp@step{0}{2}%
+    \sierp@C{\the\numexpr#1-1\relax}%
+    \sierp@step{-1}{1}%
+    \sierp@D{\the\numexpr#1-1\relax}%
+  \fi
+}
+\newcommand{\drawSierpinskiOrder}[3]{% #1=阶数, #2=边长(cm), #3=是否画网格(1/0)
+  \begingroup
+    \pgfmathtruncatemacro{\sierpN}{2^(#1+2)}%
+    \pgfmathsetmacro{\sierpScale}{#2/\sierpN}%
+    \sierp@x=2\relax
+    \sierp@y=\numexpr\sierpN-1\relax
+    \edef\sierp@start{(\the\sierp@x,\the\sierp@y)}%
+    \def\sierp@path{}%
+    \sierp@A{#1}\sierp@step{1}{-1}%
+    \sierp@B{#1}\sierp@step{-1}{-1}%
+    \sierp@C{#1}\sierp@step{-1}{1}%
+    \sierp@D{#1}\sierp@step{1}{1}%
+    \begin{tikzpicture}[scale=\sierpScale]
+      \ifnum#3=1
+        \draw[line width=0.35pt, black!70] (0,0) grid[step=4] (\sierpN,\sierpN);
+      \fi
+      \draw[line width=0.65pt] (0,0) rectangle (\sierpN,\sierpN);
+      \draw[line width=0.55pt, curveblue] \sierp@start \sierp@path;
+    \end{tikzpicture}%
+  \endgroup
+}
+\makeatother
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[t]{0.23\textwidth}
+    \centering
+    \drawSierpinskiOrder{1}{2.05}{1}
+    \caption*{图\ 99.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.23\textwidth}
+    \centering
+    \drawSierpinskiOrder{2}{2.05}{1}
+    \caption*{图\ 99.2}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.23\textwidth}
+    \centering
+    \drawSierpinskiOrder{3}{2.05}{1}
+    \caption*{图\ 99.3}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.23\textwidth}
+    \centering
+    \drawSierpinskiOrder{4}{2.05}{0}
+    \caption*{图\ 99.4}
+  \end{minipage}
+\end{figure}
+\endgroup

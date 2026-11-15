@@ -1,0 +1,176 @@
+\section{用三角板画蔓叶线}
+\markboth{63. 用三角板画蔓叶线}{63. 用三角板画蔓叶线}
+
+\begin{wrapfigure}[14]{r}{0.43\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    % p = 1.4 => 焦点 F = (-0.7, 0), 准线 l: x = 0.7, 抛物线 Y^2 = -2.8 X
+    \def\p{1.4}
+    \def\a{0.7}
+    % 取 P 在抛物线第三象限: Y = -1.68 => X = -Y^2/(2p) = -1.008
+    \pgfmathsetmacro{\PY}{-1.68}
+    \pgfmathsetmacro{\PX}{-(\PY*\PY)/(2*\p)}
+    \pgfmathsetmacro{\Mx}{(\p*\PY*\PY)/(2*(\p*\p+\PY*\PY))}
+    \pgfmathsetmacro{\My}{(\PY*\PY*\PY)/(2*(\p*\p+\PY*\PY))}
+
+    \coordinate (O) at (0,0);
+    \coordinate (F) at (-\a, 0);
+    \coordinate (A) at (\a, 0);
+    \coordinate (P) at (\PX, \PY);
+    \coordinate (M) at (\Mx, \My);
+
+    % 坐标轴与准线 l
+    \draw[->] (-1.95, 0) -- (1.15, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -2.05) -- (0, 2.05) node[left, font=\scriptsize] {$y$};
+    \draw[densely dashed] (\a, -1.95) -- (\a, 1.95);
+    \node[right, font=\scriptsize] at (\a, -1.65) {$l$};
+
+    % 辅助圆（直径 OA）
+    \draw ({0.5*\a}, 0) circle ({0.5*\a});
+
+    % 抛物线 Y^2 = -2pX
+    \draw[thick, domain=-1.92:1.92, samples=90, variable=\Y]
+      plot ({-(\Y*\Y)/(2*\p)}, {\Y});
+
+    % 蔓叶线 y^2 = x^3/(a-x)
+    \draw[very thick, curveblue, domain=-1.55:1.55, samples=110, variable=\t]
+      plot ({\a*\t*\t/(1+\t*\t)}, {\a*\t*\t*\t/(1+\t*\t)});
+
+    % 切线 PM 与垂线 OM
+    \draw (P) -- ($(P)!1.18!(M)$);
+    \draw (O) -- (M);
+
+    % 关键点
+    \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (F) circle (1.1pt) node[below, font=\scriptsize] {$F$};
+    \fill (A) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$A$};
+    \fill (P) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$P$};
+    \fill (M) circle (1.1pt) node[below=1pt, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \caption*{图\ 63.1}
+\end{wrapfigure}
+
+在图 63.1 中画了两条曲线，$y$ 轴左边的曲线是抛物线，它的顶点是坐标原点，对称轴是 $x$ 轴，$y$ 轴右边的曲线是蔓叶线，它的尖点恰好是抛物线的顶点，它的渐近线恰好是抛物线的准线。图中 $P$ 是抛物线上的任意点，$MP$ 是抛物线的切线，$OM$ 是 $MP$ 的垂线，垂足 $M$ 恰好在蔓叶线上。这个事实可以叙述成：抛物线关于其顶点 $O$ 的垂足曲线是蔓叶线。这个结论的正确性可证明如下。
+
+设图 63.1 中抛物线的焦点 $F$ 到准线 $l$ 的距离为 $p$，$P(X,Y)$ 是抛物线上的任意点，则
+\[
+  Y^2 = -2pX.
+\]
+切线 $PM$ 的斜率是
+\[
+  \frac{dY}{dX} = -\frac{p}{Y},
+\]
+切线 $PM$ 的方程是
+\[
+  y - Y = -\frac{p}{Y}(x - X).
+\]
+两边同乘以 $Y$，并且把 $pX$ 换成 $-\frac{1}{2}Y^2$，化为
+\[
+  px + Yy = \frac{1}{2}Y^2.
+\]
+垂线 $OM$ 的方程是 $y = \frac{Y}{p}x$，即
+\[
+  Yx - py = 0.
+\]
+从 $PM$ 和 $OM$ 的方程解出交点 $M$ 的坐标 $(x,y)$，得到
+\[
+  x = \frac{pY^2}{2(p^2+Y^2)},\quad y = \frac{Y^3}{2(p^2+Y^2)}.
+\]
+利用 $Y=\frac{py}{x}$ 消去 $Y$ 后，得到
+\[
+  y^2 = \frac{x^3}{\frac{p}{2}-x}.
+\]
+这正是蔓叶线的方程（见第 61 节），蔓叶线的渐近线 $x=\frac{p}{2}$ 正好是抛物线的准线 $l$，蔓叶线的尖点是坐标原点 $O$，即抛物线的顶点，这就证明了所需的结论。
+
+根据上述结论可知，如果已知一条抛物线和它的顶点 $O$，那么只要用一块三角板，就能画出蔓叶线：让三角板的一条直角边通过 $O$ 点，另一条直角边与抛物线相切，这时直角顶点 $M$ 的位置就是蔓叶线上的一点。继续这样得到若干点后，就可描出蔓叶线了。
+
+\begin{wrapfigure}[8]{l}{0.41\textwidth}
+  \centering
+  \vspace{-6pt}
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    % a = p/2 = 0.72, F = (-0.72, 0), N = (0, 0.68)
+    \def\a{0.72}
+    \def\yN{0.68}
+    \pgfmathsetmacro{\lenFN}{sqrt(\a*\a + \yN*\yN)}
+    % 单位方向向量: e1 沿 NF (指向左下), e2 沿 NT (指向左上)
+    \pgfmathsetmacro{\ex}{-\a/\lenFN}
+    \pgfmathsetmacro{\ey}{-\yN/\lenFN}
+    \pgfmathsetmacro{\fx}{-\yN/\lenFN}
+    \pgfmathsetmacro{\fy}{\a/\lenFN}
+    % 垂足 M
+    \pgfmathsetmacro{\Mx}{\a*\yN*\yN/(\a*\a+\yN*\yN)}
+    \pgfmathsetmacro{\My}{\yN*\yN*\yN/(\a*\a+\yN*\yN)}
+
+    \coordinate (O) at (0,0);
+    \coordinate (F) at (-\a, 0);
+    \coordinate (N) at (0, \yN);
+    \coordinate (M) at (\Mx, \My);
+    \coordinate (T) at ({\fx*1.12}, {\yN + \fy*1.12});
+
+    % 坐标轴与渐近线 l
+    \draw[->] (-1.15, 0) -- (1.15, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.50) -- (0, 1.82) node[left, font=\scriptsize] {$y$};
+    \draw (\a, -0.42) -- (\a, 1.56);
+    \node[right, font=\scriptsize] at (\a, -0.35) {$l$};
+
+    % 蔓叶线 y^2 = x^3/(a-x)
+    \draw[very thick, curveblue, domain=0:1.28, samples=80, variable=\t]
+      plot ({\a*\t*\t/(1+\t*\t)}, {\a*\t*\t*\t/(1+\t*\t)});
+
+    % 第一块三角板初始位置（虚线）: 直角顶点在 N, 一条边过 F, 一条边沿 NT
+    \coordinate (P1) at ({\ex*1.05}, {\yN + \ey*1.05});
+    \coordinate (P2) at ({\fx*1.10}, {\yN + \fy*1.10});
+    \draw[densely dashed] (N) -- (P1) -- (P2) -- cycle;
+    % 第一块三角板内部镂空三角形（虚线，严格相似）
+    \coordinate (I1a) at ($(N) + ({\ex*0.24 + \fx*0.24}, {\ey*0.24 + \fy*0.24})$);
+    \coordinate (I1b) at ($(N) + ({\ex*0.72 + \fx*0.24}, {\ey*0.72 + \fy*0.24})$);
+    \coordinate (I1c) at ($(N) + ({\ex*0.24 + \fx*0.74}, {\ey*0.24 + \fy*0.74})$);
+    \draw[densely dashed] (I1a) -- (I1b) -- (I1c) -- cycle;
+
+    % 直线 NT 延长通过 M 并向右下延伸
+    \draw (P2) -- ($(N)!1.55!(M)$);
+
+    % 第二块三角板（实线）: 斜边紧贴 NT 并在 NT 右上方，直角在 S3
+    \pgfmathsetmacro{\sA}{0.95}
+    \pgfmathsetmacro{\sB}{0.72}
+    \pgfmathsetmacro{\sHyp}{\sA + \sB}
+    \pgfmathsetmacro{\sProj}{0.26 * \sHyp}
+    \pgfmathsetmacro{\sAlt}{sqrt(\sProj * (\sHyp - \sProj))}
+    \coordinate (S1) at ($(N) + ({\fx*\sA}, {\fy*\sA})$);
+    \coordinate (S2) at ($(N) + ({-\fx*\sB}, {-\fy*\sB})$);
+    \coordinate (S3) at ($(S1) + ({-\fx*\sProj - \ex*\sAlt}, {-\fy*\sProj - \ey*\sAlt})$);
+    \draw[thick] (S1) -- (S2) -- (S3) -- cycle;
+    % 第二块三角板内部镂空三角形：以内心为位似中心缩小，严格相似且边距均匀
+    \pgfmathsetmacro{\la}{sqrt((\sHyp-\sProj)*(\sHyp-\sProj) + \sAlt*\sAlt)}
+    \pgfmathsetmacro{\lb}{sqrt(\sProj*\sProj + \sAlt*\sAlt)}
+    \pgfmathsetmacro{\lc}{\sHyp}
+    \pgfmathsetmacro{\lperim}{\la + \lb + \lc}
+    \pgfmathsetmacro{\wa}{\la/\lperim}
+    \pgfmathsetmacro{\wb}{\lb/\lperim}
+    \pgfmathsetmacro{\wc}{\lc/\lperim}
+    \pgfmathsetmacro{\khom}{0.52}
+    \coordinate (Ic12) at ($(S1)!{\wb/(\wa+\wb)}!(S2)$);
+    \coordinate (Ic2) at ($(Ic12)!\wc!(S3)$);
+    \coordinate (J1) at ($(Ic2)!\khom!(S1)$);
+    \coordinate (J2) at ($(Ic2)!\khom!(S2)$);
+    \coordinate (J3) at ($(Ic2)!\khom!(S3)$);
+    \draw (J1) -- (J2) -- (J3) -- cycle;
+
+    % 垂线 OM 与 M 处直角符号
+    \draw[thick] (O) -- (M);
+    \draw (M) -- ($(M)+({\ex*0.10},{\ey*0.10})$)
+      -- ($(M)+({\ex*0.10+\fx*0.10},{\ey*0.10+\fy*0.10})$)
+      -- ($(M)+({\fx*0.10},{\fy*0.10})$);
+
+    % 关键点与标注
+    \fill (O) circle (1.0pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (F) circle (1.0pt) node[below, font=\scriptsize] {$F$};
+    \fill (N) circle (1.0pt) node[below left=0.5pt, fill=white, inner sep=0.5pt, font=\scriptsize] {$N$};
+    \fill (M) circle (1.0pt) node[below=1.5pt, fill=white, inner sep=0.4pt, font=\scriptsize] {$M$};
+    \node[above left=-1pt, font=\scriptsize] at (T) {$T$};
+  \end{tikzpicture}
+  \caption*{图\ 63.2}
+\end{wrapfigure}
+
+如果手头没有任何抛物线图形，那么用两块三角板也能画出蔓叶线。如图 63.2，任取两点 $F$ 和 $O$，连 $FO$，利用三角板作 $Oy\perp FO$。让一块三角板的一条直角边通过 $F$ 点，直角顶点 $N$ 在直线 $Oy$ 上，那么根据第 8 节，第二条直角边 $NT$ 是一条抛物线的切线，并且 $O$ 点是这抛物线的顶点。把第二块三角板的斜边沿 $NT$ 与第一块三角板贴紧，然后固定第二块三角板，让第一块三角板滑动，使它的一条直角边仍然在直线 $NT$ 上，而另一条直角边通过 $O$ 点，这时直角顶点 $M$ 的位置就是从 $O$ 点向抛物线的切线 $NT$ 所作垂线的垂足，因而是蔓叶线上的一点。

@@ -1,0 +1,61 @@
+\section{农业机械中的长幅摆线}
+\markboth{20. 农业机械中的长幅摆线}{20. 农业机械中的长幅摆线}
+
+很多农业机械在工作时，都有一些部件在绕着自己的轴旋转，这些部件又随着整个机具一起向前作匀速直线运动。根据第 19 节的讨论，在这些一边旋转一边前进的部件上，每个点都在空中画出一条摆线或变幅摆线。
+
+农业机械里经常用到长幅摆线，而且主要应用它的绕扣部分。例如，图 20.1 是卧式旋耕机的工作原理示意图\footnote{重排校订：原书图 20.1 中刀片编号“1”位置不清，且四条长幅摆线轨迹起点截断参差不齐；本版重绘时将四条轨迹统一自各刀尖（$t=0$）同步出发，并清晰标出刀片 1～4。}。从图中可以看出，卧式旋耕机的每把刀片画出一条长幅摆线，它的绕扣部分很大。调整旋转轴的高度，可以使刀片在绕扣最宽的地方入土，翻松绕扣下半截的泥土后，再露出地面。四把刀片画出的四条长幅摆线顺次错开，绕扣部分互相重迭，实现了连续翻耕土地的动作。在这种机具上只有利用长幅摆线才行，如果刀尖的运动轨迹不是长幅摆线，而是普通摆线或短幅摆线，那么就不能进行翻土的动作。
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.02, >=Stealth, font=\footnotesize]
+    \def\r{0.26}
+    \def\a{0.64}
+
+    % 水平轴线与中心十字线
+    \draw[thin] ({-\a - 0.14}, 0) -- ({3*pi*\r + \a + 0.38}, 0);
+    \draw[thin] (0, {-\a - 0.14}) -- (0, {\a + 0.14});
+
+    % 旋耕机圆盘虚线外圈
+    \draw[dashed, mutedgray] (0, 0) circle (\a);
+
+    % 四把弯刀片（1 上，2 左，3 下，4 右）
+    \foreach \ang/\lbl/\pos in {90/1/right, 180/2/above, 270/3/left, 0/4/below} {
+      \begin{scope}[rotate=\ang]
+        \draw[thick] (0, 0) .. controls ({0.35*\a}, {0.15*\a}) and ({0.65*\a}, {0.35*\a}) .. (\a, 0);
+        \draw[thick] (0, 0) .. controls ({0.35*\a}, {-0.05*\a}) and ({0.72*\a}, {0.15*\a}) .. (\a, 0);
+      \end{scope}
+    }
+    \node[fill=white, inner sep=0.4pt] at (0.20, {\a - 0.08}) {1};
+    \node[fill=white, inner sep=0.4pt] at ({-\a + 0.16}, 0.16) {2};
+    \node[fill=white, inner sep=0.4pt] at (-0.16, {-\a + 0.16}) {3};
+    \node[fill=white, inner sep=0.4pt] at ({\a - 0.16}, -0.16) {4};
+
+    % 前进方向 u 与刀片标注
+    \draw[->] (-0.88, {\a + 0.28}) -- (-0.44, {\a + 0.28});
+    \node[above, inner sep=1pt] at (-0.66, {\a + 0.29}) {$u$};
+    \node[above] at (0, {\a + 0.16}) {刀片};
+
+    % 四把刀片的长幅摆线轨迹（均从 t=0 各刀尖出发）
+    % 刀片 1
+    \draw[thick, curveblue, smooth, domain=0:{3.18*pi}, samples=120]
+      plot ({\r*\x + \a*sin(\x r)}, {\a*cos(\x r)});
+    % 刀片 2
+    \draw[thick, curveblue, smooth, domain=0:{2.35*pi}, samples=100]
+      plot ({\r*\x + \a*sin((\x - 0.5*pi) r)}, {\a*cos((\x - 0.5*pi) r)});
+    % 刀片 3
+    \draw[thick, curveblue, smooth, domain=0:{2.65*pi}, samples=110]
+      plot ({\r*\x + \a*sin((\x - pi) r)}, {\a*cos((\x - pi) r)});
+    % 刀片 4
+    \draw[thick, curveblue, smooth, domain=0:{2.95*pi}, samples=110]
+      plot ({\r*\x + \a*sin((\x - 1.5*pi) r)}, {\a*cos((\x - 1.5*pi) r)});
+
+    % 底部绕扣编号 1 2 3 4 1
+    \node[below] at ({\r*pi}, {-\a - 0.03}) {1};
+    \node[below] at ({\r*1.5*pi}, {-\a - 0.03}) {2};
+    \node[below] at ({\r*2.0*pi}, {-\a - 0.03}) {3};
+    \node[below] at ({\r*2.5*pi}, {-\a - 0.03}) {4};
+    \node[below] at ({\r*3.0*pi}, {-\a - 0.03}) {1};
+  \end{tikzpicture}
+  \captionof*{figure}{图 20.1}
+\end{center}
+
+又如联合收割机的拨禾板，一面跟随联合收割机前进，一面绕自己的轴旋转。拨禾板要能沿竖直方向插入禾丛，把禾杆引向切割器，并把割断的禾杆向后推送，所以拨禾板的外端也应该描绘长幅摆线，并且在绕扣部分的下半截曲线弧上进行工作。

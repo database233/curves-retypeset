@@ -1,0 +1,21 @@
+# LaTeX 编译临时文件
+*.aux
+*.log
+*.out
+*.toc
+*.xdv
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# 核对与渲染缓存目录
+_audit_renders/
+_compare_cards/
+_ref_pages/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 原书扫描参考件（不上传至公开仓库）
+形形色色的曲线__蒋声-中学生文库.pdf

@@ -1,0 +1,159 @@
+\section{垂心的轨迹}
+\markboth{74. 垂心的轨迹}{74. 垂心的轨迹}
+
+设等腰三角形 $OAB$ 的一腰 $OA$ 是定线段，另一腰 $AB$ 绕顶点 $A$ 旋转，求其垂心 $H$ 的轨迹。
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+  \vspace{2pt}
+  \centering
+  \begin{tikzpicture}[scale=0.95, >=Stealth, line cap=round, line join=round]
+    \def\a{1.75}
+    \def\alphaB{118} % B 相对于 A 的方向角 (即 180 - 62 = 118 deg)
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\a, 0);
+    \coordinate (B) at ({\a + \a*cos(\alphaB)}, {\a*sin(\alphaB)});
+    \coordinate (E) at ($0.5*(O)+0.5*(B)$);
+    \coordinate (D) at ($(A)!(O)!(B)$);
+    \path[name path=lineOD] (O) -- (D);
+    \path[name path=lineAE] (A) -- (E);
+    \path[name intersections={of=lineOD and lineAE, by=H}];
+
+    \draw[->] (O) -- (2.1, 0);
+    \draw (O) -- (B) -- (A);
+    \draw (O) -- (D);
+    \draw (A) -- (E);
+
+    % 角度与线段标注
+    \draw (0.38, 0) arc (0:28:0.38);
+    \node[font=\scriptsize] at (13:0.55) {$\theta$};
+    % rho 放置在 OH 上方开阔区域（符合原书布局）
+    \node[above left=-1pt, font=\scriptsize] at ($0.60*(O)+0.60*(H)$) {$\rho$};
+    \node[below=1pt, font=\scriptsize] at (0.5*\a, 0) {$a$};
+
+    \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.2pt) node[below=1pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.2pt) node[above=1pt, font=\scriptsize] {$B$};
+    \fill (D) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$D$};
+    \fill (E) circle (1.2pt) node[left=1pt, font=\scriptsize] {$E$};
+    \fill (H) circle (1.2pt) node[right=2pt, font=\scriptsize] {$H$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 74.1}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}上面这个问题，看上去和平面几何中常见的轨迹题差不多，但是它的答案既不是直线，也不是圆弧，而是环索线。这个结论的证明如下。
+
+  \hspace*{2em}如图 74.1，选取极坐标系，使 $O$ 为极点，$OA$ 为极轴。记 $OA=a$，$\angle AOH=\theta$，$OH=\rho$，则从直角三角形 $OAD$ 得到
+  \[
+    OD = a\cos\theta,\quad AD = a\sin\theta.
+  \]
+\end{minipage}
+
+又因为 $AH$ 是等腰三角形 $AOB$ 底边上的高，必定平分顶角，所以 $\angle DAH=\angle HAO$。在 $\triangle ADO$ 中应用角平分线的性质，得到 $\dfrac{DH}{HO}=\dfrac{AD}{AO}$，即
+\[
+  \frac{a\cos\theta - \rho}{\rho} = \frac{a\sin\theta}{a},
+\]
+由此得
+\[
+  \rho = \frac{a\cos\theta}{1+\sin\theta}.
+\]
+分子分母同乘以 $1-\sin\theta$，化简后得到
+\[
+  \rho = a\frac{1-\sin\theta}{\cos\theta},
+\]
+这正是环索线的方程。
+
+从图 74.2 $\sim$ 74.4 可以看出当等腰三角形的顶角为锐角、直角、钝角时，垂心 $H$ 在环索线上的位置。
+
+\medskip
+\noindent
+\begin{minipage}[b]{0.32\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.58, >=Stealth, line cap=round, line join=round]
+    \def\a{1.5}
+    \def\phi{66} % 锐角顶角 OAB = 66 deg
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\a, 0);
+    \coordinate (B) at ({\a - \a*cos(\phi)}, {\a*sin(\phi)});
+    \coordinate (E) at ($0.5*(O)+0.5*(B)$);
+      \coordinate (D) at ($(A)!(O)!(B)$);
+      \path[name path=lineOD] (O) -- (D);
+      \path[name path=lineAE] (A) -- (E);
+      \path[name intersections={of=lineOD and lineAE, by=H}];
+
+      % 环索线 rho = a(1 +/- sin t)/cos t
+      \draw[very thick, curveblue, domain=-89.5:48, samples=140, variable=\t]
+        plot ({\a*(1+sin(\t))}, {\a*(1+sin(\t))*tan(\t)});
+      \draw[very thick, curveblue, domain=-48:89.5, samples=140, variable=\t]
+        plot ({\a*(1-sin(\t))}, {\a*(1-sin(\t))*tan(\t)});
+
+      \draw (O) -- (A) -- (B) -- cycle;
+      \draw (O) -- (D);
+      \draw (A) -- (E);
+
+      \fill (O) circle (1.4pt) node[left=1pt, font=\scriptsize] {$O$};
+      \fill (A) circle (1.4pt) node[right=2.5pt, font=\scriptsize] {$A$};
+      \fill (B) circle (1.4pt) node[above=1pt, font=\scriptsize] {$B$};
+      \fill (H) circle (1.4pt) node[above=2pt, font=\scriptsize] {$H$};
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 74.2}
+  \end{minipage}\hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.58, >=Stealth, line cap=round, line join=round]
+      \def\a{1.5}
+      \coordinate (O) at (0,0);
+      \coordinate (A) at (\a, 0);
+      \coordinate (B) at (\a, \a);
+      \coordinate (E) at ($0.5*(O)+0.5*(B)$);
+
+      \draw[very thick, curveblue, domain=-89.5:48, samples=140, variable=\t]
+        plot ({\a*(1+sin(\t))}, {\a*(1+sin(\t))*tan(\t)});
+      \draw[very thick, curveblue, domain=-48:89.5, samples=140, variable=\t]
+        plot ({\a*(1-sin(\t))}, {\a*(1-sin(\t))*tan(\t)});
+
+      \draw (O) -- (A) -- (B) -- cycle;
+      \draw (A) -- (E);
+
+      \fill (O) circle (1.4pt) node[left=1pt, font=\scriptsize] {$O$};
+      \fill (A) circle (1.4pt) node[right=2.5pt, font=\scriptsize] {$A$};
+      \node[below=2.5pt, font=\scriptsize] at (A) {$(H)$};
+      \fill (B) circle (1.4pt) node[above=1pt, font=\scriptsize] {$B$};
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 74.3}
+  \end{minipage}\hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.56, >=Stealth, line cap=round, line join=round]
+      \def\a{1.4}
+      \def\phi{116} % 钝角顶角 OAB = 116 deg
+      \coordinate (O) at (0,0);
+      \coordinate (A) at (\a, 0);
+      \coordinate (B) at ({\a - \a*cos(\phi)}, {\a*sin(\phi)});
+      \coordinate (E) at ($0.5*(O)+0.5*(B)$);
+      \coordinate (D) at ($(A)!(O)!(B)$);
+      \path[name path=lineOD] (O) -- ($(O)!2.2!(D)$);
+      \path[name path=lineAE] (E) -- ($(E)!3.0!(A)$);
+      \path[name intersections={of=lineOD and lineAE, by=H}];
+
+      \draw[very thick, curveblue, domain=-89.5:50, samples=140, variable=\t]
+        plot ({\a*(1+sin(\t))}, {\a*(1+sin(\t))*tan(\t)});
+      \draw[very thick, curveblue, domain=-50:89.5, samples=140, variable=\t]
+        plot ({\a*(1-sin(\t))}, {\a*(1-sin(\t))*tan(\t)});
+
+      \draw (O) -- (A) -- (B) -- cycle;
+      \draw (A) -- (E);
+      \draw[densely dashed] (A) -- (D);
+      \draw[densely dashed] (O) -- (H);
+      \draw (A) -- (H);
+
+      \fill (O) circle (1.4pt) node[left=1pt, font=\scriptsize] {$O$};
+      \fill (A) circle (1.4pt) node[right=2.5pt, font=\scriptsize] {$A$};
+      \fill (B) circle (1.4pt) node[above=1pt, font=\scriptsize] {$B$};
+      \fill (H) circle (1.4pt) node[right=1.5pt, font=\scriptsize] {$H$};
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 74.4}
+  \end{minipage}
+\medskip

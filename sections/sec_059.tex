@@ -1,0 +1,127 @@
+\section{割圆曲线}
+\markboth{59. 割圆曲线}{59. 割圆曲线}
+
+求作一个正方形，使它的面积与已知圆的面积相等，这个问题叫做化圆为方问题。凡是可以用来解决化圆为方问题的曲线，都叫做割圆曲线，又叫圆积曲线。我们已经看到，阿基米德螺线就是一种割圆曲线。除此而外，最有名的一种割圆曲线要算狄诺斯特拉图割圆曲线。
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.88, line cap=round, line join=round]
+    \def\a{1.45}
+    \def\urad{0.72}
+    \pgfmathsetmacro{\xK}{(2*\a/pi)*\urad}
+    \pgfmathsetmacro{\yM}{\xK/tan(\urad r)}
+    \pgfmathsetmacro{\yC}{sqrt(\a*\a - \xK*\xK)}
+    \pgfmathsetmacro{\angN}{90 - deg(\urad)}
+    \coordinate (O) at (0, 0);
+    \coordinate (D) at (-\a, 0);
+    \coordinate (A) at (\a, 0);
+    \coordinate (B) at (0, \a);
+    \coordinate (P) at (0, {2*\a/pi});
+    \coordinate (K) at (\xK, 0);
+    \coordinate (M) at (\xK, \yM);
+    \coordinate (C) at (\xK, \yC);
+    \coordinate (N) at (\angN:\a);
+
+    % 半圆与坐标线段
+    \draw[thick] (D) -- (A) arc (0:180:\a);
+    \draw (O) -- (B);
+    \draw (O) -- (N);
+    \draw (K) -- (C);
+
+    % 狄诺斯特拉图割圆曲线 y = x ctg(pi x / 2a)
+    \draw[very thick, curveblue, domain=-1.57:-0.02, samples=40, variable=\u]
+      plot ({2*\a/pi*\u}, {2*\a/pi*\u/tan(\u r)});
+    \draw[very thick, curveblue, domain=0.02:1.57, samples=40, variable=\u]
+      plot ({2*\a/pi*\u}, {2*\a/pi*\u/tan(\u r)});
+    \draw[very thick, curveblue] ({-2*\a/pi*0.02}, {2*\a/pi*0.02/tan(0.02 r)}) -- (P) -- ({2*\a/pi*0.02}, {2*\a/pi*0.02/tan(0.02 r)});
+
+    % 角度 u 和 phi
+    \draw (\angN:0.32) arc (\angN:90:0.32);
+    \node[font=\tiny] at ({(\angN+90)/2}:0.45) {$u$};
+    \draw (0.34, 0) arc (0:\angN:0.34);
+    \node[font=\tiny] at ({\angN/2}:0.48) {$\varphi$};
+
+    % 标点
+    \fill (O) circle (1.1pt) node[below, font=\scriptsize] {$O$};
+    \fill (D) circle (1.1pt) node[below, font=\scriptsize] {$D$};
+    \fill (A) circle (1.1pt) node[below, font=\scriptsize] {$A$};
+    \fill (B) circle (1.1pt) node[above right=-2pt, font=\scriptsize] {$B$};
+    \fill (P) circle (1.1pt) node[above left=-2pt, font=\scriptsize] {$P$};
+    \fill (K) circle (1.1pt) node[below, font=\scriptsize] {$K$};
+    \fill (M) circle (1.2pt) node[right=-1pt, font=\scriptsize] {$M$};
+    \fill (C) circle (1.1pt) node[above right=-2pt, font=\scriptsize] {$C$};
+    \fill (N) circle (1.1pt) node[above right=-2pt, font=\scriptsize] {$N$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 59.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+\hspace*{2em}如图 59.1，设圆 $O$ 的半径为 $a$，$AD$ 是一条定直径。设圆半径从 $OA$ 的位置开始，绕圆心匀速旋转，角速度为 $\frac{\pi}{2T}$；同时有一条垂直于 $AD$ 的直线，从 $A$ 向 $D$ 匀速平行移动，速度为 $\frac{a}{T}$。这两条动直线的交点 $M$ 的轨迹，就叫做狄诺斯特拉图割圆曲线。这种曲线是公元前五世纪喜庇亚发现的，在各种曲线里，除去直线和圆而外，就算它发现得最早了。很容易利用这种割圆曲线解决三等分任意角问题。公元前四世纪狄诺斯特拉图继续研究这种曲线，发现它还可以用来解决化圆为方问题。
+\end{minipage}
+
+取 $O$ 为原点，$OA$ 为 $x$ 轴正方向，建立直角坐标系，设从运动开始经过时间 $t$ 以后，两条动直线的交点运动到位置 $M(x,y)$，如图 59.1，这时
+\begin{align*}
+  x &= OK = a - \frac{a}{T}t = a\left(1 - \frac{t}{T}\right), \\
+  y &= KM = OK\ctg\left(\frac{\pi}{2} - \varphi\right) \\
+    &= a\left(1 - \frac{t}{T}\right)\ctg\frac{\pi}{2}\left(1 - \frac{t}{T}\right).
+\end{align*}
+记 $u = \frac{\pi}{2}\left(1 - \frac{t}{T}\right)$，得到参数方程
+\[
+  x = \frac{2a}{\pi}u,\quad y = \frac{2a}{\pi}u\ctg u.
+\]
+消去 $u$，就得到曲线的直角坐标方程
+\[
+  y = x\ctg\frac{\pi x}{2a}.
+\]
+上述方程中令 $x \to 0$，求 $y$ 的极限，得到
+\begin{align*}
+  \lim_{x \to 0} y &= \lim_{x \to 0}\left(x\ctg\frac{\pi x}{2a}\right) = \lim_{x \to 0}\frac{x}{\tg\dfrac{\pi x}{2a}} \\
+                  &= \frac{2a}{\pi}\cdot\lim_{x \to 0}\frac{\dfrac{\pi x}{2a}}{\tg\dfrac{\pi x}{2a}} \\
+                  &= \frac{2a}{\pi}\cdot 1 = \frac{2a}{\pi}.
+\end{align*}
+所以，若曲线与 $y$ 轴的交点为 $P$，则 $OP = \frac{2a}{\pi}$。有了这些准备知识，解决化圆为方的问题就变得很容易了。设 $OP : 2a = 2a : l$，则
+\[
+  l = \frac{4a^2}{OP} = \frac{4a^2}{\dfrac{2a}{\pi}} = 2\pi a.
+\]
+这样就可作出等于圆周长 $2\pi a$ 的线段 $l$，最后作线段 $2\pi a$ 与 $\frac{a}{2}$ 的比例中项 $x$，则 $x^2 = \pi a^2$，因而以 $x$ 为一边的正方形的面积等于以 $a$ 为半径的圆的面积，这样就解决了化圆为方问题。
+
+如图 59.2 所示的曲线叫做蜗牛线，它也是一种割圆曲线。蜗牛线的极坐标方程是
+\[
+  \rho = a\frac{\sin\theta}{\theta}.
+\]
+
+\noindent
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.86, >=Stealth, line cap=round, line join=round]
+    \def\a{2.20}
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\a, 0);
+
+    % 极轴
+    \draw[->] (-0.42, 0) -- ({\a+0.42}, 0);
+
+    % 蜗牛线 rho = a * sin(theta) / theta, 分段绘制保证内圈光滑
+    \foreach \tA/\tB in {0.01/3.1416, 3.1416/6.2832, 6.2832/9.4248, 9.4248/12.5664} {
+      \draw[thick, curveblue, domain=\tA:\tB, samples=60, variable=\t]
+        plot ({\a*sin(\t r)/\t*cos(\t r)}, {\a*sin(\t r)/\t*sin(\t r)});
+      \draw[thick, curveblue, domain=\tA:\tB, samples=60, variable=\t]
+        plot ({\a*sin(\t r)/\t*cos(\t r)}, {-\a*sin(\t r)/\t*sin(\t r)});
+    }
+    \draw[thick, curveblue] ({\a*sin(0.01 r)/0.01*cos(0.01 r)}, {-\a*sin(0.01 r)/0.01*sin(0.01 r)})
+      -- (P) -- ({\a*sin(0.01 r)/0.01*cos(0.01 r)}, {\a*sin(0.01 r)/0.01*sin(0.01 r)});
+
+    \fill (O) circle (1.0pt) node[below left=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$O$};
+    \fill (P) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$P$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 59.2}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.53\textwidth}
+\hspace*{2em}蜗牛线的形状比帕斯卡蜗线更像蜗牛。我们在第 30 节中看到的帕斯卡蜗线，其形状仅仅像一只蜗牛的外壳；而在图 59.2 中看到的蜗牛线，不但有蜗牛形的外壳，而且里面还有一圈套一圈的纹路。
+
+\hspace*{2em}从蜗牛线的方程得到，当 $\theta = \frac{\pi}{2}$ 时 $\rho = \frac{2a}{\pi}$，因而它可以像狄诺斯特拉图割圆曲线一样地用来解决化圆为方问题。
+\end{minipage}
+
+此外还有一些其他割圆曲线，如琴豪生割圆曲线 $y = a\sin\frac{\pi x}{2a}$，奥查南姆曲线 $x = 2a\sin^2\frac{y}{2a}$ 等。

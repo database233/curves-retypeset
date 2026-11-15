@@ -1,0 +1,163 @@
+% ==============================================================================
+% 《形形色色的曲线》（蒋声 著）全书 LaTeX 重排版主控文件
+% ==============================================================================
+\documentclass[UTF8, zihao=5, openany, fontset=fandol]{ctexbook}
+
+\input{preamble}
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% 1. 前置部分（封面、扉页、前言、目录）
+% ------------------------------------------------------------------------------
+\frontmatter
+\input{frontmatter/cover}
+\input{frontmatter/titlepage}
+
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\input{frontmatter/preface}
+
+\clearpage
+\tableofcontents
+
+% ------------------------------------------------------------------------------
+% 2. 正文部分（第 1 节 至 第 100 节，自然页码从 1 开始）
+% ------------------------------------------------------------------------------
+\clearpage
+\makeatletter
+\@mainmattertrue
+\makeatother
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\fontsize{9.5pt}{12.8pt}\selectfont
+
+% --- 批次 1：第 1–10 节 ---
+\input{sections/sec_001}
+\input{sections/sec_002}
+\input{sections/sec_003}
+\input{sections/sec_004}
+\input{sections/sec_005}
+\input{sections/sec_006}
+\input{sections/sec_007}
+\input{sections/sec_008}
+\input{sections/sec_009}
+\input{sections/sec_010}
+
+% --- 批次 2：第 11–20 节 ---
+\input{sections/sec_011}
+\input{sections/sec_012}
+\input{sections/sec_013}
+\input{sections/sec_014}
+\input{sections/sec_015}
+\input{sections/sec_016}
+\input{sections/sec_017}
+\input{sections/sec_018}
+\input{sections/sec_019}
+\input{sections/sec_020}
+
+% --- 批次 3：第 21–30 节 ---
+\input{sections/sec_021}
+\input{sections/sec_022}
+\input{sections/sec_023}
+\input{sections/sec_024}
+\input{sections/sec_025}
+\input{sections/sec_026}
+\input{sections/sec_027}
+\input{sections/sec_028}
+\input{sections/sec_029}
+\input{sections/sec_030}
+
+% --- 批次 4：第 31–40 节 ---
+\input{sections/sec_031}
+\input{sections/sec_032}
+\input{sections/sec_033}
+\input{sections/sec_034}
+\input{sections/sec_035}
+\input{sections/sec_036}
+\input{sections/sec_037}
+\input{sections/sec_038}
+\input{sections/sec_039}
+\input{sections/sec_040}
+
+% --- 批次 5：第 41–50 节 ---
+\input{sections/sec_041}
+\input{sections/sec_042}
+\input{sections/sec_043}
+\input{sections/sec_044}
+\input{sections/sec_045}
+\input{sections/sec_046}
+\input{sections/sec_047}
+\input{sections/sec_048}
+\input{sections/sec_049}
+\input{sections/sec_050}
+
+% --- 批次 6：第 51–60 节 ---
+\input{sections/sec_051}
+\input{sections/sec_052}
+\input{sections/sec_053}
+\input{sections/sec_054}
+\input{sections/sec_055}
+\input{sections/sec_056}
+\input{sections/sec_057}
+\input{sections/sec_058}
+\input{sections/sec_059}
+\input{sections/sec_060}
+
+% --- 批次 7：第 61–70 节 ---
+\input{sections/sec_061}
+\input{sections/sec_062}
+\input{sections/sec_063}
+\input{sections/sec_064}
+\input{sections/sec_065}
+\input{sections/sec_066}
+\input{sections/sec_067}
+\input{sections/sec_068}
+\input{sections/sec_069}
+\input{sections/sec_070}
+
+% --- 批次 8：第 71–80 节 ---
+\input{sections/sec_071}
+\input{sections/sec_072}
+\input{sections/sec_073}
+\input{sections/sec_074}
+\input{sections/sec_075}
+\input{sections/sec_076}
+\input{sections/sec_077}
+\input{sections/sec_078}
+\input{sections/sec_079}
+\input{sections/sec_080}
+
+% --- 批次 9：第 81–90 节 ---
+\input{sections/sec_081}
+\input{sections/sec_082}
+\input{sections/sec_083}
+\input{sections/sec_084}
+\input{sections/sec_085}
+\input{sections/sec_086}
+\input{sections/sec_087}
+\input{sections/sec_088}
+\input{sections/sec_089}
+\input{sections/sec_090}
+
+% --- 批次 10：第 91–100 节 ---
+\input{sections/sec_091}
+\input{sections/sec_092}
+\input{sections/sec_093}
+\input{sections/sec_094}
+\input{sections/sec_095}
+\input{sections/sec_096}
+\input{sections/sec_097}
+\input{sections/sec_098}
+\input{sections/sec_099}
+\input{sections/sec_100}
+
+% ------------------------------------------------------------------------------
+% 3. 后置部分（曲线名称对照表、版权页）
+% ------------------------------------------------------------------------------
+\backmatter
+\input{backmatter/appendix_terms}
+\input{backmatter/errata_notes}
+\input{backmatter/colophon}
+
+\end{document}

@@ -1,0 +1,172 @@
+\section{变来变去还是它}
+\markboth{95. 变来变去还是它}{95. 变来变去还是它}
+
+对数螺线是一种非常奇妙的曲线，有很多种不同的变换，都能把对数螺线仍旧变到对数螺线。
+
+例如，我们先来看看对数螺线
+\[
+  \rho = e^{m\theta}
+\]
+关于极点 $O$ 的垂足曲线。如图 95.1，设 $M(\rho, \theta)$ 是对数螺线上的任意点，$MT$ 是对数螺线的切线，$ON \perp MT$，垂足为 $N(\rho_1, \theta_1)$。又设切线 $MT$ 与极半径 $OM$ 的夹角为 $\psi$，第 92 节中已经证明了
+
+\par\medskip\noindent
+\begin{minipage}[c]{0.47\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=1.15]
+    % 对数螺线 rho = R0 * exp(m*theta)
+    \def\mval{0.34}
+    \def\Rzero{1.42}
+    % 螺线
+    \draw[line width=0.85pt, curveblue, domain=-8.5:0.20, samples=200, smooth]
+      plot ({\Rzero*exp(\mval*\x)*cos(\x r)}, {\Rzero*exp(\mval*\x)*sin(\x r)});
+    % 极轴（水平向右带箭头）
+    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (0,0) -- (1.72,0);
+
+    % 选定 M 点：thetaM = -52 deg = -0.90757 rad
+    \pgfmathsetmacro{\thM}{-0.90757}
+    \pgfmathsetmacro{\rM}{\Rzero*exp(\mval*\thM)}
+    \pgfmathsetmacro{\Mx}{\rM*cos(\thM r)}
+    \pgfmathsetmacro{\My}{\rM*sin(\thM r)}
+    % 切线单位方向 t = (m cos - sin, m sin + cos)/sqrt(1+m^2)
+    \pgfmathsetmacro{\normt}{sqrt(1+\mval*\mval)}
+    \pgfmathsetmacro{\tx}{(\mval*cos(\thM r) - sin(\thM r))/\normt}
+    \pgfmathsetmacro{\ty}{(\mval*sin(\thM r) + cos(\thM r))/\normt}
+    % 垂足 N = M - (M.t)*t
+    \pgfmathsetmacro{\MdotT}{\Mx*\tx + \My*\ty}
+    \pgfmathsetmacro{\Nx}{\Mx - \MdotT*\tx}
+    \pgfmathsetmacro{\Ny}{\My - \MdotT*\ty}
+
+    \coordinate (O) at (0,0);
+    \coordinate (M) at (\Mx,\My);
+    \coordinate (N) at (\Nx,\Ny);
+    \coordinate (Ptan) at ({\Mx + 1.15*\tx}, {\My + 1.15*\ty});
+    \coordinate (Ttan) at ({\Mx - 0.85*\tx}, {\My - 0.85*\ty});
+
+    % 极半径 OM (适度向外延长以清晰标示夹角 psi), ON 与切线 MT
+    \draw[line width=0.6pt] (O) -- ($(O)!1.32!(M)$);
+    \draw[line width=0.6pt] (O) -- (N);
+    \draw[line width=0.65pt] (Ttan) -- (Ptan);
+
+    % 直角符号于 N
+    \coordinate (Nu) at ($(N)!0.12cm!(O)$);
+    \coordinate (Nv) at ($(N)!0.12cm!(M)$);
+    \draw[line width=0.45pt] (Nu) -- ($(Nu)+(Nv)-(N)$) -- (Nv);
+
+    % 角度标记 theta, theta1, psi
+    \draw[line width=0.45pt] (0.58,0) arc (0:-52:0.58);
+    \node[fill=white, inner sep=0.4pt] at (-24:0.74) {\scriptsize $\theta$};
+    \pgfmathsetmacro{\angN}{atan2(\Ny,\Nx)}
+    \draw[line width=0.45pt] (0.27,0) arc (0:\angN:0.27);
+    \node[fill=white, inner sep=0.3pt] at (-62:0.44) {\scriptsize $\theta_1$};
+    % psi 在 M 处 OM 延长方向与切线正方向之间
+    \pgfmathsetmacro{\angT}{atan2(\ty,\tx)}
+    \draw[line width=0.45pt] ($(M)+(-52:0.25)$) arc (-52:\angT:0.25);
+    \node at ($(M)+(-8:0.44)$) {\scriptsize $\psi$};
+
+    % 标注 rho, rho1, O, M, N, P, T
+    \fill (O) circle (1.1pt) node[above left=-1pt, fill=white, inner sep=0.4pt] {\footnotesize $O$};
+    \fill (M) circle (1.2pt) node[below=1.5pt, fill=white, inner sep=0.3pt] {\footnotesize $M$};
+    \fill (N) circle (1.2pt) node[below left=-1pt] {\footnotesize $N$};
+    \node[above right=-1pt] at (Ptan) {\footnotesize $P$};
+    \node[below=1pt] at (Ttan) {\footnotesize $T$};
+    \node[above right=-2pt] at ($(O)!0.74!(M)$) {\scriptsize $\rho$};
+    \node[below left=-2pt] at ($(O)!0.60!(N)$) {\scriptsize $\rho_1$};
+  \end{tikzpicture}
+  \par\vspace{3pt}{\footnotesize 图\ 95.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.49\textwidth}
+  \[
+    \tg\psi = \frac{\rho}{\rho'} = \frac{1}{m}.
+  \]
+  由此得到
+  \[
+    \sin\psi = \frac{1}{\sqrt{1 + m^2}}.
+  \]
+  从直角三角形 $OMN$ 得到 $\rho_1 = \rho \sin\psi$，因而
+  \[
+    \rho_1 = \frac{1}{\sqrt{1 + m^2}} e^{m\theta}.
+  \]
+\end{minipage}
+\par\medskip
+
+从图中还看出\footnote{重排校订：原书图 95.1 中将 $\theta$、$\theta_1$ 绘作自极轴向下的小弧段且未标有向箭头，从绝对值角度易使人误读为 $|\theta_1| > |\theta|$；实则顺时针极角为负值，$\theta_1 = \theta - (\frac{\pi}{2}-\psi) < \theta < 0$。本版重绘时拉开弧径并调正切向以明晰几何关系。}
+\begin{align*}
+  \theta_1 &= \theta - \angle NOM = \theta - \left(\frac{\pi}{2} - \psi\right) \\
+  &= \theta + \psi - \frac{\pi}{2},
+\end{align*}
+\[
+  \therefore\ \theta = \theta_1 + \frac{\pi}{2} - \psi.
+\]
+代入 $\rho_1$ 的表达式，得到
+\[
+  \rho_1 = \frac{1}{\sqrt{1 + m^2}} e^{m\left(\theta_1 + \frac{\pi}{2} - \psi\right)}.
+\]
+令
+\[
+  C = \frac{1}{\sqrt{1 + m^2}}, \qquad b = m\left(\frac{\pi}{2} - \psi\right),
+\]
+上式化为
+\[
+  \rho_1 = C e^{m\theta_1 + b},
+\]
+因而根据第 91 节的讨论，知道点 $N(\rho_1, \theta_1)$ 的轨迹也是一条对数螺线，并且在极轴旋转了适当的角度以后，上述方程还可进一步化简为
+\[
+  \rho_1 = e^{m\theta_1}.
+\]
+这个化简后的方程与原曲线的方程在形式上完全相同，所以 $N$ 的轨迹是与原曲线全等的一条对数螺线。换句话说，对数螺线关于极点 $O$ 的垂足曲线，可由原曲线绕 $O$ 点旋转适当角度后得到。
+
+现在考虑另一种变换：反演变换（第 66 节）。取极点 $O$ 为反演极，常数 $C$ 为反演幂（$C \neq 0$），那么反演变换把点 $M(\rho, \theta)$ 变到 $K(\rho_1, \theta_1)$，这里
+\[
+  \rho_1 = \frac{C}{\rho}, \qquad \theta_1 = \theta.
+\]
+把 $\rho = e^{m\theta}$ 代入，得到
+\[
+  \rho_1 = C e^{-m\theta_1},
+\]
+这说明反点 $K(\rho_1, \theta_1)$ 的轨迹仍是一条对数螺线。不但如此，通过把极轴适当旋转，可将上式简化为
+\[
+  \rho_1 = e^{-m\theta_1}.
+\]
+再令
+\[
+  \rho_2 = \rho_1, \qquad \theta_2 = -\theta_1,
+\]
+则点 $L(\rho_2, \theta_2)$ 与 $K(\rho_1, \theta_1)$ 关于旋转后的极轴对称，并且
+\[
+  \rho_2 = e^{m\theta_2}.
+\]
+这说明点 $L(\rho_2, \theta_2)$ 的轨迹可由原对数螺线绕极点旋转适当角度后得到。进而，再作一次轴对称变换，就得到点 $K(\rho_1, \theta_1)$ 的轨迹，即原曲线的反演图形。所以，在以极点为反演极时，反演变换把对数螺线仍变到与它全等的一条对数螺线。
+
+在第 93 节中，我们曾经证明，不管把对数螺线怎样放大或缩小，结果总是得到与原曲线全等的对数螺线，仅仅是位置有所改变而已。这个性质已经使对数螺线披上了奇妙的色彩。现在我们又进而证明了，无论是把对数螺线变换成关于极点 $O$ 的垂足曲线，或者是变换成以 $O$ 为反演极的反演曲线，结果都仍然得到与原曲线全等的对数螺线，仅位置有所不同。这些变换把一般曲线变得面目全非，而对数螺线却能依然故我，简直是妙不可言了。瑞士数学家雅各·贝努利（1654～1705）对于对数螺线的各种不变性质作了深入的研究，最后在遗嘱里吩咐要把对数螺线刻在他的墓碑上，留作永久纪念，并且附上一句颂词“Eadem mutata resurgo”（图 95.2），意思就是“虽然改变了，我还是和原来一样！”这句意味深长的颂词，固然是直接赞赏对数螺线的奇妙性质，同时还使人联想到，这位杰出的数学家也许是在弥留之际借此表达他对数学的眷恋深情，他希望自己虽然肉体长眠，却能精神不死，魂游天府，一如既往地从事数学研究。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.88]
+    % 雅各·贝努利墓碑纪念徽：外方框、双圆环、拉丁文颂词与对数螺线
+    \draw[line width=0.7pt] (-1.52,-1.52) rectangle (1.52,1.52);
+    \draw[line width=0.75pt] (0,0) circle (1.38);
+    \draw[line width=0.75pt] (0,0) circle (0.98);
+
+    % 圆环文字 EADEM MUTATA RESURGO（从左下起顺时针环排）
+    \def\Rtxt{1.18}
+    \foreach \ch/\ang in {
+      E/212, A/198, D/184, E/170, M/155,
+      M/128, U/114, T/100, A/86,  T/72, A/58,
+      R/32,  E/18,  S/4,   U/-10, R/-24, G/-38, O/-52%
+    } {
+      \node[rotate={\ang-90}, font=\scriptsize\sffamily\bfseries] at (\ang:\Rtxt) {\ch};
+    }
+    % 底部装饰刻纹
+    \foreach \ang in {230,235,...,300} {
+      \draw[line width=0.45pt] (\ang:1.05) -- (\ang:1.31);
+    }
+
+    % 内圆中的正交轴与对数螺线
+    \draw[line width=0.55pt] (-0.98,0) -- (0.98,0);
+    \draw[line width=0.55pt] (0,-0.98) -- (0,0.98);
+    \draw[line width=0.8pt, curveblue, domain=-11.5:0.35, samples=220, smooth]
+      plot ({0.88*exp(0.22*\x)*cos(\x r)}, {0.88*exp(0.22*\x)*sin(\x r)});
+  \end{tikzpicture}
+  \caption*{图\ 95.2}
+\end{figure}

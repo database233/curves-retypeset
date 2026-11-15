@@ -1,0 +1,66 @@
+\section{摆线时钟}
+\markboth{17. 摆线时钟}{17. 摆线时钟}
+
+我们已经从“滚珠荡秋千”的游戏中认识到摆线的等时性，又通过“利用摆线板画摆线”的问题知道了怎样利用绷紧在摆线板上的细线画出新的摆线。把这两项知识结合起来，就可以理解著名的摆线时钟问题了。
+
+钟摆在滴答声中来回摆动一次，每次摆动所用的时间必须严格地相等，才能保证计时的准确性。通常时钟的钟摆是把摆锤挂在摆杆上，沿圆弧来回摆动。由于各种因素的影响，钟摆每次摆动的幅度不可能保持绝对不变。而当摆锤沿圆弧摆动时，来回摆动一次所用的时间与摆动幅度有关：摆幅越小，摆动一次的时间越短。能不能设计一种钟摆，使它每摆动一次所用的时间不受摆幅大小的影响，始终保持常数呢？
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.67, >=Stealth, font=\footnotesize]
+    \def\r{0.58}
+    \def\th{1.32}
+    \pgfmathsetmacro{\mx}{\r*(\th - sin(\th r))}
+    \pgfmathsetmacro{\my}{-\r*(1 - cos(\th r))}
+    \pgfmathsetmacro{\nx}{\r*(\th + sin(\th r))}
+    \pgfmathsetmacro{\ny}{-2*\r - \r*(1 + cos(\th r))}
+
+    % 左侧摆线挡板
+    \fill[pattern=north east lines, pattern color=mutedgray!75]
+      ({-\r*pi}, 0) -- (0, 0)
+      plot[domain=0:pi, samples=50] ({-\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))})
+      -- ({-\r*pi}, 0);
+    \draw[thick] ({-\r*pi}, 0) -- (0, 0);
+    \draw[thick] ({-\r*pi}, 0) -- ({-\r*pi}, {-2*\r});
+    \draw[thick, curveblue, smooth, domain=0:pi, samples=50]
+      plot ({-\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))});
+
+    % 右侧摆线挡板
+    \fill[pattern=north east lines, pattern color=mutedgray!75]
+      (0, 0) -- ({\r*pi}, 0) -- ({\r*pi}, {-2*\r})
+      plot[domain=pi:0, samples=50] ({\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))})
+      -- cycle;
+    \draw[thick] (0, 0) -- ({\r*pi}, 0) -- ({\r*pi}, {-2*\r});
+    \draw[thick, curveblue, smooth, domain=0:pi, samples=50]
+      plot ({\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))});
+
+    % 左侧 2r 高度标记
+    \draw[thin] ({-\r*pi - 0.12}, 0) -- ({-\r*pi - 0.48}, 0);
+    \draw[thin] ({-\r*pi - 0.12}, {-2*\r}) -- ({-\r*pi - 0.48}, {-2*\r});
+    \draw[<->, thin] ({-\r*pi - 0.30}, 0) -- ({-\r*pi - 0.30}, {-2*\r})
+      node[midway, fill=white, inner sep=1pt] {$2r$};
+
+    % 摆锤虚线摆线轨迹
+    \draw[thick, dashed, curveblue, smooth, domain=-pi:pi, samples=80]
+      plot ({\r*(\x + sin(\x r))}, {-2*\r - \r*(1 + cos(\x r))});
+
+    % 铅垂悬线（长 4r）与最低点摆锤
+    \draw[thick] (0, 0) -- (0, {-4*\r});
+    \node[left, inner sep=2pt] at (0, {-2.3*\r}) {$4r$};
+    \filldraw[fill=white, draw=black, thick] (0, {-4*\r}) circle (0.09);
+
+    % 摆向右方的贴合段与切线细线与摆锤
+    \draw[thick, smooth, domain=0:\th, samples=25]
+      plot ({\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))});
+    \draw[thick] (\mx, \my) -- (\nx, \ny);
+    \filldraw[fill=white, draw=black, thick] (\nx, \ny) circle (0.09);
+  \end{tikzpicture}
+  \captionof*{figure}{图 17.1}
+  \vspace{-6pt}
+\end{wrapfigure}
+同“滚珠荡秋千”的游戏比较，滚珠相当于这里的摆锤，所以只要设法让摆锤不是沿圆弧摆动，而是沿摆线弧摆动，就能使摆动周期严格保持一定，不受摆幅变化的影响。又根据“利用摆线板画摆线”问题的答案，只要像图 17.1 那样把摆锤悬挂在长为 $4r$（摆线半拱的弧长）的能弯曲但不能伸长的细线上，悬挂点的两边各放一块摆线挡板，使挡板的曲线轮廓是拱高为 $2r$ 的半拱摆线，这样就能保证摆锤沿着图中虚线所示的摆线弧摆动。无论摆幅大小如何，摆锤沿这摆线弧来回摆动一次，所用的时间都是 $4\pi\sqrt{\frac{r}{g}}$。
+
+十七世纪物理学家惠更斯发现了摆线的等时性以后，就用它来设计出这种巧妙的摆线时钟。“摆线”这个名称，正是由于这种曲线被应用于改进钟摆而得来的。
+
+\clearpage

@@ -1,0 +1,94 @@
+\section{麦克劳林三等分角曲线}
+\markboth{58. 麦克劳林三等分角曲线}{58. 麦克劳林三等分角曲线}
+
+凡是可以用来解答三等分任意角问题的曲线，都叫做三等分角曲线。尼哥米德蚌线就是一种三等分角曲线。除此而外，比较著名的三等分角曲线还有麦克劳林三等分角曲线等。
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    \def\a{0.38}
+    \coordinate (O) at (0, 0);
+    \coordinate (B) at ({-2*\a}, 0);
+    \coordinate (A) at ({-3*\a}, 0);
+    \coordinate (F) at ({-4*\a}, 0);
+    % D 取 Y = 1.65*a, X = -3.680625*a
+    \pgfmathsetmacro{\yD}{1.65*\a}
+    \pgfmathsetmacro{\xD}{-3*\a - (\yD*\yD)/(4*\a)}
+    \coordinate (D) at (\xD, \yD);
+    % DM 切线斜率 -2a/Y, OM 斜率 Y/(2a), 交点 M(-1.380*a, -1.138*a)
+    \pgfmathsetmacro{\xM}{-1.380*\a}
+    \pgfmathsetmacro{\yM}{-1.138*\a}
+    \coordinate (M) at (\xM, \yM);
+
+    % 坐标轴与准线 By'
+    \draw[->] ({-5.0*\a}, 0) -- ({1.8*\a}, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, {-3.6*\a}) -- (0, {3.8*\a}) node[left, font=\scriptsize] {$y$};
+    \draw[densely dashed] ({-2*\a}, {-3.3*\a}) -- ({-2*\a}, {3.6*\a}) node[left, font=\scriptsize] {$y'$};
+
+    % 辅助抛物线（虚线）
+    \draw[thick, densely dashed, domain={-3.2*\a}:{3.2*\a}, samples=60, variable=\Y]
+      plot ({-\Y*\Y/(4*\a) - 3*\a}, \Y);
+
+    % 麦克劳林三等分角曲线（实线）
+    \draw[very thick, curveblue, domain=-74:74, samples=120, variable=\p]
+      plot ({\a*(1 - 4*cos(\p)*cos(\p))},
+            {\a*tan(\p)*(4*cos(\p)*cos(\p) - 1)});
+
+    % 切线 DM 及其延长、垂线 OM 与直角记号，连线 BM（虚线）
+    \draw[thick] ($(D)!-0.38!(M)$) -- ($(D)!1.18!(M)$);
+    \draw[thick] (O) -- ($(O)!1.18!(M)$);
+    \draw[densely dashed] (B) -- (M);
+    \coordinate (rD) at ($(M)!0.14cm!(D)$);
+    \coordinate (rO) at ($(M)!0.14cm!(O)$);
+    \draw (rD) -- ($(rD)+(rO)-(M)$) -- (rO);
+
+    % 标点与标签
+    \fill (F) circle (1.1pt) node[below left=-2pt, font=\scriptsize] {$F$};
+    \fill (A) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.1pt) node[above right=-2pt, font=\scriptsize] {$B$};
+    \fill (O) circle (1.1pt) node[below right=-2pt, font=\scriptsize] {$O$};
+    \fill (D) circle (1.2pt) node[below left=-2pt, font=\scriptsize] {$D$};
+    \fill (M) circle (1.2pt) node[below=2pt, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 58.1}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \hspace*{2em}任取一条抛物线，设其焦点 $F$ 关于准线的对称点为 $O$，则此抛物线关于点 $O$ 的垂足曲线叫做麦克劳林三等分角曲线。在图 58.1 中，虚线表示辅助的抛物线，实线为麦克劳林三等分角曲线，$DM$ 是抛物线的切线，$OM$ 是 $DM$ 的垂线，$By'$ 是抛物线的准线。由此可见，只要让三角板的一条直角边通过 $O$ 点，另一条直角边与辅助抛物线相切，直角顶点 $M$ 的位置就是麦克劳林三等分角曲线上的一点。
+\end{minipage}
+
+设辅助抛物线的焦点 $F$ 到准线 $By'$ 的距离为 $2a$，则 $OF = 4a$。取 $O$ 为坐标原点，并使 $F$ 在 $x$ 轴的负半轴上（图 58.1），则抛物线顶点为 $A(-3a, 0)$，因而抛物线方程为
+\[
+  Y^2 = -2\cdot 2a(X + 3a),
+\]
+由此得到
+\begin{equation*}
+  X = -\frac{Y^2}{4a} - 3a, \tag{1}
+\end{equation*}
+\[
+  \frac{dX}{dY} = -\frac{Y}{2a}.
+\]
+因而这条抛物线过点 $D(X,Y)$ 的切线的斜率是
+\[
+  \frac{dY}{dX} = -\frac{2a}{Y},
+\]
+切线 $DM$ 的方程是\footnote{重排校订：原书第 103 页（2）式右端误排作双减号 \texttt{(x--X)}（第 102 页（1）式 $-\frac{Y^2}{4a}$ 前亦误排重减号），据上下文均订正为单减号。}
+% 原书此处误印作 (x--X)，据上下文订正为 (x-X)
+\begin{equation*}
+  y - Y = -\frac{2a}{Y}(x - X). \tag{2}
+\end{equation*}
+直线 $OM$ 通过原点，且垂直于 $DM$，因而方程是
+\begin{equation*}
+  y = \frac{Y}{2a}x. \tag{3}
+\end{equation*}
+从（3）式、（2）式和（1）式中消去 $Y$ 和 $X$，得到
+\[
+  x(x^2 + y^2) = a(y^2 - 3x^2),
+\]
+这就是麦克劳林三等分角曲线的方程。
+
+麦克劳林三等分角曲线在以 $B$ 为极点，$BF$ 为极轴的极坐标系中，方程可化简成
+\[
+  \rho = \frac{a}{\cos\frac{\theta}{3}}.
+\]
+从这个方程知道，对于麦克劳林三等分角曲线上任意一点 $M(\rho,\theta)$，作以极半径 $\rho$ 为斜边、定长 $a$ 为直角边的直角三角形，则 $a$ 边的邻角为 $\frac{\theta}{3}$，因而可将任意角 $\theta$ 分成相等的三部分。

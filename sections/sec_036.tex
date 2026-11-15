@@ -1,0 +1,66 @@
+\section{内外摆线本是一家}
+\markboth{36. 内外摆线本是一家}{36. 内外摆线本是一家}
+
+在第 35 节中，我们刚刚导出了内摆线族曲线的参数方程
+\begin{align*}
+  x &= (R-mR)\cos mt + h\cos(t-mt), \\
+  y &= (R-mR)\sin mt - h\sin(t-mt),
+\end{align*}
+并且强调其中的 $m$ 值应该在 $0$ 与 $1$ 之间。现在我们倒过来考虑，从上面的参数方程出发，给定了常数 $R$、$h$ 和 $m$ 之后，就可用描点法画出对应的曲线。如果我们在这方程中令 $m$ 取大于 $1$ 的数值，结果画出的曲线会具有怎样的形状呢？
+
+为了解答这个问题，我们限定
+\[
+  m > 1,
+\]
+并且令
+\[
+  m_1 = m - 1,\quad h_1 = mR - R,\quad R_1 = \frac{h}{m},
+\]
+则有 $m_1 > 0$，$h_1 > 0$，$R_1 > 0$，并且
+\[
+  m = m_1 + 1,\quad h = mR_1 = R_1 + m_1R_1.
+\]
+将这些关系式代入上面的参数方程，得到
+\begin{align*}
+  x &= -h_1\cos(t + m_1t) + (R_1 + m_1R_1)\cos(-m_1t), \\
+  y &= -h_1\sin(t + m_1t) - (R_1 + m_1R_1)\sin(-m_1t),
+\end{align*}
+即
+\begin{align*}
+  x &= (R_1 + m_1R_1)\cos m_1t - h_1\cos(t + m_1t), \\
+  y &= (R_1 + m_1R_1)\sin m_1t - h_1\sin(t + m_1t),
+\end{align*}
+其中 $R_1$、$h_1$ 和 $m_1$ 都是正数。这正是第 34 节中导出的外摆线族曲线的方程。
+
+进而，当 $h = mR$ 时，有
+\begin{gather*}
+  R_1 = \frac{h}{m} = \frac{mR}{m} = R, \\
+  h_1 = mR - R = (m-1)R = m_1R_1,
+\end{gather*}
+因而这时得到外摆线。
+
+当 $h > mR$ 时，有
+\begin{gather*}
+  R_1 = \frac{h}{m} > \frac{mR}{m} = R, \\
+  h_1 = (m-1)R = m_1R < m_1R_1,
+\end{gather*}
+因而这时得到短幅外摆线。
+
+当 $h < mR$ 时，有
+\begin{gather*}
+  R_1 = \frac{h}{m} < \frac{mR}{m} = R, \\
+  h_1 = (m-1)R = m_1R > m_1R_1,
+\end{gather*}
+因而这时得到长幅外摆线。
+
+由此可见，内摆线族曲线和外摆线族曲线都属于一个更大的曲线族，它们的方程可以统一写成
+\begin{align*}
+  x &= (R-mR)\cos mt + h\cos(t-mt), \\
+  y &= (R-mR)\sin mt - h\sin(t-mt),
+\end{align*}
+其中 $R$、$h$、$m$ 都是正数。当 $0 < m < 1$ 时得到内摆线族曲线，$m > 1$ 时得到外摆线族曲线，当 $m = 1$ 时曲线退缩为一点 $(h, 0)$。特别，内摆线和外摆线的方程可以统一写成形式
+\begin{align*}
+  x &= (R-mR)\cos mt + mR\cos(t-mt), \\
+  y &= (R-mR)\sin mt - mR\sin(t-mt),
+\end{align*}
+当 $0 < m < 1$ 时为内摆线，$m > 1$ 时为外摆线。

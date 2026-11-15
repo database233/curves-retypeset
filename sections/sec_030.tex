@@ -1,0 +1,145 @@
+\section{帕斯卡的蜗牛}
+\markboth{30. 帕斯卡的蜗牛}{30. 帕斯卡的蜗牛}
+
+在用英语写就的数学书里，有一种曲线被叫做 Pascal's limaçon，但是这里的 limaçon 却不是一个英语单词，而是一个法语单词，意思是“蜗牛”。蜗牛是法国人爱吃的一种佳肴，这里是指曲线的形状像蜗牛。这里的 Pascal 不是十七世纪著名的法国数学家和物理学家布来兹·帕斯卡，而是他的父亲爱田·帕斯卡。如果从字面上直译，这种曲线的名称就成为“帕斯卡的蜗牛”，不过作为数学术语，却要把它译成帕斯卡蜗线，简称蜗线；也有很多人把它译成“蚶线”。这种曲线的极坐标方程可以写成
+\[
+  \rho = 2r\cos\theta + l,
+\]
+其中 $r$ 和 $l$ 是两个正数。当 $l=2r$ 时，上述方程就成为 $\rho = 2r(1+\cos\theta)$，这是心脏线的方程（见第 28 节），所以心脏线是蜗线的特例。
+
+蜗线可以用下面的几何方式来定义：已知半径为 $r$ 的定圆，$O$ 是这个圆上的一个定点。过 $O$ 点任意作直线交这圆于第二点 $N$，在直线 $ON$ 上向 $N$ 点两侧截取 $NM = NM_1 = l$，其中 $l$ 为定长，则点 $M$ 和 $M_1$ 的轨迹叫做帕斯卡蜗线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.62, >=Stealth, line cap=round, line join=round]
+      \def\r{0.85}
+      \def\l{1.05}
+      \def\th{40}
+      \coordinate (O) at (0,0);
+      \coordinate (N) at ({2*\r*cos(\th)*cos(\th)}, {2*\r*cos(\th)*sin(\th)});
+      \coordinate (M) at ({(2*\r*cos(\th)+\l)*cos(\th)}, {(2*\r*cos(\th)+\l)*sin(\th)});
+      \coordinate (M1) at ({(2*\r*cos(\th)-\l)*cos(\th)}, {(2*\r*cos(\th)-\l)*sin(\th)});
+
+      \draw[->] (-0.35, 0) -- (3.1, 0);
+      \draw (\r, 0) circle (\r);
+      \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+        plot ({(2*\r*cos(\t)+\l)*cos(\t)}, {(2*\r*cos(\t)+\l)*sin(\t)});
+      \draw (O) -- (M);
+
+      \fill[white] (O) circle (1.5pt); \draw (O) circle (1.5pt) node[below left=0.5pt, font=\scriptsize] {$O$};
+      \fill[white] (N) circle (1.5pt); \draw (N) circle (1.5pt) node[above left=-1pt, font=\scriptsize] {$N$};
+      \fill[white] (M) circle (1.5pt); \draw (M) circle (1.5pt) node[above right=-1pt, font=\scriptsize] {$M$};
+      \fill[white] (M1) circle (1.5pt); \draw (M1) circle (1.5pt) node[above left=0.5pt, font=\scriptsize] {$M_1$};
+      \node[font=\scriptsize] at (2.65, -1.55) {$l<2r$};
+    \end{tikzpicture}
+    \caption*{图\ 30.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.55, >=Stealth, line cap=round, line join=round]
+      \def\r{0.72}
+      \def\l{1.44}
+      \def\th{42}
+      \coordinate (O) at (0,0);
+      \coordinate (N) at ({2*\r*cos(\th)*cos(\th)}, {2*\r*cos(\th)*sin(\th)});
+      \coordinate (M) at ({(2*\r*cos(\th)+\l)*cos(\th)}, {(2*\r*cos(\th)+\l)*sin(\th)});
+      \coordinate (M1) at ({(2*\r*cos(\th)-\l)*cos(\th)}, {(2*\r*cos(\th)-\l)*sin(\th)});
+
+      \draw[->] (-0.75, 0) -- (3.25, 0);
+      \draw (\r, 0) circle (\r);
+      \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+        plot ({(2*\r*cos(\t)+\l)*cos(\t)}, {(2*\r*cos(\t)+\l)*sin(\t)});
+      \draw (M1) -- (M);
+
+      \fill[white] (O) circle (1.6pt); \draw (O) circle (1.6pt) node[below right=-1pt, font=\scriptsize] {$O$};
+      \fill[white] (N) circle (1.6pt); \draw (N) circle (1.6pt) node[above left=-1pt, font=\scriptsize] {$N$};
+      \fill[white] (M) circle (1.6pt); \draw (M) circle (1.6pt) node[above right=-1pt, font=\scriptsize] {$M$};
+      \fill[white] (M1) circle (1.6pt); \draw (M1) circle (1.6pt) node[left, font=\scriptsize] {$M_1$};
+      \node[font=\scriptsize] at (2.75, -1.65) {$l=2r$};
+    \end{tikzpicture}
+    \caption*{图\ 30.2}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.32\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.52, >=Stealth, line cap=round, line join=round]
+      \def\r{0.62}
+      \def\l{1.75}
+      \def\th{42}
+      \coordinate (O) at (0,0);
+      \coordinate (N) at ({2*\r*cos(\th)*cos(\th)}, {2*\r*cos(\th)*sin(\th)});
+      \coordinate (M) at ({(2*\r*cos(\th)+\l)*cos(\th)}, {(2*\r*cos(\th)+\l)*sin(\th)});
+      \coordinate (M1) at ({(2*\r*cos(\th)-\l)*cos(\th)}, {(2*\r*cos(\th)-\l)*sin(\th)});
+
+      \draw[->] (-1.15, 0) -- (3.35, 0);
+      \draw (\r, 0) circle (\r);
+      \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+        plot ({(2*\r*cos(\t)+\l)*cos(\t)}, {(2*\r*cos(\t)+\l)*sin(\t)});
+      \draw (M1) -- (M);
+
+      \fill[white] (O) circle (1.6pt); \draw (O) circle (1.6pt) node[below right=-1pt, font=\scriptsize] {$O$};
+      \fill[white] (N) circle (1.6pt); \draw (N) circle (1.6pt) node[above left=-1pt, font=\scriptsize] {$N$};
+      \fill[white] (M) circle (1.6pt); \draw (M) circle (1.6pt) node[above right=-1pt, font=\scriptsize] {$M$};
+      \fill[white] (M1) circle (1.6pt); \draw (M1) circle (1.6pt) node[left, font=\scriptsize] {$M_1$};
+      \node[font=\scriptsize] at (2.85, -1.75) {$l>2r$};
+    \end{tikzpicture}
+    \caption*{图\ 30.3}
+  \end{minipage}
+\end{figure}
+
+当 $l<2r$ 时，曲线的形状如图 30.1，带有一个绕扣。当 $l=2r$ 时，曲线化为心脏线（图 30.2），带有一个尖点。当 $l>2r$ 时，曲线的形状如图 30.3，既没有绕扣，也没有尖点。
+
+\noindent
+\begin{minipage}[c]{0.40\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.68, >=Stealth, line cap=round, line join=round]
+    % 凸轮轮廓：蜗线 rho = 2r*cos(theta - theta0) + l (2r < l < 4r 明显呈现凹弧特征)
+    \def\twoR{0.84}
+    \def\Lcam{1.22}
+    \def\thzero{120}
+    \pgfmathsetmacro{\rhoM}{\twoR*cos(90-\thzero) + \Lcam}
+
+    % 凸轮轮廓曲线
+    \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+      plot ({(\twoR*cos(\t-\thzero)+\Lcam)*cos(\t)},
+            {(\twoR*cos(\t-\thzero)+\Lcam)*sin(\t)});
+
+    % 转轴中心与圆环
+    \fill (0,0) circle (2.2pt);
+    \draw (0,0) circle (0.16);
+
+    % 极轴射线 S
+    \draw (0,0) -- ({\thzero}:{\twoR+\Lcam});
+    \node[left, font=\footnotesize] at ({\thzero}:{0.76*(\twoR+\Lcam)}) {$S$};
+
+    % 竖直尖顶从动杆与导向套（尖端正抵 M 点）
+    \draw[densely dashed] (0,0) -- (0, \rhoM);
+    \fill (0, \rhoM) circle (1.3pt);
+    \draw[thick, fill=white] (0, \rhoM) -- (-0.06, \rhoM+0.14) -- (-0.06, \rhoM+1.05) -- (0.06, \rhoM+1.05) -- (0.06, \rhoM+0.14) -- cycle;
+    \draw[thick] (-0.32, \rhoM+0.44) -- (-0.06, \rhoM+0.44);
+    \draw[thick] (0.06, \rhoM+0.44) -- (0.32, \rhoM+0.44);
+    \draw[thick] (-0.32, \rhoM+0.80) -- (-0.06, \rhoM+0.80);
+    \draw[thick] (0.06, \rhoM+0.80) -- (0.32, \rhoM+0.80);
+    \node[right, font=\footnotesize] at (0.08, \rhoM+0.10) {$M$};
+
+    % 角度 omega t
+    \draw (0, 0.72) arc (90:\thzero:0.72);
+    \node[font=\scriptsize, fill=white, inner sep=0.4pt] at (105:1.05) {$\omega t$};
+
+    % 凸轮逆时针旋转指示弧箭头（不穿刺凸轮实体）
+    \draw[->, thin] (-22:0.46) arc (-22:55:0.46);
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 30.4}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.57\textwidth}
+  \setlength{\parindent}{2em}\indent
+  机器上的凸轮机构有时采用蜗线作为凸轮的轮廓曲线（图 30.4）。采用这样的凸轮轮廓曲线，当凸轮以角速度 $\omega$ 匀速旋转时，有
+  \[
+    \rho = 2r\cos\omega t + l,
+  \]
+  因而带动图中上部的从动杆沿着它所在的直线按余弦规律往返运动。在第 23 节中已经证明过，按余弦规律的往返直线运动可以减小撞击力。
+\end{minipage}

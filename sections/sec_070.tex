@@ -1,0 +1,20 @@
+\section{从圆锥曲线反演得到帕斯卡蜗线}
+\markboth{70. 从圆锥曲线反演得到帕斯卡蜗线}{70. 从圆锥曲线反演得到帕斯卡蜗线}
+
+以焦点为极点的圆锥曲线极坐标方程可以写成
+\[
+  \rho = \frac{p}{1+\varepsilon\cos\theta},
+\]
+其中当离心率 $\varepsilon>1$ 时为双曲线，$\varepsilon=1$ 时为抛物线，$\varepsilon<1$ 时为椭圆（特例当 $\varepsilon=0$ 时为圆）。以极点为反演极，任意正数 $R^2$ 为反演幂，点 $(\rho,\theta)$ 变成 $\left(\frac{R^2}{\rho},\theta\right)$，因而所得曲线的方程是
+\[
+  \rho = \frac{R^2}{p}(1+\varepsilon\cos\theta).
+\]
+记
+\[
+  \frac{R^2}{p} = l,\quad \varepsilon l = 2r,
+\]
+方程化为
+\[
+  \rho = 2r\cos\theta + l.
+\]
+我们在第 30 节中已经见到过上述方程，由它表示的曲线是帕斯卡蜗线：当 $2r>l$（$\varepsilon>1$）时曲线带有绕扣，$2r=l$（$\varepsilon=1$）时曲线有尖点（心脏线），$2r<l$（$\varepsilon<1$）时曲线没有绕扣和尖点。这样就证明了，以圆锥曲线的焦点（即极点）为反演极，作反演变换，结果把这条圆锥曲线变成帕斯卡蜗线。三种不同类型的圆锥曲线（双曲线、抛物线、椭圆），分别对应于三种不同类型的帕斯卡蜗线。

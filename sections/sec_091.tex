@@ -1,0 +1,131 @@
+\section{对数螺线}
+\markboth{91. 对数螺线}{91. 对数螺线}
+
+设 $e$ 是自然对数的底，$m$ 是不等于 $0$ 的常数，则极坐标方程
+\[
+  \rho = e^{m\theta}
+\]
+所表示的曲线叫做对数螺线，其形状如图 91.1 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.05]
+    % 对数螺线 rho = R0 * exp(m*theta), theta in [-4*pi, 0.08*pi]
+    \def\mval{0.22}
+    \def\Rzero{1.15}
+    \draw[line width=0.85pt, curveblue, domain=-12.56:0.25, samples=260, smooth]
+      plot ({\Rzero*exp(\mval*\x)*cos(\x r)}, {\Rzero*exp(\mval*\x)*sin(\x r)});
+    % 极轴 OP
+    \draw[line width=0.65pt, -{Stealth[length=4.5pt]}] (0,0) -- (1.9,0);
+    \fill (0,0) circle (1.2pt);
+    \node[below=2pt] at (0,-0.02) {\footnotesize $O$};
+    \node[below=2pt] at (1.82,-0.02) {\footnotesize $P$};
+  \end{tikzpicture}
+  \caption*{图\ 91.1}
+\end{figure}
+
+在自然界中，由于动、植物生长时细胞分裂的规律是一个变两个、两个变四个、四个变八个，等等，满足指数定律，因而在某些动物和植物身上可以找到自然存在的对数螺线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.08]
+      % 自然界螺壳（对数螺线外壳、内缘与放射状肋纹）
+      \def\bshell{0.165}
+      \def\rshell{0.34}
+      % 内部中心旋涡
+      \draw[line width=0.65pt, domain=-8.0:-1.8, samples=120, smooth]
+        plot ({\rshell*exp(\bshell*\x)*cos(\x r)}, {\rshell*exp(\bshell*\x)*sin(\x r)});
+      % 外廓螺线（从内向外绕至右上开口）
+      \draw[line width=0.9pt, domain=-1.8:8.05, samples=220, smooth]
+        plot ({\rshell*exp(\bshell*\x)*cos(\x r)}, {\rshell*exp(\bshell*\x)*sin(\x r)});
+      % 螺壳肋纹 / 隔膜线（沿生长方向略微前凸的弧线）
+      \foreach \th in {-3.5,-3.1,...,7.8} {
+        \pgfmathsetmacro{\rout}{\rshell*exp(\bshell*\th)}
+        \pgfmathsetmacro{\rin}{\rshell*exp(\bshell*(\th-6.28318))}
+        \pgfmathsetmacro{\rmid}{0.5*(\rout+\rin)}
+        \pgfmathsetmacro{\thmid}{\th + 0.16}
+        \pgfmathsetmacro{\xo}{\rout*cos(\th r)}
+        \pgfmathsetmacro{\yo}{\rout*sin(\th r)}
+        \pgfmathsetmacro{\xi}{\rin*cos(\th r)}
+        \pgfmathsetmacro{\yi}{\rin*sin(\th r)}
+        \pgfmathsetmacro{\xm}{\rmid*cos(\thmid r)}
+        \pgfmathsetmacro{\ym}{\rmid*sin(\thmid r)}
+        \draw[line width=0.45pt, black!85] (\xi,\yi) .. controls (\xm,\ym) .. (\xo,\yo);
+      }
+      % 最外圈壳口锯齿状闭合线
+      \pgfmathsetmacro{\tend}{8.05}
+      \pgfmathsetmacro{\reout}{\rshell*exp(\bshell*\tend)}
+      \pgfmathsetmacro{\rein}{\rshell*exp(\bshell*(\tend-6.28318))}
+      \draw[line width=0.8pt]
+        ({\rein*cos(\tend r)}, {\rein*sin(\tend r)})
+        -- ({(0.75*\rein+0.25*\reout)*cos((\tend-0.06) r)}, {(0.75*\rein+0.25*\reout)*sin((\tend-0.06) r)})
+        -- ({(0.50*\rein+0.50*\reout)*cos((\tend+0.05) r)}, {(0.50*\rein+0.50*\reout)*sin((\tend+0.05) r)})
+        -- ({(0.25*\rein+0.75*\reout)*cos((\tend-0.04) r)}, {(0.25*\rein+0.75*\reout)*sin((\tend-0.04) r)})
+        -- ({\reout*cos(\tend r)}, {\reout*sin(\tend r)});
+    \end{tikzpicture}
+    \caption*{图\ 91.2}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.50\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.95]
+      % 重瓣花朵：严格按黄金角 137.507764 度与指数半径 R_j = 0.22 * exp(0.033*j) 排布花瓣
+      % 从外向内 (j = 54 down to 0) 绘制并白底填充，自然形成层叠立体感
+      \def\Rzero{0.22}
+      \def\cval{0.033}
+      \foreach \j in {54,53,...,0} {
+        \pgfmathsetmacro{\ang}{\j * 137.507764}
+        \pgfmathsetmacro{\rTip}{\Rzero * exp(\cval * \j)}
+        \pgfmathsetmacro{\rBase}{0.38 * \rTip}
+        \pgfmathsetmacro{\plen}{\rTip - \rBase}
+        \pgfmathsetmacro{\pwid}{0.36 * \plen + 0.04}
+        \begin{scope}[rotate=\ang]
+          \fill[white, draw=black, line width=0.52pt]
+            (0,\rBase)
+            .. controls (-\pwid,{\rBase + 0.45*\plen}) and (-\pwid*0.85,{\rTip - 0.12*\plen}) ..
+            (0,\rTip)
+            .. controls (\pwid*0.85,{\rTip - 0.12*\plen}) and (\pwid,{\rBase + 0.45*\plen}) ..
+            (0,\rBase) -- cycle;
+          \draw[line width=0.22pt, black!60] (0,{\rBase + 0.12*\plen}) -- (0,{\rTip - 0.22*\plen});
+        \end{scope}
+      }
+      % 花心小蕊
+      \fill[white, draw=black, line width=0.5pt] (0,0) circle (0.09);
+      \foreach \a in {0,45,...,315} {
+        \fill (\a:0.045) circle (0.4pt);
+      }
+      % 两条严格贴合花瓣叶序 (8-斜列线与 5-斜列线) 的虚线对数螺线
+      % 1) 8-斜列线 (逆时针): j_0 = 2, theta_j = (2 + 8*t)*137.507764 deg,
+      %    有效角度变化 +20.0621 deg/步 = +0.35015 rad/步, m8 = 8*0.033/0.35015 = 0.75396
+      \draw[dashed, dash pattern=on 2.8pt off 1.8pt, line width=0.95pt, curveblue,
+            domain=0:6.5, samples=80, smooth]
+        plot ({ \Rzero*exp(\cval*(2 + 8*\x)) * cos( (2*137.507764 + \x*20.0621) ) },
+              { \Rzero*exp(\cval*(2 + 8*\x)) * sin( (2*137.507764 + \x*20.0621) ) });
+      % 2) 5-斜列线 (顺时针): j_0 = 4, 有效角度变化 -32.4612 deg/步
+      \draw[dashed, dash pattern=on 2.8pt off 1.8pt, line width=0.95pt, curveblue,
+            domain=0:9.8, samples=100, smooth]
+        plot ({ \Rzero*exp(\cval*(4 + 5*\x)) * cos( (4*137.507764 - \x*32.4612) ) },
+              { \Rzero*exp(\cval*(4 + 5*\x)) * sin( (4*137.507764 - \x*32.4612) ) });
+    \end{tikzpicture}
+    \caption*{图\ 91.3}
+  \end{minipage}
+\end{figure}
+
+例如，图 91.2 所示的螺壳，明显地呈现对数螺线形状。在图 91.3 所示的花朵中，也可看出花瓣沿着对数螺线排列（图中用虚线画出两条对数螺线）。如果仔细观察向日葵的花盘，还会发现一粒一粒的葵花籽在花盘上也是排成很多条交织的对数螺线。
+
+对数螺线的方程还可写成其它形式。例如记 $e^m = a$，就能把对数螺线方程改写成最简洁的形式
+\[
+  \rho = a^\theta.
+\]
+
+另一方面，如果把极轴旋转一个任意的角 $\alpha$，那么点 $(\rho, \theta)$ 的极坐标变成 $(\rho, \theta_1)$，这里 $\theta_1 = \theta - \alpha$，因而原方程 $\rho = e^{m\theta}$ 变成
+\[
+  \rho = e^{m(\theta_1 + \alpha)}.
+\]
+记 $m\alpha = b + \ln C$，并且略去 $\theta$ 的下标 $1$，上式就化为
+\[
+  \rho = C e^{m\theta + b},
+\]
+这是对数螺线方程的最一般的形式。

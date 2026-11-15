@@ -1,0 +1,63 @@
+\section{繁花规}
+\markboth{42. 繁花规}{42. 繁花规}
+
+从百货公司可以买到一种价廉物美的儿童玩具，叫做繁花规。繁花规由一套彩色塑料齿轮组成。一个大齿轮是环状的，牙齿做在里面；几个小齿轮的牙齿做在外面，小齿轮内部有一些小圆洞和几个其他形状的较大的洞。玩的时候，用左手按住大齿轮，让它紧贴在纸上，不能移动，在大齿轮里放一只小齿轮，如图 42.1(1) 所示，把笔尖插进小齿轮的某一个洞里，让小齿轮紧贴大齿轮内壁滚动，笔尖就会在纸上画出美丽的曲线花纹。利用不同的小齿轮和小齿轮上不同的洞，可以画出很多不同形状的复杂精巧的花纹。图 42.1(2) $\sim$ (5) 就是用繁花规画出的几幅花纹图案，它们都是变幅内摆线，不过为了美观，有几幅图中的变幅内摆线只画了一部分。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.39\textwidth]{fig_042_1.png}
+  \par\vspace{1pt}
+  {\footnotesize (1)}
+
+  \vspace{3pt}
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.58]
+      \pgfmathsetmacro{\m}{25/91}
+      \def\h{0.44}
+      \foreach \j in {0,1,2,3} {
+        \draw[very thin, curveblue, domain=0:1800, samples=360, variable=\s]
+          plot ({(1-\m)*cos(\s)+\h*cos(72*\j + ((1-\m)/\m)*\s)},
+                {(1-\m)*sin(\s)-\h*sin(72*\j + ((1-\m)/\m)*\s)});
+      }
+    \end{tikzpicture}
+    \par{\footnotesize (2)}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.51]
+      \pgfmathsetmacro{\m}{9/32}
+      \def\h{0.715}
+      \draw[very thin, curveblue, domain=0:3240, samples=960, variable=\t]
+        plot ({(1-\m)*cos(\t)+\h*cos(((1-\m)/\m)*\t)},
+              {(1-\m)*sin(\t)-\h*sin(((1-\m)/\m)*\t)});
+    \end{tikzpicture}
+    \par{\footnotesize (3)}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.52]
+      \pgfmathsetmacro{\m}{7/29}
+      \def\h{0.62}
+      \draw[very thin, curveblue, domain=0:2520, samples=900, variable=\t]
+        plot ({(1-\m)*cos(\t)+\h*cos(((1-\m)/\m)*\t)},
+              {(1-\m)*sin(\t)-\h*sin(((1-\m)/\m)*\t)});
+    \end{tikzpicture}
+    \par{\footnotesize (4)}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.23\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.55]
+      \pgfmathsetmacro{\m}{21/64}
+      \def\h{0.62}
+      \draw[very thin, curveblue, domain=0:2880, samples=960, variable=\t]
+        plot ({(1-\m)*cos(\t)+\h*cos(((1-\m)/\m)*\t)},
+              {(1-\m)*sin(\t)-\h*sin(((1-\m)/\m)*\t)});
+    \end{tikzpicture}
+    \par{\footnotesize (5)}
+  \end{minipage}
+  \caption*{图\ 42.1}
+\end{figure}

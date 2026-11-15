@@ -1,0 +1,69 @@
+\section{三次抛物线}
+\markboth{83. 三次抛物线}{83. 三次抛物线}
+
+在代数上，三次函数的一般形式是
+\[
+  y = ax^3 + bx^2 + cx + d. \quad (a \neq 0)
+\]
+三次函数的图象叫做三次抛物线，又叫立方抛物线。在造船工业中进行船体放样时，经常采用三次抛物线作为样条曲线。
+
+根据三次函数的驻点和极值点的情况，可以把三次抛物线分成不同的类型。为此，我们求出三次函数的导数：
+\[
+  y' = 3ax^2 + 2bx + c.
+\]
+驻点是 $y' = 0$ 的点，解 $3ax^2 + 2bx + c = 0$，得
+\[
+  x = \frac{-b \pm \sqrt{b^2 - 3ac}}{3a}.
+\]
+
+当 $b^2 - 3ac > 0$ 时，上式给出两个不等的实数值，因而有两个不同的驻点。这时 $y'$ 有表达式
+\[
+  y' = 3a\left(x - \frac{-b + \sqrt{b^2 - 3ac}}{3a}\right)\left(x - \frac{-b - \sqrt{b^2 - 3ac}}{3a}\right),
+\]
+考察在驻点附近 $y'$ 的符号，可知一个驻点对应于极小值，另一个对应于极大值。从图形上看，这时的三次抛物线有一个山谷和一个山峰，如图 83.1 所示（图中坐标轴已经过平移）。
+
+当 $b^2 - 3ac = 0$ 时，得到唯一的驻点 $x = -\frac{b}{3a}$，这时
+\[
+  y' = 3a\left(x + \frac{b}{3a}\right)^2.
+\]
+因而在驻点两边 $y'$ 的符号相同，驻点不是极值点。这时的三次抛物线如图 83.2 所示（图中坐标轴已经过平移）。整个曲线既没有山谷，也没有山峰，只有驻点处的切线成水平方向，可以在那里立足稍留，其余各处都是单调的斜坡。
+
+\begin{center}
+  \begin{minipage}[b]{0.31\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.68, >=Stealth, line cap=round, line join=round]
+      \draw[->] (-1.65, 0) -- (1.65, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -1.85) -- (0, 1.95) node[left, font=\footnotesize] {$y$};
+      \node[below left, font=\footnotesize] at (0, 0) {$O$};
+      \draw[very thick, curveblue, domain=-1.35:1.35, samples=60]
+        plot (\x, {1.25 * \x * \x * \x - 1.5 * \x});
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 83.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.31\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.68, >=Stealth, line cap=round, line join=round]
+      \draw[->] (-1.45, 0) -- (1.45, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -1.85) -- (0, 1.95) node[left, font=\footnotesize] {$y$};
+      \node[below left, font=\footnotesize] at (0, 0) {$O$};
+      \draw[very thick, curveblue, domain=-1.18:1.22, samples=60]
+        plot (\x, {1.05 * \x * \x * \x});
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 83.2}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.31\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.68, >=Stealth, line cap=round, line join=round]
+      \draw[->] (-1.45, 0) -- (1.45, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -1.85) -- (0, 1.95) node[left, font=\footnotesize] {$y$};
+      \node[below left, font=\footnotesize] at (0, 0) {$O$};
+      \draw[very thick, curveblue, domain=-1.15:1.05, samples=60]
+        plot (\x, {0.85 * \x * \x * \x + 0.85 * \x + 0.18});
+    \end{tikzpicture}
+    \captionof*{figure}{图\ 83.3}
+  \end{minipage}
+\end{center}
+
+当 $b^2 - 3ac < 0$ 时，不存在驻点，因而也没有极值点。这时的三次抛物线处处都是单调的斜坡，如图 83.3 所示（图中坐标轴已经过平移）。

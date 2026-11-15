@@ -1,0 +1,97 @@
+\section{渐开线齿轮}
+\markboth{49. 渐开线齿轮}{49. 渐开线齿轮}
+
+常见齿轮的牙齿，侧面轮廓大多做成圆的渐伸线。工厂里把圆的渐伸线叫做圆的渐开线，所以这种齿轮叫做渐开线齿轮。
+
+\begin{wrapfigure}[19]{l}{0.45\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.72, >=Stealth, line cap=round, line join=round]
+    \def\rp{1.85}
+    \def\alphaP{22}
+    \pgfmathsetmacro{\rb}{\rp*cos(\alphaP)}
+    \def\rf{1.60}
+    \def\ra{2.03}
+    \def\wb{8.649} % z=12: 7.5 + inv(22 deg) in degrees
+    \pgfmathsetmacro{\tmax}{sqrt((\ra/\rb)^2 - 1)} % rad ~ 0.633
+
+    \coordinate (O1) at (0, \rp);
+    \coordinate (O2) at (0, -\rp);
+    \coordinate (B)  at (0, 0);
+    \coordinate (M)  at (-0.167, 0.067);
+
+    % 连心线 O1 O2 与旋转中心十字线
+    \draw[densely dash dot] (0, {\rp+0.32}) -- (0, {-\rp-0.32});
+    \draw[densely dash dot] (-0.58, \rp) -- (0.58, \rp);
+    \draw[densely dash dot] (-0.58, -\rp) -- (0.58, -\rp);
+
+    % 两个基圆弧（虚线）
+    \draw[densely dashed] ($(O1)+(228:\rb)$) arc (228:312:\rb);
+    \draw[densely dashed] ($(O2)+(48:\rb)$) arc (48:132:\rb);
+
+    % 公切线 MN
+    \draw[thick] (-1.45, {1.45*tan(\alphaP)}) -- (1.45, {-1.45*tan(\alphaP)});
+    \node[below, font=\scriptsize] at (1.35, {-1.35*tan(\alphaP)-0.04}) {$N$};
+
+    % 齿轮 I 齿廓 (z=12, pitch=30 deg)
+    \begin{scope}[shift={(O1)}]
+      \foreach \ang [count=\i] in {226.5, 256.5, 286.5, 316.5} {
+        \pgfmathsetmacro{\thu}{\ang+\wb}
+        \pgfmathsetmacro{\thl}{\ang-\wb}
+        \draw[thick, curveblue]
+          (\thl:\rf) -- (\thl:\rb)
+          -- plot[domain=0:\tmax, samples=10, variable=\t]
+            ({\rb*(cos(\thl + \t*180/pi) + \t*sin(\thl + \t*180/pi))},
+             {\rb*(sin(\thl + \t*180/pi) - \t*cos(\thl + \t*180/pi))})
+          -- plot[domain=\tmax:0, samples=10, variable=\t]
+            ({\rb*(cos(\thu - \t*180/pi) - \t*sin(\thu - \t*180/pi))},
+             {\rb*(sin(\thu - \t*180/pi) + \t*cos(\thu - \t*180/pi))})
+          -- (\thu:\rf);
+        \ifnum\i<4
+          \pgfmathsetmacro{\nextl}{\ang + 30.0 - \wb}
+          \draw[thick, curveblue] (\thu:\rf) arc (\thu:\nextl:\rf);
+        \fi
+      }
+    \end{scope}
+
+    % 齿轮 II 齿廓 (z=12, pitch=30 deg)
+    \begin{scope}[shift={(O2)}]
+      \foreach \ang [count=\i] in {58.5, 88.5, 118.5} {
+        \pgfmathsetmacro{\thu}{\ang+\wb}
+        \pgfmathsetmacro{\thl}{\ang-\wb}
+        \draw[thick, curveblue]
+          (\thl:\rf) -- (\thl:\rb)
+          -- plot[domain=0:\tmax, samples=10, variable=\t]
+            ({\rb*(cos(\thl + \t*180/pi) + \t*sin(\thl + \t*180/pi))},
+             {\rb*(sin(\thl + \t*180/pi) - \t*cos(\thl + \t*180/pi))})
+          -- plot[domain=\tmax:0, samples=10, variable=\t]
+            ({\rb*(cos(\thu - \t*180/pi) - \t*sin(\thu - \t*180/pi))},
+             {\rb*(sin(\thu - \t*180/pi) + \t*cos(\thu - \t*180/pi))})
+          -- (\thu:\rf);
+        \ifnum\i<3
+          \pgfmathsetmacro{\nextl}{\ang + 30.0 - \wb}
+          \draw[thick, curveblue] (\thu:\rf) arc (\thu:\nextl:\rf);
+        \fi
+      }
+    \end{scope}
+
+    % 旋转方向箭头
+    \draw[->, thick] ($(O1)+(210:1.25)$) arc (210:250:1.25);
+    \draw[->, densely dashed, thick] ($(O2)+(150:1.25)$) arc (150:110:1.25);
+
+    % 标注
+    \fill (O1) circle (1.4pt) node[above right=-1pt, font=\scriptsize] {$O_1$};
+    \fill (O2) circle (1.4pt) node[below right=-1pt, font=\scriptsize] {$O_2$};
+    \fill (B)  circle (1.4pt) node[above right=2pt, font=\scriptsize, fill=white, inner sep=0.4pt] {$B$};
+    \fill (M)  circle (1.4pt) node[below left=2pt, font=\scriptsize, fill=white, inner sep=0.4pt] {$M$};
+    \node[right, font=\scriptsize] at (0.14, {\rp-0.58}) {齿轮 I};
+    \node[right, font=\scriptsize] at (0.14, {-\rp+0.58}) {齿轮 II};
+  \end{tikzpicture}
+  \caption*{图\ 49.1}
+\end{wrapfigure}
+
+图 49.1 所示为一对渐开线齿轮啮合的情形。点 $O_1$ 和 $O_2$ 分别是这两个齿轮的旋转中心，虚线画的圆是基圆。齿轮 I 每个牙齿两侧的轮廓曲线都是圆 $O_1$ 的渐伸线，齿轮 II 牙齿两侧的轮廓曲线是圆 $O_2$ 的渐伸线。设在某一瞬间这两个齿轮在点 $M$ 接触，那么它们的齿廓曲线在点 $M$ 有公共的切线，因而也有公共的法线 $MN$。根据圆的渐伸线的法线的性质（第 48 节），$MN$ 必为基圆 $O_1$ 和 $O_2$ 的公切线，因而是一条定直线。设 $MN$ 与两圆连心线 $O_1O_2$ 的交点为 $B$，则 $B$ 是定点。
+
+当主动齿轮 I 旋转时，在接触点 $M$ 沿齿廓法线 $MN$ 的方向推动齿轮 II，使齿轮 II 跟着它旋转。在旋转的过程中，接触点 $M$ 的位置不断变化，但是齿轮 I 对齿轮 II 的推力却始终通过定点 $B$。这种受力情况，相当于摩擦轮传动：假想有一对橡皮轮，一个的圆心是 $O_1$、半径是 $O_1B$，另一个的圆心是 $O_2$、半径是 $O_2B$，那么当第一个橡皮轮转动时，由于摩擦力的作用，在 $B$ 点处始终有一个推力作用到第二个橡皮轮上，使它跟随着转动。这两个转动的橡皮轮，在接触点 $B$ 的线速度相同，因而旋转的角速度总是与它们的半径成反比。由此推出渐开线齿轮 I 和 II 旋转的角速度之比，也总是等于 $O_2B:O_1B$，这是一个定值，与时间无关。这样就能保证当齿轮 I 匀速旋转时，齿轮 II 的旋转也是匀速的。
+
+主动齿轮旋转的角速度与从动齿轮旋转的角速度的比，叫做传动比。如果齿轮的齿廓曲线没有经过特殊选择，一般说来，在不同瞬间的传动比也是不同的。但是如果选择圆的渐伸线作齿廓曲线，就能得到固定的传动比，使传动过程平稳，并且能得到具有预期的角速度的匀速旋转运动。

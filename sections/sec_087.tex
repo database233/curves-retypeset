@@ -1,0 +1,71 @@
+\section{双纽线}
+\markboth{87. 双纽线}{87. 双纽线}
+
+设有两个定点 $F$ 和 $F_1$，它们之间的距离是 $2a$。若动点 $M$ 到两点 $F_1$ 和 $F$ 的距离之积为 $a^2$，则 $M$ 的轨迹叫做双纽线。这种曲线最初是 1694 年在雅各·贝努利的一篇论文中出现的，所以通常把它叫做贝努利双纽线。当时，他把这种曲线叫做 lemniscate，借以说明这种曲线形如 8 字或绷带。
+
+\noindent
+\begin{minipage}[t]{0.52\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 87.1，选取直角坐标系，使直线 $F_1 F$ 为 $x$ 轴，线段 $F_1 F$ 的中点 $O$ 为坐标原点，则 $F_1$ 的坐标为 $(-a, 0)$，$F$ 的坐标为 $(a, 0)$。设 $M(x, y)$ 是双纽线上的任意点，则从 $MF_1 \cdot MF = a^2$，得到
+  \[
+    \sqrt{(x + a)^2 + y^2} \cdot \sqrt{(x - a)^2 + y^2} = a^2.
+  \]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+    \def\a{1.05}
+    \draw[->] (-1.75, 0) -- (1.85, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -0.95) -- (0, 1.05) node[left, font=\footnotesize] {$y$};
+    \node[font=\footnotesize, fill=white, inner sep=0.5pt] at (-0.12, -0.20) {$O$};
+    % 伯努利双纽线参数方程: x = a*sqrt(2)*cos(t)/(1+sin^2(t)), y = a*sqrt(2)*sin(t)*cos(t)/(1+sin^2(t))
+    \draw[very thick, curveblue, domain=0:360, samples=120, smooth]
+      plot ({\a*1.4142*cos(\x)/(1 + sin(\x)*sin(\x))}, {\a*1.4142*sin(\x)*cos(\x)/(1 + sin(\x)*sin(\x))});
+    % 焦点 F1, F
+    \coordinate (F1) at (-\a, 0);
+    \coordinate (F) at (\a, 0);
+    \fill (F1) circle (1.2pt) node[below, font=\footnotesize] {$F_1$};
+    \fill (F) circle (1.2pt) node[below, font=\footnotesize] {$F$};
+    % 点 M (t = 28 deg)
+    \pgfmathsetmacro{\tdeg}{28}
+    \pgfmathsetmacro{\mx}{\a*1.4142*cos(\tdeg)/(1 + sin(\tdeg)*sin(\tdeg))}
+    \pgfmathsetmacro{\my}{\a*1.4142*sin(\tdeg)*cos(\tdeg)/(1 + sin(\tdeg)*sin(\tdeg))}
+    \coordinate (M) at (\mx, \my);
+    \fill (M) circle (1.3pt) node[above right=-1pt, font=\footnotesize] {$M$};
+    \draw[thin] (F1) -- (M) -- (F);
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 87.1}
+\end{minipage}
+
+\noindent 两边平方，然后整理，得到
+\[
+  (x^2 + y^2)^2 = 2a^2 (x^2 - y^2),
+\]
+这就是双纽线的直角坐标方程。利用关系式
+\[
+  x = \rho\cos\theta, \quad y = \rho\sin\theta,
+\]
+可把上述直角坐标方程化成极坐标方程
+\[
+  \rho^2 = 2a^2 \cos 2\theta.
+\]
+
+双纽线与等轴双曲线有密切的联系。考虑等轴双曲线
+\[
+  x^2 - y^2 = b^2. \quad (b > 0)
+\]
+以坐标原点为反演极，$k = \sqrt{2}\,ab$ 为反演幂，作反演变换（第 66 节），那么双曲线上的点 $(x, y)$ 变到点 $(X, Y)$，这里
+\[
+  x = \frac{\sqrt{2}\,abX}{X^2 + Y^2}, \quad y = \frac{\sqrt{2}\,abY}{X^2 + Y^2}.
+\]
+代入双曲线方程后得到
+\[
+  \frac{2a^2 b^2 X^2}{(X^2 + Y^2)^2} - \frac{2a^2 b^2 Y^2}{(X^2 + Y^2)^2} = b^2,
+\]
+即
+\[
+  (X^2 + Y^2)^2 = 2a^2 (X^2 - Y^2),
+\]
+这正是双纽线的方程。所以，取等轴双曲线的对称中心做反演极，作反演变换，就把等轴双曲线变成了贝努利双纽线。

@@ -1,0 +1,134 @@
+% ==============================================================================
+% 《形形色色的曲线》小 32 开 (130mm x 184mm) 忠实重排版统一样式配置
+% ==============================================================================
+\usepackage[
+  paperwidth=130mm,
+  paperheight=184mm,
+  top=15.5mm,
+  bottom=14.5mm,
+  left=14mm,
+  right=14mm,
+  headheight=20pt,
+  headsep=4mm,
+  footskip=6.5mm
+]{geometry}
+
+% 数学与字体宏包
+\usepackage{amsmath, amssymb}
+\usepackage{newtxmath}
+\let\widering\relax
+\usepackage{yhmath} % 提供平滑圆弧符号 \wideparen
+
+\setmainfont{TeX Gyre Termes}
+
+% TikZ 与 PGFPlots 矢量绘图
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{
+  arrows.meta,
+  decorations.pathreplacing,
+  decorations.markings,
+  angles,
+  quotes,
+  calc,
+  intersections,
+  patterns
+}
+
+% 图表与混排控制
+\usepackage{graphicx}
+\graphicspath{{assets/generated/}{assets/figures/}}
+\usepackage{wrapfig}
+\usepackage{caption}
+\captionsetup{
+  font=footnotesize,
+  labelfont=bf,
+  labelsep=quad,
+  skip=4pt
+}
+\usepackage{longtable, booktabs, array}
+
+% 颜色、页眉页脚、标题与目录
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage[
+  colorlinks=true,
+  linkcolor=accentblue,
+  urlcolor=accentblue,
+  bookmarksnumbered=true,
+  pdfstartview=FitH
+]{hyperref}
+
+% 配色方案
+\definecolor{accentblue}{RGB}{24, 72, 122}
+\definecolor{curveblue}{RGB}{20, 90, 160}
+\definecolor{mutedgray}{RGB}{95, 100, 110}
+\definecolor{coverbg}{RGB}{66, 92, 82}
+\definecolor{covergreen}{RGB}{118, 224, 128}
+\definecolor{coverdark}{RGB}{44, 62, 55}
+
+% ------------------------------------------------------------------------------
+% 原书数学符号忠实还原宏定义
+% ------------------------------------------------------------------------------
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\ctg}{ctg}
+\DeclareMathOperator{\arctg}{arctg}
+\DeclareMathOperator{\arcctg}{arcctg}
+\DeclareMathOperator{\sh}{sh}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\thyp}{th}
+\DeclareMathOperator{\cth}{cth}
+\newcommand{\arc}[1]{\wideparen{#1}}
+\newcommand{\dd}{\,d}
+
+% ------------------------------------------------------------------------------
+% 节标题与目录样式（扁平 100 节结构）
+% ------------------------------------------------------------------------------
+\renewcommand{\thesection}{\arabic{section}}
+\titleformat{\section}
+  {\centering\large\sffamily\bfseries\color{accentblue}}
+  {\thesection.}{0.45em}{}
+\titlespacing*{\section}{0pt}{1.0\baselineskip}{0.65\baselineskip}
+
+% 紧凑清晰的目录格式（小 32 开单列对齐，纯文本 contentsname 避免样式污染页眉）
+\setcounter{tocdepth}{1}
+\renewcommand{\contentsname}{目录}
+\ctexset{
+  chapter = {
+    name = {},
+    number = {},
+    format = \centering\Large\sffamily\bfseries\color{accentblue},
+    beforeskip = 0.8\baselineskip,
+    afterskip = 0.8\baselineskip,
+    pagestyle = fancy
+  }
+}
+\titlecontents{section}
+  [0em]
+  {\small}
+  {\makebox[2.2em][r]{\thecontentslabel.\hspace{0.4em}}}
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+
+% ------------------------------------------------------------------------------
+% 页眉与页脚设置
+% ------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\footnotesize\color{mutedgray} 形形色色的曲线}
+\fancyhead[LO,RE]{\footnotesize\color{mutedgray} \leftmark}
+\fancyfoot[C]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{mutedgray!40}\leaders\hrule height \headrulewidth\hfill}}
+
+% 允许较长多行公式适当跨页，减少大段空白
+\allowdisplaybreaks[2]
+
+% 适配小 32 开窄版心的正文字距与行距（小五号约 9.5pt，保证公式不溢出）
+\raggedbottom
+\linespread{1.28}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.15\baselineskip}

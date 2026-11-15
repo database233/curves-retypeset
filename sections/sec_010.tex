@@ -1,0 +1,82 @@
+\section{垂足曲线和反垂足曲线}
+\markboth{10. 垂足曲线和反垂足曲线}{10. 垂足曲线和反垂足曲线}
+
+利用三角板画曲线的方法，不但可以用来画抛物线、椭圆和双曲线，而且可以用来画许多其它曲线。这种画法是有垂足曲线和反垂足曲线作为背景的。
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \setlength{\parindent}{2em}
+  在图 10.1 中有一条曲线 $c$，设 $M$ 是平面曲线 $c$ 上的任意点，$O$ 是这张平面内的一个定点。过 $M$ 作曲线 $c$ 的切线 $MT$；再作 $OP \perp MT$，垂足为 $P$。当 $M$ 沿曲线 $c$ 移动时，垂足 $P$ 也画出一条曲线 $s$，$s$ 就叫做曲线 $c$ 关于 $O$ 点的垂足曲线。反过来，$c$ 叫做曲线 $s$ 关于 $O$ 点的反垂足曲线。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \centering
+  \vspace{-2pt}
+  \begin{tikzpicture}[scale=1.02]
+    \coordinate (O) at (-0.75, -0.55);
+
+    % 曲线 c
+    \draw[line width=0.9pt, curveblue, domain=-0.85:1.35, samples=60]
+      plot ({0.75 + 0.55*\x*\x}, \x);
+    \node[above right=-1pt] at ({0.75 + 0.55*1.35*1.35}, 1.30) {\footnotesize $c$};
+
+    % 垂足曲线 s
+    \draw[line width=0.8pt, black, domain=-1.75:1.85, samples=80]
+      plot ({
+        0.75 + 0.55*\x*\x + ( ((-0.75 - 0.75 - 0.55*\x*\x)*1.1*\x + (-0.55 - \x)) / (1.21*\x*\x + 1) ) * 1.1*\x
+      }, {
+        \x + ( ((-0.75 - 0.75 - 0.55*\x*\x)*1.1*\x + (-0.55 - \x)) / (1.21*\x*\x + 1) )
+      });
+
+    % 主点 t = -0.32
+    \pgfmathsetmacro{\ta}{-0.32}
+    \pgfmathsetmacro{\mx}{0.75 + 0.55*\ta*\ta}
+    \pgfmathsetmacro{\my}{\ta}
+    \pgfmathsetmacro{\tx}{1.1*\ta}
+    \pgfmathsetmacro{\ty}{1.0}
+    \pgfmathsetmacro{\lam}{((-0.75-\mx)*\tx + (-0.55-\my)*\ty)/(\tx*\tx + \ty*\ty)}
+    \pgfmathsetmacro{\px}{\mx + \lam*\tx}
+    \pgfmathsetmacro{\py}{\my + \lam*\ty}
+    \coordinate (M) at (\mx, \my);
+    \coordinate (P) at (\px, \py);
+    \coordinate (T) at ({\px + 0.55*\tx}, {\py + 0.55*\ty});
+    \draw[line width=0.6pt] ({\px + 0.55*\tx}, {\py + 0.55*\ty}) -- ({\mx - 0.65*\tx}, {\my - 0.65*\ty});
+    \draw[line width=0.6pt] (O) -- (P);
+    \pgfmathsetmacro{\ux}{\tx/sqrt(\tx*\tx+\ty*\ty)}
+    \pgfmathsetmacro{\uy}{\ty/sqrt(\tx*\tx+\ty*\ty)}
+    \pgfmathsetmacro{\nx}{(\px+0.75)/sqrt((\px+0.75)^2+(\py+0.55)^2)}
+    \pgfmathsetmacro{\ny}{(\py+0.55)/sqrt((\px+0.75)^2+(\py+0.55)^2)}
+    \draw[line width=0.45pt] (P) ++(-0.11*\ux, -0.11*\uy) -- ++(-0.11*\nx, -0.11*\ny) -- ++(0.11*\ux, 0.11*\uy);
+
+    % 另外两条切线与垂线: t = 0.35 和 t = -0.75
+    \foreach \tb in {0.35, -0.75} {
+      \pgfmathsetmacro{\mxb}{0.75 + 0.55*\tb*\tb}
+      \pgfmathsetmacro{\myb}{\tb}
+      \pgfmathsetmacro{\txb}{1.1*\tb}
+      \pgfmathsetmacro{\tyb}{1.0}
+      \pgfmathsetmacro{\lamb}{((-0.75-\mxb)*\txb + (-0.55-\myb)*\tyb)/(\txb*\txb + \tyb*\tyb)}
+      \pgfmathsetmacro{\pxb}{\mxb + \lamb*\txb}
+      \pgfmathsetmacro{\pyb}{\myb + \lamb*\tyb}
+      \draw[line width=0.48pt, black!75] ({\pxb - 0.40*\txb}, {\pyb - 0.40*\tyb}) -- ({\mxb + 0.45*\txb}, {\myb + 0.45*\tyb});
+      \draw[line width=0.48pt, black!75] (O) -- (\pxb, \pyb);
+      \pgfmathsetmacro{\uxb}{\txb/sqrt(\txb*\txb+\tyb*\tyb)}
+      \pgfmathsetmacro{\uyb}{\tyb/sqrt(\txb*\txb+\tyb*\tyb)}
+      \pgfmathsetmacro{\nxb}{(\pxb+0.75)/sqrt((\pxb+0.75)^2+(\pyb+0.55)^2)}
+      \pgfmathsetmacro{\nyb}{(\pyb+0.55)/sqrt((\pxb+0.75)^2+(\pyb+0.55)^2)}
+      \draw[line width=0.4pt] (\pxb, \pyb) ++(0.10*\uxb, 0.10*\uyb) -- ++(-0.10*\nxb, -0.10*\nyb) -- ++(-0.10*\uxb, -0.10*\uyb);
+    }
+
+    \fill (O) circle (1.3pt) node[below left=-1pt] {\footnotesize $O$};
+    \fill (M) circle (1.2pt) node[right=1pt] {\footnotesize $M$};
+    \fill (P) circle (1.2pt) node[above right=0pt] {\footnotesize $P$};
+    \node[above] at (T) {\footnotesize $T$};
+    \node[left] at (-0.62, 0.35) {\footnotesize $s$};
+  \end{tikzpicture}
+  \par\vspace{4pt}{\footnotesize 图\ 10.1}
+\end{minipage}
+
+图 10.1 中的 $\angle OPM$ 可以用三角板来实现，这就是三角板画法的本质。具体地说，让三角板的一条直角边通过 $O$ 点，另一条直角边与曲线 $c$ 相切，这时直角顶点 $P$ 的位置就指出了 $c$ 关于 $O$ 点的垂足曲线 $s$。
+
+如果让三角板的一条直角边通过 $O$ 点，直角顶点 $P$ 在曲线 $s$ 上移动，这时另一条直角边就给出了一族直线，与这些直线都相切的光滑曲线，就是 $s$ 关于 $O$ 点的反垂足曲线 $c$。
+
+根据前面几节的讨论，可以知道，抛物线关于焦点的垂足曲线是直线，椭圆和双曲线关于焦点的垂足曲线都是圆。反过来，直线关于线外一点的反垂足曲线是抛物线，圆周关于圆内一点的反垂足曲线是椭圆，圆周关于圆外一点的反垂足曲线是双曲线。正是利用这些性质，设计出了利用三角板画抛物线、椭圆和双曲线的方法。

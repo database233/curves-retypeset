@@ -1,0 +1,182 @@
+\section{在纸盒里转动的划粉}
+\markboth{97. 在纸盒里转动的划粉}{97. 在纸盒里转动的划粉}
+
+\par\medskip\noindent
+\begin{minipage}[c]{0.55\textwidth}
+  \hspace{2em}如图 97.1，先作一个边长为 $a$ 的正三角形 $ABC$，然后分别以 $A$、$B$、$C$ 为圆心，$a$ 为半径，作圆弧 $\arc{BC}$、$\arc{CA}$、$\arc{AB}$，由这三条相等的 $60^\circ$ 圆弧所组成的图形叫做莱洛三角形。裁剪服装时用来在布料上划线的划粉，就是做成莱洛三角形的形状。某些产品如电视机、手表等的商标，有时也很别致地画在一个莱洛三角形里面。
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.41\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=1.0]
+    \def\a{2.1}
+    \coordinate (B) at (0,0);
+    \coordinate (C) at (\a,0);
+    \coordinate (A) at (60:\a);
+
+    \draw[dashed, line width=0.6pt] (A) -- (B) -- (C) -- cycle;
+    % 三段 60 度圆弧
+    \draw[line width=0.9pt, curveblue]
+      (B) arc (-120:-60:\a)
+      arc (0:60:\a)
+      arc (120:180:\a) -- cycle;
+
+    \node[above=1pt] at (A) {\footnotesize $A$};
+    \node[left=1pt] at (B) {\footnotesize $B$};
+    \node[right=1pt] at (C) {\footnotesize $C$};
+  \end{tikzpicture}
+  \par\vspace{3pt}{\footnotesize 图\ 97.1}
+\end{minipage}
+\par\medskip
+
+如果糊制一只存放划粉的方底纸盒，使得划粉刚好能紧紧地卡在盒子里面，你就会发现，划粉仍然能在纸盒里自由转动，如图 97.2 所示。从数学上看，这说明莱洛三角形可以在边长为 $a$ 的正方形内自由转动。机械学家莱洛在研究机械分类时首先指出这个性质，“莱洛三角形”的名称正是由此而来的。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.65]
+    % 四个正方形方盒内旋转的莱洛三角形
+    % 位置 1: phi = 90 deg
+    \begin{scope}[shift={(0,0)}]
+      \draw[line width=0.7pt] (0,0) rectangle (1,1);
+      \draw[line width=0.85pt, curveblue]
+        ({0.5 + 1*cos(-120)}, {1.0 + 1*sin(-120)})
+        arc (-120:-60:1)
+        arc (0:60:1)
+        arc (120:180:1);
+    \end{scope}
+    % 位置 2: phi = 72 deg
+    \begin{scope}[shift={(1.32,0)}]
+      \draw[line width=0.7pt] (0,0) rectangle (1,1);
+      \draw[line width=0.85pt, curveblue]
+        ({0.7431 + 1*cos(-138)}, {1.0 + 1*sin(-138)})
+        arc (-138:-78:1)
+        arc (-18:42:1)
+        arc (102:162:1);
+    \end{scope}
+    % 位置 3: phi = 52 deg
+    \begin{scope}[shift={(2.64,0)}]
+      \draw[line width=0.7pt] (0,0) rectangle (1,1);
+      \draw[line width=0.85pt, curveblue]
+        ({0.9272 + 1*cos(-158)}, {0.9903 + 1*sin(-158)})
+        arc (-158:-98:1)
+        arc (-38:22:1)
+        arc (82:142:1);
+    \end{scope}
+    % 位置 4: phi = 180 deg
+    \begin{scope}[shift={(3.96,0)}]
+      \draw[line width=0.7pt] (0,0) rectangle (1,1);
+      \draw[line width=0.85pt, curveblue]
+        ({0.0 + 1*cos(-30)}, {0.5 + 1*sin(-30)})
+        arc (-30:30:1)
+        arc (90:150:1)
+        arc (-150:-90:1);
+    \end{scope}
+  \end{tikzpicture}
+  \caption*{图\ 97.2}
+\end{figure}
+
+普通钻头的横截面是圆形的，只能用来钻圆孔。但是在很多机器上也需要一些方孔。用一种特制的方孔钻头，它的横截面是莱洛三角形，就可以钻削出所需的方孔来。
+
+\par\medskip\noindent
+\begin{minipage}[c]{0.55\textwidth}
+  \hspace{2em}如图 97.3，曲线 $C$ 在直线 $l$ 上的正射影 $AB$ 的长，叫做曲线 $C$ 在 $l$ 方向上的宽度。如果一条曲线在所有方向上的宽度都相同，就称它为定宽曲线。圆是显然的定宽曲线，它在每个方向上的宽度都等于直径。除去圆而外，还有很多其他的定宽曲线，莱洛三角形就是其中最简单的一种。
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.41\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.96]
+    % 曲线 C 在直线 l 上的正射影 AB
+    \def\cx{1.1}
+    \def\cy{1.15}
+    \def\a{0.92}
+    \def\b{0.56}
+    \def\ang{28}
+    \pgfmathsetmacro{\dxmax}{sqrt(\a*\a*cos(\ang)*cos(\ang) + \b*\b*sin(\ang)*sin(\ang))}
+    \pgfmathsetmacro{\xA}{\cx - \dxmax}
+    \pgfmathsetmacro{\xB}{\cx + \dxmax}
+    \pgfmathsetmacro{\yAt}{\cy - (\a*\a-\b*\b)*sin(\ang)*cos(\ang)/\dxmax}
+    \pgfmathsetmacro{\yBt}{\cy + (\a*\a-\b*\b)*sin(\ang)*cos(\ang)/\dxmax}
+
+    % 直线 l
+    \draw[line width=0.7pt] (-0.2,0) -- (2.45,0);
+    % 左右外切竖直投影线
+    \draw[line width=0.55pt] (\xA,0) -- (\xA,\yAt);
+    \draw[line width=0.55pt] (\xB,0) -- (\xB,\yBt);
+    % 中间若干投影线
+    \foreach \xp in {0.50, 0.72, 0.94, 1.16, 1.38, 1.60, 1.82} {
+      \draw[line width=0.45pt] (\xp,0) -- (\xp,{\cy - 0.1});
+    }
+    \fill[white, rotate around={\ang:(\cx,\cy)}] (\cx,\cy) ellipse (\a cm and \b cm);
+    \begin{scope}
+      \clip (\cx,\cy) [rotate around={\ang:(\cx,\cy)}] ellipse (\a cm and \b cm);
+      \foreach \xp in {0.50, 0.72, 0.94, 1.16, 1.38, 1.60, 1.82} {
+        \draw[line width=0.45pt] (\xp,0) -- (\xp,2.5);
+      }
+    \end{scope}
+    \draw[line width=0.9pt, curveblue, rotate around={\ang:(\cx,\cy)}] (\cx,\cy) ellipse (\a cm and \b cm);
+
+    \fill (\xA,0) circle (1.1pt) node[below=1pt] {\footnotesize $A$};
+    \fill (\xB,0) circle (1.1pt) node[below=1pt] {\footnotesize $B$};
+    \node[right=1pt] at (2.43,0) {\footnotesize $l$};
+    \node[above=2pt] at (0.88,1.76) {\footnotesize $C$};
+  \end{tikzpicture}
+  \par\vspace{3pt}{\footnotesize 图\ 97.3}
+\end{minipage}
+\par\medskip
+
+任意给定一个三角形 $ABC$，总能在它的基础上作出一条定宽曲线来。为此，如图 97.4，先在边 $BC$ 的延长线上任取一点 $D$，但须使
+\[
+  BC + CD > AB, \qquad AC + CD > AB.
+\]
+
+\par\medskip\noindent
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=1.24]
+    % A=(0.78,0.95), B=(0,0), C=(1,0), CD=0.65
+    \coordinate (A) at (0.7800, 0.9500);
+    \coordinate (B) at (0.0000, 0.0000);
+    \coordinate (C) at (1.0000, 0.0000);
+    \coordinate (D) at (1.6500, 0.0000);
+    \coordinate (E) at (1.0470, 1.2752);
+    \coordinate (F) at (0.6851, 1.3600);
+    \coordinate (G) at (-0.3960, 0.0000);
+    \coordinate (H) at (-0.2513, -0.3060);
+    \coordinate (K) at (1.1466, -0.6332);
+
+    % 延长线射线（AB, BC, CA 延长交出各顶点）
+    \draw[line width=0.5pt] (G) -- (D);
+    \draw[line width=0.5pt] (H) -- (E);
+    \draw[line width=0.5pt] (K) -- (F);
+
+    % 6 段圆弧组成的定宽曲线
+    \draw[line width=0.9pt, curveblue]
+      (D) arc (0:50.61:1.6500)
+          arc (50.61:103.04:0.4208)
+          arc (103.04:180.00:1.3960)
+          arc (180.00:230.61:0.3960)
+          arc (-129.39:-76.96:1.6251)
+          arc (-76.96:0:0.6500);
+
+    \foreach \pt in {A,B,C,D,E,F,G,H,K} {
+      \fill (\pt) circle (1.0pt);
+    }
+    \node[above left=-1pt] at (A) {\footnotesize $A$};
+    \node[below right=-2pt] at (B) {\footnotesize $B$};
+    \node[above right=-2pt] at (C) {\footnotesize $C$};
+    \node[right=1pt] at (D) {\footnotesize $D$};
+    \node[above right=-1pt] at (E) {\footnotesize $E$};
+    \node[above left=-1pt] at (F) {\footnotesize $F$};
+    \node[left=1pt] at (G) {\footnotesize $G$};
+    \node[below left=-1pt] at (H) {\footnotesize $H$};
+    \node[below right=-1pt] at (K) {\footnotesize $K$};
+  \end{tikzpicture}
+  \par\vspace{3pt}{\footnotesize 图\ 97.4}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.52\textwidth}
+  \hspace{2em}然后以 $B$ 为圆心，$BD$ 为半径画弧，交 $BA$ 的延长线于 $E$；以 $A$ 为圆心，$AE$ 为半径画弧，交 $CA$ 的延长线于 $F$；以 $C$ 为圆心，$CF$ 为半径画弧，交 $CB$ 的延长线于 $G$；以 $B$ 为圆心，$BG$ 为半径画弧，交 $AB$ 的延长线于 $H$；以 $A$ 为圆心，$AH$ 为半径画弧，交 $AC$ 的延长线于 $K$；最后以 $C$ 为圆心，$CK$ 为半径画弧，必定通过点 $D$。由这样六条圆弧 $\arc{DE}$、$\arc{EF}$、$\arc{FG}$、$\arc{GH}$、$\arc{HK}$ 和 $\arc{KD}$ 组成的封闭曲线，就是一条定宽曲线。
+\end{minipage}
+\par\medskip
+
+在电影放映机里有一个叫做“三角歪轮”的凸轮，它的轮廓曲线就是在一个等腰三角形的基础上作出的定宽曲线。

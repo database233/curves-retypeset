@@ -1,0 +1,151 @@
+% ==============================================================================
+% 封面页（LaTeX + TikZ 忠实复刻 1985 年原版《形形色色的曲线》封面）
+% ==============================================================================
+\clearpage
+\thispagestyle{empty}
+\null
+
+% 原书封面色彩精确取样定义
+\definecolor{origcoverbg}{RGB}{102, 127, 116}
+\definecolor{origcovergreen}{RGB}{156, 224, 166}
+\definecolor{origcoverdark}{RGB}{48, 65, 57}
+\definecolor{origivory}{RGB}{253, 254, 244}
+\definecolor{origivoryshade}{RGB}{241, 237, 226}
+\definecolor{origcurve}{RGB}{68, 102, 83}
+
+\begin{tikzpicture}[remember picture, overlay]
+  % 1. 纯净复古松石灰绿底色（原扫描件左侧暗痕为纸张压褶，非色块）
+  \fill[origcoverbg] (current page.south west) rectangle (current page.north east);
+
+  \begin{scope}[shift={(current page.south west)}, x=1cm, y=1cm]
+    \clip (0, 0) rectangle (13.0, 18.4);
+
+    % 2. 巨型亮草绿鹦鹉螺对数螺线（单条主螺线略粗 + 单向 C 形气室隔壁）
+    \coordinate (naut) at (10.10, 16.05);
+    \begin{scope}[shift={(naut)}]
+      % 单条外延主螺线：r(t) = 0.0685 * exp(0.1685 * t)，顺时针角度 t
+      \draw[line width=2.85pt, origcovergreen, line cap=round, smooth, domain=1.0:28.9, samples=440]
+        plot ({0.0685 * exp(0.1685*\x) * cos(\x r)}, {-0.0685 * exp(0.1685*\x) * sin(\x r)});
+
+      % 均匀密集的 C 形弧形气室隔壁：起于内圈单螺线、顺时针微弓后平滑扫掠接至外圈单螺线
+      \foreach \k in {0,...,49} {
+        \pgfmathsetmacro{\th}{10.2 + \k * 0.345}
+        \pgfmathsetmacro{\rOut}{0.0685 * exp(0.1685*\th)}
+        \pgfmathsetmacro{\rIn}{0.0685 * exp(0.1685*(\th - 2*pi))}
+        \pgfmathsetmacro{\thIn}{\th}
+        \pgfmathsetmacro{\thMid}{\th + 0.22}
+        \pgfmathsetmacro{\thOut}{\th - 0.04}
+        \pgfmathsetmacro{\rMid}{0.42*\rOut + 0.58*\rIn}
+        \pgfmathsetmacro{\xIn}{\rIn * cos(\thIn r)}
+        \pgfmathsetmacro{\yIn}{-\rIn * sin(\thIn r)}
+        \pgfmathsetmacro{\xMid}{\rMid * cos(\thMid r)}
+        \pgfmathsetmacro{\yMid}{-\rMid * sin(\thMid r)}
+        \pgfmathsetmacro{\xOut}{\rOut * cos(\thOut r)}
+        \pgfmathsetmacro{\yOut}{-\rOut * sin(\thOut r)}
+        \draw[line width=1.55pt, origcovergreen, line cap=round]
+          (\xIn, \yIn) .. controls (\xMid, \yMid) .. (\xOut, \yOut);
+      }
+    \end{scope}
+
+    % 3. 左侧书名、双细线与出版社（位于螺线大弧上方）
+    \draw[line width=0.8pt, origcoverdark] (0.45, 12.66) -- (7.72, 12.66);
+    \draw[line width=0.8pt, origcoverdark] (0.45, 10.65) -- (7.38, 10.65);
+
+    \node[anchor=west, inner sep=0pt, text=white] at (0.46, 13.38)
+      {\scalebox{1.20}[0.89]{\songti\bfseries\fontsize{25.5}{27}\selectfont 形\hspace{0.23em}形\hspace{0.23em}色\hspace{0.23em}色}};
+    \node[anchor=west, inner sep=0pt, text=white] at (0.46, 11.42)
+      {\scalebox{1.20}[0.89]{\songti\bfseries\fontsize{25.5}{27}\selectfont 的\hspace{0.23em}曲\hspace{0.23em}线}};
+    \node[anchor=west, inner sep=0pt, text=origcoverdark] at (0.50, 9.75)
+      {\songti\fontsize{10.0}{11}\selectfont 上\hspace{0.44em}海\hspace{0.44em}教\hspace{0.44em}育\hspace{0.44em}出\hspace{0.44em}版\hspace{0.44em}社};
+
+    % 4. 中下部白色伪球面（对应第 79 节《曳物线与伪球面》：半支曳物线旋转曲面及其上的罗氏几何测地线）
+    \begin{scope}
+      % 4.1 底部承托弧碗（圆润下探至 y=0.80，精确匹配 600dpi 原封面轮廓）
+      \def\bowlPath{
+        (4.74, 2.13)
+        .. controls (5.16, 1.24) and (6.30, 0.80) .. (8.22, 0.80)
+        .. controls (10.14, 0.80) and (11.28, 1.24) .. (11.70, 2.13)
+        -- cycle
+      }
+      \fill[origivory] \bowlPath;
+      \begin{scope}
+        \clip \bowlPath;
+        \shade[left color=origivory, right color=origivoryshade, opacity=0.75]
+          (8.0, 0.75) rectangle (11.8, 2.20);
+      \end{scope}
+
+      % 4.2 伪球面主体轮廓：精确拟合 600dpi 原封面曳物线半宽与平滑外撇裙底（消除 y=3.0 处微小折点）
+      \def\psPath{
+        (7.94, 12.74)
+        .. controls (7.97, 12.92) and (8.47, 12.92) .. (8.50, 12.74)
+        .. controls (8.66, 12.05) and (8.82, 11.05) .. (8.98, 10.00)
+        .. controls (9.22, 8.55) and (9.52, 7.15) .. (9.96, 6.00)
+        .. controls (10.50, 4.62) and (11.38, 3.60) .. (12.46, 2.94)
+        .. controls (12.74, 2.77) and (12.88, 2.58) .. (12.76, 2.38)
+        .. controls (12.64, 2.21) and (12.20, 2.15) .. (11.50, 2.06)
+        .. controls (10.15, 1.88) and (9.15, 1.81) .. (8.22, 1.81)
+        .. controls (7.29, 1.81) and (6.29, 1.88) .. (4.94, 2.06)
+        .. controls (4.24, 2.15) and (3.80, 2.21) .. (3.68, 2.38)
+        .. controls (3.56, 2.58) and (3.70, 2.77) .. (3.98, 2.94)
+        .. controls (5.06, 3.60) and (5.94, 4.62) .. (6.48, 6.00)
+        .. controls (6.92, 7.15) and (7.22, 8.55) .. (7.46, 10.00)
+        .. controls (7.62, 11.05) and (7.78, 12.05) .. (7.94, 12.74)
+        -- cycle
+      }
+
+      % 象牙白填色 + 柔和右下部暖象牙微阴影（保持原版纸雕般干净边缘）
+      \fill[origivory] \psPath;
+      \begin{scope}
+        \clip \psPath;
+        \shade[left color=origivory, right color=origivoryshade!85!origivory, shading angle=78]
+          (6.5, 1.7) rectangle (12.9, 12.9);
+
+        % 4.3 伪球面上的 10 条罗氏几何测地线（逐条对照原封面 600dpi 精确坐标还原）
+        \begin{scope}[line width=1.15pt, origcurve, line cap=round]
+          % 曲线 1：顶部延伸至中左部的纵贯缓弯测地线
+          \draw (8.01, 12.88)
+            .. controls (7.99, 11.40) and (7.92, 9.60) .. (7.64, 8.15)
+            .. controls (7.36, 6.75) and (6.82, 5.85) .. (6.37, 5.14);
+
+          % 曲线 2：近顶端向右上方微拱的短测地线
+          \draw (7.68, 11.55) .. controls (7.88, 11.88) and (8.12, 12.14) .. (8.42, 12.31);
+
+          % 曲线 3：上段向右下方斜穿的测地线
+          \draw (7.62, 11.18) .. controls (7.84, 10.82) and (8.12, 10.50) .. (8.42, 10.22);
+
+          % 曲线 4：中上段微倾横向测地线
+          \draw (7.24, 8.76) .. controls (7.58, 8.73) and (7.95, 8.65) .. (8.25, 8.51);
+
+          % 曲线 5：中段右倾长斜穿测地线
+          \draw (7.08, 7.12) .. controls (7.65, 6.64) and (8.45, 6.12) .. (8.96, 5.53);
+
+          % 曲线 6：中右起向左下大幅扫掠的长测地线
+          \draw (8.86, 7.56)
+            .. controls (8.62, 6.50) and (8.28, 5.25) .. (7.87, 4.00)
+            .. controls (7.52, 3.12) and (7.10, 2.55) .. (6.72, 2.18);
+
+          % 曲线 7：中下段右倾长斜穿测地线
+          \draw (7.14, 5.88) .. controls (7.75, 5.10) and (8.38, 4.46) .. (8.99, 3.98);
+
+          % 曲线 8：中轴附近纵下偏左弯的测地线
+          \draw (8.30, 5.93)
+            .. controls (8.18, 4.80) and (8.16, 3.60) .. (8.07, 3.00)
+            .. controls (7.98, 2.52) and (7.82, 2.22) .. (7.65, 2.02);
+
+          % 曲线 9：左下裙部右倾斜穿测地线
+          \draw (5.97, 4.42) .. controls (6.52, 3.74) and (7.28, 2.94) .. (8.05, 2.27);
+
+          % 曲线 10：最左侧裙摆 C 形回弯测地线
+          \draw (5.11, 3.62) .. controls (4.86, 3.28) and (4.82, 2.82) .. (4.97, 2.44);
+        \end{scope}
+      \end{scope}
+
+      % 4.4 仅在伪球面底裙前缘与承托弧碗接缝处绘制清晰绿线（主体边缘保持原版干净留白）
+      \draw[line width=1.25pt, origcurve!88!origcovergreen, line cap=round]
+        (4.18, 2.21)
+        .. controls (5.40, 1.98) and (6.80, 1.81) .. (8.22, 1.81)
+        .. controls (9.64, 1.81) and (11.04, 1.98) .. (12.26, 2.21);
+    \end{scope}
+  \end{scope}
+\end{tikzpicture}
+\clearpage

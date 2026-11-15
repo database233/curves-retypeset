@@ -1,0 +1,170 @@
+\section{蔓叶线}
+\markboth{61. 蔓叶线}{61. 蔓叶线}
+
+蔓叶线有几种不同的定义方法，现在常用的定义是：设 $OA$ 是定圆的定直径，过 $A$ 作切线 $l$，过 $O$ 任作直线交圆于 $C$，交 $l$ 于 $B$，并在射线 $OB$ 上取 $OM=CB$，则 $M$ 的轨迹叫做蔓叶线（图 61.1）。为了纪念它的发现者狄奥克勒斯，也叫做狄奥克勒斯蔓叶线。
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace{2em}选取极坐标系，使 $O$ 为极点，$OA$ 为极轴，并且记 $OA=a$。设 $\angle AOM=\theta$，$OM=\rho$，$OB=\rho_1$，$OC=\rho_2$，则有
+  \[
+    \rho = \rho_1 - \rho_2,
+  \]
+  \[
+    \rho_1 = \frac{a}{\cos\theta},\quad \rho_2 = a\cos\theta.
+  \]
+  由此得到
+  \[
+    \rho = \frac{a}{\cos\theta} - a\cos\theta,
+  \]
+  即
+  \[
+    \rho = a\sin\theta\tg\theta.
+  \]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=1.0, >=Stealth, line cap=round, line join=round]
+    \def\a{1.65}
+    \def\th{33}
+    \pgfmathsetmacro{\Bx}{\a}
+    \pgfmathsetmacro{\By}{\a*tan(\th)}
+    \pgfmathsetmacro{\Cx}{\a*cos(\th)*cos(\th)}
+    \pgfmathsetmacro{\Cy}{\a*sin(\th)*cos(\th)}
+    \pgfmathsetmacro{\Mx}{\a*sin(\th)*sin(\th)}
+    \pgfmathsetmacro{\My}{\a*sin(\th)*sin(\th)*tan(\th)}
+
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\a, 0);
+    \coordinate (B) at (\Bx, \By);
+    \coordinate (C) at (\Cx, \Cy);
+    \coordinate (M) at (\Mx, \My);
+
+    % 坐标轴与渐近线 l
+    \draw[->] (-0.35, 0) -- (2.05, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.55) -- (0, 1.55) node[left, font=\scriptsize] {$y$};
+    \draw (\a, -1.45) -- (\a, 1.45);
+    \node[right, font=\scriptsize] at (\a, -1.25) {$l$};
+
+    % 定圆
+    \draw ({0.5*\a}, 0) circle ({0.5*\a});
+
+    % 蔓叶线 y^2 = x^3/(a-x) 参数化: x = a t^2/(1+t^2), y = a t^3/(1+t^2)
+    \draw[very thick, curveblue, domain=-1.32:1.32, samples=120, variable=\t]
+      plot ({\a*\t*\t/(1+\t*\t)}, {\a*\t*\t*\t/(1+\t*\t)});
+
+    % 射线 OB 与垂线 AC
+    \draw (O) -- ({1.12*\Bx}, {1.12*\By});
+    \draw[densely dashed] (A) -- (C);
+
+    % 角度 theta 与长度 a
+    \draw (0.38, 0) arc (0:\th:0.38);
+    \node[font=\scriptsize] at ({0.5*\th}:0.53) {$\theta$};
+    \node[below, font=\scriptsize] at ({0.5*\a}, 0) {$a$};
+
+    % 关键点
+    \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.1pt) node[right, font=\scriptsize] {$B$};
+    \fill (C) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$C$};
+    \fill (M) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 61.1}
+\end{minipage}
+
+\medskip
+\noindent
+这就是蔓叶线的极坐标方程。上式可改写成
+\[
+  \rho^2 = \frac{a\rho^2\sin^2\theta}{\rho\cos\theta},
+\]
+利用关系式 $x=\rho\cos\theta$，$y=\rho\sin\theta$，化为直角坐标得
+\[
+  x^2+y^2 = \frac{ay^2}{x},
+\]
+变形后得到蔓叶线的直角坐标方程为
+\[
+  y^2 = \frac{x^3}{a-x}.
+\]
+
+从直角坐标方程看出，当 $x\to a$ 时，$y\to \pm\infty$，因而直线 $x=a$ 是蔓叶线的渐近线。蔓叶线的整个图形夹在 $y$ 轴和它的平行直线 $x=a$ 之间，并且在坐标原点处有一个尖点。
+
+下面是一个关于蔓叶线的轨迹问题。
+
+\begin{wrapfigure}[11]{l}{0.41\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.95, >=Stealth, line cap=round, line join=round]
+    \def\R{1.10}
+    \def\alp{34}
+    \pgfmathsetmacro{\Px}{-\R*sin(\alp)}
+    \pgfmathsetmacro{\Py}{\R*cos(\alp)}
+    \pgfmathsetmacro{\Nx}{\R*sin(\alp)}
+    \pgfmathsetmacro{\Ny}{\R*cos(\alp)}
+    \pgfmathsetmacro{\Kx}{\R}
+    \pgfmathsetmacro{\Ky}{2*\R*cos(\alp)/(1+sin(\alp))}
+    \pgfmathsetmacro{\Mx}{-\R*sin(\alp)}
+    \pgfmathsetmacro{\My}{\R*(1-sin(\alp))*cos(\alp)/(1+sin(\alp))}
+
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (-\R, 0);
+    \coordinate (B) at (\R, 0);
+    \coordinate (C) at (0, \R);
+    \coordinate (D) at (0, -\R);
+    \coordinate (P) at (\Px, \Py);
+    \coordinate (N) at (\Nx, \Ny);
+    \coordinate (S) at (\Px, 0);
+    \coordinate (Q) at (\Nx, 0);
+    \coordinate (K) at (\Kx, \Ky);
+    \coordinate (M) at (\Mx, \My);
+
+    % 定圆及直径 AB, CD
+    \draw (O) circle (\R);
+    \draw (A) -- (B);
+    \draw (C) -- (D);
+
+    % 辅助线段 PS, NQ, BK, AK
+    \draw (P) -- (S);
+    \draw (N) -- (Q);
+    \draw (B) -- (K);
+    \draw (A) -- (K);
+
+    % 圆内蔓叶线弧 CMAD
+    \draw[very thick, curveblue, domain=-1:1, samples=90, variable=\t]
+      plot ({-\R + 2*\R*\t*\t/(1+\t*\t)}, {2*\R*\t*\t*\t/(1+\t*\t)});
+
+    % 关键点与标注
+    \fill (O) circle (1.0pt) node[below left=-1pt, font=\scriptsize] {$O$};
+    \fill (A) circle (1.0pt) node[left, font=\scriptsize] {$A$};
+    \fill (B) circle (1.0pt) node[right, font=\scriptsize] {$B$};
+    \fill (C) circle (1.0pt) node[above, font=\scriptsize] {$C$};
+    \fill (D) circle (1.0pt) node[below, font=\scriptsize] {$D$};
+    \fill (P) circle (1.0pt) node[above left=-1pt, font=\scriptsize] {$P$};
+    \fill (N) circle (1.0pt) node[above=1pt, font=\scriptsize] {$N$};
+    \fill (S) circle (1.0pt) node[below right=-1pt, font=\scriptsize] {$S$};
+    \fill (Q) circle (1.0pt) node[below=-1pt, font=\scriptsize] {$Q$};
+    \fill (K) circle (1.0pt) node[above right=-1pt, font=\scriptsize] {$K$};
+    \fill (M) circle (1.0pt) node[above left=-1pt, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \caption*{图\ 61.2}
+\end{wrapfigure}
+
+如图 61.2，在定圆中作两条互相垂直的直径 $AB$ 和 $CD$，在圆周上向 $C$ 点两侧任意取 $\arc{CP}=\arc{CN}$，作 $PS\parallel CD$，设直线 $PS$ 和 $AN$ 的交点为 $M$，则 $M$ 的轨迹是蔓叶线的弧。
+
+为了证明上述结论，设 $PS$ 与 $AB$ 的交点为 $S$；又作 $NQ\perp AB$，垂足为 $Q$；作圆的切线 $BK$，交直线 $AN$ 于 $K$。$PS$、$NQ$ 和 $KB$ 都垂直于 $AB$，所以 $PS\parallel NQ\parallel KB$。从 $\arc{CP}=\arc{CN}$ 得 $\arc{PA}=\arc{NB}$，由此可得 $AS=QB$。再从 $AM:MN:NK=AS:SQ:QB$，得 $AM=NK$。因而 $M$ 在一条蔓叶线上。又因为点 $M$ 必在定圆内部，所以 $M$ 的轨迹是蔓叶线位于圆内的部分。
+
+\begin{wrapfigure}[9]{r}{0.36\textwidth}
+  \centering
+  \vspace{-4pt}
+  \begin{tikzpicture}[scale=0.95, line cap=round, line join=round]
+    \def\R{0.98}
+    \draw[very thick, curveblue, domain=-1:1, samples=80, variable=\t]
+      plot ({-\R + 2*\R*\t*\t/(1+\t*\t)}, {2*\R*\t*\t*\t/(1+\t*\t)})
+      arc (90:-90:\R);
+  \end{tikzpicture}
+  \caption*{图\ 61.3}
+\end{wrapfigure}
+
+在狄奥克勒斯的时代，人们认为图 61.2 中的轨迹就是整个蔓叶线。因而当时所说的蔓叶线只是它位于定圆内的曲线弧 $CMAD$。这段蔓叶线弧与半圆周 $\arc{CBD}$ 合在一起，很像常春藤的一片叶子（图 61.3），“蔓叶线”的名称就是由此而来的。直到十七世纪以后，才开始注意蔓叶线在定圆外部的无穷分支。

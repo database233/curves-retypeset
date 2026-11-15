@@ -1,0 +1,114 @@
+\section{曲线之星}
+\markboth{25. 曲线之星}{25. 曲线之星}
+
+当 $r=\frac{1}{4}R$ 时的内摆线有四个尖角，如图 25.1，像夜空中一颗光芒四射的星，因此叫做星形线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.35, >=Stealth, line cap=round, line join=round]
+    \def\R{1.0}
+    \def\phi{38}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\R, 0);
+    \coordinate (C) at ({0.75*\R*cos(\phi)}, {0.75*\R*sin(\phi)});
+    \coordinate (P) at ({\R*(cos(\phi))^3}, {\R*(sin(\phi))^3});
+
+    \draw[->] (-1.22, 0) -- (1.38, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.22) -- (0, 1.28) node[left, font=\footnotesize] {$y$};
+
+    \draw (O) circle (\R);
+    \draw (C) circle (0.25*\R);
+
+    \draw[very thick, curveblue, domain=0:360, samples=200, variable=\u]
+      plot ({\R*(cos(\u))^3}, {\R*(sin(\u))^3});
+
+    \fill (O) circle (1.1pt) node[below left, font=\footnotesize] {$O$};
+    \fill (A) circle (1.1pt) node[below left=-1pt, font=\footnotesize] {$A$};
+    \fill (C) circle (1.1pt) node[above=1pt, font=\scriptsize] {$C$};
+    \fill (P) circle (1.2pt) node[below left=-1pt, font=\footnotesize] {$P$};
+  \end{tikzpicture}
+  \caption*{图\ 25.1}
+\end{figure}
+
+根据第 24 节，内摆线的参数方程是
+\begin{align*}
+  x &= (R-mR)\cos mt + mR\cos(t-mt), \\
+  y &= (R-mR)\sin mt - mR\sin(t-mt),
+\end{align*}
+其中 $m=\frac{r}{R}$。以 $m=\frac{1}{4}$ 代入，就得到星形线的参数方程
+\begin{align*}
+  x &= \frac{3}{4}R\cos\frac{t}{4} + \frac{R}{4}\cos\frac{3t}{4}, \\
+  y &= \frac{3}{4}R\sin\frac{t}{4} - \frac{R}{4}\sin\frac{3t}{4}.
+\end{align*}
+令 $t=4\varphi$，并且利用三倍角公式
+\begin{align*}
+  \cos 3\varphi &= 4\cos^3\varphi - 3\cos\varphi, \\
+  \sin 3\varphi &= 3\sin\varphi - 4\sin^3\varphi,
+\end{align*}
+可将星形线的参数方程简化成
+\[
+  x = R\cos^3\varphi,\quad y = R\sin^3\varphi.
+\]
+
+由此又可消去参数 $\varphi$，得到星形线的直角坐标方程
+\[
+  x^{\frac{2}{3}} + y^{\frac{2}{3}} = R^{\frac{2}{3}}.
+\]
+
+设星形线在任意点 $P(x, y)$ 的切线斜率为 $k$，则
+\[
+  k = \frac{\dd y}{\dd x} = \frac{y'\dd\varphi}{x'\dd\varphi} = \frac{3R\cos\varphi\sin^2\varphi}{-3R\sin\varphi\cos^2\varphi} = -\tg\varphi.
+\]
+利用点斜式写出过 $P$ 的切线的方程，得到
+\[
+  Y - R\sin^3\varphi = -\tg\varphi\,(X - R\cos^3\varphi),
+\]
+这里 $X$、$Y$ 是切线上任意点的坐标。化简得
+\[
+  X\tg\varphi + Y = R\sin\varphi.
+\]
+两边同除以 $R\sin\varphi$，化为截距式
+\[
+  \frac{X}{R\cos\varphi} + \frac{Y}{R\sin\varphi} = 1.
+\]
+由此知道切线在两个坐标轴上的截距分别是
+\[
+  p = R\cos\varphi,\quad q = R\sin\varphi.
+\]
+因而切线夹在两坐标轴间的线段长为
+\[
+  d = \sqrt{p^2+q^2} = \sqrt{(R\cos\varphi)^2 + (R\sin\varphi)^2} = R.
+\]
+
+这样就证明了，星形线 $x=R\cos^3\varphi$，$y=R\sin^3\varphi$ 的任意切线夹在两坐标轴间的线段等于定长 $R$。由此可得到星形线的一种简便画法：
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=1.22, >=Stealth, line cap=round, line join=round]
+    \def\R{1.05}
+    \draw[->] (-1.35, 0) -- (1.38, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.35) -- (0, 1.38) node[left, font=\footnotesize] {$y$};
+    \node[below left, font=\footnotesize] at (0,0) {$O$};
+
+    % 四个象限的等长切线段族
+    \foreach \ang in {18, 36, 54, 72} {
+      \draw[thin, mutedgray] ({\R*cos(\ang)}, 0) -- (0, {\R*sin(\ang)});
+      \draw[thin, mutedgray] ({-\R*cos(\ang)}, 0) -- (0, {\R*sin(\ang)});
+      \draw[thin, mutedgray] ({-\R*cos(\ang)}, 0) -- (0, {-\R*sin(\ang)});
+      \draw[thin, mutedgray] ({\R*cos(\ang)}, 0) -- (0, {-\R*sin(\ang)});
+    }
+
+    % 包络星形线
+    \draw[very thick, curveblue, domain=0:360, samples=200, variable=\u]
+      plot ({\R*(cos(\u))^3}, {\R*(sin(\u))^3});
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 25.2}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \setlength{\parindent}{2em}\indent
+  如图 25.2，任意作若干条长度为 $R$ 的线段，使它们的两端分别在 $x$ 轴和 $y$ 轴上；然后在每个象限里画一段光滑曲线弧，使它们与这些线段相切，就得到所要画的星形线。
+
+  如果一条曲线弧与一族直线中的每条直线都相切，并且曲线弧上每一点都是一个切点，就说这曲线弧是这族直线的包络。本书第 1、2、8、9 节画出的抛物线和椭圆，以及图 25.2 所画出的星形线，都是某一直线族的包络。
+\end{minipage}

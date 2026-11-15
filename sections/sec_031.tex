@@ -1,0 +1,74 @@
+\section{利用三角板画蜗线}
+\markboth{31. 利用三角板画蜗线}{31. 利用三角板画蜗线}
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 31.1，先作一个半径为 $l$ 的辅助圆，设圆心为 $A$。再在平面内取一点 $O$，设 $OA=2r$。让三角板的一条直角边与圆 $A$ 相切（切点为 $D$），另一条直角边通过 $O$ 点，则三角板的直角顶点 $M$ 就是蜗线 $\rho=2r\cos\theta+l$ 上的一个点。继续这样求出若干点后，就可根据它们描出蜗线来了。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    % 2r = 1.38, l = 0.82, theta = 32 deg
+    \def\twoR{1.38}
+    \def\l{0.82}
+    \def\th{32}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\twoR, 0);
+    \coordinate (N) at ({\twoR*cos(\th)*cos(\th)}, {\twoR*cos(\th)*sin(\th)});
+    \coordinate (M) at ({(\twoR*cos(\th)+\l)*cos(\th)}, {(\twoR*cos(\th)+\l)*sin(\th)});
+    \coordinate (M1) at ({(\twoR*cos(\th)-\l)*cos(\th)}, {(\twoR*cos(\th)-\l)*sin(\th)});
+    \coordinate (D) at ({\twoR + \l*cos(\th)}, {\l*sin(\th)});
+    \coordinate (D1) at ({\twoR - \l*cos(\th)}, {-\l*sin(\th)});
+
+    % 极轴射线（从 O 点向右）
+    \draw[->] (O) -- (2.72, 0);
+
+    % 辅助圆 A (半径 l)
+    \draw (A) circle (\l);
+
+    % 帕斯卡蜗线 rho = 2r cos theta + l
+    \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+      plot ({(\twoR*cos(\t)+\l)*cos(\t)}, {(\twoR*cos(\t)+\l)*sin(\t)});
+
+    % 辅助连线：OM, AN, D1-A-D, MD, M1D1
+    \draw (O) -- (M);
+    \draw (A) -- (N);
+    \draw (D1) -- (D);
+    \draw (M) -- (D);
+    \draw (M1) -- (D1);
+
+    % 直角记号 (AN perp OM, MD perp AD)
+    \draw ($(N)!0.12!(O)$) -- ($($(N)!0.12!(O)$) + ($(N)!0.12!(A)$) - (N)$) -- ($(N)!0.12!(A)$);
+    \draw ($(D)!0.12!(M)$) -- ($($(D)!0.12!(M)$) + ($(D)!0.12!(A)$) - (D)$) -- ($(D)!0.12!(A)$);
+
+    % 关键点与标签
+    \fill (O) circle (1.3pt) node[left=1pt, font=\footnotesize] {$O$};
+    \fill (A) circle (1.3pt) node[below, font=\footnotesize] {$A$};
+    \fill (N) circle (1.3pt) node[above left=-1pt, font=\footnotesize] {$N$};
+    \fill (M) circle (1.4pt) node[above right=-1pt, font=\footnotesize] {$M$};
+    \fill (M1) circle (1.4pt) node[above left=0.5pt, fill=white, inner sep=0.4pt, font=\footnotesize] {$M_1$};
+    \fill (D) circle (1.3pt) node[below right=-2pt, font=\footnotesize] {$D$};
+    \fill (D1) circle (1.3pt) node[below left=-2pt, font=\footnotesize] {$D_1$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 31.1}
+\end{minipage}
+
+\medskip
+
+为了证明上述作法的正确性，可作 $AN\perp OM$，垂足为 $N$。设 $\angle AOM=\theta$。若 $N$ 在 $O$ 与 $M$ 之间，则
+\begin{align*}
+  \rho = OM &= ON + NM = OA\cos\theta + AD \\
+            &= 2r\cos\theta + l,
+\end{align*}
+所以 $M(\rho,\theta)$ 是蜗线 $\rho=2r\cos\theta+l$ 上的点。若 $M_1$ 在 $O$ 与 $N$ 之间（图 31.1），则把 $M_1$ 的极角看成 $\theta_1=\theta+\pi$，因而它的极半径 $\rho_1$ 是负的：
+\begin{align*}
+  \rho_1 = -OM_1 &= -ON + M_1N = -OA\cos\theta + D_1A \\
+                 &= -2r\cos\theta + l = 2r\cos(\theta+\pi) + l \\
+                 &= 2r\cos\theta_1 + l,
+\end{align*}
+所以 $M_1(\rho_1,\theta_1)$ 也是蜗线 $\rho=2r\cos\theta+l$ 上的点。
+
+利用垂足曲线的概念（第 10 节），可以把上面证明的事实叙述成：定圆关于它所在平面内任一定点的垂足曲线是帕斯卡蜗线。当定点在圆外时（$2r>l$），得到有绕扣的蜗线；当定点在圆周上时（$2r=l$），得到有尖点的蜗线，即心脏线；当定点在圆内时（$2r<l$），得到无绕扣又无尖点的蜗线。当定点为圆心这一特殊情形时，$r=0$，垂足曲线仍为原来的圆 $\rho=l$。

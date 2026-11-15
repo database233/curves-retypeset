@@ -1,0 +1,130 @@
+\section{内摆线}
+\markboth{24. 内摆线}{24. 内摆线}
+
+已知半径为 $R$ 的定圆 $O$ 和半径为 $r$ 的动圆 $O_1$，这里 $r<R$。当圆 $O_1$ 在圆 $O$ 内无滑动地滚动时，圆 $O_1$ 上一点 $M$ 的轨迹叫做内摆线。
+
+\noindent
+\begin{minipage}[c]{0.54\textwidth}
+  \setlength{\parindent}{2em}\indent
+  现在推导内摆线的方程。如图 24.1，选取直角坐标系，使定圆的圆心 $O$ 为原点，并且使圆 $O$ 与 $x$ 轴正半轴的交点 $A$ 是轨迹上的一点。当圆 $O_1$ 滚动到图中的任意位置时，点 $M$ 从初始位置 $A(R, 0)$ 移到位置 $(x, y)$。设这时两圆接触点为 $N$，则因为 $r<R$，点 $O_1$ 必在线段 $ON$ 上。记 $\angle NO_1M=t$，则大圆的 $\arc{NA}$ 和小圆的 $\arc{NM}$ 的长度都是 $rt$。$\angle AON = \frac{rt}{R}$，$\overrightarrow{O_1M}$ 的幅角 $\alpha = \frac{r}{R}t - t$，由 $\overrightarrow{OM} = \overrightarrow{OO_1} + \overrightarrow{O_1M}$，得到向量 $\overrightarrow{OM}$ 的坐标表示式为
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.43\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    % R = 1.9, r = 0.65, angle(AON) = 55 deg => t = (R/r)*55 = 160.77 deg
+    \def\R{1.9}
+    \def\r{0.65}
+    \def\angAON{55}
+    \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
+    \pgfmathsetmacro{\alp}{\angAON - \tdeg}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\R, 0);
+    \coordinate (N) at ({\R*cos(\angAON)}, {\R*sin(\angAON)});
+    \coordinate (O1) at ({(\R-\r)*cos(\angAON)}, {(\R-\r)*sin(\angAON)});
+    \coordinate (M) at ({(\R-\r)*cos(\angAON) + \r*cos(\alp)}, {(\R-\r)*sin(\angAON) + \r*sin(\alp)});
+
+    % 坐标轴
+    \draw[->] (-2.15, 0) -- (2.42, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -2.15) -- (0, 2.25) node[left, font=\footnotesize] {$y$};
+
+    % 定圆与动圆
+    \draw[thick] (O) circle (\R);
+    \draw (O1) circle (\r);
+
+    % 轨迹弧 AM (精确参数方程)
+    \draw[very thick, curveblue, domain=0:\tdeg, samples=80, variable=\s]
+      plot ({(\R-\r)*cos(\r/\R*\s) + \r*cos(\s - \r/\R*\s)},
+            {(\R-\r)*sin(\r/\R*\s) - \r*sin(\s - \r/\R*\s)});
+
+    % 辅助线段与角度
+    \draw (O) -- (N);
+    \draw (O1) -- (M);
+    \draw[thin] (O1) -- ++(0.78, 0);
+
+    % 角 t (从 O1N 顺时针到 O1M)
+    \draw ($(O1) + (\angAON:0.20)$) arc (\angAON:\alp:0.20);
+    \node[font=\scriptsize] at ($(O1) + (27:0.33)$) {$t$};
+
+    % 角 alpha (从水平右射线顺时针到 O1M)
+    \draw ($(O1) + (0:0.35)$) arc (0:\alp:0.35);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.49)$) {$\alpha$};
+
+    % 关键点与标签
+    \fill (O) circle (1.3pt) node[below left, font=\footnotesize] {$O$};
+    \fill (A) circle (1.3pt) node[below left=-1pt, font=\footnotesize] {$A$};
+    \fill (N) circle (1.3pt) node[above right, font=\footnotesize] {$N$};
+    \fill (O1) circle (1.3pt) node[above left, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.4pt) node[below, font=\footnotesize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 24.1}
+\end{minipage}
+\begin{align*}
+  (x, y) &= \bigl((R-r)\cos\angle AON,\, (R-r)\sin\angle AON\bigr) \\
+         &\quad + (r\cos\alpha,\, r\sin\alpha) \\
+         &= \biggl((R-r)\cos\frac{r}{R}t + r\cos\Bigl(t - \frac{r}{R}t\Bigr), \\
+         &\qquad\ (R-r)\sin\frac{r}{R}t - r\sin\Bigl(t - \frac{r}{R}t\Bigr)\biggr)
+\end{align*}
+令 $\frac{r}{R}=m$，就得到内摆线的参数方程是
+\[
+  \begin{aligned}
+    x &= (R-mR)\cos mt + mR\cos(t-mt), \\
+    y &= (R-mR)\sin mt - mR\sin(t-mt).
+  \end{aligned}
+  \quad (0<m<1)
+\]
+
+当 $m$ 取 $0$ 与 $1$ 之间的不同数值时，可以得到各种不同形状的内摆线。图 24.2 画出了其中的几种情形\footnote{重排校订：原书图 24.2 中 $m=\frac{2}{3}$ 一图误绘为带三个绕扣的闭合圆环；按内摆线参数方程（半径比 $m=\frac{r}{R}=\frac{2}{3}$），动圆滚过三周闭合，轨迹实为与 $m=\frac{1}{3}$ 同构的三尖内摆线（三尖瓣线，有三个尖点而无绕扣），本版据正确数学方程重绘。}。图中 $m=\frac{1}{2}$ 的情形在第 21 节已详细讨论过。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[t]{0.42\textwidth}
+    \centering
+    {\footnotesize $m=\dfrac{1}{4}$}\\[2pt]
+    \begin{tikzpicture}[scale=1.25]
+      \draw (0,0) circle (1);
+      \draw (0.75, 0) circle (0.25);
+      \draw[thick, curveblue, domain=0:1440, samples=200, variable=\t]
+        plot ({0.75*cos(0.25*\t) + 0.25*cos(0.75*\t)},
+              {0.75*sin(0.25*\t) - 0.25*sin(0.75*\t)});
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{6mm}
+  \begin{minipage}[t]{0.42\textwidth}
+    \centering
+    {\footnotesize $m=\dfrac{2}{5}$}\\[2pt]
+    \begin{tikzpicture}[scale=1.25]
+      \draw (0,0) circle (1);
+      \draw (0.6, 0) circle (0.4);
+      \draw[thick, curveblue, domain=0:1800, samples=260, variable=\t]
+        plot ({0.6*cos(0.4*\t) + 0.4*cos(0.6*\t)},
+              {0.6*sin(0.4*\t) - 0.4*sin(0.6*\t)});
+    \end{tikzpicture}
+  \end{minipage}
+
+  \vspace{4mm}
+
+  \begin{minipage}[t]{0.42\textwidth}
+    \centering
+    {\footnotesize $m=\dfrac{1}{2}$}\\[2pt]
+    \begin{tikzpicture}[scale=1.25]
+      \draw (0,0) circle (1);
+      \draw (0.5, 0) circle (0.5);
+      \draw (0, -1) -- (0, 1);
+      \draw[thick, curveblue] (-1, 0) -- (1, 0);
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{6mm}
+  \begin{minipage}[t]{0.42\textwidth}
+    \centering
+    {\footnotesize $m=\dfrac{2}{3}$}\\[2pt]
+    \begin{tikzpicture}[scale=1.25]
+      \draw (0,0) circle (1);
+      \draw (0.3333, 0) circle (0.6667);
+      \draw[thick, curveblue, domain=0:1080, samples=220, variable=\t]
+        plot ({0.3333*cos(0.6667*\t) + 0.6667*cos(0.3333*\t)},
+              {0.3333*sin(0.6667*\t) - 0.6667*sin(0.3333*\t)});
+    \end{tikzpicture}
+  \end{minipage}
+  \caption*{图\ 24.2}
+\end{figure}

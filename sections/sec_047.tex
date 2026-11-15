@@ -1,0 +1,129 @@
+\section{圆的渐伸线}
+\markboth{47. 圆的渐伸线}{47. 圆的渐伸线}
+
+在桌上铺一张白纸，纸上放一只大口瓶的盖子，并且把一端系有铅笔的细线绕在瓶盖的圆周外面，手执铅笔拉紧细线，让线逐渐放开伸直，铅笔就在纸上画出一条螺旋形曲线，这条曲线叫做圆的渐伸线（图 47.1）。瓶盖映在纸上的圆形轮廓，叫做这条曲线的基圆。在工厂里和在制图学课本里，习惯于把这种曲线叫做圆的渐开线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.46\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
+      % 瓶盖（透视圆柱体，底面椭圆中心在 (0, 0.26)，半轴 rx=0.28, ry=0.10）
+      \def\rx{0.28}
+      \def\ry{0.10}
+      \def\h{0.16}
+      \def\yc{0.26}
+
+      % 透视展开的渐伸线（严格保持与底面椭圆相同的透视投影比例 rx, ry）
+      \draw[very thick, curveblue, domain=0:345, samples=140, variable=\t]
+        plot ({\rx*(cos(\t)+(\t*pi/180)*sin(\t))},
+              {\yc+\ry*(sin(\t)-(\t*pi/180)*cos(\t))});
+
+      % 瓶盖侧面与底面可见轮廓
+      \draw[thick, fill=white] (-\rx, {\yc+\h}) -- (-\rx, \yc)
+        arc (180:360:{\rx} and {\ry}) -- (\rx, {\yc+\h});
+      \draw[densely dashed] (-\rx, \yc) arc (180:0:{\rx} and {\ry});
+      \draw[thick, fill=white] (0, {\yc+\h}) ellipse ({\rx} and {\ry});
+
+      % 位置 1（虚线铅笔，t = 205 deg，左上方切线严格等于弧长）
+      \pgfmathsetmacro{\ta}{205}
+      \pgfmathsetmacro{\tar}{\ta*pi/180}
+      \coordinate (Ba) at ({\rx*cos(\ta)}, {\yc+\ry*sin(\ta)});
+      \coordinate (Pa) at ({\rx*(cos(\ta)+\tar*sin(\ta))}, {\yc+\ry*(sin(\ta)-\tar*cos(\ta))});
+      \draw[densely dashed] (Ba) -- (Pa);
+      \draw[densely dashed] (Pa) -- ++(-0.06, 0.18) -- ++(0, 0.25) -- ++(0.12, 0) -- ++(0, -0.25) -- cycle;
+
+      % 位置 2（虚线铅笔，t = 272 deg，左下方切线严格等于弧长）
+      \pgfmathsetmacro{\tb}{272}
+      \pgfmathsetmacro{\tbr}{\tb*pi/180}
+      \coordinate (Bb) at ({\rx*cos(\tb)}, {\yc+\ry*sin(\tb)});
+      \coordinate (Pb) at ({\rx*(cos(\tb)+\tbr*sin(\tb))}, {\yc+\ry*(sin(\tb)-\tbr*cos(\tb))});
+      \draw[densely dashed] (Bb) -- (Pb);
+      \draw[densely dashed] (Pb) -- ++(-0.06, 0.18) -- ++(0, 0.25) -- ++(0.12, 0) -- ++(0, -0.25) -- cycle;
+
+      % 位置 3（当前实线铅笔，t = 345 deg，右下方切线严格等于弧长）
+      \pgfmathsetmacro{\tc}{345}
+      \pgfmathsetmacro{\tcr}{\tc*pi/180}
+      \coordinate (Bc) at ({\rx*cos(\tc)}, {\yc+\ry*sin(\tc)});
+      \coordinate (Pc) at ({\rx*(cos(\tc)+\tcr*sin(\tc))}, {\yc+\ry*(sin(\tc)-\tcr*cos(\tc))});
+      \draw[thick] (Bc) -- (Pc);
+      \draw[thick, fill=white] (Pc) -- ++(-0.07, 0.20) -- ++(0, 0.26) -- ++(0.14, 0) -- ++(0, -0.26) -- cycle;
+      \draw[thin] ($(Pc)+(-0.07, 0.20)$) -- ($(Pc)+(-0.025, 0.18)$) -- ($(Pc)+(0.025, 0.20)$) -- ($(Pc)+(0.07, 0.20)$);
+      \draw[thin] ($(Pc)+(-0.025, 0.18)$) -- ($(Pc)+(-0.025, 0.46)$);
+      \draw[thin] ($(Pc)+(0.025, 0.20)$) -- ($(Pc)+(0.025, 0.46)$);
+
+      % 方向箭头
+      \draw[->, thick] (0.48, 0.56) arc (25:65:0.45);
+      \draw[->, thick] (-1.22, -0.18) arc (205:240:0.95);
+    \end{tikzpicture}
+    \caption*{图\ 47.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.50\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.90, >=Stealth, line cap=round, line join=round]
+      \def\a{0.76}
+      \def\phideg{56}
+      \pgfmathsetmacro{\phirad}{\phideg*pi/180}
+      \coordinate (O) at (0,0);
+      \coordinate (A) at (\a, 0);
+      \coordinate (B) at ({\a*cos(\phideg)}, {\a*sin(\phideg)});
+      \coordinate (P) at ({\a*(cos(\phideg)+\phirad*sin(\phideg))},
+                          {\a*(sin(\phideg)-\phirad*cos(\phideg))});
+
+      % 坐标轴
+      \draw[->] (-1.05, 0) -- (1.85, 0) node[below, font=\scriptsize] {$x$};
+      \draw[->] (0, -1.05) -- (0, 2.00) node[left, font=\scriptsize] {$y$};
+
+      % 基圆与渐伸线
+      \draw[thick] (O) circle (\a);
+      \draw[very thick, curveblue, domain=0:118, samples=80, variable=\t]
+        plot ({\a*(cos(\t)+(\t*pi/180)*sin(\t))},
+              {\a*(sin(\t)-(\t*pi/180)*cos(\t))});
+
+      % 矢量与切线
+      \draw[->] (O) -- (B);
+      \draw[->] (B) -- (P);
+      \draw[->] (O) -- (P);
+
+      % 直角标志 at B
+      \coordinate (Br) at ($(B)+({\phideg-180}:0.12)$);
+      \coordinate (Bt) at ($(B)+({\phideg-90}:0.12)$);
+      \coordinate (Bc) at ($(Br)+(Bt)-(B)$);
+      \draw (Br) -- (Bc) -- (Bt);
+
+      % B 处角 phi 与 phi - pi/2 (错开半径避免遮挡)
+      \draw (B) -- ++({\phideg}:0.48);
+      \draw (B) -- ++(0.68, 0);
+      \draw ($(B)+(0:0.24)$) arc (0:\phideg:0.24);
+      \node[font=\scriptsize] at ($(B)+({\phideg/2}:0.39)$) {$\phi$};
+
+      \draw ($(B)+(0:0.42)$) arc (0:{\phideg-90}:0.42);
+      \draw[thin] ($(B)+({(\phideg-90)/2}:0.42)$) -- ($(B)+(0.86, 0.34)$)
+        node[right, font=\scriptsize] {$\phi-\dfrac{\pi}{2}$};
+
+      % O 处角 phi
+      \draw (0.24, 0) arc (0:\phideg:0.24);
+      \node[font=\scriptsize] at ({\phideg/2}:0.38) {$\phi$};
+
+      % 标点与标签
+      \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
+      \fill (A) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$A$};
+      \fill (B) circle (1.3pt) node[above left=-1pt, font=\scriptsize] {$B$};
+      \fill (P) circle (1.3pt) node[right, font=\scriptsize] {$P(x,y)$};
+    \end{tikzpicture}
+    \caption*{图\ 47.2}
+  \end{minipage}
+\end{figure}
+
+如图 47.2，设 $P(x,y)$ 是圆的渐伸线上的任意点，$B$ 是基圆 $O$ 上的对应点，$A$ 是圆的渐伸线与圆 $O$ 的交点。根据圆的渐伸线的画法知道，图中的线段 $BP$ 是把 $\arc{BA}$ 拉直而成的，并且 $PB$ 是圆 $O$ 的切线。取 $O$ 为坐标原点，$OA$ 为 $x$ 轴正方向。设圆 $O$ 的半径为 $a$，$\angle AOB=\phi$，则 $\overrightarrow{BP}$ 的幅角为 $\phi-\frac{\pi}{2}$，由 $\overrightarrow{OP}=\overrightarrow{OB}+\overrightarrow{BP}$ 得向量 $\overrightarrow{OP}$ 的坐标表示式为
+\begin{align*}
+  (x,y) &= (a\cos\phi,\, a\sin\phi) \\
+        &\quad + \left(a\phi\cos\left(\phi-\frac{\pi}{2}\right),\, a\phi\sin\left(\phi-\frac{\pi}{2}\right)\right) \\
+        &= (a\cos\phi+a\phi\sin\phi,\, a\sin\phi-a\phi\cos\phi).
+\end{align*}
+所以圆的渐伸线的参数方程为
+\begin{align*}
+  x &= a(\cos\phi+\phi\sin\phi), \\
+  y &= a(\sin\phi-\phi\cos\phi).
+\end{align*}

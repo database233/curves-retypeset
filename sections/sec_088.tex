@@ -1,0 +1,55 @@
+\section{相似的曲线}
+\markboth{88. 相似的曲线}{88. 相似的曲线}
+
+已知定点 $O$ 和不等于零的常数 $k$。如图 88.1，对于平面上任一点 $A$，在直线 $OA$ 上取点 $B$，使 $\frac{OB}{OA} = |k|$，并且当 $k > 0$ 时 $B$ 在射线 $OA$ 上，$k < 0$ 时 $B$ 在 $OA$ 的反向延长线上。点 $B$ 叫做 $A$ 的位似点，点 $O$ 叫做位似中心，把每一点都变到其位似点的变换叫做位似变换。
+
+一条曲线 $C$ 上的一切点的位似点组成一条新的曲线 $C_1$，叫做 $C$ 的位似形。位似形是处在一种特殊位置下的相似形。一般地，如果曲线 $C_1$ 不是曲线 $C$ 的位似形，但是通过刚体运动能把 $C_1$ 移到适当位置，使新位置的曲线是 $C$ 的位似形，这时仍说 $C_1$ 是 $C$ 的相似形，或者说 $C_1$ 与 $C$ 相似。所以，关于曲线相似的问题，可以归结为位似的问题。
+
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如果选取极坐标系，使位似中心 $O$ 为极点，那么位似变换把点 $A(\rho, \theta)$ 变到 $B(\rho_1, \theta)$，这里
+  \[
+    \rho_1 = k\rho; \quad \rho = \frac{\rho_1}{k}.
+  \]
+  因此，如果曲线 $C$ 由极坐标方程给出，要得到它的位似形的方程，只要在 $C$ 的方程中把 $\rho$ 换成 $\frac{\rho_1}{k}$ 就行了。例如，设曲线 $C$ 是圆周 $\rho = a$，则曲线 $C_1$ 的极坐标方程是 $\frac{\rho_1}{k} = a$，即 $\rho_1 = ka$。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.42\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+    \draw[->] (-0.35, 0) -- (2.35, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -0.35) -- (0, 2.25) node[left, font=\footnotesize] {$y$};
+    \node[below left, font=\footnotesize] at (0, 0) {$O$};
+    % 曲线 C 与位似曲线 C1 (位似比 k = 1.65)
+    \draw[very thick, curveblue, name path=curveC]
+      (1.00, 0) .. controls (0.78, 0.34) and (0.76, 0.72) .. (0.98, 1.04);
+    \fill (1.00, 0) circle (1.1pt);
+    \node[font=\footnotesize] at (1.03, 0.25) {$C$};
+    \begin{scope}[scale=1.65]
+      \draw[very thick, curveblue, name path=curveC1]
+        (1.00, 0) .. controls (0.78, 0.34) and (0.76, 0.72) .. (0.98, 1.04);
+      \fill (1.00, 0) circle (0.75pt);
+    \end{scope}
+    \node[font=\footnotesize] at (1.56, 0.62) {$C_1$};
+    % 射线 OB (angle 40 deg)
+    \coordinate (O) at (0, 0);
+    \coordinate (Xaxis) at (1.5, 0);
+    \coordinate (R) at ({2.35*cos(40)}, {2.35*sin(40)});
+    \draw[thin, name path=ray] (O) -- (R);
+    \path[name intersections={of=curveC and ray, by=A}];
+    \coordinate (B) at ($1.65*(A)$);
+    \fill (A) circle (1.3pt) node[above left=-1pt, font=\footnotesize] {$A$};
+    \fill (B) circle (1.3pt) node[above left=-1pt, font=\footnotesize] {$B$};
+    \pic[draw, angle radius=10pt, angle eccentricity=1.45, font=\scriptsize, "$\theta$"] {angle=Xaxis--O--R};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 88.1}
+\end{minipage}
+
+如果选取直角坐标系，使位似中心 $O$ 为原点，那么位似变换把点 $A(x, y)$ 变到 $B(x_1, y_1)$，这里
+\begin{gather*}
+  x_1 = kx, \quad y_1 = ky; \\
+  x = \frac{x_1}{k}, \quad y = \frac{y_1}{k}.
+\end{gather*}
+因此，如果曲线 $C$ 由直角坐标方程给出，要得到它的位似形的方程，只要在 $C$ 的方程中把 $x$、$y$ 分别换成 $\frac{x_1}{k}$ 和 $\frac{y_1}{k}$ 就行了。

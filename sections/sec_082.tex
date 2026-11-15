@@ -1,0 +1,115 @@
+\section{挂在两根钉子中间的绳子}
+\markboth{82. 挂在两根钉子中间的绳子}{82. 挂在两根钉子中间的绳子}
+
+在两个钉子上挂着的一根绳子，由于它自己的重量而自然下垂，应该弯曲成什么形状？意大利物理学家伽里略就研究过这个问题，他认为绳子的形状是抛物线。另一位物理学家惠更斯用物理的推论证明，不对。正确的答案究竟是什么呢？莱布尼兹、惠更斯和约翰·贝努利找到了正确的答案，原来就是第 81 节中介绍的悬链线。下面我们就来证明这个事实。
+
+\noindent
+\begin{minipage}[t]{0.54\textwidth}
+  \vspace{0pt}
+  \hspace{2em}如图 82.1，选取坐标系，使 $x$ 轴取水平方向，$y$ 轴的正半轴通过绳子的最低点 $A$，因而绳子在 $A$ 点的切线平行于 $x$ 轴。设 $M(x, y)$ 是绳子上的任意一点，绳子在 $M$ 处的切线 $MT$ 对 $x$ 轴的倾斜角是 $\alpha$。为了叙述方便，不妨设 $M$ 在 $A$ 的右侧。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.43\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+    % 坐标系
+    \draw[->] (-1.35, 0) -- (1.45, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -0.25) -- (0, 1.85) node[left, font=\footnotesize] {$y$};
+    \node[below left, font=\footnotesize] at (0, 0) {$O$};
+    % 悬链线 y = 0.50 * cosh(x / 0.65)
+    \draw[very thick, curveblue, domain=-1.05:1.05, samples=60]
+      plot (\x, {0.50 * cosh(\x / 0.65)});
+    % 点 A(0, 0.50) 及水平向左拉力 AC
+    \coordinate (A) at (0, 0.50);
+    \coordinate (C) at (-0.65, 0.50);
+    \fill (A) circle (1.2pt) node[below left, font=\footnotesize] {$A$};
+    \draw[->, thick] (A) -- (C) node[below, font=\footnotesize] {$C$};
+    % 点 M(0.65, 0.50*cosh(1)=0.7715), 斜率 dy/dx = (0.50/0.65)*sinh(1) = 0.9040 => angle = 42.11 deg
+    \pgfmathsetmacro{\mx}{0.65}
+    \pgfmathsetmacro{\my}{0.50 * cosh(1.0)}
+    \pgfmathsetmacro{\slope}{(0.50/0.65) * sinh(1.0)}
+    \pgfmathsetmacro{\dx}{0.72}
+    \pgfmathsetmacro{\dy}{\slope * \dx}
+    \coordinate (M) at (\mx, \my);
+    \coordinate (D) at ({\mx + \dx}, \my);
+    \coordinate (E) at (\mx, {\my + \dy});
+    \coordinate (T) at ({\mx + \dx}, {\my + \dy});
+    \fill (M) circle (1.2pt) node[below, font=\footnotesize] {$M$};
+    % 向量 MD, ME, MT 及虚线框
+    \draw[->, thick] (M) -- (D) node[below, font=\footnotesize] {$D$};
+    \draw[->, thick] (M) -- (E) node[above, font=\footnotesize] {$E$};
+    \draw[->, thick] (M) -- (T) node[above right, font=\footnotesize] {$T$};
+    \draw[dashed, thin] (E) -- (T) -- (D);
+    % 角度 alpha
+    \pic[draw, angle radius=11pt, angle eccentricity=1.48, font=\scriptsize, "$\alpha$"] {angle=D--M--T};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 82.1}
+\end{minipage}
+
+\noindent 设曲线弧 $\arc{AM}$ 的长度是 $s$，单位长度绳子的重量是 $\gamma$，那么从 $A$ 到 $M$ 这段绳子的重量是 $\gamma s$，它使这段绳子受到一个竖直向下的力 $\vec{\gamma} s$。$A$ 到 $M$ 这段绳子还受到另外两个力的作用：一个是在 $A$ 点沿水平切线指向左方的拉力 $\overrightarrow{AC}$，另一个是在 $M$ 点沿倾斜切线指向右上方的拉力 $\overrightarrow{MT}$。拉力 $\overrightarrow{MT}$ 分解成水平向右的分力 $\overrightarrow{MD}$ 和竖直向上的分力 $\overrightarrow{ME}$。因为绳子处于平衡状态，所以水平分力 $\overrightarrow{MD}$ 与 $A$ 点处的水平拉力 $\overrightarrow{AC}$ 大小相等、方向相反，竖直分力 $\overrightarrow{ME}$ 与重力 $\vec{\gamma} s$ 大小相等、方向相反，这样就得到
+\begin{gather*}
+  |\overrightarrow{MT}|\cos\alpha = |\overrightarrow{AC}|, \\
+  |\overrightarrow{MT}|\sin\alpha = |\vec{\gamma} s|.
+\end{gather*}
+
+用第二式除以第一式，得到
+\[
+  \tg\alpha = \frac{|\vec{\gamma}|}{|\overrightarrow{AC}|} s.
+\]
+记 $\frac{|\overrightarrow{AC}|}{|\vec{\gamma}|} = a$，上式化为
+\[
+  s = a \tg\alpha.
+\]
+用撇号表示对 $x$ 的导数，那么 $\tg\alpha = y'$，所以
+\[
+  s = a y'.
+\]
+再对 $x$ 求导，并且利用 $s' = \sqrt{1 + y'^2}$（参考第 12 节），得到
+\begin{equation*}
+  \sqrt{1 + y'^2} = a y''. \tag{1}
+\end{equation*}
+
+为了从上式求出 $y$ 与 $x$ 的关系，我们令
+\[
+  y' = p,
+\]
+那么
+\[
+  y'' = (y')' = p' = \frac{dp}{dx},
+\]
+因而 $(1)$ 式成为
+\[
+  \sqrt{1 + p^2} = a \frac{dp}{dx},
+\]
+即
+\[
+  dx = \frac{a \dd p}{\sqrt{1 + p^2}}.
+\]
+积分，得到
+\[
+  x = a \ln\left(p + \sqrt{1 + p^2}\right) + C_1,
+\]
+其中 $C_1$ 为积分常数。因为选择坐标轴时，已经使得当 $x = 0$ 时的切线平行于 $x$ 轴，即这时的切线斜率 $p = y' = 0$，因而 $C_1 = 0$，上式化为
+\begin{align*}
+  \frac{x}{a} &= \ln\left(p + \sqrt{1 + p^2}\right). \\
+  \therefore\quad e^{\frac{x}{a}} &= p + \sqrt{1 + p^2}, \\
+  e^{\frac{x}{a}} - p &= \sqrt{1 + p^2}.
+\end{align*}
+两边平方后，整理，得到
+\[
+  2p e^{\frac{x}{a}} = e^{\frac{2x}{a}} - 1.
+\]
+把 $p$ 仍换成 $y'$，两边同乘以 $\frac{1}{2} e^{-\frac{x}{a}}$，得到
+\[
+  y' = \frac{1}{2}\left(e^{\frac{x}{a}} - e^{-\frac{x}{a}}\right).
+\]
+再积分一次，得到
+\[
+  y = \frac{a}{2}\left(e^{\frac{x}{a}} + e^{-\frac{x}{a}}\right) + C_2,
+\]
+其中 $C_2$ 是积分常数。通过平移坐标轴，把原点移动到 $y$ 轴上的适当位置，可使 $C_2 = 0$，因而
+\[
+  y = \frac{a}{2}\left(e^{\frac{x}{a}} + e^{-\frac{x}{a}}\right),
+\]
+这正是悬链线的方程。可见悬链线是问题的唯一解答。

@@ -1,0 +1,197 @@
+\section{拖在细线后面的钮扣}
+\markboth{78. 拖在细线后面的钮扣}{78. 拖在细线后面的钮扣}
+
+如图 78.1，在一根细线的一端扣上一粒小钮扣，把钮扣在水里浸一浸，然后放在桌上，用手捏紧线的一端沿着桌边滑动，细线就拖着钮扣在桌面上移动。钮扣经过处留下的水迹，在桌面上画出一条曲线，这条曲线叫做曳物线。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.55\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+      % 桌面透视轮廓
+      \draw[thick] (-2.6, 0.05) -- (0.85, -0.15) -- (2.45, -0.25);
+      \draw[thick] (-2.6, 0.05) -- (-1.35, 1.35) -- (2.45, 0.75);
+      % 桌边厚度与竖直阴影线
+      \draw[thick] (-2.6, 0.05) -- (-2.6, -0.32) -- (2.45, -0.62);
+      \foreach \x in {-2.45,-2.30,...,0.75} {
+        \pgfmathsetmacro{\ytop}{0.05 - (\x+2.6)*0.058}
+        \pgfmathsetmacro{\ybot}{-0.32 - (\x+2.6)*0.059}
+        \draw[thin, mutedgray] (\x, \ytop) -- (\x, \ybot);
+      }
+      % 桌腿暗示
+      \draw[thick] (-1.45, -0.39) -- (-1.45, -0.78);
+      \draw[thick] (-1.15, -0.41) -- (-1.15, -0.78);
+      \draw[thick] (-0.95, -0.42) -- (-0.95, -0.75);
+
+      % 纽扣所在位置与水迹虚线 (曳物线状透视)
+      \coordinate (Btn) at (-0.92, 0.56);
+      \coordinate (Finger) at (0.88, -0.12);
+
+      % 纽扣经过的虚线水迹 (末段严格与细线 Btn--Finger 同向相切)
+      \draw[densely dashed, curveblue, thick]
+        (-1.42, 1.28) .. controls (-1.40, 0.96) and (-1.28, 0.696) .. (Btn);
+
+      % 小扁圆纽扣及孔眼
+      \fill[white] (Btn) ellipse (0.14 and 0.065);
+      \draw[thick] (Btn) ellipse (0.14 and 0.065);
+      \fill ($(Btn)+(-0.04, 0.01)$) circle (0.65pt);
+      \fill ($(Btn)+(0.04, -0.01)$) circle (0.65pt);
+
+      % 细线 (从纽扣拉直伸向手指)
+      \draw[thin] (Btn) -- (Finger);
+
+      % 捏线的右手简笔线稿
+      \fill[white]
+        (0.84, -0.08) .. controls (0.98, 0.14) and (1.25, 0.28) .. (1.65, 0.36)
+        .. controls (1.95, 0.42) and (2.25, 0.38) .. (2.42, 0.28)
+        -- (2.42, -0.46)
+        .. controls (2.10, -0.46) and (1.65, -0.48) .. (1.28, -0.42)
+        .. controls (1.02, -0.38) and (0.86, -0.26) .. (0.84, -0.08) -- cycle;
+      % 手背与腕部轮廓
+      \draw[thick]
+        (2.42, 0.28) .. controls (2.18, 0.38) and (1.82, 0.40) .. (1.52, 0.32)
+        .. controls (1.24, 0.24) and (1.02, 0.06) .. (0.88, -0.09)
+        .. controls (0.83, -0.14) and (0.88, -0.22) .. (0.99, -0.21)
+        .. controls (1.16, -0.20) and (1.35, -0.11) .. (1.52, -0.06);
+      % 拇指与食指捏合线
+      \draw[thick]
+        (0.95, -0.21) .. controls (0.88, -0.28) and (0.96, -0.38) .. (1.14, -0.39)
+        .. controls (1.34, -0.40) and (1.52, -0.36) .. (1.68, -0.35);
+      % 弯曲的中指/无名指/小指及手掌下缘
+      \draw[thick]
+        (1.16, -0.39) .. controls (1.26, -0.46) and (1.50, -0.47) .. (1.72, -0.43);
+      \draw[thick]
+        (1.38, -0.45) .. controls (1.56, -0.50) and (1.88, -0.48) .. (2.42, -0.44);
+      % 掌纹与指关节细节
+      \draw[thin] (1.24, -0.02) .. controls (1.42, 0.05) and (1.60, 0.04) .. (1.74, -0.03);
+      \draw[thin] (1.38, -0.20) .. controls (1.50, -0.22) and (1.62, -0.27) .. (1.66, -0.34);
+      % 袖口竖线装饰
+      \draw[thick] (2.42, 0.32) -- (2.42, -0.48);
+      \foreach \y in {-0.38,-0.24,-0.10,0.04,0.18} {
+        \draw[thin] (2.42, \y) -- (2.56, \y);
+      }
+    \end{tikzpicture}
+    \caption*{图\ 78.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.42\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+      \def\a{1.55}
+      % 坐标轴
+      \draw[->] (-0.35, 0) -- (2.65, 0) node[below, font=\scriptsize] {$x$};
+      \draw[->] (0, -0.32) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
+
+      % 曳物线右支 (alpha 从 90 deg 到 158 deg)
+      \draw[very thick, curveblue, domain=90:158, samples=120, variable=\t]
+        plot ({\a*ln(tan(\t/2)) + \a*cos(\t)}, {\a*sin(\t)});
+
+      % 选定切点 M (alpha = 138 deg)
+      \def\alp{138}
+      \pgfmathsetmacro{\xm}{\a*ln(tan(\alp/2)) + \a*cos(\alp)}
+      \pgfmathsetmacro{\ym}{\a*sin(\alp)}
+      \pgfmathsetmacro{\xt}{\xm - \ym/tan(\alp)}
+
+      \coordinate (O) at (0,0);
+      \coordinate (M) at (\xm, \ym);
+      \coordinate (N) at (\xm, 0);
+      \coordinate (T) at (\xt, 0);
+
+      % 垂线 MN 与切线 MT
+      \draw (M) -- (N);
+      \draw (M) -- (T);
+
+      % 标注角 alpha (钝角：从 x 轴正方向到 MT 方向)
+      \draw ($(\xt,0)+(0.26,0)$) arc (0:\alp:0.26);
+      \node[above right=-1pt, font=\scriptsize] at (\xt, 0.16) {$\alpha$};
+
+      % 长度与点标注
+      \node[below left=-1pt, font=\scriptsize] at (O) {$O$};
+      \node[left, font=\scriptsize] at (0, 0.52*\a) {$a$};
+      \fill (M) circle (1.3pt) node[above right=-1pt, font=\scriptsize] {$M(x,y)$};
+      \node[left, font=\scriptsize] at (\xm, 0.45*\ym) {$y$};
+      \node[above right=0.5pt, font=\scriptsize] at ($0.45*(M)+0.55*(T)$) {$a$};
+      \node[below, font=\scriptsize] at (N) {$N$};
+      \node[below, font=\scriptsize] at (T) {$T$};
+    \end{tikzpicture}
+    \caption*{图\ 78.2}
+  \end{minipage}
+\end{figure}
+
+为了推导曳物线的方程，我们设细线在手指与钮扣间的长度为 $a$，并且取手指沿着它滑动的那条桌边为 $x$ 轴，并假设开始滑动时，细线的位置与 $x$ 轴垂直。把细线的初始位置取成 $y$ 轴。因为钮扣是被细线拖着走的，所以在运动的任何瞬间，细线都与钮扣画出的曳物线相切。如图 78.2\footnote{重排校订：原书第 135 页此图图注误印作“图 73.2”，据节次与上下文订正为“图 78.2”。}，设 $M(x,y)$ 是曳物线上的任意点，$MN$ 是 $x$ 轴的垂线，$MT$ 是曳物线的切线，$MT$ 与 $x$ 轴正方向的夹角为 $\alpha$，则 $MT=a$，$\angle MTN=\pi-\alpha$，因而
+\[
+  y = a\sin(\pi-\alpha) = a\sin\alpha.
+\]
+由此得到
+\begin{gather*}
+  dy = a\cos\alpha\dd\alpha, \\
+  \tg\alpha = \frac{dy}{dx} = \frac{a\cos\alpha\dd\alpha}{dx}.
+\end{gather*}
+因而
+\begin{align*}
+  \frac{dx}{d\alpha} &= a\cos\alpha\ctg\alpha = \frac{a\cos^2\alpha}{\sin\alpha} = \frac{a(1-\sin^2\alpha)}{\sin\alpha} \\
+                     &= \frac{a}{\sin\alpha} - a\sin\alpha,
+\end{align*}
+积分，得到
+\[
+  x = \int\frac{a\dd\alpha}{\sin\alpha} - \int a\sin\alpha\dd\alpha = a\ln\left|\tg\frac{\alpha}{2}\right| + a\cos\alpha + C.
+\]
+根据运动情形可知，曲线全部位于 $x$ 轴上方，所以 $0<\alpha<\pi$，$\tg\dfrac{\alpha}{2}>0$，绝对值符号可以去掉。又因为根据我们选择的坐标系，当 $\alpha=\dfrac{\pi}{2}$ 时 $x=0$，所以积分常数 $C=0$。这样就得到曳物线的参数方程
+\begin{align*}
+  x &= a\ln\tg\frac{\alpha}{2} + a\cos\alpha, \\
+  y &= a\sin\alpha,
+\end{align*}
+其中的参数 $\alpha$ 是曳物线的切线与 $x$ 轴正方向的夹角。
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}当细线牵引着物体向 $y$ 轴右方运动时，$\dfrac{\pi}{2}<\alpha<\pi$。一般认为这时得到的曲线只是曳物线的一半，因为我们也可用细线牵引着物体向 $y$ 轴左方运动，得到曳物线的另一半，如图 78.3 所示。这时 $0<\alpha<\dfrac{\pi}{2}$，从图 78.3 中的直角三角形 $MNT$ 仍得到 $y=a\sin\alpha$，因而上面的推导过程和得到的参数方程也适用于曳物线的左半支，仅仅是左半支参数范围是 $0<\alpha<\dfrac{\pi}{2}$，右半支是 $\dfrac{\pi}{2}<\alpha<\pi$。当 $\alpha=\dfrac{\pi}{2}$ 时得到 $y$ 轴上的点 $(0,a)$。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{4pt}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    \def\a{1.25}
+    % 坐标轴
+    \draw[->] (-2.25, 0) -- (2.25, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -0.25) -- (0, 1.58) node[left, font=\scriptsize] {$y$};
+
+    % 曳物线左右两支
+    \draw[very thick, curveblue, domain=21:159, samples=160, variable=\t]
+      plot ({\a*ln(tan(\t/2)) + \a*cos(\t)}, {\a*sin(\t)});
+
+    % 左支上的点 M (alpha = 28 deg)
+    \def\alp{28}
+    \pgfmathsetmacro{\xm}{\a*ln(tan(\alp/2)) + \a*cos(\alp)}
+    \pgfmathsetmacro{\ym}{\a*sin(\alp)}
+    \pgfmathsetmacro{\xt}{\xm - \ym/tan(\alp)}
+
+    \coordinate (M) at (\xm, \ym);
+    \coordinate (N) at (\xm, 0);
+    \coordinate (T) at (\xt, 0);
+
+    \draw (M) -- (N);
+    \draw (M) -- (T);
+
+    \draw ($(\xt,0)+(0.34,0)$) arc (0:\alp:0.34);
+    \node[font=\scriptsize] at (\xt+0.48, 0.12) {$\alpha$};
+
+    \node[below left=-1pt, font=\scriptsize] at (0,0) {$O$};
+    \fill (M) circle (1.2pt) node[above left=0.5pt, font=\scriptsize] {$M$};
+    \node[right=0.5pt, font=\scriptsize] at (\xm, 0.45*\ym) {$y$};
+    \node[above left=0pt, font=\scriptsize] at ($0.52*(M)+0.48*(T)$) {$a$};
+    \node[below, font=\scriptsize] at (N) {$N$};
+    \node[below, font=\scriptsize] at (T) {$T$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 78.3}
+\end{minipage}
+
+从曳物线的参数方程消去参数 $\alpha$，就得到曳物线的直角坐标方程
+\[
+  x = \pm\left(a\ln\frac{a-\sqrt{a^2-y^2}}{y} + \sqrt{a^2-y^2}\right),
+\]
+右边括弧前的正号对应于 $0<\alpha<\dfrac{\pi}{2}$ 的部分，即曳物线的左半支（$x<0$）；负号对应于 $\dfrac{\pi}{2}<\alpha<\pi$ 的部分，即曳物线的右半支（$x>0$）。
+
+曳物线有一个尖点，就是 $y$ 轴上的点 $(0,a)$；有一条渐近线，就是 $x$ 轴。

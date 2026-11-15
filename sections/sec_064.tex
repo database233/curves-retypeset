@@ -1,0 +1,82 @@
+\section{笛卡儿叶形线}
+\markboth{64. 笛卡儿叶形线}{64. 笛卡儿叶形线}
+
+除去蔓叶线而外，还有一种以叶子命名的著名曲线，叫做笛卡儿叶形线。通常把笛卡儿叶形线的方程写成形式
+\[
+  x^3 + y^3 - 3axy = 0,
+\]
+其中 $a$ 为正的常数。曲线形状如图 64.1。这种曲线是笛卡儿在 1638 年写给费马的信中最先提到的，当时只考虑它在第一象限中的部分，形状像一瓣嫩叶，所以叫做叶形线。后来才发现它在第二象限和第四象限里的无穷分支。图中的倾斜直线是笛卡儿叶形线的渐近线。
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace{2em}令 $y=tx$，代入曲线方程后得到
+  \[
+    x^3 + t^3x^3 - 3atx^2 = 0,
+  \]
+  由此立刻得到笛卡儿叶形线的参数方程
+  \[
+    x = \frac{3at}{1+t^3},\quad y = \frac{3at^2}{1+t^3}.
+  \]
+  参数 $t$ 的几何意义是曲线上的点与原点的连线的斜率。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{0pt}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    \def\a{0.80}
+    % 坐标轴
+    \draw[->] (-1.55, 0) -- (1.65, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.55) -- (0, 1.65) node[left, font=\scriptsize] {$y$};
+
+    \begin{scope}
+      \clip (-1.48, -1.48) rectangle (1.52, 1.52);
+
+      % 渐近线 x + y + a = 0
+      \draw (-2.5, {2.5-\a}) -- ({2.5-\a}, -2.5);
+
+      % 笛卡儿叶形线参数方程: x = 3at/(1+t^3), y = 3at^2/(1+t^3)
+      % 第一象限环: t in [0,1] 与 u = 1/t in [0,1] (严格闭合回原点)
+      \draw[very thick, curveblue]
+        plot[domain=0:1, samples=50, variable=\t]
+          ({3*\a*\t/(1+\t*\t*\t)}, {3*\a*\t*\t/(1+\t*\t*\t)})
+        -- plot[domain=1:0, samples=50, variable=\u]
+          ({3*\a*\u*\u/(1+\u*\u*\u)}, {3*\a*\u/(1+\u*\u*\u)});
+
+      % 第二象限分支: t in (-1, 0]
+      \draw[very thick, curveblue, domain=-0.77:0, samples=80, variable=\t]
+        plot ({3*\a*\t/(1+\t*\t*\t)}, {3*\a*\t*\t/(1+\t*\t*\t)});
+
+      % 第四象限分支: u = 1/t in (-1, 0] (沿 y 轴切线严格回到原点)
+      \draw[very thick, curveblue, domain=-0.77:0, samples=80, variable=\u]
+        plot ({3*\a*\u*\u/(1+\u*\u*\u)}, {3*\a*\u/(1+\u*\u*\u)});
+    \end{scope}
+
+    \fill (0,0) circle (1.0pt) node[below left=-1pt, font=\scriptsize] {$O$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 64.1}
+\end{minipage}
+
+\medskip
+\noindent
+在几何上，我们考虑以原点为顶点并且关于 $y$ 轴对称的圆锥曲线束
+\[
+  x^2 = 3ay - \lambda y^2 \quad (a>0)
+\]
+和通过原点的直线束
+\[
+  y = \lambda x.
+\]
+对于相同的参数值 $\lambda$，求这两个束中对应的圆锥曲线和直线的交点，消去 $y$ 后得到
+\[
+  x^2 = 3a\lambda x - \lambda^3 x^2,
+\]
+\[
+  x\bigl[(1+\lambda^3)x - 3a\lambda\bigr] = 0.
+\]
+当 $x=0$ 时必有 $y=0$，因而得到唯一的参数表达式
+\[
+  x = \frac{3a\lambda}{1+\lambda^3},\quad y = \frac{3a\lambda^2}{1+\lambda^3}.
+\]
+这说明两个束中对应圆锥曲线和直线的交点的轨迹是笛卡儿叶形线。

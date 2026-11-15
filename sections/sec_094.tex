@@ -1,0 +1,91 @@
+\section{怎样画对数螺线}
+\markboth{94. 怎样画对数螺线}{94. 怎样画对数螺线}
+
+看了上面一节，如果让你搞橱窗设计，你一定跃跃欲试，想画一条对数螺线。但是你马上就会发现，如果根据曲线方程 $\rho = e^{m\theta}$ 直接去画它，要经过很复杂的计算，太不方便了。这里介绍一种简单的几何画法。
+
+\par\medskip\noindent
+\begin{minipage}[c]{0.49\textwidth}
+  \hspace{2em}如图 94.1，把圆 $O$ 的圆周分成 $n$ 等分，设分点顺次是 $A_1$、$A_2$、$A_3$、$\cdots$。在半径 $OA_1$ 上任取一点 $M_1$，作 $M_1M_2 \perp OA_2$，垂足为 $M_2$；再作 $M_2M_3 \perp OA_3$，垂足为 $M_3$；作 $M_3M_4 \perp OA_4$，垂足为 $M_4$，等等。如此继续，得到一连串的点 $M_1$、$M_2$、$M_3$、$M_4$、$\cdots$，用光滑曲线把它们连接起来，就得到一条对数螺线。
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.47\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.98]
+    % 圆 O 周分成 n=12 等分，半径 R=1.55
+    \def\R{1.55}
+    \def\rone{1.32} % OM_1
+    \def\calpha{0.8660254} % cos(30 deg)
+    \def\mval{0.2747175} % -ln(cos(pi/6))/(pi/6)
+
+    \coordinate (O) at (0,0);
+    \draw[line width=0.75pt] (O) circle (\R);
+    % 12 等分半径
+    \foreach \k in {0,1,...,11} {
+      \draw[line width=0.5pt] (0,0) -- ({-30*\k}:\R);
+    }
+
+    % 折线 M_1 M_2 M_3 ... (垂直作图)
+    \coordinate (M1) at (0:\rone);
+    \foreach \k in {2,...,16} {
+      \pgfmathsetmacro{\rk}{\rone * pow(\calpha, \k-1)}
+      \pgfmathsetmacro{\ak}{-30 * (\k-1)}
+      \pgfmathsetmacro{\prev}{int(\k-1)}
+      \coordinate (M\k) at (\ak:\rk);
+      \draw[line width=0.65pt] (M\prev) -- (M\k);
+    }
+    % M2, M3 处直角记号
+    \draw[line width=0.45pt] ($(M2)!0.11cm!(O)$) -- ($($(M2)!0.11cm!(O)$) + ($(M2)!0.11cm!(M1)$) - (M2)$) -- ($(M2)!0.11cm!(M1)$);
+    \draw[line width=0.45pt] ($(M3)!0.11cm!(O)$) -- ($($(M3)!0.11cm!(O)$) + ($(M3)!0.11cm!(M2)$) - (M3)$) -- ($(M3)!0.11cm!(M2)$);
+
+    % 光滑对数螺线经过 M_1, M_2, ...
+    \draw[line width=0.9pt, curveblue, domain=0:-9.5, samples=160, smooth]
+      plot ({\rone*exp(\mval*\x)*cos(\x r)}, {\rone*exp(\mval*\x)*sin(\x r)});
+
+    % 标记点与名称
+    \fill (0,0) circle (1.2pt);
+    \node[below left=-1pt, fill=white, inner sep=0.3pt] at (-0.04,-0.02) {\footnotesize $O$};
+    \foreach \i in {1,2,3,4} {
+      \fill (M\i) circle (1.2pt);
+    }
+    \node[right=1pt] at (0:\R) {\footnotesize $A_1$};
+    \node[below right=-1pt] at (-30:\R) {\footnotesize $A_2$};
+    \node[below right=-1pt] at (-60:\R) {\footnotesize $A_3$};
+    \node[below=1pt] at (-90:\R) {\footnotesize $A_4$};
+
+    \node[above left=-1pt, fill=white, inner sep=0.2pt] at (M1) {\footnotesize $M_1$};
+    \node[above right=0.5pt, fill=white, inner sep=0.2pt] at (M2) {\footnotesize $M_2$};
+    \node[right=1.5pt, fill=white, inner sep=0.2pt] at (M3) {\footnotesize $M_3$};
+    \node[below left=-1pt, fill=white, inner sep=0.2pt] at (M4) {\footnotesize $M_4$};
+  \end{tikzpicture}
+  \par\vspace{3pt}{\footnotesize 图\ 94.1}
+\end{minipage}
+\par\medskip
+
+现在证明上述作法的正确性。选取极坐标系，使 $O$ 为极点，极轴不妨就取为 $OA_1$。设点 $M_i$ 的极坐标为 $(\rho_i, \theta_i)$，$i = 1, 2, 3, \cdots$，并且记 $\alpha = \frac{2\pi}{n}$，那么由作法可得
+\[
+  \theta_{i+1} = \theta_i - \alpha, \qquad \rho_{i+1} = \rho_i \cos\alpha.
+\]
+记
+\[
+  m = -\frac{\ln\cos\alpha}{\alpha},
+\]
+则有 $\cos\alpha = e^{-m\alpha}$，因而
+\[
+  \rho_{i+1} = \rho_i e^{-m\alpha}.
+\]
+再设
+\[
+  C = \rho_1 e^{-m\theta_1},
+\]
+就得到
+\begin{align*}
+  \rho_1 &= C e^{m\theta_1}, \\
+  \rho_2 &= \rho_1 e^{-m\alpha} = C e^{m(\theta_1 - \alpha)} = C e^{m\theta_2}, \\
+  \rho_3 &= \rho_2 e^{-m\alpha} = C e^{m(\theta_2 - \alpha)} = C e^{m\theta_3}, \\
+  &\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots
+\end{align*}
+因而这一连串的点 $M_1$、$M_2$、$M_3$、$\cdots$ 的坐标都满足方程
+\[
+  \rho = C e^{m\theta},
+\]
+所以这些点都在同一条对数螺线上。

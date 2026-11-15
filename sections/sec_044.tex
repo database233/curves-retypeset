@@ -1,0 +1,174 @@
+\section{用三把车刀切削正六边形零件}
+\markboth{44. 用三把车刀切削正六边形零件}{44. 用三把车刀切削正六边形零件}
+
+在各种机械中用到很多螺丝钉和螺丝帽，大多数螺丝帽的侧面都具有正六边形的轮廓。在经常生产大批同一规格螺丝帽的地方，只要做一个专门的模具，就能很方便地在螺帽半成品上切削出有固定大小的正六边形轮廓。但是也有一些工厂需要各种不同规格的六角螺帽，而同一规格的需要量又不大，犯不着做很多种不同的模具。为了充分挖掘设备的潜力，提高生产效率，可以设法在车床上加上一个专用夹具，用三把车刀来切削各种小螺丝帽侧面的正六边形轮廓。
+
+螺丝帽的半成品，外部轮廓是一个圆，最后需要保留的轮廓是这个圆的内接正六边形。在车床的主轴上装一个大圆盘，叫做刀盘，在刀盘的圆周上每隔 $120^\circ$ 装一把车刀，共装三把，使刀头沿刀盘的半径方向伸出到刀盘外面，注意使三把车刀露出刀盘的部分的长度相同。做一个夹具，使工件的圆周与刀盘圆周在同一平面内，两个圆心间的距离可以调节，并且当刀盘旋转时，通过齿轮带动工件沿相同方向旋转，刀盘转速是工件转速的二倍。
+
+从图 44.1 中可以看出，用三把车刀切削正六边形的过程，就像用三颗牙齿轮流啃苹果一样，先是第一把车刀 $M$ 在工件圆盘上“啃”掉 $60^\circ$ 的圆弧，得到圆内接正六边形的一边，接着第二把车刀 $N$ 赶上来“啃”出第二边，如此继续。每把车刀“啃”出面对面的两边，因而三把车刀合作，切削出整个正六边形的轮廓。当然，金属比苹果硬得多，不是那么容易啃的，所以实际切削时，不能像图 44.1 那样一刀就切削出一边来，而只能逐步缩短圆心距 $OA$，分若干次进刀，每次进刀后只切削掉薄薄的一层。
+
+\begin{figure}[htbp]
+  \centering
+  % 公共参数与绘制单个状态的命令
+  % #1: 刀盘顺时针转角 (相对于 M 在 196 deg), #2: 工件绘制代码
+  \newcommand{\hexpanel}[2]{%
+    \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+      \def\rw{0.38}
+      \def\rd{0.72}
+      \def\htip{0.84}
+      \def\lOA{1.17}
+      \def\phiA{#1}
+      \coordinate (O) at (0,0);
+      \coordinate (A) at (\lOA, 0);
+
+      % 中心十字线
+      \draw[densely dash dot, thin] (-0.54, 0) -- (2.06, 0);
+      \draw[densely dash dot, thin] (0, -0.54) -- (0, 0.54);
+      \draw[densely dash dot, thin] (\lOA, -0.90) -- (\lOA, 0.90);
+
+      % 工件轮廓
+      #2
+
+      % 刀盘圆
+      \draw[thick] (A) circle (\rd);
+
+      % 三把车刀 (M, N, P 顺时针相隔 120 度)
+      \pgfmathsetmacro{\angM}{196 - \phiA}
+      \pgfmathsetmacro{\angN}{196 + 120 - \phiA}
+      \pgfmathsetmacro{\angP}{196 - 120 - \phiA}
+      \foreach \ang/\lbl in {\angM/M, \angN/N, \angP/P} {
+        \coordinate (Tb1) at ($(A)+({\ang-5}:\rd)$);
+        \coordinate (Tb2) at ($(A)+({\ang+5}:\rd)$);
+        \coordinate (Ttp) at ($(A)+(\ang:\htip)$);
+        \draw[thick, fill=white] (Tb1) -- (Ttp) -- (Tb2) -- cycle;
+        % 若刀尖正在左侧 O 处切削 (165..205 deg)，标签置于刀尖外上或外下侧，避免落入圆 O 内
+        \pgfmathtruncatemacro{\side}{(\ang > 165 && \ang < 188) ? 1 : ((\ang >= 188 && \ang < 210) ? -1 : 0)}
+        \ifnum\side=1
+          \node[font=\scriptsize, fill=white, inner sep=0.4pt]
+            at ($(A)+(153:{\htip+0.19})$) {$\lbl$};
+        \else\ifnum\side=-1
+          \node[font=\scriptsize, fill=white, inner sep=0.4pt]
+            at ($(A)+(214:{\htip+0.19})$) {$\lbl$};
+        \else
+          \node[font=\scriptsize, fill=white, inner sep=0.4pt]
+            at ($(A)+(\ang:{\htip+0.18})$) {$\lbl$};
+        \fi\fi
+      }
+
+      % 旋转箭头 omega 与 2omega (均为顺时针)
+      \draw[->, thin] ($(O)+(225:0.49)$) arc (225:155:0.49);
+      \node[font=\tiny] at ($(O)+(220:0.63)$) {$\omega$};
+      \draw[->, thin] ($(A)+(252:0.54)$) arc (252:208:0.54);
+      \node[font=\tiny, fill=white, inner sep=0.4pt] at ($(A)+(230:0.39)$) {$2\omega$};
+
+      \fill (O) circle (0.9pt) node[below left=-2pt, font=\scriptsize] {$O$};
+      \fill (A) circle (0.9pt) node[below right=-2pt, font=\scriptsize] {$A$};
+    \end{tikzpicture}%
+  }
+
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \hexpanel{0}{%
+      \draw[thick, curveblue] (O) circle (\rw);
+    }
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \hexpanel{16}{%
+      \draw[densely dashed, thin, black!40] (O) circle (\rw);
+      \draw[thick, curveblue] (-30:\rw) -- ({\rw*cos(30)}, 0) -- (0:\rw) arc (0:330:\rw) -- cycle;
+    }
+  \end{minipage}
+
+  \vspace{4pt}
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \hexpanel{36}{%
+      \draw[densely dashed, thin, black!40] (O) circle (\rw);
+      \draw[thick, curveblue] (12:\rw) arc (12:312:\rw) -- cycle;
+    }
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \hexpanel{76}{%
+      \draw[densely dashed, thin, black!40] (O) circle (\rw);
+      \draw[thick, curveblue] (-8:\rw) arc (-8:292:\rw) -- cycle;
+    }
+  \end{minipage}
+
+  \vspace{4pt}
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \hexpanel{120}{%
+      \draw[densely dashed, thin, black!40] (O) circle (\rw);
+      \draw[thick, curveblue] (-30:\rw) arc (-30:90:\rw) -- (150:\rw) arc (150:270:\rw) -- cycle;
+    }
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \hexpanel{136}{%
+      \draw[densely dashed, thin, black!40] (O) circle (\rw);
+      \draw[thick, curveblue] (-98:\rw) -- (-38:\rw) -- (-8:{\rw*cos(30)}) -- (-8:\rw) arc (-8:262:\rw) -- cycle;
+    }
+  \end{minipage}
+  \caption*{图\ 44.1}
+\end{figure}
+
+从数学角度来看，旋转的车刀在旋转的工件上切削出曲线轮廓，相当于旋转的笔在旋转的纸上画曲线。刀尖 $M$ 相当于笔尖，工件圆盘相当于一张白纸。要能看清旋转的“笔”在旋转的“纸”上画出什么曲线，观察者必须设想自己能够随着“纸”一起绕 $O$ 点旋转。在这样的观察者眼中，就会觉得似乎不是工件绕 $O$ 点以角速度 $\omega$ 顺时针旋转，刀盘中心 $A$ 不动，而好像是工件不动，刀盘中心 $A$ 以角速度 $\omega$ 绕 $O$ 点逆时针旋转。与此同时，刀尖 $M$ 又以角速度 $2\omega$ 绕 $A$ 点顺时针旋转。这样就归结成第 43 节中已经讨论过的情形（这里 $m=\frac{1}{2}$），因而刀尖 $M$ 在工件上切削出的轮廓曲线的方程是
+\begin{align*}
+  x &= l\cos\frac{\theta}{2} + h\cos\left(\theta - \frac{\theta}{2}\right), \\
+  y &= l\sin\frac{\theta}{2} - h\sin\left(\theta - \frac{\theta}{2}\right),
+\end{align*}
+其中 $l=OA$，$h=AM$，$\frac{\theta}{2}=\omega t$。将上述方程化简，得到
+\begin{align*}
+  x &= (l+h)\cos\frac{\theta}{2}, \\
+  y &= (l-h)\sin\frac{\theta}{2},
+\end{align*}
+即
+\[
+  \frac{x^2}{(l+h)^2} + \frac{y^2}{(l-h)^2} = 1.
+\]
+
+\noindent
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.88, line cap=round, line join=round]
+    \def\aell{1.45}
+    \def\bell{0.19}
+    \pgfmathsetmacro{\lOA}{(\aell+\bell)/2}
+    \pgfmathsetmacro{\htip}{(\aell-\bell)/2}
+    \def\rd{0.50}
+    \pgfmathsetmacro{\hexr}{\bell/cos(30)}
+
+    % 中心线
+    \draw[densely dash dot, thin] (-1.45, 0) -- (1.55, 0);
+    \draw[densely dash dot, thin] (\lOA, -0.75) -- (\lOA, 0.75);
+
+    % 三个错开 60 度的扁椭圆 (长轴分别沿 90, 30, 150 度)
+    \foreach \rot in {0, 60, -60} {
+      \draw[densely dashed, thick, curveblue, rotate=\rot] (0,0) ellipse ({\bell} and {\aell});
+    }
+
+    % 中心正六边形“核”
+    \fill[pattern=north east lines, pattern color=mutedgray]
+      (30:\hexr) -- (90:\hexr) -- (150:\hexr) -- (210:\hexr) -- (270:\hexr) -- (330:\hexr) -- cycle;
+    \draw[thick]
+      (30:\hexr) -- (90:\hexr) -- (150:\hexr) -- (210:\hexr) -- (270:\hexr) -- (330:\hexr) -- cycle;
+
+    % 刀盘圆及三把车刀 (位于 180, 60, -60 度)
+    \coordinate (A) at (\lOA, 0);
+    \draw[thick] (A) circle (\rd);
+    \foreach \ang in {180, 60, -60} {
+      \draw[thick, fill=white]
+        ($(A)+({\ang-6}:\rd)$) -- ($(A)+(\ang:\htip)$) -- ($(A)+({\ang+6}:\rd)$) -- cycle;
+    }
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 44.2}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.53\textwidth}
+所以刀尖 $M$ 在工件的平面上画出一个椭圆（图 44.2）。这个椭圆的短半轴 $l-h$ 远远小于长半轴 $l+h$，因而又扁又长，所以这椭圆靠近中心 $O$ 的两小段弧非常接近于一对平行直线上的线段，可作为正六边形的一双对边。三把互相错开 $120^\circ$ 的车刀，画出三个互相错开 $60^\circ$ 的很扁的椭圆，恰好提供了正六边形的三双对边。
+\end{minipage}

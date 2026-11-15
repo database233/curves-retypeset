@@ -1,0 +1,81 @@
+\section{女数学家对曲线的贡献}
+\markboth{98. 女数学家对曲线的贡献}{98. 女数学家对曲线的贡献}
+
+玛丽·安妮西（1718～1799）是一位意大利的女数学家，她曾经研究过一种曲线，叫做箕舌线，定义如下：
+
+\par\medskip\noindent
+\begin{minipage}[c]{0.46\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.98]
+    % 箕舌线 y = a^3 / (x^2 + a^2), 取 a = 1.25
+    \def\a{1.25}
+    % 坐标轴
+    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (-1.85,0) -- (1.85,0);
+    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (0,-0.25) -- (0,1.65);
+
+    % 直线 y = a
+    \draw[line width=0.6pt] (-1.75,\a) -- (1.75,\a);
+    % 圆 x^2 + y^2 = a y
+    \draw[line width=0.65pt] (0,{\a/2}) circle ({\a/2});
+    % 箕舌线
+    \draw[line width=0.9pt, curveblue, domain=-1.72:1.72, samples=120, smooth]
+      plot (\x, {\a*\a*\a/(\x*\x + \a*\a)});
+
+    % 射线 OE（斜率 k = 1.35）
+    \def\k{1.35}
+    \pgfmathsetmacro{\xE}{\a/\k}
+    \pgfmathsetmacro{\yE}{\a}
+    \pgfmathsetmacro{\xD}{\a*\k/(1+\k*\k)}
+    \pgfmathsetmacro{\yD}{\a*\k*\k/(1+\k*\k)}
+    \coordinate (O) at (0,0);
+    \coordinate (C) at (0,\a);
+    \coordinate (E) at (\xE,\yE);
+    \coordinate (D) at (\xD,\yD);
+    \coordinate (B) at (0,\yD);
+    \coordinate (M) at (\xE,\yD);
+
+    \draw[line width=0.55pt] (O) -- ($(O)!1.15!(E)$);
+    \draw[line width=0.55pt] (B) -- (M);
+    \draw[line width=0.55pt] (E) -- (M);
+
+    \fill (D) circle (1.0pt);
+    \fill (E) circle (1.0pt);
+    \fill (M) circle (1.1pt);
+
+    \node[below left=-2pt] at (O) {\footnotesize $O$};
+    \node[below=1pt] at (1.78,0) {\footnotesize $x$};
+    \node[left=1pt] at (0,1.58) {\footnotesize $y$};
+    \node[above right=-1pt] at (C) {\footnotesize $C$};
+    \node[left=1pt] at (B) {\footnotesize $B$};
+    \node[above left=0.5pt, fill=white, inner sep=0.3pt] at (D) {\footnotesize $D$};
+    \node[above=1pt] at (E) {\footnotesize $E$};
+    \node[right=1pt] at (M) {\footnotesize $M$};
+  \end{tikzpicture}
+  \par\vspace{3pt}{\footnotesize 图\ 98.1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.50\textwidth}
+  \hspace{2em}如图 98.1，从坐标原点 $O$ 任意作一直线，交圆 $x^2 + y^2 = ay$ 于点 $D$，交直线 $y = a$ 于点 $E$。过 $E$ 作直线平行于 $y$ 轴，过 $D$ 作直线平行于 $x$ 轴，所作两直线的交点为 $M$，则 $M$ 的轨迹叫做箕舌线。
+\end{minipage}
+\par\medskip
+
+设点 $M$ 的坐标为 $(x, y)$，从图 98.1 可得
+\[
+  x = BM = CE, \qquad y = OB.
+\]
+从 $\triangle OBD \backsim \triangle OCE$，得到
+\[
+  \frac{OB}{OC} = \frac{BD}{CE}.
+\]
+再注意 $OC = a$，$BD^2 = OB \cdot BC = y(a - y)$，就得到
+\[
+  \frac{y}{a} = \frac{\sqrt{y(a - y)}}{x}.
+\]
+化简后，得到箕舌线的方程是
+\[
+  y = \frac{a^3}{x^2 + a^2}.
+\]
+
+在当今世界上，可以找到很多杰出的女数学家；但是在历史上，妇女能够从事数学研究的却寥寥无几。最早的一位女数学家海帕西娅（约 370～415 年）竟然惨遭教会指使的暴徒们残酷杀害。正象海帕西娅出身于数学之家一样，玛丽·安妮西的父亲也是一位数学教授，在意大利波诺格拉大学任教。玛丽从小受到父母对她的丰富多彩的教育，但她不幸是二十一个小孩子中最年长的一个。玛丽·安妮西没有结婚，她把大部分时间用来研究数学和照顾弟弟妹妹，在母亲死后还负担着家务。她用二十年时间钻研各种文字写成的关于微积分的著作，写成两大本教材，被译成英文和法文，广泛地用作课本。
+
+应该指出，安妮西对箕舌线作了详细的研究，但她并不是这种曲线的发现者。在她以前，费马（1657）和格兰弟（1703）就已知道这种曲线。

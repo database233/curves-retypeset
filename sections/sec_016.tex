@@ -1,0 +1,178 @@
+\section{利用摆线板画摆线}
+\markboth{16. 利用摆线板画摆线}{16. 利用摆线板画摆线}
+
+如图 16.1，木板 $OAB$ 的轮廓线，在 $OA$ 部分是摆线的半拱弧，$AB$ 为拱高，用一段没有伸缩性的柔软细线绷紧在摆线弧 $\arc{OA}$ 上。
+
+现在把线的一端固定在 $O$ 点，另一端系一个小环，用笔尖套在 $A$ 端的小环里拉紧细线，并且移动笔尖，使细线从 $A$ 端开始逐渐离开摆线板而伸直，一直到整个细线刚好完全伸直为止。这时笔尖将画出图 16.1 中虚线所示的曲线弧 $\arc{AK}$。这 $\arc{AK}$ 是一条什么曲线呢？
+
+\begin{center}
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{minipage}[b]{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.80, >=Stealth, font=\footnotesize]
+        \def\r{0.92}
+        % 木板 OAB 阴影填充
+        \fill[pattern=north west lines, pattern color=mutedgray!75]
+          (0, 0) -- ({\r*pi}, 0) -- ({\r*pi}, {2*\r})
+          plot[domain=pi:0, samples=60] ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))})
+          -- cycle;
+        % 木板轮廓
+        \draw[thick] (0, 0) -- ({\r*pi}, 0) -- ({\r*pi}, {2*\r});
+        \draw[very thick, curveblue, smooth, domain=0:pi, samples=60]
+          plot ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))});
+
+        % 渐伸线 AK（虚线）
+        \draw[thick, dashed, curveblue, smooth, domain=0:pi, samples=60]
+          plot ({\r*(\x + sin(\x r))}, {2*\r + \r*(1 + cos(\x r))});
+
+        % 若干位置拉直的细线
+        \draw[thin] (0, 0) -- (0, {4*\r});
+        \fill (0, {4*\r}) circle (1.3pt);
+        \foreach \th in {0.65, 1.15, 1.65, 2.15, 2.65} {
+          \pgfmathsetmacro{\mx}{\r*(\th - sin(\th r))}
+          \pgfmathsetmacro{\my}{\r*(1 - cos(\th r))}
+          \pgfmathsetmacro{\nx}{\r*(\th + sin(\th r))}
+          \pgfmathsetmacro{\ny}{2*\r + \r*(1 + cos(\th r))}
+          \draw[thin] (\mx, \my) -- (\nx, \ny);
+          \fill (\mx, \my) circle (1.1pt);
+          \fill (\nx, \ny) circle (1.3pt);
+        }
+        \fill ({\r*pi}, {2*\r}) circle (1.3pt);
+
+        \node[below left] at (0, 0) {$O$};
+        \node[below] at ({\r*pi}, 0) {$B$};
+        \node[right] at ({\r*pi}, {2*\r}) {$A$};
+        \node[left] at (0, {4*\r}) {$K$};
+      \end{tikzpicture}
+      \captionof*{figure}{图 16.1}
+    \end{minipage}\hfill
+    \begin{minipage}[b]{0.48\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.80, >=Stealth, font=\footnotesize]
+        \def\r{0.92}
+        \def\th{1.35}
+        \pgfmathsetmacro{\mx}{\r*(\th - sin(\th r))}
+        \pgfmathsetmacro{\my}{\r*(1 - cos(\th r))}
+        \pgfmathsetmacro{\nx}{\r*(\th + sin(\th r))}
+        \pgfmathsetmacro{\ny}{2*\r + \r*(1 + cos(\th r))}
+
+        % 坐标轴
+        \draw[->] (-0.3, 0) -- ({\r*pi + 0.55}, 0) node[below] {$x$};
+        \draw[->] (0, -0.25) -- (0, {4*\r + 0.45}) node[left] {$y$};
+        \node[below left] at (0, 0) {$O$};
+
+        % 摆线 OA 与垂线 AB
+        \draw[very thick, curveblue, smooth, domain=0:pi, samples=60]
+          plot ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))});
+        \draw[thin] ({\r*pi}, 0) -- ({\r*pi}, {2*\r});
+
+        % 渐伸线 AK（虚线）
+        \draw[thick, dashed, curveblue, smooth, domain=0:pi, samples=60]
+          plot ({\r*(\x + sin(\x r))}, {2*\r + \r*(1 + cos(\x r))});
+
+        % 切线 MN 与水平线
+        \coordinate (M) at (\mx, \my);
+        \coordinate (N) at (\nx, \ny);
+        \coordinate (H) at ({\mx + 1.0}, \my);
+        \draw[thick] (M) -- (N);
+        \draw[dashed, mutedgray] (M) -- (H);
+        \pic[draw, angle radius=0.42cm, angle eccentricity=1.35, "\scriptsize$\alpha$"] {angle=H--M--N};
+
+        % 点与标注
+        \fill (M) circle (1.3pt) node[below right, xshift=-2pt, yshift=-1pt] {$M$};
+        \fill (N) circle (1.3pt) node[above right, inner sep=1.5pt] {$N$};
+        \fill ({\r*pi}, {2*\r}) circle (1.3pt) node[right] {$A$};
+        \fill ({\r*pi}, 0) circle (1.3pt) node[below] {$B$};
+        \fill (0, {4*\r}) circle (1.3pt) node[left] {$K$};
+      \end{tikzpicture}
+      \captionof*{figure}{图 16.2}
+    \end{minipage}
+  \end{minipage}
+\end{center}
+
+如图 16.2 选取坐标系，半拱摆线弧 $\arc{OA}$ 的方程是
+\[
+  x = r(\theta - \sin\theta),\quad y = r(1 - \cos\theta),
+\]
+其中 $0 \leqslant \theta \leqslant \pi$。设当笔尖从 $A$ 移到点 $N(X, Y)$ 时，细线被拉直的部分是 $MN$，弯曲部分是 $\arc{OM}$，这时 $M(x, y)$ 是摆线上的点，$MN$ 是摆线的切线，并且线段 $MN$ 的长度等于摆线弧 $\arc{MA}$ 的弧长 $s$。设切线 $MN$ 与 $x$ 轴的夹角为 $\alpha$，则因为 $\overrightarrow{ON} = \overrightarrow{OM} + \overrightarrow{MN}$，所以 $N$ 点的坐标为
+\begin{gather*}
+  X = x + MN\cos\alpha, \\
+  Y = y + MN\sin\alpha,
+\end{gather*}
+并且
+\begin{align*}
+  \tg\alpha &= \frac{dy}{dx} = \frac{y'\dd\theta}{x'\dd\theta} = \frac{r\sin\theta}{r(1 - \cos\theta)} \\
+            &= \ctg\frac{\theta}{2} = \tg\left(\frac{\pi}{2} - \frac{\theta}{2}\right), \\
+  \therefore\ \alpha &= \frac{\pi}{2} - \frac{\theta}{2};
+\end{align*}
+\begin{align*}
+  MN &= s = \int_{\theta}^{\pi} \sqrt{x'^2 + y'^2}\dd\theta \\
+     &= \int_{\theta}^{\pi} \sqrt{r^2(1 - \cos\theta)^2 + r^2\sin^2\theta}\dd\theta \\
+     &= \int_{\theta}^{\pi} 2r\sin\frac{\theta}{2}\dd\theta
+      = \left.-4r\cos\frac{\theta}{2}\right|_{\theta}^{\pi} = 4r\cos\frac{\theta}{2}.
+\end{align*}
+
+综合上列各式，得到
+\begin{align*}
+  X &= r(\theta - \sin\theta) + 4r\cos\frac{\theta}{2}\cos\left(\frac{\pi}{2} - \frac{\theta}{2}\right) \\
+    &= r(\theta - \sin\theta) + 4r\cos\frac{\theta}{2}\sin\frac{\theta}{2} \\
+    &= r(\theta - \sin\theta) + 2r\sin\theta \\
+    &= r(\theta + \sin\theta),
+\end{align*}
+\begin{align*}
+  Y &= r(1 - \cos\theta) + 4r\cos\frac{\theta}{2}\sin\left(\frac{\pi}{2} - \frac{\theta}{2}\right) \\
+    &= r(1 - \cos\theta) + 4r\cos^2\frac{\theta}{2} \\
+    &= r(1 - \cos\theta) + 2r(1 + \cos\theta) \\
+    &= 2r + r(1 + \cos\theta).
+\end{align*}
+
+下面我们来证明 $N$ 点的轨迹也是摆线。令
+\[
+  \theta = \theta_1 + \pi,\quad (0 \leqslant \theta \leqslant \pi)
+\]
+$N$ 点的坐标 $X$ 和 $Y$ 化为
+\[
+  X = \pi r + r(\theta_1 - \sin\theta_1),\quad Y = 2r + r(1 - \cos\theta_1).
+\]
+把坐标原点平移到点 $(\pi r, 2r)$（图 16.3），则点 $(X, Y)$ 在新坐标系中的坐标 $(X', Y')$ 由下式决定：
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.76, >=Stealth, font=\footnotesize]
+    \def\r{0.86}
+    % 原坐标系
+    \draw[->] (-0.35, 0) -- ({\r*pi + 0.55}, 0) node[below] {$x$};
+    \draw[->] (0, -0.25) -- (0, {4*\r + 0.45}) node[left] {$y$};
+    \node[below left] at (0, 0) {$O$};
+
+    % 新坐标系（平移到 A）
+    \draw[dashed] (-0.25, {2*\r}) -- ({\r*pi}, {2*\r});
+    \draw[->, dashed] ({\r*pi}, {2*\r}) -- ({\r*pi + 0.72}, {2*\r}) node[below] {$x'$};
+    \draw[dashed] ({\r*pi}, 0) -- ({\r*pi}, {2*\r});
+    \draw[->, dashed] ({\r*pi}, {2*\r}) -- ({\r*pi}, {4*\r + 0.45}) node[left] {$y'$};
+
+    % 曲线 OA 与 AK
+    \draw[very thick, curveblue, smooth, domain=0:pi, samples=60]
+      plot ({\r*(\x - sin(\x r))}, {\r*(1 - cos(\x r))});
+    \draw[thick, dashed, curveblue, smooth, domain=0:pi, samples=60]
+      plot ({\r*(\x + sin(\x r))}, {2*\r + \r*(1 + cos(\x r))});
+
+    \fill ({\r*pi}, {2*\r}) circle (1.3pt) node[above right, inner sep=1.5pt] {$A$};
+    \fill ({\r*pi}, 0) circle (1.3pt) node[below] {$B$};
+    \fill (0, {4*\r}) circle (1.3pt) node[left] {$K$};
+  \end{tikzpicture}
+  \captionof*{figure}{图 16.3}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \[
+    X' = X - \pi r,\quad Y' = Y - 2r.
+  \]
+  因而曲线弧 $\arc{AK}$ 在新坐标系中的方程是
+  \begin{gather*}
+    X' = r(\theta_1 - \sin\theta_1), \\
+    Y' = r(1 - \cos\theta_1),
+  \end{gather*}
+  其中 $-\pi \leqslant \theta_1 \leqslant 0$。这说明 $\arc{AK}$ 也是摆线的半拱弧，并且其拱高与原摆线 $\arc{OA}$ 的拱高相等，都是 $2r$，区别只在于 $\arc{OA}$ 是前半拱，$\arc{KA}$ 是后半拱，并且位置不同。
+\end{minipage}

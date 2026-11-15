@@ -1,0 +1,173 @@
+\section{双曲线和双曲线函数}
+\markboth{80. 双曲线和双曲线函数}{80. 双曲线和双曲线函数}
+
+我们知道，单位圆的直角坐标方程可写成
+\[
+  x^2 + y^2 = 1,
+\]
+利用三角函数，可以化成参数方程
+\[
+  x = \cos\theta,\quad y = \sin\theta.
+\]
+现在考虑“单位”双曲线
+\[
+  x^2 - y^2 = 1,
+\]
+对于它在 $y$ 轴右方的一支有 $x>0$，可化为参数方程
+\[
+  x = \frac{e^u+e^{-u}}{2},\quad y = \frac{e^u-e^{-u}}{2},
+\]
+其中 $e$ 是自然对数的底，$u$ 是参数。容易验证这时确有
+\[
+  x^2 - y^2 = \left(\frac{e^u+e^{-u}}{2}\right)^2 - \left(\frac{e^u-e^{-u}}{2}\right)^2 = 1,
+\]
+因而当 $u$ 取一切实数值时，得到这双曲线的整个右支。与单位圆的情形相对应，我们记
+\[
+  \ch u = \frac{e^u+e^{-u}}{2},\quad \sh u = \frac{e^u-e^{-u}}{2},
+\]
+就能把“单位”双曲线 $x^2-y^2=1$ 的右支表示成参数方程
+\[
+  x = \ch u,\quad y = \sh u.
+\]
+函数 $\ch u$ 叫做 $u$ 的双曲线余弦，简称为双曲余弦；$\sh u$ 叫做 $u$ 的双曲线正弦，简称双曲正弦。双曲正弦与双曲余弦的商叫做双曲正切，记为 $\thyp u$：
+\[
+  \thyp u = \frac{\sh u}{\ch u} = \frac{e^u-e^{-u}}{e^u+e^{-u}}.
+\]
+双曲正切的倒数叫做双曲余切，记为 $\cth u$：
+\[
+  \cth u = \frac{1}{\thyp u} = \frac{\ch u}{\sh u} = \frac{e^u+e^{-u}}{e^u-e^{-u}}.
+\]
+此外还有双曲正割 $\operatorname{sech} u$，双曲余割 $\operatorname{csch} u$，分别定义为
+\[
+  \operatorname{sech} u = \frac{1}{\ch u};\quad \operatorname{csch} u = \frac{1}{\sh u}.
+\]
+上面引进的六个函数 $\sh u$、$\ch u$、$\thyp u$、$\cth u$、$\operatorname{sech} u$ 和 $\operatorname{csch} u$ 都与双曲线联系在一起，所以统称为双曲线函数。它们分别对应于六个三角函数 $\sin\theta$、$\cos\theta$、$\tg\theta$、$\ctg\theta$、$\sec\theta$ 和 $\csc\theta$。
+
+\noindent
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}我们记得，三角函数可以利用单位圆作出简单的几何解释。如图 80.1，设 $M(x,y)$ 是单位圆上的任意点，$A$ 是单位圆与 $x$ 轴正半轴的交点，$AT$ 是圆的切线，交直线 $OM$ 于 $T$，$MN\perp OA$，$\angle AOM=\theta$，则有
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.44\textwidth}
+  \vspace{2pt}
+  \centering
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    \def\r{1.15}
+    \def\th{46}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\r, 0);
+    \coordinate (M) at ({\r*cos(\th)}, {\r*sin(\th)});
+    \coordinate (N) at ({\r*cos(\th)}, 0);
+    \coordinate (T) at (\r, {\r*tan(\th)});
+
+    \draw[->] (-1.45, 0) -- (1.65, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.45) -- (0, 1.55) node[left, font=\scriptsize] {$y$};
+
+    % 单位圆
+    \draw[very thick, curveblue] (O) circle (\r);
+
+    % 切线 AT, 射线 OT, 垂线 MN
+    \draw (A) -- (T);
+    \draw (O) -- (T);
+    \draw (M) -- (N);
+
+    % 角度 theta
+    \draw (0.32, 0) arc (0:\th:0.32);
+    \node[font=\scriptsize] at (23:0.46) {$\theta$};
+
+    \node[below left=0pt, font=\scriptsize] at (O) {$O$};
+    \node[below right=-1pt, font=\scriptsize] at (A) {$A$};
+    \node[below=1pt, font=\scriptsize] at (N) {$N$};
+    \fill (M) circle (1.3pt);
+    \node[font=\scriptsize] at ($(M)+(128:0.18)$) {$M$};
+    \fill (T) circle (1.3pt) node[above right=-1pt, font=\scriptsize] {$T$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 80.1}
+\end{minipage}
+\begin{gather*}
+  ON = x = \cos\theta,\quad NM = y = \sin\theta, \\*
+  AT = \frac{OA}{ON}\cdot NM = \frac{y}{x} = \tg\theta,
+\end{gather*}
+由于圆半径 $r=1$，所以如果用 $S$ 表示扇形 $OAM$ 的面积，那么当角的度量单位采用弧度制时，得到
+\begin{gather*}
+  S = \frac{1}{2}r^2\theta = \frac{\theta}{2}, \\
+  \therefore\quad \theta = 2S.
+\end{gather*}
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+  \vspace{2pt}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    \def\u{0.92}
+    \pgfmathsetmacro{\xm}{cosh(\u)}
+    \pgfmathsetmacro{\ym}{sinh(\u)}
+    \pgfmathsetmacro{\yt}{tanh(\u)}
+
+    \draw[->] (-0.45, 0) -- (2.15, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.65) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
+
+    % 渐近线 y = +/- x
+    \draw[densely dashed] (-0.40, -0.40) -- (1.72, 1.72);
+    \draw[densely dashed] (-0.40, 0.40) -- (1.72, -1.72);
+
+    % 单位双曲线右支 x = cosh(t), y = sinh(t)
+    \draw[very thick, curveblue, domain=-1.28:1.28, samples=120, variable=\t]
+      plot ({cosh(\t)}, {sinh(\t)});
+
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (1, 0);
+    \coordinate (M) at (\xm, \ym);
+    \coordinate (N) at (\xm, 0);
+    \coordinate (T) at (1, \yt);
+
+    \draw (A) -- (T);
+    \draw (O) -- (M);
+    \draw (M) -- (N);
+
+    \node[fill=white, inner sep=0.3pt, font=\scriptsize] at (248:0.24) {$O$};
+    \node[below left=0.5pt, font=\scriptsize] at (A) {$A$};
+    \node[below=1pt, font=\scriptsize] at (N) {$N$};
+    \fill (M) circle (1.3pt) node[right=1pt, font=\scriptsize] {$M$};
+    \fill (T) circle (1.3pt) node[above left=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$T$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 80.2}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}现在把单位圆换成“单位”双曲线 $x^2-y^2=1$。如图 80.2，对于双曲线右支上的点 $M$，采用与上面对应的记号，可得
+  \begin{gather*}
+    ON = x = \ch u,\quad NM = y = \sh u, \\
+    AT = \frac{OA}{ON}\cdot NM = \frac{\sh u}{\ch u} = \thyp u.
+  \end{gather*}
+  \hspace*{2em}由此可见，双曲线函数 $\sh u$、$\ch u$ 和 $\thyp u$ 都可以简单地表示成与双曲线有关的一些线段。
+\end{minipage}
+
+为了说明 $u$ 的几何意义，我们考虑图 80.2 中由双曲线弧 $\arc{AM}$ 和线段 $OA$、$OM$ 围成的双曲线扇形 $OAM$ 的面积 $S$。又用 $S_1$ 表示直角三角形 $ONM$ 的面积，$S_2$ 表示曲边梯形 $AMN$ 的面积，则有
+\[
+  S = S_1 - S_2.
+\]
+现在分别算出 $S_1$ 和 $S_2$。
+\begin{align*}
+  S_1 &= \frac{1}{2}ON\cdot NM = \frac{1}{2}\left(\frac{e^u+e^{-u}}{2}\right)\left(\frac{e^u-e^{-u}}{2}\right) \\
+      &= \frac{e^{2u}-e^{-2u}}{8}; \\
+  S_2 &= \int_1^x y\dd x = \int_0^u \frac{e^u-e^{-u}}{2}\dd\left(\frac{e^u+e^{-u}}{2}\right) \\
+      &= \int_0^u \frac{e^u-e^{-u}}{2}\cdot\frac{e^u-e^{-u}}{2}\dd u \\
+      &= \frac{1}{4}\int_0^u (e^{2u}+e^{-2u}-2)\dd u \\
+      &= \left.\frac{1}{4}\left(\frac{e^{2u}}{2}-\frac{e^{-2u}}{2}-2u\right)\right|_0^u = \frac{e^{2u}-e^{-2u}}{8} - \frac{u}{2}.
+\end{align*}
+\[
+  \therefore\quad S = S_1 - S_2 = \frac{u}{2},\quad \therefore\quad u = 2S.
+\]
+这就是说，$u$ 表示双曲线扇形 $OAM$ 的面积的 $2$ 倍，这也是与三角函数的情形完全对应的。
+
+容易验证，双曲线函数具有许多类似于三角函数的简单性质，例如
+\begin{gather*}
+  \sh(-u) = -\sh u,\quad \ch(-u) = \ch u, \\
+  \ch^2 u - \sh^2 u = 1, \\
+  (\sh u)' = \ch u,\quad (\ch u)' = \sh u, \\
+  \int\ch u\dd u = \sh u + C,\quad \int\sh u\dd u = \ch u + C,
+\end{gather*}
+等等。双曲线函数是一类非常有用的函数。

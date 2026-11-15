@@ -1,0 +1,111 @@
+\section{滚珠荡秋千}
+\markboth{15. 滚珠荡秋千}{15. 滚珠荡秋千}
+
+图 15.1 中有一块钢板，钢板上方有一条光滑的摆线槽。取一粒适当大小的滚珠，放在这摆线槽中的任意位置，例如图中的 $M$ 处。当捏着滚珠的手指松开以后，滚珠就会像荡秋千一样，沿着摆线槽来回摆动。试选择不同的 $M$ 点放开滚珠，并注意观察滚珠连续两次通过摆线槽最低点 $K$ 的间隔时间，你就会发现一个奇怪的现象：尽管 $M$ 点的高低不同，但是滚珠每来回摆动一次所花的时间竟没有变！这个性质叫做摆线的等时性，是十七世纪荷兰物理学家惠更斯发现的。
+
+\begin{center}
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.85, >=Stealth, font=\footnotesize]
+      % 摆线尺度 r = 0.90, theta in [0, 2*pi]
+      \def\r{0.90}
+      \pgfmathsetmacro{\w}{2*pi*\r}
+      \pgfmathsetmacro{\ybot}{-2*\r - 0.55}
+      \pgfmathsetmacro{\xL}{-0.55}
+      \pgfmathsetmacro{\xR}{\w + 0.55}
+
+      % M (theta0 = 0.95 rad) 与 N (theta = 1.72 rad)
+      \def\tM{0.95}
+      \def\tN{1.72}
+      \pgfmathsetmacro{\xM}{\r*(\tM - sin(\tM r))}
+      \pgfmathsetmacro{\yM}{-\r*(1 - cos(\tM r))}
+      \pgfmathsetmacro{\xN}{\r*(\tN - sin(\tN r))}
+      \pgfmathsetmacro{\yN}{-\r*(1 - cos(\tN r))}
+      % 滚珠圆心沿内法线偏移半径 rb = 0.11
+      \def\rb{0.11}
+      \pgfmathsetmacro{\nxM}{cos(\tM/2 r)}
+      \pgfmathsetmacro{\nyM}{sin(\tM/2 r)}
+      \pgfmathsetmacro{\nxN}{cos(\tN/2 r)}
+      \pgfmathsetmacro{\nyN}{sin(\tN/2 r)}
+
+      % 钢板剖面阴影填充（摆线槽下方）
+      \fill[pattern=north east lines, pattern color=mutedgray!75]
+        (\xL, 0) -- (0, 0)
+        plot[domain=0:{2*pi}, samples=90] ({\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))})
+        -- (\w, 0) -- (\xR, 0) -- (\xR, \ybot) -- (\xL, \ybot) -- cycle;
+
+      % 钢板外框与摆线槽轮廓
+      \draw[thick] (\xL, \ybot) rectangle (\xR, 0);
+      \draw[very thick, curveblue, smooth, domain=0:{2*pi}, samples=90]
+        plot ({\r*(\x - sin(\x r))}, {-\r*(1 - cos(\x r))});
+      % 槽顶白底覆盖上边框线
+      \draw[white, line width=1.4pt] (0.02, 0) -- ({\w - 0.02}, 0);
+
+      % 坐标轴
+      \draw[->] (\xL, 0) -- ({\xR + 0.55}, 0) node[below] {$x$};
+      \draw[->] (0, 0.25) -- (0, {\ybot - 0.2}) node[below left, fill=white, inner sep=1pt] {$y$};
+      \node[above left] at (0, 0) {$O$};
+
+      % 滚珠（置于 M 和 N 处）
+      \filldraw[fill=white, draw=black, thick] ({\xM + \rb*\nxM}, {\yM + \rb*\nyM}) circle (\rb);
+      \filldraw[fill=white, draw=black, thick] ({\xN + \rb*\nxN}, {\yN + \rb*\nyN}) circle (\rb);
+      \node[above right, inner sep=1.5pt] at ({\xM + \rb*\nxM + 0.04}, {\yM + \rb*\nyM + 0.02}) {$M$};
+      \node[above right, inner sep=1.5pt] at ({\xN + \rb*\nxN + 0.04}, {\yN + \rb*\nyN + 0.02}) {$N$};
+
+      % 最低点 K
+      \fill ({\r*pi}, {-2*\r}) circle (1.3pt);
+      \node[below, fill=white, inner sep=1.5pt, yshift=-2pt] at ({\r*pi}, {-2*\r}) {$K$};
+
+      % 左侧高度标注 y0, y
+      \draw[dashed, mutedgray] (-1.40, 0) -- (\xL, 0);
+      \draw[dashed, mutedgray] (-0.82, \yM) -- (\xM, \yM);
+      \draw[dashed, mutedgray] (-1.40, \yN) -- (\xN, \yN);
+      \draw[<->, thin] (-0.75, 0) -- (-0.75, \yM) node[midway, left, inner sep=1.5pt] {$y_0$};
+      \draw[<->, thin] (-1.32, 0) -- (-1.32, \yN) node[midway, left, inner sep=1.5pt] {$y$};
+    \end{tikzpicture}
+    \captionof*{figure}{图 15.1}
+  \end{minipage}
+\end{center}
+
+摆线的等时性可证明如下。如图 15.1 选取坐标系，摆线槽的曲线方程可以写成
+\[
+  x = r(\theta - \sin\theta),\quad y = r(1 - \cos\theta).\quad (0 \leqslant \theta \leqslant 2\pi)
+\]
+摆线槽最低点 $K$ 的参数值是 $\theta = \pi$。设滚珠的初始位置 $M(x_0, y_0)$ 的参数值是 $\theta_0$，它在 $M$ 处时的速度为 $0$。又设滚珠沿摆线槽滚到 $N(x, y)$ 处时，离底面的高度下降了 $h$，那么
+\begin{align*}
+  h &= y - y_0 = r(1 - \cos\theta) - r(1 - \cos\theta_0) \\
+    &= r(\cos\theta_0 + 1 - \cos\theta - 1) \\
+    &= 2r\left(\cos^2\frac{\theta_0}{2} - \cos^2\frac{\theta}{2}\right).
+\end{align*}
+设滚珠的质量为 $m$，在 $N$ 处的速度大小为 $v$，由于滚珠从 $M$ 下降到 $N$ 所减少的势能 $mgh$ 全部转化成动能 $\frac{1}{2}mv^2$（我们假定滚动是无阻尼的），从而得到 $mgh = \frac{1}{2}mv^2$，即
+\[
+  v = \sqrt{2gh}.
+\]
+
+另一方面，速度 $v$ 等于弧长 $s$ 对时间 $t$ 的导数，所以
+\begin{align*}
+  v &= \frac{ds}{dt} = \frac{\sqrt{x'^2 + y'^2}\dd\theta}{dt} \\
+    &= \sqrt{r^2(1 - \cos\theta)^2 + r^2\sin^2\theta}\,\frac{d\theta}{dt} \\
+    &= \sqrt{2r^2(1 - \cos\theta)}\,\frac{d\theta}{dt} \\
+    &= 2r\sin\frac{\theta}{2} \cdot \frac{d\theta}{dt}.
+\end{align*}
+综合上列各式，得到
+\begin{gather*}
+  \frac{2r\sin\frac{\theta}{2}\dd\theta}{dt} = \sqrt{4gr\left(\cos^2\frac{\theta_0}{2} - \cos^2\frac{\theta}{2}\right)}, \\
+  \therefore\ dt = \frac{\sqrt{r}\sin\frac{\theta}{2}\dd\theta}{\sqrt{g\left(\cos^2\frac{\theta_0}{2} - \cos^2\frac{\theta}{2}\right)}}.
+\end{gather*}
+对于上式从 $\theta = \theta_0$ 到 $\theta = \pi$ 积分，就得到滚珠从 $M$ 滚到 $K$ 所需的时间是
+\begin{align*}
+  T &= \int_{\theta_0}^{\pi} \frac{\sqrt{r}\sin\frac{\theta}{2}\dd\theta}{\sqrt{g\left(\cos^2\frac{\theta_0}{2} - \cos^2\frac{\theta}{2}\right)}} \\
+    &= -2\sqrt{\frac{r}{g}} \int_{\theta_0}^{\pi} \frac{d\left(\cos\frac{\theta}{2}\right)}{\sqrt{\cos^2\frac{\theta_0}{2} - \cos^2\frac{\theta}{2}}}.
+\end{align*}
+令 $\cos\frac{\theta_0}{2} = a$，$\cos\frac{\theta}{2} = u$，并且利用
+\[
+  \int \frac{du}{\sqrt{a^2 - u^2}} = \arcsin\frac{u}{a} + C,
+\]
+可得
+\begin{align*}
+  T &= \left.-2\sqrt{\frac{r}{g}}\arcsin\frac{\cos\frac{\theta}{2}}{\cos\frac{\theta_0}{2}}\right|_{\theta_0}^{\pi} \\
+    &= -2\sqrt{\frac{r}{g}}(\arcsin 0 - \arcsin 1) = \pi\sqrt{\frac{r}{g}}.
+\end{align*}
+上面的计算结果表明，滚珠从初始位置 $M$ 下降到摆线槽最低点所用的时间是常数 $\pi\sqrt{\frac{r}{g}}$，与初始位置无关。因而不论摆动幅度大小，滚珠沿摆线槽每来回摆动一次所用的时间都是 $4\pi\sqrt{\frac{r}{g}}$。

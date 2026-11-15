@@ -1,0 +1,147 @@
+\section{利用微分三角形求曲线的弧长}
+\markboth{12. 利用微分三角形求曲线的弧长}{12. 利用微分三角形求曲线的弧长}
+
+在讨论曲线的性质和应用时，很多问题都与曲线的弧长有关，这时可以利用下面介绍的微分三角形。
+
+如图 12.1，设 $M(x, y)$ 是曲线 $\Gamma$ 上的任意点，$N(x + dx, y + \Delta y)$ 是曲线 $\Gamma$ 上靠近 $M$ 的点。为了看得清楚，图中把 $N$ 与 $M$ 之间的距离有意画大了。又设图中 $NP$ 平行于 $y$ 轴，$MP$ 平行于 $x$ 轴，$MQ$ 是曲线 $\Gamma$ 在 $M$ 点的切线，$MQ$ 与 $x$ 轴的夹角为 $\alpha$，那么从 $MP = dx$ 和
+\[
+  \tg\alpha = \frac{dy}{dx}
+\]
+可得
+\[
+  PQ = dy,\quad PN = \Delta y = dy + QN.
+\]
+
+\begin{center}
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=0.90, >=Stealth, font=\footnotesize]
+      % 坐标轴
+      \draw[->] (-0.45, 0) -- (3.65, 0) node[below left] {$x$};
+      \draw[->] (0, -0.3) -- (0, 3.15) node[below left] {$y$};
+      \node[below left] at (0, 0) {$O$};
+
+      % 曲线 Gamma: y = 0.5 + 0.30*x + 0.16*x^2
+      \draw[very thick, curveblue, smooth, domain=-0.2:2.95, samples=80]
+        plot (\x, {0.5 + 0.30*\x + 0.16*\x*\x});
+      \node[curveblue, left] at (-0.08, 0.58) {$\Gamma$};
+
+      % 关键点坐标
+      \coordinate (M) at (0.65, 0.7626);
+      \coordinate (N) at (2.65, 2.4186);
+      \coordinate (P) at (2.65, 0.7626);
+      \coordinate (Q) at (2.65, 1.7786);
+      \coordinate (C) at (0.65, 0);
+      \coordinate (D) at (2.65, 0);
+      \coordinate (T) at (3.00, {0.7626 + 0.508*(3.00 - 0.65)});
+
+      % 辅助垂线与水平线
+      \draw[dashed, mutedgray] (M) -- (C) node[below, black] {$C$};
+      \draw[dashed, mutedgray] (P) -- (D) node[below, black] {$D$};
+      \draw[thin] (M) -- (P);
+      \draw[thin] (P) -- (N);
+
+      % 切线 MQ（略微延长）
+      \draw[thick] (M) -- (T);
+
+      % 直角标记
+      \draw ($(P)+(-0.15,0)$) -- ($(P)+(-0.15,0.15)$) -- ($(P)+(0,0.15)$);
+
+      % 夹角 alpha
+      \pic[draw, angle radius=0.44cm, angle eccentricity=1.35, "\scriptsize$\alpha$"] {angle=P--M--Q};
+
+      % 点标记
+      \fill (M) circle (1.4pt) node[above left, inner sep=1.5pt] {$M$};
+      \fill (N) circle (1.4pt) node[left, inner sep=2pt] {$N$};
+      \fill (P) circle (1.4pt) node[right, inner sep=1.5pt] {$P$};
+      \fill (Q) circle (1.4pt) node[below right, xshift=-1pt, yshift=1pt] {$Q$};
+
+      % 边长与增量标注
+      \node[below] at ($(M)!0.5!(P)$) {$dx$};
+      \node[left] at ($(P)!0.5!(Q)$) {$dy$};
+      \node[below right, inner sep=1pt] at ($(M)!0.5!(Q)$) {$ds$};
+      \node[above left, inner sep=2pt] at (1.55, 1.48) {$\Delta s$};
+
+      % 右侧大括号标注 Delta y
+      \draw[decorate, decoration={brace, amplitude=4.5pt, raise=16pt}]
+        (N) -- (P) node[midway, right=22pt] {$\Delta y$};
+    \end{tikzpicture}
+    \captionof*{figure}{图 12.1}
+  \end{minipage}
+\end{center}
+
+当 $dx$ 非常小时，$QN$ 比 $dy$ 小得多，可以忽略，这时可以近似地认为 $N$ 点与 $Q$ 点重合。相应地，一小段曲线弧 $\arc{MN}$ 可以近似看成切线上的对应线段 $MQ$。用 $\Delta s$ 表示弧 $\arc{MN}$ 的长度，$ds$ 表示线段 $MQ$ 的长度，那么当 $dx$ 非常小时就有
+\[
+  \Delta y \approx dy,\quad \Delta s \approx ds.
+\]
+因而，正像 $dy$ 叫做 $y$ 的微分一样，$ds$ 叫做弧长 $s$ 的微分。对于直角三角形 $MPQ$，应用勾股定理得到
+\[
+  (ds)^2 = (dx)^2 + (dy)^2.
+\]
+通常把上式简写成
+\[
+  ds^2 = dx^2 + dy^2,
+\]
+
+\noindent
+\begin{minipage}[c]{0.38\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.76, font=\footnotesize]
+    \coordinate (M) at (0, 0);
+    \coordinate (P) at (3.0, 0);
+    \coordinate (N) at (3.0, 1.95);
+
+    \draw[thick] (M) -- (P) -- (N);
+    \draw[very thick, curveblue] (M) -- (N);
+
+    % 直角标记
+    \draw ($(P)+(-0.18,0)$) -- ($(P)+(-0.18,0.18)$) -- ($(P)+(0,0.18)$);
+    % 夹角 alpha
+    \pic[draw, angle radius=0.45cm, angle eccentricity=1.35, "\scriptsize$\alpha$"] {angle=P--M--N};
+
+    % 顶点与边标注
+    \node[below left] at (M) {$M$};
+    \node[below right] at (P) {$P$};
+    \node[above right] at (N) {$N$};
+    \node[below] at ($(M)!0.5!(P)$) {$dx$};
+    \node[right] at ($(P)!0.5!(N)$) {$dy$};
+    \node[above left] at ($(M)!0.5!(N)$) {$ds$};
+  \end{tikzpicture}
+  \captionof*{figure}{图 12.2}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.58\textwidth}
+  \noindent 并且把线段 $MQ$ 画成与曲线弧 $\arc{MN}$ 重合在一起，使图 12.1 简化成图 12.2 的形状。图 12.2 中由微分 $dx$、$dy$ 和 $ds$ 组成的直角三角形就叫做微分三角形。微分三角形很容易记住，并且从它立刻可写出
+  \[
+    ds = \sqrt{dx^2 + dy^2}.
+  \]
+\end{minipage}
+
+$ds$ 只不过是一小段弧长。再将 $ds$ 积分，就能求出弧长 $s$ 了。具体说来，如果曲线是由参数方程 $x = \varphi(\theta)$，$y = f(\theta)$ 给出的，用撇号表示对参数 $\theta$ 的导数，那么
+\[
+  ds = \sqrt{(x'\dd\theta)^2 + (y'\dd\theta)^2} = \sqrt{x'^2 + y'^2}\dd\theta,
+\]
+因而曲线在 $\theta = \theta_1$ 和 $\theta = \theta_2$ 的两点间的弧长是
+\[
+  s = \int_{\theta_1}^{\theta_2} \sqrt{x'^2 + y'^2}\dd\theta.
+\]
+
+直角坐标方程 $y = f(x)$ 可看成参数方程的特例，这时参数 $\theta = x$，因而 $x' = 1$，曲线在 $x = x_1$ 和 $x = x_2$ 的两点间的弧长是
+\[
+  s = \int_{x_1}^{x_2} \sqrt{1 + y'^2}\dd x.
+\]
+
+作为例子，我们现在来求摆线一拱的长。摆线方程是
+\[
+  x = r(\theta - \sin\theta),\quad y = r(1 - \cos\theta).\quad (0 \leqslant \theta \leqslant 2\pi)
+\]
+由此得到摆线一拱的弧长是
+\begin{align*}
+  s &= \int_{0}^{2\pi} \sqrt{x'^2 + y'^2}\dd\theta \\
+    &= \int_{0}^{2\pi} \sqrt{r^2(1 - \cos\theta)^2 + r^2\sin^2\theta}\dd\theta \\
+    &= \int_{0}^{2\pi} r\sqrt{1 - 2\cos\theta + \cos^2\theta + \sin^2\theta}\dd\theta \\
+    &= \int_{0}^{2\pi} r\sqrt{2(1 - \cos\theta)}\dd\theta
+     = \int_{0}^{2\pi} r\sqrt{4\sin^2\frac{\theta}{2}}\dd\theta \\
+    &= 2r\int_{0}^{2\pi} \sin\frac{\theta}{2}\dd\theta
+     = \left.-4r\cos\frac{\theta}{2}\right|_{0}^{2\pi} = 8r.
+\end{align*}
+由于摆线的拱高是 $2r$，所以摆线一拱的弧长恰好是拱高的 $4$ 倍。

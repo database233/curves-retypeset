@@ -1,0 +1,123 @@
+\section{柴油机与垂足曲线}
+\markboth{32. 柴油机与垂足曲线}{32. 柴油机与垂足曲线}
+
+为了说明在柴油机中怎样巧妙地利用曲线的性质，需要简短地回顾几项已经知道的事实：第一，当机器中的某个部件需要以很快的节奏作往返直线运动时，为了在改变运动方向时减小撞击力，最好使它的位移按余弦规律变化（第 23 节）；第二，对于帕斯卡蜗线 $\rho=2r\cos\theta+l$（第 30 节），当极角 $\theta$ 随时间匀速变化时，极半径 $\rho$ 按余弦规律变化；第三，圆 $O$ 关于任意点 $F$ 的垂足曲线是帕斯卡蜗线，只有当点 $F$ 与圆心 $O$ 重合时，垂足曲线仍为圆 $O$（第 31 节）。
+
+我们知道，柴油发动机工作情形是周而复始的，每个周期由进气、压缩、做功、排气四个步骤组成，这四步叫做四个冲程。为了保证这四个冲程能顺次衔接，循环不已，柴油机的进气阀门和排气阀门必须按一定规律周期性地定时开闭。阀门打开或关闭，是靠一根挺杆沿直线往返运动，从而顶起或放下阀门。由于柴油机转速很快，所以为了减小撞击力，挺杆沿直线往返运动时的行程最好能按余弦规律变化。在柴油机中利用如图 32.1 所示的凸轮来控制挺杆的运动。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.05, line cap=round, line join=round]
+      % 四段光滑圆弧凸轮几何参数
+      \def\rO{0.68}
+      \def\dM{1.42}
+      \def\th{12}
+      \def\hP{0.62}
+      \pgfmathsetmacro{\Mx}{-\dM*cos(\th)}
+      \pgfmathsetmacro{\My}{-\dM*sin(\th)}
+      \pgfmathsetmacro{\RM}{\dM + \rO}
+      \pgfmathsetmacro{\phiD}{atan2(\hP - \My, -\Mx)}
+      \pgfmathsetmacro{\MP}{veclen(-\Mx, \hP - \My)}
+      \pgfmathsetmacro{\RP}{\RM - \MP}
+
+      \coordinate (O) at (0,0);
+      \coordinate (B) at (0, -\rO);
+      \coordinate (P) at (0, \hP);
+      \coordinate (E) at (0, \hP + \RP);
+      \coordinate (M) at (\Mx, \My);
+      \coordinate (N) at (-\Mx, \My);
+      \coordinate (C) at ({\rO*cos(\th)}, {\rO*sin(\th)});
+      \coordinate (A) at ({-\rO*cos(\th)}, {\rO*sin(\th)});
+      \coordinate (D) at ({\Mx + \RM*cos(\phiD)}, {\My + \RM*sin(\phiD)});
+      \coordinate (F) at ({-\Mx - \RM*cos(\phiD)}, {\My + \RM*sin(\phiD)});
+
+      % 凸轮四段圆弧轮廓
+      \draw[very thick, curveblue]
+        (A) arc ({180-\th}:{360+\th}:\rO)
+        arc (\th:\phiD:\RM)
+        arc (\phiD:{180-\phiD}:\RP)
+        arc ({180-\phiD}:{180-\th}:\RM);
+
+      % 虚线辅助射线
+      \draw[densely dashed] (B) -- (E);
+      \draw[densely dashed] (M) -- (C);
+      \draw[densely dashed] (N) -- (A);
+      \draw[densely dashed] (M) -- (D);
+      \draw[densely dashed] (N) -- (F);
+
+      % 各点标记
+      \fill (O) circle (1.2pt) node[left=1pt, yshift=-3pt, font=\scriptsize] {$O$};
+      \fill (P) circle (1.2pt) node[right, font=\scriptsize] {$P$};
+      \fill (M) circle (1.2pt) node[below, font=\scriptsize] {$M$};
+      \fill (N) circle (1.2pt) node[below, font=\scriptsize] {$N$};
+      \fill (A) circle (1.1pt) node[left, font=\scriptsize] {$A$};
+      \fill (B) circle (1.1pt) node[below, font=\scriptsize] {$B$};
+      \fill (C) circle (1.1pt) node[right, font=\scriptsize] {$C$};
+      \fill (D) circle (1.1pt) node[above right=-1pt, font=\scriptsize] {$D$};
+      \fill (E) circle (1.1pt) node[above right=-1pt, font=\scriptsize] {$E$};
+      \fill (F) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$F$};
+    \end{tikzpicture}
+    \caption*{图\ 32.1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.05, line cap=round, line join=round]
+      \def\rO{0.68}
+      \def\dM{1.42}
+      \def\th{12}
+      \def\hP{0.62}
+      \def\rot{-30}
+      \pgfmathsetmacro{\Mx}{-\dM*cos(\th)}
+      \pgfmathsetmacro{\My}{-\dM*sin(\th)}
+      \pgfmathsetmacro{\RM}{\dM + \rO}
+      \pgfmathsetmacro{\phiD}{atan2(\hP - \My, -\Mx)}
+      \pgfmathsetmacro{\MP}{veclen(-\Mx, \hP - \My)}
+      \pgfmathsetmacro{\RP}{\RM - \MP}
+      % 旋转 rot=-30 deg 后弧 DEF 的圆心 P' 与最高接触点 X
+      \pgfmathsetmacro{\Px}{-\hP*sin(\rot)}
+      \pgfmathsetmacro{\Py}{\hP*cos(\rot)}
+      \pgfmathsetmacro{\yTop}{\Py + \RP}
+
+      \coordinate (O) at (0,0);
+      \coordinate (Y) at (0, \yTop);
+      \coordinate (X) at (\Px, \yTop);
+
+      % 旋转后的凸轮轮廓
+      \begin{scope}[rotate=\rot]
+        \draw[very thick, curveblue]
+          ({-\rO*cos(\th)}, {\rO*sin(\th)}) arc ({180-\th}:{360+\th}:\rO)
+          arc (\th:\phiD:\RM)
+          arc (\phiD:{180-\phiD}:\RP)
+          arc ({180-\phiD}:{180-\th}:\RM);
+      \end{scope}
+
+      % 中心线 l 与连线 OX, OY 及直角记号
+      \draw (0, -0.95) -- (0, \yTop + 1.05) node[above, font=\scriptsize] {$l$};
+      \draw (O) -- (X);
+      \draw[thin] (-0.95, 0) -- (0.95, 0);
+      \draw (0, \yTop - 0.11) -- (0.11, \yTop - 0.11) -- (0.11, \yTop);
+
+      % 挺杆平底与圆柱杆（带剖面斜线）
+      \draw[thick] (-0.75, \yTop) -- (0.75, \yTop);
+      \draw[thick] (-0.75, \yTop) -- (-0.65, \yTop + 0.14) -- (-0.18, \yTop + 0.18) -- (-0.18, \yTop + 0.85);
+      \draw[thick] (0.75, \yTop) -- (0.65, \yTop + 0.14) -- (0.18, \yTop + 0.18) -- (0.18, \yTop + 0.85);
+      \draw[pattern=north east lines, pattern color=mutedgray!70]
+        (-0.18, \yTop + 0.45) rectangle (0.18, \yTop + 0.85);
+
+      % 标注
+      \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
+      \fill (Y) circle (1.2pt) node[left=0pt, yshift=-4pt, font=\scriptsize] {$Y$};
+      \fill (X) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$X$};
+      \node[right, font=\scriptsize] at (0.68, -0.25) {$c$};
+    \end{tikzpicture}
+    \caption*{图\ 32.2}
+  \end{minipage}
+\end{figure}
+
+凸轮的轮廓由四段圆弧光滑连接而成：$\arc{ABC}$，圆心是 $O$；$\arc{CD}$，圆心是 $M$；$\arc{DEF}$，圆心是 $P$；$\arc{FA}$，圆心是 $N$。凸轮和挺杆按图 32.2 所示的方式配合：挺杆的中心线 $l$ 通过凸轮的旋转中心 $O$，挺杆的下端是垂直于 $l$ 的一个平面，设这个平面与 $l$ 的交点是 $Y$，与凸轮的接触点是 $X$，则 $XY$ 是凸轮轮廓曲线的切线，并且 $OY\perp XY$。因而当点 $X$ 沿着凸轮的轮廓曲线 $c$ 移动时，对应的点 $Y$ 就画出曲线 $c$ 关于点 $O$ 的垂足曲线。曲线 $c$ 上的圆弧 $\arc{CD}$、$\arc{DEF}$ 和 $\arc{FA}$ 的圆心都不是 $O$，所以这三部分的垂足曲线都是帕斯卡蜗线，随着凸轮绕 $O$ 点匀速旋转，挺杆沿直线 $l$ 按余弦规律作往返运动，完成开阀门和关阀门的动作。曲线 $c$ 上的圆弧 $\arc{ABC}$ 的圆心就是 $O$ 点\footnote{重排校订：原书第 51 页此处误将轮廓曲线记号小写 $c$ 印作大写 $C$，据上文“轮廓曲线 $c$”统一订正为 $c$。}，% 原书此处误印作“C”
+因而这段弧关于 $O$ 点的垂足曲线还是它自己，这时点 $Y$ 与 $X$ 重合，当凸轮用这段弧与挺杆接触时，挺杆保持不动，使阀门保持关闭状态。
+
+从上面的分析看出，为了使挺杆能迅速而平稳地完成开门和关门的动作，需要使挺杆中心线上的点 $Y$ 在凸轮平面内的轨迹是帕斯卡蜗线。由于设计者把挺杆与凸轮的接触面做成垂直于 $l$ 的平面，巧妙地利用了垂足曲线的性质，使凸轮的轮廓曲线简化为几段圆弧。制造圆弧轮廓的凸轮，比制造蜗线轮廓的凸轮容易得多了。

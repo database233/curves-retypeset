@@ -1,0 +1,113 @@
+\section{公共汽车的门与星形线}
+\markboth{26. 公共汽车的门与星形线}{26. 公共汽车的门与星形线}
+
+\noindent
+\begin{minipage}[c]{0.55\textwidth}
+  \setlength{\parindent}{2em}\indent
+  普通房门是完整的一扇，大门是对开的两扇，唯有公共汽车的门最特殊：它不但是对开的两扇，而且每一扇都由相同的两半用铰链铰接而成。开门和关门时，靠门轴的半扇绕着门轴旋转，另外半扇的外端沿着连接两个门轴的滑槽滑动。开门时一扇车门折拢成为半扇，关门时又重新伸展成为一扇。
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.95, >=Stealth, line cap=round, line join=round]
+    \def\a{1.25}
+    \def\ang{26}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at ({\a*cos(\ang)}, {\a*sin(\ang)});
+    \coordinate (B) at ({2*\a*cos(\ang)}, 0);
+    \coordinate (C) at (0, {2*\a*sin(\ang)});
+
+    \draw[->] (-0.35, 0) -- (2.65, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -0.35) -- (0, 1.55) node[left, font=\footnotesize] {$y$};
+
+    \draw[thick, curveblue] (O) -- (A) node[midway, above left=-1pt, font=\scriptsize, text=black] {$a$}
+                           -- (B) node[midway, above right=-1pt, font=\scriptsize, text=black] {$a$};
+    \draw[dashed] (A) -- (C);
+
+    \fill[white] (O) circle (1.4pt); \draw (O) circle (1.4pt) node[below left, font=\footnotesize] {$O$};
+    \fill[white] (A) circle (1.4pt); \draw (A) circle (1.4pt) node[above, font=\footnotesize] {$A$};
+    \fill[white] (B) circle (1.4pt); \draw (B) circle (1.4pt) node[below, font=\footnotesize] {$B$};
+    \fill[white] (C) circle (1.4pt); \draw (C) circle (1.4pt) node[left, font=\footnotesize] {$C$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 26.1}
+\end{minipage}
+
+公共汽车采用这种折迭式的车门，有一个明显的优点，就是车门开、关所需的活动范围比较小，因而在乘车高峰时能够多载运乘客。要计算采用折迭式车门究竟节省多少地方，就必须同星形线打交道了。
+
+如图 26.1，设折线 $OAB$ 是一扇折迭式车门，$O$ 是门轴，$OA=AB=a$。取 $O$ 为坐标原点，滑槽 $OB$ 为 $x$ 轴，延长 $BA$ 交 $y$ 轴于 $C$。在 $\triangle AOB$ 中，$AO=AB$，所以 $\angle AOB=\angle B$。又因为 $\angle BOC$ 是直角，所以 $\triangle BOC$ 是直角三角形，由此推出
+\[
+  \angle AOC = 90^\circ - \angle AOB = 90^\circ - \angle B = \angle C,
+\]
+所以从 $\triangle AOC$ 得到 $AC=AO=a$，因而
+\[
+  CB = 2a.\quad \text{（定长）}
+\]
+
+根据第 25 节星形线的画法，当定长线段 $BC$ 的两端分别沿 $x$ 轴和 $y$ 轴滑动时，其一切位置的包络是星形线
+\[
+  x = 2a\cos^3\varphi,\quad y = 2a\sin^3\varphi.
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.1, >=Stealth, line cap=round, line join=round]
+    \def\a{1.25}
+    \coordinate (O) at (0,0);
+    \coordinate (M) at (0, \a);
+    \coordinate (N) at ({0.7071*\a}, {0.7071*\a});
+    \coordinate (Q) at ({0.7071*\a}, 0);
+    \coordinate (P) at ({2*\a}, 0);
+
+    \draw[->] (-0.35, 0) -- (2.85, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -0.35) -- (0, 1.75) node[left, font=\footnotesize] {$y$};
+
+    % 圆弧 MN 与星形线弧 NP
+    \draw[thick, curveblue] (M) arc (90:45:\a);
+    \draw[thick, curveblue, domain=45:0, samples=80, variable=\u]
+      plot ({2*\a*(cos(\u))^3}, {2*\a*(sin(\u))^3});
+
+    % 辅助线 ON, NQ
+    \draw (O) -- (N) node[midway, above left=-1pt, font=\scriptsize] {$a$};
+    \draw (N) -- (Q);
+
+    \fill[white] (O) circle (1.4pt); \draw (O) circle (1.4pt) node[below left, font=\footnotesize] {$O$};
+    \fill[white] (M) circle (1.4pt); \draw (M) circle (1.4pt) node[left, font=\footnotesize] {$M$};
+    \fill[white] (N) circle (1.4pt); \draw (N) circle (1.4pt) node[above right, font=\footnotesize] {$N$};
+    \fill[white] (Q) circle (1.4pt); \draw (Q) circle (1.4pt) node[below, font=\footnotesize] {$Q$};
+    \fill[white] (P) circle (1.4pt); \draw (P) circle (1.4pt) node[below, font=\footnotesize] {$P$};
+  \end{tikzpicture}
+  \caption*{图\ 26.2}
+\end{figure}
+
+由于车门只在第一象限活动，所以动线段 $BC$ 的包络只是这个星形线位于第一象限内的一段。这段弧又被第一象限的分角线分成上下两部分，根据对称性，半截车门 $AB$ 活动时的包络只是这星形线弧的下半部分。
+
+由此知道，一扇折迭式车门所需要的活动范围，在水平面内的投影，是由图 26.2 中的圆弧 $\arc{MN}$、星形线弧 $\arc{NP}$ 和坐标轴围成的区域。这个区域可以划分成三个较简单的部分：扇形 $OMN$、等腰直角三角形 $OQN$ 和曲边三角形 $QNP$。把这三部分的面积顺次记成 $S_1$、$S_2$、$S_3$，三部分面积的和记成 $S$。由于 $ON=a$，$\angle MON=45^\circ$，容易得到
+\[
+  S_1 = \frac{1}{8}\pi a^2,\quad S_2 = \frac{1}{2}\biggl(\frac{\sqrt{2}}{2}a\biggr)^2 = \frac{1}{4}a^2.
+\]
+
+星形线弧 $\arc{NP}$ 的两个端点的坐标是 $N\Bigl(\dfrac{\sqrt{2}}{2}a,\, \dfrac{\sqrt{2}}{2}a\Bigr)$，$P(2a, 0)$。代入星形线的方程
+\[
+  x = 2a\cos^3\varphi,\quad y = 2a\sin^3\varphi,
+\]
+求得点 $N$ 的参数值是 $\varphi = \dfrac{\pi}{4}$，$P$ 的参数值是 $\varphi = 0$。所以
+\begin{align*}
+  S_3 &= \int_{\frac{\sqrt{2}}{2}a}^{2a} y\dd x \\
+      &= \int_{\frac{\pi}{4}}^{0} 2a\sin^3\varphi \cdot (-6a)\cos^2\varphi\sin\varphi\dd\varphi \\
+      &= 12a^2\int_{0}^{\frac{\pi}{4}} \sin^4\varphi\cos^2\varphi\dd\varphi \\
+      &= 3a^2\int_{0}^{\frac{\pi}{4}} \sin^2 2\varphi \sin^2\varphi\dd\varphi \\
+      &= \frac{3}{2}a^2\int_{0}^{\frac{\pi}{4}} \sin^2 2\varphi\,(1-\cos 2\varphi)\dd\varphi \\
+      &= \frac{3}{2}a^2\biggl[\int_{0}^{\frac{\pi}{4}} \frac{1-\cos 4\varphi}{2}\dd\varphi \\
+      &\qquad\qquad - \frac{1}{2}\int_{0}^{\frac{\pi}{4}} \sin^2 2\varphi\dd(\sin 2\varphi)\biggr] \\
+      &= \frac{3}{2}a^2\biggl[\frac{1}{2}\varphi - \frac{1}{8}\sin 4\varphi
+         - \frac{1}{2}\cdot\frac{\sin^3 2\varphi}{3}\biggr]\biggr|_{0}^{\frac{\pi}{4}} \\
+      &= \frac{3}{2}a^2\biggl[\frac{\pi}{8} - \frac{1}{6}\biggr]
+       = \frac{3}{16}\pi a^2 - \frac{1}{4}a^2
+\end{align*}
+\begin{align*}
+  \therefore\quad S &= S_1 + S_2 + S_3 \\
+                    &= \frac{1}{8}\pi a^2 + \frac{1}{4}a^2 + \biggl(\frac{3}{16}\pi a^2 - \frac{1}{4}a^2\biggr) \\
+                    &= \frac{5}{16}\pi a^2.
+\end{align*}
+
+这就是说，一扇总宽度为 $2a$ 的折迭式车门，所需的活动面积为 $\frac{5}{16}\pi a^2$。而一扇宽度为 $2a$ 的普通门所需的面积为 $\pi a^2$（圆的 $\frac{1}{4}$），因而一扇折迭式活门所占的地方只有普通门的 $\frac{5}{16}$。

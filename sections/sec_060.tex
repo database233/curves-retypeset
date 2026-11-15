@@ -1,0 +1,54 @@
+\section{利用抛物线解倍立方问题}
+\markboth{60. 利用抛物线解倍立方问题}{60. 利用抛物线解倍立方问题}
+
+据传说，古希腊的提洛岛上曾发生瘟疫，死了很多人。岛上的居民纷纷到神庙去祈求太阳神保佑，神表示：要使瘟疫停止，必须把殿前的立方体祭坛的体积扩大一倍。岛上的人把祭坛的各棱放大一倍，做了一个新的祭坛，可是瘟疫却更严重了。人们这才发现，新祭坛的体积实际上是旧祭坛的 $8$ 倍。怎样才能成为原来的两倍呢？从这里就提出了一个著名的作图题：求作一个立方体，使它的体积等于已知立方体的体积的二倍。通常把这个作图题叫做倍立方问题或立方倍积问题。
+
+\noindent
+\begin{minipage}[c]{0.55\textwidth}
+\hspace*{2em}倍立方问题可以利用抛物线来解。如图 60.1，作两条抛物线
+\begin{align*}
+  y &= \frac{1}{a}x^2, \\
+  y^2 &= 2ax.
+\end{align*}
+求它们的交点的横坐标。为此，把第一个方程代入第二个方程，得到
+\begin{gather*}
+  \frac{1}{a^2}x^4 = 2ax, \\
+  x(x^3 - 2a^3) = 0, \\
+  \therefore\quad x = 0 \quad\text{或}\quad x^3 = 2a^3.
+\end{gather*}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.42\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    \def\a{0.82}
+    \pgfmathsetmacro{\xP}{pow(2,1/3)*\a}
+    \pgfmathsetmacro{\yP}{pow(4,1/3)*\a}
+    \coordinate (O) at (0, 0);
+    \coordinate (P) at (\xP, \yP);
+    \coordinate (M) at (\xP, 0);
+
+    % 坐标轴
+    \draw[->] (-1.15, 0) -- (1.75, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.30) -- (0, 1.90) node[left, font=\scriptsize] {$y$};
+
+    % 两条抛物线
+    \draw[very thick, curveblue, domain=-1.10:1.22, samples=70, variable=\x]
+      plot (\x, {\x*\x/\a});
+    \draw[very thick, curveblue, domain=-1.30:1.54, samples=70, variable=\y]
+      plot ({\y*\y/(2*\a)}, \y);
+
+    % 垂线 PM
+    \draw[densely dashed] (P) -- (M);
+
+    % 标点
+    \fill (O) circle (1.2pt) node[below left=-2pt, font=\scriptsize] {$O$};
+    \fill (P) circle (1.3pt) node[below right=-1pt, font=\scriptsize] {$P$};
+    \fill (M) circle (1.2pt) node[below, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 60.1}
+\end{minipage}
+
+这两个解分别对应于图 60.1 中的两个交点 $O$ 和 $P$。作 $x$ 轴的垂线 $PM$，垂足为 $M$，则 $OM = \sqrt[3]{2}\,a$，以 $OM$ 为棱长的立方体的体积，等于以 $a$ 为棱长的立方体的体积的二倍。
+
+有些人认为，公元前四世纪希腊数学家门内马斯发现圆锥曲线，正是与倍立方问题联系在一起的。当然，当时还没有创立解析几何，所以有关叙述都不利用坐标，而只采用纯几何的叙述方式。

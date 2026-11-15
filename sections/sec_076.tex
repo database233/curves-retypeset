@@ -1,0 +1,71 @@
+\section{卡帕曲线}
+\markboth{76. 卡帕曲线}{76. 卡帕曲线}
+
+\noindent
+\begin{minipage}[t]{0.50\textwidth}
+  \vspace{0pt}
+  \hspace*{2em}如图 76.1 所示的曲线，形状很像一个希腊字母 $\kappa$（读作“卡帕”），所以叫做卡帕曲线。它的极坐标方程是
+  \[
+    \rho = a\ctg\theta.
+  \]
+  \hspace*{2em}这种曲线可用下面的几何方式定义：设动圆 $C$ 的半径等于定长 $a$，圆心 $C$ 在 $x$ 轴上滑动，那么从坐标原点 $O$ 向圆 $C$ 所作切线的切点 $M$ 的轨迹叫做卡帕曲线。
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+  \vspace{2pt}
+  \centering
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
+    \def\a{0.92}
+    \def\th{35}
+    \pgfmathsetmacro{\xc}{\a/sin(\th)}
+    \pgfmathsetmacro{\xm}{\a*cos(\th)/sin(\th)*cos(\th)}
+    \pgfmathsetmacro{\ym}{\a*cos(\th)}
+
+    % 坐标轴 (右端足够长，避开虚线圆)
+    \draw[->] (-2.15, 0) -- (2.82, 0);
+    \node[below=1.5pt, font=\scriptsize] at (2.74, 0) {$x$};
+    \draw[->] (0, -1.25) -- (0, 1.38) node[left, font=\scriptsize] {$y$};
+
+    % 渐近线 y = +/- a
+    \draw[densely dashed] (-2.08, \a) -- (2.48, \a);
+    \draw[densely dashed] (-2.08, -\a) -- (2.48, -\a);
+
+    % 动圆 C (虚线)
+    \draw[densely dashed] (\xc, 0) circle (\a);
+
+    % 卡帕曲线四条分支 (左右上下对称延伸至渐近线附近)
+    \draw[very thick, curveblue, domain=22:158, samples=160, variable=\t]
+      plot ({\a*cos(\t)*cos(\t)/sin(\t)}, {\a*cos(\t)});
+    \draw[very thick, curveblue, domain=202:338, samples=160, variable=\t]
+      plot ({\a*cos(\t)*cos(\t)/sin(\t)}, {\a*cos(\t)});
+
+    % 切线 OM 与半径 CM，切点直角记号
+    \coordinate (O) at (0,0);
+    \coordinate (C) at (\xc, 0);
+    \coordinate (M) at (\xm, \ym);
+    \draw (O) -- ($(O)!1.25!(M)$);
+    \draw (C) -- (M) node[midway, above right=-1pt, font=\scriptsize] {$a$};
+    \draw ($(M)+(\th+180:0.14)$) -- ++(\th-90:0.14) -- ($(M)+(\th-90:0.14)$);
+
+    % 标注角 theta
+    \draw (0.36, 0) arc (0:\th:0.36);
+    \node[font=\scriptsize] at (17:0.50) {$\theta$};
+
+    \node[below left=-1pt, font=\scriptsize] at (O) {$O$};
+    \fill (C) circle (1.2pt) node[below=1pt, font=\scriptsize] {$C$};
+    \fill (M) circle (1.2pt) node[above=2.5pt, font=\scriptsize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 76.1}
+\end{minipage}
+
+把卡帕曲线极坐标方程的两边同乘以 $\rho\sin\theta$，然后平方，得到
+\[
+  \rho^2\cdot(\rho\sin\theta)^2 = a^2(\rho\cos\theta)^2.
+\]
+化成直角坐标，得到
+\[
+  y^2(x^2+y^2) = a^2x^2,
+\]
+这就是卡帕曲线的直角坐标方程。
+
+卡帕曲线是十七世纪发现的，在史留斯和惠更斯的通信中第一次提到这种曲线。当时是为了解答下面的运动学问题：同一平面内有一个固定的直角坐标系 $Oxy$ 和一个运动的直角坐标系 $O'x'y'$，已知 $x'$ 轴始终通过点 $O$，$y'$ 轴与 $x$ 轴的交点 $C$ 到 $O'$ 的距离等于定长 $a$，求动坐标系的原点 $O'$ 的轨迹。容易看出，这里的点 $O'$ 相当于图 76.1 中的 $M$，$x'$ 轴相当于直线 $MO$，因而所求的轨迹就是图 76.1 中的卡帕曲线。

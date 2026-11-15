@@ -1,0 +1,103 @@
+\section{摆线滑梯}
+\markboth{13. 摆线滑梯}{13. 摆线滑梯}
+
+\noindent
+\begin{minipage}[c]{0.53\textwidth}
+  \hspace*{2em}如图 13.1，把半拱摆线 $\arc{OMA}$ 连同 $y$ 轴一起翻转到 $x$ 轴下方来，并且连结 $OA$，就做成了两个滑梯：一个是普通滑梯，它的滑道是斜线 $OA$；另一个是摆线滑梯，它的滑道是摆线弧 $\arc{OMA}$。现在向你提出一个问题：如果 $O$ 点有甲、乙两个小孩，甲沿普通滑梯滑下，乙同时沿摆线滑梯滑下，谁先滑到底？
+\end{minipage}\hfill
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.82, >=Stealth, font=\footnotesize]
+    % 摆线尺度 r_scale = 1.05, theta in [0, pi]
+    \def\rs{1.05}
+    \coordinate (O) at (0, 0);
+    \coordinate (B) at ({\rs*pi}, 0);
+    \coordinate (A) at ({\rs*pi}, {-2*\rs});
+    % 点 M 取 theta = 1.45 rad
+    \coordinate (M) at ({\rs*(1.45 - sin(1.45 r))}, {-\rs*(1 - cos(1.45 r))});
+    \coordinate (N) at (0, {-\rs*(1 - cos(1.45 r))});
+
+    % 坐标轴（x 向右，y 向下）
+    \draw[->] (-0.3, 0) -- ({\rs*pi + 0.6}, 0) node[above left] {$x$};
+    \draw[->] (0, 0.3) -- (0, {-2*\rs - 0.4}) node[left] {$y$};
+    \node[above left] at (O) {$O$};
+
+    % 辅助虚线
+    \draw[dashed, mutedgray] (B) -- (A) node[midway, right, black] {$2r$};
+    \draw[dashed, mutedgray] (N) -- (M);
+
+    % 普通滑梯 OA（斜线）
+    \draw[thick] (O) -- (A);
+
+    % 摆线滑梯 OMA（参数方程精确绘制）
+    \draw[very thick, curveblue, smooth, domain=0:pi, samples=80]
+      plot ({\rs*(\x - sin(\x r))}, {-\rs*(1 - cos(\x r))});
+
+    % 点与标签
+    \fill (A) circle (1.4pt) node[below] {$A$};
+    \fill (B) circle (1.4pt) node[above] {$B$};
+    \fill (M) circle (1.4pt) node[below left, inner sep=1.5pt] {$M$};
+    \node[left] at (N) {$N$};
+    \node[below] at ($(O)!0.5!(B)$) {$\pi r$};
+  \end{tikzpicture}
+  \captionof*{figure}{图 13.1}
+\end{minipage}
+
+你大概会回答是甲吧，错了！你的回答一定是因为甲走过的路程较短。但是请你细想一下，现在问题是问谁花的时间最少，这就不但与路程长短有关，而且跟滑行的速度有关了。甲沿着斜线 $OA$ 下滑，是做匀加速运动，速度从 $0$ 开始，缓慢而均匀地增大。乙沿摆线下滑，速度也是从 $0$ 开始，但是刚开始滑行就是一段陡坡，速度迅速增大，使得乙的滑行速度比甲快。虽然比甲多走一点路，但究竟谁先到达终点，就很难说了！如果乙的路线选择得非常巧妙，速度增大得又快，路程的长度增加得又少，为什么不可以先滑到底呢？
+
+还是来算一下，看看究竟谁先滑到底。
+
+假定滑梯是绝对光滑的，小孩从 $O$ 点开始下滑时，初速度是 $0$。设他下滑到点 $M$ 时，离地面的高度下降了 $y$，那么根据力学原理知道，他的重力势能就减少了 $mgy$，这里 $m$ 是小孩的质量，$g$ 是重力加速度。又设这时他的速度大小是 $v$，因而这时的动能是 $\frac{1}{2}mv^2$。由于开始下滑时动能是零，根据能量守恒定律，现在的这些动能是由减少的势能转化而来的，由此得到
+\begin{gather*}
+  \frac{1}{2}mv^2 = mgy, \\
+  \therefore\ v = \sqrt{2gy}.
+\end{gather*}
+另一方面，速度 $v$ 等于路程 $s$ 对时间 $t$ 的导数 $\frac{ds}{dt}$，代入上式得
+\begin{gather*}
+  \frac{ds}{dt} = \sqrt{2gy}, \\
+  \therefore\ dt = \frac{ds}{\sqrt{2gy}}.
+\end{gather*}
+设滑行曲线的参数方程是 $x = \varphi(\theta)$，$y = f(\theta)$，用撇号表示对参数 $\theta$ 的导数，利用微分三角形（第 12 节）得到
+\begin{gather*}
+  ds = \sqrt{x'^2 + y'^2}\dd\theta, \\
+  \therefore\ dt = \frac{\sqrt{x'^2 + y'^2}}{\sqrt{2gy}}\dd\theta.
+\end{gather*}
+积分，就得到从 $\theta = \theta_1$ 的点下滑到 $\theta = \theta_2$ 的点所需的时间是
+\[
+  T = \int_{\theta_1}^{\theta_2} \frac{\sqrt{x'^2 + y'^2}}{\sqrt{2gy}}\dd\theta.
+\]
+如用直角坐标方程，则
+\[
+  T = \int_{x_1}^{x_2} \frac{\sqrt{1 + y'^2}}{\sqrt{2gy}}\dd x.
+\]
+
+读者注意，以上推导公式的过程，与滑行路线的形状无关，因而这个公式对于普通滑梯和摆线滑梯以至任何滑梯都同样适用。先考虑普通滑梯，它的滑道是连接点 $O(0, 0)$ 和 $A(\pi r, 2r)$ 的线段，其方程为
+\[
+  y = \frac{2}{\pi}x.\quad (0 \leqslant x \leqslant \pi r)
+\]
+这时滑完全程所需的时间是
+\begin{align*}
+  T_1 &= \int_{x_1}^{x_2} \frac{\sqrt{1 + y'^2}}{\sqrt{2gy}}\dd x
+       = \int_{0}^{\pi r} \frac{\sqrt{1 + \left(\frac{2}{\pi}\right)^2}}{\sqrt{\frac{4g}{\pi}x}}\dd x \\
+      &= \sqrt{\frac{\pi}{g}\left(1 + \frac{4}{\pi^2}\right)} \int_{0}^{\pi r} \frac{dx}{2\sqrt{x}} \\
+      &= \left.\sqrt{\frac{\pi}{g}\left(1 + \frac{4}{\pi^2}\right)} \cdot \sqrt{x}\right|_{0}^{\pi r} \\
+      &= \sqrt{\frac{r}{g}(\pi^2 + 4)}.
+\end{align*}
+
+其次考虑摆线滑梯。它的滑道是半拱摆线弧，其参数方程可以写成
+\[
+  x = r(\theta - \sin\theta),\quad y = r(1 - \cos\theta).\quad (0 \leqslant \theta \leqslant \pi)
+\]
+因而沿着摆线滑梯滑到底所需的时间是
+\begin{align*}
+  T_2 &= \int_{0}^{\pi} \frac{\sqrt{x'^2 + y'^2}}{\sqrt{2gy}}\dd\theta
+       = \int_{0}^{\pi} \frac{\sqrt{2r^2(1 - \cos\theta)}}{\sqrt{2gr(1 - \cos\theta)}}\dd\theta \\
+      &= \sqrt{\frac{r}{g}} \int_{0}^{\pi} d\theta
+       = \left.\sqrt{\frac{r}{g}}\,\theta\right|_{0}^{\pi}
+       = \sqrt{\frac{r}{g}}\,\pi.
+\end{align*}
+由于
+\[
+  \sqrt{\frac{r}{g}(\pi^2 + 4)} > \sqrt{\frac{r}{g}\,\pi^2} = \sqrt{\frac{r}{g}}\,\pi,
+\]
+所以 $T_1 > T_2$，即普通滑梯上的小孩后到终点，摆线滑梯上的小孩先到终点。

@@ -1,0 +1,93 @@
+\section{外摆线}
+\markboth{27. 外摆线}{27. 外摆线}
+
+已知半径为 $R$ 的定圆 $O$ 和半径为 $r$ 的动圆 $O_1$。当圆 $O_1$ 在圆 $O$ 外无滑动地滚动时，圆 $O_1$ 上一点 $M$ 的轨迹叫做外摆线。
+
+\noindent
+\begin{minipage}[c]{0.53\textwidth}
+  \setlength{\parindent}{2em}\indent
+  现在推导外摆线的方程。如图 27.1，选取直角坐标系，使定圆的圆心 $O$ 为原点，并且使圆 $O$ 与 $x$ 轴正半轴的交点 $A$ 是轨迹上的一点。当圆 $O_1$ 滚动到图中的任意位置时，点 $M$ 从初始位置 $A(R, 0)$ 移到位置 $(x, y)$。设这时两圆接触点为 $N$，记 $\angle NO_1M=t$，则 $\arc{NA}$ 和 $\arc{NM}$ 的长度都是 $rt$，因而 $\angle AON = \frac{rt}{R}$，$\overrightarrow{O_1M}$ 的幅角 $\alpha = \frac{r}{R}t - \pi + t$，由 $\overrightarrow{OM} = \overrightarrow{OO_1} + \overrightarrow{O_1M}$ 可得向量 $\overrightarrow{OM}$ 的坐标表示式为
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.44\textwidth}
+  \centering
+  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    % R = 1.15, r = 0.65, angle(AON) = 38 deg => t = (R/r)*38 = 67.23 deg
+    \def\R{1.15}
+    \def\r{0.65}
+    \def\angAON{38}
+    \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
+    \pgfmathsetmacro{\alp}{\angAON - 180 + \tdeg}
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (\R, 0);
+    \coordinate (N) at ({\R*cos(\angAON)}, {\R*sin(\angAON)});
+    \coordinate (O1) at ({(\R+\r)*cos(\angAON)}, {(\R+\r)*sin(\angAON)});
+    \coordinate (M) at ({(\R+\r)*cos(\angAON) + \r*cos(\alp)}, {(\R+\r)*sin(\angAON) + \r*sin(\alp)});
+
+    \draw[->] (-1.45, 0) -- (2.68, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.45) -- (0, 2.00) node[left, font=\footnotesize] {$y$};
+
+    \draw[thick] (O) circle (\R);
+    \draw (O1) circle (\r);
+
+    % 外摆线弧 AM
+    \draw[very thick, curveblue, domain=0:\tdeg, samples=80, variable=\s]
+      plot ({(\R+\r)*cos(\r/\R*\s) - \r*cos(\s + \r/\R*\s)},
+            {(\R+\r)*sin(\r/\R*\s) - \r*sin(\s + \r/\R*\s)});
+
+    \draw (O) -- (O1);
+    \draw (O1) -- (M);
+    \draw[thin] (O1) -- ++(0.85, 0);
+
+    % 角 t (从 O1N 逆时针到 O1M)
+    \draw ($(O1) + ({\angAON-180}:0.22)$) arc ({\angAON-180}:\alp:0.22);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*(\angAON-180+\alp)+12}:0.36)$) {$t$};
+
+    % 角 alpha (从水平右射线顺时针到 O1M)
+    \draw ($(O1) + (0:0.35)$) arc (0:\alp:0.35);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp-4}:0.49)$) {$\alpha$};
+
+    \fill (O) circle (1.3pt) node[below left, font=\footnotesize] {$O$};
+    \fill (A) circle (1.3pt) node[below right=0.5pt, fill=white, inner sep=0.5pt, font=\footnotesize] {$A$};
+    \fill (N) circle (1.3pt) node[left, font=\footnotesize] {$N$};
+    \fill (O1) circle (1.3pt) node[above, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.4pt) node[below right, font=\footnotesize] {$M$};
+  \end{tikzpicture}
+  \captionof*{figure}{图\ 27.1}
+\end{minipage}
+\begin{align*}
+  (x, y) &= \bigl((R+r)\cos\angle AON,\, (R+r)\sin\angle AON\bigr) \\
+         &\quad + (r\cos\alpha,\, r\sin\alpha) \\
+         &= \biggl((R+r)\cos\frac{r}{R}t - r\cos\Bigl(t + \frac{r}{R}t\Bigr), \\
+         &\qquad\ (R+r)\sin\frac{r}{R}t - r\sin\Bigl(t + \frac{r}{R}t\Bigr)\biggr).
+\end{align*}
+令 $\frac{r}{R}=m$，就得到外摆线的参数方程是
+\begin{align*}
+  x &= (R+mR)\cos mt - mR\cos(t+mt), \\
+  y &= (R+mR)\sin mt - mR\sin(t+mt),
+\end{align*}
+其中 $m$ 可取任意正数。当 $m$ 取不同数值时，得到不同形状的外摆线。图 27.2 画出其中 $m=2$ 和 $m=\frac{3}{5}$ 的两种情形。$m=\frac{3}{5}$ 时的外摆线构成一幅美丽的图案。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.35, line cap=round, line join=round]
+    % m = 2, R = 1
+    \draw (0,0) circle (1);
+    \draw (3,0) circle (2);
+    \draw[very thick, curveblue, domain=0:360, samples=220, variable=\t]
+      plot ({3*cos(2*\t) - 2*cos(3*\t)},
+            {3*sin(2*\t) - 2*sin(3*\t)});
+    \node[right, font=\footnotesize] at (5.1, 0) {$m=2$};
+  \end{tikzpicture}
+  \hspace{6mm}
+  \begin{tikzpicture}[scale=0.72, line cap=round, line join=round]
+    % m = 3/5, R = 1
+    \draw (0,0) circle (1);
+    \draw (1.6,0) circle (0.6);
+    \draw[very thick, curveblue, domain=0:1800, samples=360, variable=\t]
+      plot ({1.6*cos(0.6*\t) - 0.6*cos(1.6*\t)},
+            {1.6*sin(0.6*\t) - 0.6*sin(1.6*\t)});
+    \node[right, font=\footnotesize] at (2.25, 0) {$m=\dfrac{3}{5}$};
+  \end{tikzpicture}
+  \caption*{图\ 27.2}
+\end{figure}
