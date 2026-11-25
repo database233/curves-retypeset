@@ -2,22 +2,26 @@
 
 本项目为蒋声先生所著《形形色色的曲线》（上海教育出版社 1985 年第 1 版，“中学生文库”系列）的全书 LaTeX 重排版源码与成品工程。全书按原书 **小 32 开（`130mm × 184mm`）** 物理开本忠实重排，覆盖 **1985 版封面复刻、扉页、前言、目录、正文全部 100 节、附录曲线名称对照表、重排版校订注记与版权页**，成书共 **193 页**。
 
+> - **最新版成品 PDF 下载**：请前往 [GitHub Releases（Latest）](https://github.com/database233/curves-retypeset/releases/latest) 直接获取最新编译验收的 `main.pdf`；
+> - **AI 协作复刻提示词**：想了解本项目全流程提示词、多智能体逐图校准与封面复刻方法，请参阅 [PROMPTS.md](PROMPTS.md)。
+
 ---
 
 ## 一、目录结构
 
 ```text
-book_project/
+curves-retypeset/
 ├── main.tex                          # 全书主控文件（导言引入、前置/正文/后置编排）
-├── preamble.tex                      # 版心尺寸、字体、TikZ/PGFPlots、古典数学记号宏定义
+├── preamble.tex                      # 版心尺寸、字体、TikZ/PGFPlots、古典数学记号与 ZXS 徽标宏
 ├── main.pdf                          # 已编译验证的全书成品 PDF（193 页）
 ├── sections_index.json               # 原书 100 节与原扫描 PDF 页码映射索引
 ├── .gitignore                        # 忽略 LaTeX 中间文件与核对渲染缓存
-├── README.md                         # 本使用与迁移说明文档
+├── README.md                         # 项目使用、校验与迁移说明文档
+├── PROMPTS.md                        # AI 协作复刻全流程提示词与工作流指南
 │
 ├── frontmatter/                      # 前置部分
 │   ├── cover.tex                     # 1985 原版封面纯矢量 TikZ 复刻（鹦鹉螺螺线 + 第 79 节伪球面与测地线）
-│   ├── titlepage.tex                 # “中学生文库”扉页及矢量徽标
+│   ├── titlepage.tex                 # “中学生文库”扉页及纯矢量 ZXS 徽标
 │   └── preface.tex                   # 前言
 │
 ├── sections/                         # 正文 100 节独立源码（共 88 节含插图，169 幅 TikZ 矢量图）
@@ -28,15 +32,15 @@ book_project/
 ├── backmatter/                       # 后置部分
 │   ├── appendix_terms.tex            # 附：曲线名称汉英对照表（longtable）
 │   ├── errata_notes.tex              # 附：重排版校订注记（汇总原书误植与插图数理订正）
-│   └── colophon.tex                  # 版权页与内容提要（含弧形 ZXS 矢量徽标）
+│   └── colophon.tex                  # 版权页与内容提要（含弧形“中学生文库”纯矢量 ZXS 徽标）
 │
 ├── assets/
-│   └── generated/                    # 5 幅实景/科普插图（由 sec_006、007、021、042 引用）
-│       ├── fig_006_1.png             # 图 6.1 杰尼西亚山洞（狄奥尼修斯之耳）
-│       ├── fig_007_3.png             # 图 7.3 建筑师小模型
-│       ├── fig_007_4.png             # 图 7.4 双曲抛物面屋顶实景
-│       ├── fig_021_1.png             # 图 21.1 熊猫滚圆玩具
-│       └── fig_042_1.png             # 图 42.1 手持大齿轮套小齿轮画花曲线
+│   └── generated/                    # 5 幅科普插图（由 sec_006、007、021、042 引用）
+│       ├── fig_006_1.png             # 图 6.1 杰尼西亚的耳朵（狄奥尼修斯山洞声波反射）
+│       ├── fig_007_3.png             # 图 7.3 北京网球馆（椭圆抛物面扁壳屋顶）
+│       ├── fig_007_4.png             # 图 7.4 北京火车站（六处椭圆抛物面扁壳屋顶）
+│       ├── fig_021_1.png             # 图 21.1 熊猫走钢丝（1:2 卡丹圆偶玩具）
+│       └── fig_042_1.png             # 图 42.1 繁花规（左手按大齿轮、右手执笔）
 │
 └── scripts/                          # 编译校验与对照工具（均使用相对路径，可跨机直接运行）
     ├── audit_build.py                # 扫描 main.log 红线指标，支持按需导出页面 PNG
@@ -66,7 +70,7 @@ book_project/
 
 ## 三、编译与质量校验流程
 
-在 `book_project/` 目录下执行以下流程：
+在仓库根目录（`curves-retypeset/`）下执行以下流程：
 
 ### 1. 两遍编译全书 PDF
 必须运行 **两遍 `xelatex`**（确保目录、`hyperref` 书签及封面的 `remember picture, overlay` 坐标完全收敛）：
@@ -147,3 +151,11 @@ python scripts/build_compare_cards.py
 - **校订注记与交叉页码完善**：
   - 修正 `backmatter/errata_notes.tex` 中“图 42.1 套藤圈”笔误与图 38.1(4) 说明，收拢为紧凑 2 整页；第 85 节跨页公式引用改用 `\pageref` 动态追踪；同步修正 `sections_index.json` 第 62 节书签错字。
 - **成品验证**：重新两遍编译生成 `main.pdf`（193 页），全项红线校验通过（`0 Errors`、`0 Missing chars`、`0 Overfull \hbox`、`0 Undefined refs`、`0 空白页`、`0 页脚碰撞`）。
+
+---
+
+## 七、版权与声明
+
+- 原著《形形色色的曲线》的文字与内容版权归作者**蒋声先生**及**上海教育出版社**所有。
+- 本仓库所含 LaTeX 源码、TikZ 绘图代码、校验脚本及重排版成品 PDF **仅用于个人学习、数学科普阅读与 LaTeX/TikZ 排版技术交流**，严禁用于任何商业分发或盈利用途。
+- 如涉及任何版权问题，请通过 GitHub Issue 或联系仓库维护者，核实后将第一时间妥善处理。
