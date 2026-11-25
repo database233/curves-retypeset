@@ -3,89 +3,93 @@
 
 常见齿轮的牙齿，侧面轮廓大多做成圆的渐伸线。工厂里把圆的渐伸线叫做圆的渐开线，所以这种齿轮叫做渐开线齿轮。
 
-\begin{wrapfigure}[19]{l}{0.45\textwidth}
+\begin{wrapfigure}[19]{l}{0.46\textwidth}
   \centering
   \vspace{-4pt}
   \begin{tikzpicture}[scale=0.72, >=Stealth, line cap=round, line join=round]
-    \def\rp{1.85}
-    \def\alphaP{22}
+    % z=8 宽大饱满渐开线齿轮，alpha=25°, ra=2.12 严格满足 2*rp - ra > rb，两齿在 M 精确外切零交叉干涉
+    \def\rp{1.95}
+    \def\alphaP{25}
     \pgfmathsetmacro{\rb}{\rp*cos(\alphaP)}
-    \def\rf{1.60}
-    \def\ra{2.03}
-    \def\wb{8.649} % z=12: 7.5 + inv(22 deg) in degrees
-    \pgfmathsetmacro{\tmax}{sqrt((\ra/\rb)^2 - 1)} % rad ~ 0.633
+    \def\rf{1.70}
+    \def\ra{2.12}
+    \def\wb{12.968} % z=8: 11.25 + inv(25 deg) in degrees
+    \pgfmathsetmacro{\tmax}{sqrt((\ra/\rb)^2 - 1)} % rad ~ 0.6626
+    \def\sM{0.28} % 接触点 M 距节点 B 沿公切线左上方向的距离
 
     \coordinate (O1) at (0, \rp);
     \coordinate (O2) at (0, -\rp);
     \coordinate (B)  at (0, 0);
-    \coordinate (M)  at (-0.167, 0.067);
+    \coordinate (M)  at ({-\sM*cos(\alphaP)}, {\sM*sin(\alphaP)});
 
     % 连心线 O1 O2 与旋转中心十字线
-    \draw[densely dash dot] (0, {\rp+0.32}) -- (0, {-\rp-0.32});
-    \draw[densely dash dot] (-0.58, \rp) -- (0.58, \rp);
-    \draw[densely dash dot] (-0.58, -\rp) -- (0.58, -\rp);
+    \draw[densely dash dot] (0, {\rp+0.34}) -- (0, {-\rp-0.34});
+    \draw[densely dash dot] (-0.60, \rp) -- (0.60, \rp);
+    \draw[densely dash dot] (-0.60, -\rp) -- (0.60, -\rp);
 
     % 两个基圆弧（虚线）
-    \draw[densely dashed] ($(O1)+(228:\rb)$) arc (228:312:\rb);
-    \draw[densely dashed] ($(O2)+(48:\rb)$) arc (48:132:\rb);
+    \draw[densely dashed] ($(O1)+(222:\rb)$) arc (222:318:\rb);
+    \draw[densely dashed] ($(O2)+(42:\rb)$) arc (42:138:\rb);
 
-    % 公切线 MN
-    \draw[thick] (-1.45, {1.45*tan(\alphaP)}) -- (1.45, {-1.45*tan(\alphaP)});
-    \node[below, font=\scriptsize] at (1.35, {-1.35*tan(\alphaP)-0.04}) {$N$};
+    % 公切线 MN（向右下充分延长出齿轮 II 外缘，确保 N 位于纯空白区）
+    \draw[thick] (-1.58, {1.58*tan(\alphaP)}) -- (1.88, {-1.88*tan(\alphaP)});
+    \node[above right=-1pt, font=\scriptsize] at (1.86, {-1.86*tan(\alphaP)}) {$N$};
 
-    % 齿轮 I 齿廓 (z=12, pitch=30 deg)
+    % 齿轮 I 齿廓 (z=8, pitch=45 deg；第 2 颗牙右廓面在 M 点与齿轮 II 精确外切无干涉)
     \begin{scope}[shift={(O1)}]
-      \foreach \ang [count=\i] in {226.5, 256.5, 286.5, 316.5} {
+      \foreach \ang [count=\i] in {204.67, 249.67, 294.67, 339.67} {
         \pgfmathsetmacro{\thu}{\ang+\wb}
         \pgfmathsetmacro{\thl}{\ang-\wb}
         \draw[thick, curveblue]
           (\thl:\rf) -- (\thl:\rb)
-          -- plot[domain=0:\tmax, samples=10, variable=\t]
+          -- plot[domain=0:\tmax, samples=14, variable=\t]
             ({\rb*(cos(\thl + \t*180/pi) + \t*sin(\thl + \t*180/pi))},
              {\rb*(sin(\thl + \t*180/pi) - \t*cos(\thl + \t*180/pi))})
-          -- plot[domain=\tmax:0, samples=10, variable=\t]
+          -- plot[domain=\tmax:0, samples=14, variable=\t]
             ({\rb*(cos(\thu - \t*180/pi) - \t*sin(\thu - \t*180/pi))},
              {\rb*(sin(\thu - \t*180/pi) + \t*cos(\thu - \t*180/pi))})
           -- (\thu:\rf);
         \ifnum\i<4
-          \pgfmathsetmacro{\nextl}{\ang + 30.0 - \wb}
+          \pgfmathsetmacro{\nextl}{\ang + 45.0 - \wb}
           \draw[thick, curveblue] (\thu:\rf) arc (\thu:\nextl:\rf);
         \fi
       }
     \end{scope}
 
-    % 齿轮 II 齿廓 (z=12, pitch=30 deg)
+    % 齿轮 II 齿廓 (z=8, pitch=45 deg；第 2 颗牙左廓面在 M 点与齿轮 I 精确外切无干涉)
     \begin{scope}[shift={(O2)}]
-      \foreach \ang [count=\i] in {58.5, 88.5, 118.5} {
+      \foreach \ang [count=\i] in {42.82, 87.82, 132.82} {
         \pgfmathsetmacro{\thu}{\ang+\wb}
         \pgfmathsetmacro{\thl}{\ang-\wb}
         \draw[thick, curveblue]
           (\thl:\rf) -- (\thl:\rb)
-          -- plot[domain=0:\tmax, samples=10, variable=\t]
+          -- plot[domain=0:\tmax, samples=14, variable=\t]
             ({\rb*(cos(\thl + \t*180/pi) + \t*sin(\thl + \t*180/pi))},
              {\rb*(sin(\thl + \t*180/pi) - \t*cos(\thl + \t*180/pi))})
-          -- plot[domain=\tmax:0, samples=10, variable=\t]
+          -- plot[domain=\tmax:0, samples=14, variable=\t]
             ({\rb*(cos(\thu - \t*180/pi) - \t*sin(\thu - \t*180/pi))},
              {\rb*(sin(\thu - \t*180/pi) + \t*cos(\thu - \t*180/pi))})
           -- (\thu:\rf);
         \ifnum\i<3
-          \pgfmathsetmacro{\nextl}{\ang + 30.0 - \wb}
+          \pgfmathsetmacro{\nextl}{\ang + 45.0 - \wb}
           \draw[thick, curveblue] (\thu:\rf) arc (\thu:\nextl:\rf);
         \fi
       }
     \end{scope}
 
     % 旋转方向箭头
-    \draw[->, thick] ($(O1)+(210:1.25)$) arc (210:250:1.25);
-    \draw[->, densely dashed, thick] ($(O2)+(150:1.25)$) arc (150:110:1.25);
+    \draw[->, thick] ($(O1)+(208:1.26)$) arc (208:250:1.26);
+    \draw[->, densely dashed, thick] ($(O2)+(152:1.26)$) arc (152:110:1.26);
 
-    % 标注
+    % 标注（接触点 M 与节点 B 均带清晰实心点并引至无线条空白区）
     \fill (O1) circle (1.4pt) node[above right=-1pt, font=\scriptsize] {$O_1$};
     \fill (O2) circle (1.4pt) node[below right=-1pt, font=\scriptsize] {$O_2$};
-    \fill (B)  circle (1.4pt) node[above right=2pt, font=\scriptsize, fill=white, inner sep=0.4pt] {$B$};
-    \fill (M)  circle (1.4pt) node[below left=2pt, font=\scriptsize, fill=white, inner sep=0.4pt] {$M$};
-    \node[right, font=\scriptsize] at (0.14, {\rp-0.58}) {齿轮 I};
-    \node[right, font=\scriptsize] at (0.14, {-\rp+0.58}) {齿轮 II};
+    \fill (B)  circle (1.5pt);
+    \draw[thin, black!70] (B) -- (0.34, 0.30) node[above right=-2pt, font=\scriptsize] {$B$};
+    \fill (M)  circle (1.5pt);
+    \draw[thin, black!70] (M) -- (-0.54, 0.50) node[left=-1pt, font=\scriptsize] {$M$};
+    \node[right, font=\scriptsize] at (0.14, {\rp-0.62}) {齿轮 I};
+    \node[right, font=\scriptsize] at (0.14, {-\rp+0.62}) {齿轮 II};
   \end{tikzpicture}
   \caption*{图\ 49.1}
 \end{wrapfigure}

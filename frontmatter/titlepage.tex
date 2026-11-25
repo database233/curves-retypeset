@@ -7,18 +7,12 @@
 
 \noindent
 \begin{minipage}[c]{20mm}
-  % 矢量重绘“中学生文库”经典徽标
+  % 高保真纯矢量重绘“中学生文库”经典 ZXS 郁金香书本徽标
   \begin{tikzpicture}[scale=0.85]
     \fill[black] (0, 0) rectangle (2.1, 2.1);
-    % 下方三角形书本与钢笔尖
-    \draw[white, line width=1.1pt] (0.32, 0.35) -- (1.05, 1.48) -- (1.78, 0.35) -- cycle;
-    \draw[white, line width=0.9pt] (0.52, 0.45) -- (1.05, 1.25) -- (1.58, 0.45) -- cycle;
-    % 中央笔尖与字母轮廓
-    \draw[white, line width=1.0pt] (1.05, 0.35) -- (1.05, 1.48);
-    \node[white, font=\scriptsize\sffamily\bfseries] at (1.05, 0.72) {ZXS};
-    % 顶部花苞图案
-    \draw[white, line width=0.9pt] (0.88, 1.65) .. controls (0.88, 1.92) and (1.22, 1.92) .. (1.22, 1.65);
-    \draw[white, line width=0.9pt] (0.82, 1.72) -- (1.05, 1.52) -- (1.28, 1.72);
+    \begin{scope}[shift={(1.05, 0.30)}, scale=0.182]
+      \drawZXSEmblem{white}
+    \end{scope}
   \end{tikzpicture}
 \end{minipage}
 \hspace{2mm}

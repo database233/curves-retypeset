@@ -51,25 +51,59 @@
     \def\sx#1#2{0.90*(#2) - 0.52*(#1)}
     \def\sy#1#2{0.25*(#2) + 0.28*(#1) + 0.50*(#2)*(#2) - 0.55*(#1)*(#1)}
 
-    \foreach \uu in {-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1} {
-      \draw[line width=0.45pt, black!80, domain=-1:1, samples=25]
-        plot ({\sx{\uu}{\x}}, {\sy{\uu}{\x}});
-    }
-    \foreach \vv in {-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1} {
-      \draw[line width=0.45pt, black!80, domain=-1:1, samples=25]
-        plot ({\sx{\x}{\vv}}, {\sy{\x}{\vv}});
-    }
-    \draw[line width=0.85pt, curveblue, domain=-1:1, samples=30]
-      plot ({\sx{\x}{1}}, {\sy{\x}{1}});
-    \draw[line width=0.85pt, curveblue, domain=-1:1, samples=30]
-      plot ({\sx{1}{\x}}, {\sy{1}{\x}});
-    \draw[line width=0.7pt, domain=-1:1, samples=30]
-      plot ({\sx{\x}{-1}}, {\sy{\x}{-1}});
-    \draw[line width=0.7pt, domain=-1:1, samples=30]
-      plot ({\sx{-1}{\x}}, {\sy{-1}{\x}});
+    % 由后向前的画家算法隐藏面消隐 (u: 1 -> -1, v: 1 -> -1)
+    % 16x16 细腻面片白底消隐 + 8x8 清晰网格线 + 边界蓝/黑主曲线同步消隐
+    \foreach \i in {0,...,15} {
+      \pgfmathsetmacro{\ua}{1.0 - 0.125*\i}
+      \pgfmathsetmacro{\ub}{1.0 - 0.125*(\i+1)}
+      \pgfmathtruncatemacro{\imod}{mod(\i,2)}
+      \foreach \j in {0,...,15} {
+        \pgfmathsetmacro{\va}{1.0 - 0.125*\j}
+        \pgfmathsetmacro{\vb}{1.0 - 0.125*(\j+1)}
+        \pgfmathtruncatemacro{\jmod}{mod(\j,2)}
+        \coordinate (P11) at ({\sx{\ua}{\va}}, {\sy{\ua}{\va}});
+        \coordinate (P21) at ({\sx{\ub}{\va}}, {\sy{\ub}{\va}});
+        \coordinate (P22) at ({\sx{\ub}{\vb}}, {\sy{\ub}{\vb}});
+        \coordinate (P12) at ({\sx{\ua}{\vb}}, {\sy{\ua}{\vb}});
 
-    \node[above right=-1pt, font=\scriptsize] at ({\sx{-0.35}{1}}, {\sy{-0.35}{1}}) {$a$};
-    \node[below=2pt, font=\scriptsize] at ({\sx{1}{0.05}}, {\sy{1}{0.05}}) {$b$};
+        % 面片白底填充(微描白边防相邻多边形发丝缝)
+        \filldraw[fill=white, draw=white, line width=0.25pt]
+          (P11) -- (P21) -- (P22) -- (P12) -- cycle;
+
+        % u = ua 网格线 (i=0 为后外缘, 其余偶数 i 为内部网格线)
+        \ifnum\i=0
+          \draw[line width=0.7pt, black, line cap=round] (P11) -- (P12);
+        \else
+          \ifnum\imod=0
+            \draw[line width=0.45pt, black!80, line cap=round] (P11) -- (P12);
+          \fi
+        \fi
+
+        % v = va 网格线 (j=0 为右外缘动曲线 a, 其余偶数 j 为内部网格线)
+        \ifnum\j=0
+          \draw[line width=0.85pt, curveblue, line cap=round] (P11) -- (P21);
+        \else
+          \ifnum\jmod=0
+            \draw[line width=0.45pt, black!80, line cap=round] (P11) -- (P21);
+          \fi
+        \fi
+
+        % v = -1 左外缘
+        \ifnum\j=15
+          \draw[line width=0.7pt, black, line cap=round] (P12) -- (P22);
+        \fi
+
+        % u = -1 最前下缘定曲线 b
+        \ifnum\i=15
+          \draw[line width=0.85pt, curveblue, line cap=round] (P21) -- (P22);
+        \fi
+      }
+    }
+
+    \node[above right=0pt, fill=white, inner sep=0.5pt, font=\scriptsize]
+      at ({\sx{-0.35}{1}}, {\sy{-0.35}{1}}) {$a$};
+    \node[below=2pt, fill=white, inner sep=0.6pt, font=\scriptsize]
+      at ({\sx{-1}{0.10}}, {\sy{-1}{0.10}}) {$b$};
   \end{tikzpicture}
   \par\vspace{4pt}{\footnotesize 图\ 7.2}
 \end{minipage}

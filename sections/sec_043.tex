@@ -35,8 +35,8 @@
   \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
     \def\l{1.25}
     \def\h{0.72}
-    \def\mth{60}
-    \def\th{42}
+    \def\mth{68}
+    \def\th{32}
     \pgfmathsetmacro{\alp}{\mth-\th}
     \coordinate (O) at (0,0);
     \coordinate (D) at (\l, 0);
@@ -45,8 +45,8 @@
     \coordinate (M) at ($ (A) + (\alp:\h) $);
 
     % 坐标轴
-    \draw[->] (-1.50, 0) -- (1.75, 0) node[below, font=\scriptsize] {$x$};
-    \draw[->] (0, -1.50) -- (0, 2.05) node[left, font=\scriptsize] {$y$};
+    \draw[->] (-1.45, 0) -- (1.92, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.45) -- (0, 2.15) node[left, font=\scriptsize] {$y$};
 
     % 圆 O 与圆 A
     \draw[thick] (O) circle (\l);
@@ -56,24 +56,24 @@
     \draw (O) -- (E);
     \draw (A) -- (M);
     \draw[thick] (O) -- (M);
-    \draw[thin] (A) -- ++(0.74, 0);
+    \draw[thin] (A) -- ++(0.92, 0);
 
-    % 角度弧
-    \draw (0.28, 0) arc (0:\mth:0.28);
-    \node[font=\scriptsize, fill=white, inner sep=0.3pt] at (20:0.48) {$m\theta$};
+    % 角度弧（放大圆 A 半径至 0.72，alpha 与 theta 均完全处于圆内宽裕空白区）
+    \draw (0.30, 0) arc (0:\mth:0.30);
+    \node[font=\scriptsize, fill=white, inner sep=0.3pt] at (26:0.52) {$m\theta$};
 
-    \draw ($(A)+(\alp:0.25)$) arc (\alp:\mth:0.25);
-    \node[font=\scriptsize] at ($(A)+({\alp+\th/2}:0.42)$) {$\theta$};
+    \draw ($(A)+(\alp:0.26)$) arc (\alp:\mth:0.26);
+    \node[font=\scriptsize] at ($(A)+({\alp+\th/2}:0.46)$) {$\theta$};
 
-    \draw ($(A)+(0:0.40)$) arc (0:\alp:0.40);
-    \node[font=\scriptsize] at ($(A)+({\alp/2}:0.56)$) {$\alpha$};
+    \draw ($(A)+(0:0.24)$) arc (0:\alp:0.24);
+    \node[font=\scriptsize] at ($(A)+({\alp/2}:0.42)$) {$\alpha$};
 
-    % 标点与标签
+    % 标点与标签（D 置于 below left 彻底避开 x）
     \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
-    \fill (D) circle (1.2pt) node[below right=-1pt, font=\scriptsize] {$D$};
+    \fill (D) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$D$};
     \fill (A) circle (1.3pt) node[above left=-1pt, font=\scriptsize] {$A$};
-    \fill (E) circle (1.2pt) node[above, font=\scriptsize] {$E$};
-    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+    \fill (E) circle (1.2pt) node[above=0.5pt, font=\scriptsize] {$E$};
+    \fill (M) circle (1.3pt) node[above right=-1pt, font=\scriptsize] {$M$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 43.1}
 \end{minipage}

@@ -13,8 +13,7 @@
   \vspace{2pt}
   \centering
   \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
-    % 取 a=1.22, b=0.58, th=52 deg:
-    % atan(b/a) = 25.4 deg，因此 theta=52 deg 与 AO 夹角达 26.6 deg，角度空间宽裕
+    % 取 a=1.22, b=0.58, th=52 deg，完整呈现角 DAB = theta
     \def\a{1.22}
     \def\b{0.58}
     \def\th{52}
@@ -26,7 +25,6 @@
     \pgfmathsetmacro{\rhoN}{\a/cos(\th) - \a*tan(\th) + \b}
     \coordinate (M) at ({\rhoM*cos(\th)}, {\rhoM*sin(\th)});
     \coordinate (N) at ({\rhoN*cos(\th)}, {\rhoN*sin(\th)});
-    \coordinate (K) at ({\a*1.75}, {\b*1.75});
 
     % 斜环索线：分支 1 涵盖完整套扣环与右上渐近分支，分支 2 涵盖套扣上弧与右下渐近分支
     \begin{scope}
@@ -42,26 +40,24 @@
     \draw (\a, -1.48) -- (\a, 2.18);
     \node[left=2pt, font=\scriptsize] at (\a, -1.30) {$l$};
 
-    % 射线 ABM 与 AO 延长线 AK
+    % 射线 ABM
     \draw (A) -- ($(A)!1.14!(M)$);
-    \draw (A) -- (K);
 
-    % 标注角 theta (落在 AO 上方与 AB 下方之间，绝不碰任何直线)
-    \draw (0.50, 0) arc (0:\th:0.50);
-    \node[font=\scriptsize] at (38:0.68) {$\theta$};
+    % 标注角 theta（置于完整角 DAB 扇区中央）
+    \draw (0.48, 0) arc (0:\th:0.48);
+    \node[font=\scriptsize] at (26:0.65) {$\theta$};
 
-    % 长度 a 与 b 标注在清晰空白处
+    % 长度 a 与 b 标注在清晰空白处（b 置于 OD 左侧纯空白区彻底避开右侧斜环索线蓝线）
     \node[below=1.5pt, font=\scriptsize] at (0.55*\a, 0) {$a$};
-    \node[right=1.5pt, font=\scriptsize] at (\a, 0.30*\b) {$b$};
+    \node[left=0.5pt, font=\scriptsize] at (\a, 0.56*\b) {$b$};
 
     % 各点标注
     \fill (A) circle (1.2pt) node[below left=0pt, font=\scriptsize] {$A$};
     \fill (D) circle (1.2pt) node[below right=0.5pt, font=\scriptsize] {$D$};
-    \fill (O) circle (1.2pt) node[right=1.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$O$};
+    \fill (O) circle (1.2pt) node[right=2pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$O$};
     \fill (B) circle (1.2pt) node[left=1.5pt, font=\scriptsize] {$B$};
     \fill (M) circle (1.2pt) node[right=1.5pt, font=\scriptsize] {$M$};
     \fill (N) circle (1.2pt) node[above left=0.5pt, font=\scriptsize] {$N$};
-    \node[above right=0pt, font=\scriptsize] at (K) {$K$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 75.1}
 \end{minipage}

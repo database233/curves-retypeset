@@ -6,37 +6,40 @@
   \rho = \frac{b}{\theta}.\quad (b>0)
 \]
 
-\begin{wrapfigure}[10]{r}{0.43\textwidth}
+\begin{wrapfigure}[11]{r}{0.45\textwidth}
   \centering
   \vspace{-4pt}
-  \begin{tikzpicture}[scale=0.72, >=Stealth, line cap=round, line join=round]
-    % b = 1.15 => 180*b/pi = 65.8901
-    \def\b{1.15}
-    \def\bdeg{65.8901}
-    \def\thM{45}
+  \begin{tikzpicture}[scale=1.08, >=Stealth, line cap=round, line join=round]
+    % 截短右侧留白并放大比例，使极点附近盘旋与虚线圆弧清晰舒展
+    % b = 1.22 => 180*b/pi = 69.9009
+    \def\b{1.22}
+    \def\bdeg{69.9009}
+    \def\thM{48}
     \pgfmathsetmacro{\rhoM}{\bdeg/\thM}
     \coordinate (O) at (0,0);
     \coordinate (M) at ({\rhoM*cos(\thM)}, {\rhoM*sin(\thM)});
     \coordinate (N) at (\rhoM, 0);
 
-    % 极轴 Ox 与渐近线 l
-    \draw[->] (-1.15, 0) -- (2.85, 0) node[below, font=\scriptsize] {$x$};
-    \draw (-1.15, \b) -- (2.85, \b);
-    \node[above left=-1pt, font=\scriptsize] at (-1.10, \b) {$l$};
+    % 极轴 Ox 与渐近线 l（右侧收至 2.30）
+    \draw[->] (-0.82, 0) -- (2.30, 0) node[below, font=\scriptsize] {$x$};
+    \draw (-0.82, \b) -- (2.30, \b);
+    \node[above left=-1pt, font=\scriptsize] at (-0.78, \b) {$l$};
 
-    % 双曲螺线 rho = b/theta (theta > 0)
-    \draw[very thick, curveblue, domain=22:760, samples=220, variable=\t]
+    % 双曲螺线 rho = b/theta (theta > 0，约 2.5 圈盘旋)
+    \draw[very thick, curveblue, domain=28:900, samples=280, variable=\t]
       plot ({(\bdeg/\t)*cos(\t)}, {(\bdeg/\t)*sin(\t)});
 
     % 极径 OM, 角度 theta 与圆弧 MN
-    \draw (O) -- (M) node[midway, above left=-2pt, font=\scriptsize] {$\rho$};
+    \draw (O) -- (M) node[midway, above left=-1pt, font=\scriptsize] {$\rho$};
     \draw[densely dashed] (M) arc (\thM:0:\rhoM);
-    \draw (0.45, 0) arc (0:\thM:0.45);
-    \node[font=\scriptsize] at ({0.5*\thM}:0.65) {$\theta$};
+    \draw (0.50, 0) arc (0:\thM:0.50);
+    \node[font=\scriptsize] at ({0.48*\thM}:0.69) {$\theta$};
 
-    \fill (O) circle (1.2pt) node[below left=2pt, font=\scriptsize] {$O$};
-    \fill (M) circle (1.2pt) node[below=2pt, font=\scriptsize] {$M$};
-    \fill (N) circle (1.2pt) node[below, font=\scriptsize] {$N$};
+    % 标点（O 用极细短引线标于盘旋外侧，不压内圈蓝线）
+    \fill (O) circle (1.1pt);
+    \draw[thin, black!65] (O) -- (-0.38, -0.34) node[below left=-2pt, font=\scriptsize] {$O$};
+    \fill (M) circle (1.2pt) node[below=2pt, xshift=-2pt, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[below=1pt, font=\scriptsize] {$N$};
   \end{tikzpicture}
   \caption*{图\ 67.1}
 \end{wrapfigure}

@@ -10,7 +10,7 @@
 \begin{minipage}[t]{0.44\textwidth}
   \centering
   \vspace{-2pt}
-  \begin{tikzpicture}[scale=0.80]
+  \begin{tikzpicture}[scale=1.04]
     % 双叶旋转双曲面反射镜: a=0.65, b=0.65, c=0.9192, t in [-1.1, 1.1]
     % 右叶顶点 (0.65, 0), 左叶顶点 (-0.65, 0)
     % 虚焦点 F1=(-0.9192, 0), 实光源焦点 F2=(0.9192, 0)
@@ -18,28 +18,41 @@
     \def\a{0.65}
     \def\b{0.65}
     \def\c{0.9192}
+    \def\xrim{1.0845}
+    \def\yrim{0.8682}
+    \def\rxrim{0.20}
 
-    % 右叶金属外壳阴影(左叶侧视外表面)与开口凹面内壁
-    \fill[black!10]
+    % 右叶金属外壳明暗渐变(上亮下暗)与轻柔影线，以及凹面内壁反向明暗(上暗下亮)
+    \shade[top color=black!14, middle color=black!24, bottom color=black!48]
       plot[domain=-1.1:1.1, samples=40] ({\a*cosh(\x)}, {\b*sinh(\x)})
-      -- (1.0845, -0.8682) arc[start angle=-90, end angle=90, x radius=0.20, y radius=0.8682]
+      arc[start angle=90, end angle=270, x radius=\rxrim, y radius=\yrim]
       -- cycle;
-    \fill[pattern=north east lines, pattern color=black!50]
+    \fill[pattern=north east lines, pattern color=black!18]
       plot[domain=-1.1:1.1, samples=40] ({\a*cosh(\x)}, {\b*sinh(\x)})
-      arc[start angle=90, end angle=270, x radius=0.20, y radius=0.8682]
+      arc[start angle=90, end angle=270, x radius=\rxrim, y radius=\yrim]
       -- cycle;
-    \fill[black!6] (1.0845,0) ellipse [x radius=0.20, y radius=0.8682];
+    \shade[top color=black!26, middle color=black!10, bottom color=black!4]
+      (\xrim,0) ellipse [x radius=\rxrim, y radius=\yrim];
     \draw[line width=0.75pt]
       plot[domain=-1.1:1.1, samples=40] ({\a*cosh(\x)}, {\b*sinh(\x)});
-    \draw[line width=0.7pt] (1.0845,0) ellipse [x radius=0.20, y radius=0.8682];
+    \draw[line width=0.7pt] (\xrim,0) ellipse [x radius=\rxrim, y radius=\yrim];
 
     % 左叶轮廓
     \draw[line width=0.75pt]
       plot[domain=-1.1:1.1, samples=40] ({-\a*cosh(\x)}, {\b*sinh(\x)});
-    \draw[line width=0.7pt] (-1.0845,0) ellipse [x radius=0.20, y radius=0.8682];
+    \draw[line width=0.7pt] (-\xrim,0) ellipse [x radius=\rxrim, y radius=\yrim];
 
-    % 从左焦点 F1 出发的反向延长虚线止于右叶轮廓, 实线光线从右叶开口端净射出(不穿透镜背)
     \coordinate (F1) at (-\c, 0);
+    \coordinate (F2) at (\c, 0);
+
+    % 从实光源焦点 F2 射向内壁的细入射虚线(示意光线自焦点发散至镜面)
+    \foreach \t in {-0.95, -0.71, -0.47, 0.47, 0.71, 0.95} {
+      \pgfmathsetmacro{\px}{\a*cosh(\t)}
+      \pgfmathsetmacro{\py}{\b*sinh(\t)}
+      \draw[densely dotted, line width=0.35pt, black!55] (F2) -- (\px, \py);
+    }
+
+    % 反射光线: F1->P 为反向延长虚线; P->E_in(外壳遮挡)为细虚线; 越过碗口左缘 E_in 进入开放视野后转为实线
     \foreach \t in {-0.95, -0.71, -0.47, -0.23, 0, 0.23, 0.47, 0.71, 0.95} {
       \pgfmathsetmacro{\px}{\a*cosh(\t)}
       \pgfmathsetmacro{\py}{\b*sinh(\t)}
@@ -48,17 +61,25 @@
       \pgfmathsetmacro{\len}{sqrt(\vx*\vx + \vy*\vy)}
       \pgfmathsetmacro{\ux}{\vx/\len}
       \pgfmathsetmacro{\uy}{\vy/\len}
-      % 出射光线穿过开口椭圆右半缘(近似截断到开口外侧, 避免穿过实体镜背阴影)
-      \pgfmathsetmacro{\kexit}{max(0, (1.0845 + 0.20*sqrt(max(0, 1 - (\py/0.8682)*(\py/0.8682))) - \px)/\ux)}
-      \pgfmathsetmacro{\ex}{\px + \kexit*\ux}
-      \pgfmathsetmacro{\ey}{\py + \kexit*\uy}
-      \draw[dashed, line width=0.45pt] (F1) -- (\px, \py);
-      \draw[dashed, line width=0.4pt, black!45] (\px, \py) -- (\ex, \ey);
-      \draw[line width=0.55pt] (\ex, \ey) -- ({\px + (\kexit + 0.72)*\ux}, {\py + (\kexit + 0.72)*\uy});
+      % 精确求解射线 P + k*u 与右叶碗口椭圆左缘的交点参数 k_in
+      \pgfmathsetmacro{\xzero}{\px - \xrim}
+      \pgfmathsetmacro{\qA}{(\ux/\rxrim)*(\ux/\rxrim) + (\uy/\yrim)*(\uy/\yrim)}
+      \pgfmathsetmacro{\qB}{(\xzero*\ux)/(\rxrim*\rxrim) + (\py*\uy)/(\yrim*\yrim)}
+      \pgfmathsetmacro{\qC}{(\xzero/\rxrim)*(\xzero/\rxrim) + (\py/\yrim)*(\py/\yrim) - 1}
+      \pgfmathsetmacro{\qD}{max(0, \qB*\qB - \qA*\qC)}
+      \pgfmathsetmacro{\kin}{max(0, (-\qB - sqrt(\qD))/\qA)}
+      \pgfmathsetmacro{\ex}{\px + \kin*\ux}
+      \pgfmathsetmacro{\ey}{\py + \kin*\uy}
+      % 右端自然延伸至统一外观长度
+      \pgfmathsetmacro{\kout}{max(\kin, (-\qB + sqrt(\qD))/\qA)}
+      \pgfmathsetmacro{\kend}{\kout + 0.68}
+      \draw[dashed, line width=0.45pt, black!80] (F1) -- (\px, \py);
+      \draw[dashed, line width=0.35pt, black!35] (\px, \py) -- (\ex, \ey);
+      \draw[line width=0.58pt] (\ex, \ey) -- ({\px + \kend*\ux}, {\py + \kend*\uy});
     }
     % 左焦点(虚焦点)与右焦点(灯丝位置)小圆圈
     \draw[fill=white, line width=0.7pt] (F1) circle (1.4pt);
-    \fill[black] (\c, 0) circle (1.3pt);
+    \fill[black] (F2) circle (1.35pt);
   \end{tikzpicture}
   \par\vspace{4pt}{\footnotesize 图\ 4.1}
 \end{minipage}

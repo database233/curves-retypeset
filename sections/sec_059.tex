@@ -99,8 +99,8 @@
     \coordinate (O) at (0, 0);
     \coordinate (P) at (\a, 0);
 
-    % 极轴
-    \draw[->] (-0.42, 0) -- ({\a+0.42}, 0);
+    % 极轴（左端伸出最左侧内环之外以便标注 O）
+    \draw[->] (-0.58, 0) -- ({\a+0.42}, 0);
 
     % 蜗牛线 rho = a * sin(theta) / theta, 分段绘制保证内圈光滑
     \foreach \tA/\tB in {0.01/3.1416, 3.1416/6.2832, 6.2832/9.4248, 9.4248/12.5664} {
@@ -112,7 +112,9 @@
     \draw[thick, curveblue] ({\a*sin(0.01 r)/0.01*cos(0.01 r)}, {-\a*sin(0.01 r)/0.01*sin(0.01 r)})
       -- (P) -- ({\a*sin(0.01 r)/0.01*cos(0.01 r)}, {\a*sin(0.01 r)/0.01*sin(0.01 r)});
 
-    \fill (O) circle (1.0pt) node[below left=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$O$};
+    % 极点 O 移出左小内环，标于最左侧外环之外极轴端，不遮断精致内环
+    \fill (O) circle (1.0pt);
+    \node[left=1pt, font=\scriptsize] at (-0.58, 0) {$O$};
     \fill (P) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$P$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 59.2}

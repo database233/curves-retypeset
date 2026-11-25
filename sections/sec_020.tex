@@ -11,45 +11,52 @@
     \def\a{0.64}
 
     % 水平轴线与中心十字线
-    \draw[thin] ({-\a - 0.14}, 0) -- ({3*pi*\r + \a + 0.38}, 0);
+    \draw[thin] ({-\a - 0.14}, 0) -- ({3*pi*\r + \a + 0.20}, 0);
     \draw[thin] (0, {-\a - 0.14}) -- (0, {\a + 0.14});
 
     % 旋耕机圆盘虚线外圈
     \draw[dashed, mutedgray] (0, 0) circle (\a);
 
     % 四把弯刀片（1 上，2 左，3 下，4 右）
-    \foreach \ang/\lbl/\pos in {90/1/right, 180/2/above, 270/3/left, 0/4/below} {
+    \foreach \ang in {90, 180, 270, 0} {
       \begin{scope}[rotate=\ang]
         \draw[thick] (0, 0) .. controls ({0.35*\a}, {0.15*\a}) and ({0.65*\a}, {0.35*\a}) .. (\a, 0);
         \draw[thick] (0, 0) .. controls ({0.35*\a}, {-0.05*\a}) and ({0.72*\a}, {0.15*\a}) .. (\a, 0);
       \end{scope}
     }
-    \node[fill=white, inner sep=0.4pt] at (0.20, {\a - 0.08}) {1};
-    \node[fill=white, inner sep=0.4pt] at ({-\a + 0.16}, 0.16) {2};
-    \node[fill=white, inner sep=0.4pt] at (-0.16, {-\a + 0.16}) {3};
-    \node[fill=white, inner sep=0.4pt] at ({\a - 0.16}, -0.16) {4};
+
+    % 刀盘中心顺时针旋转弧形箭头（匹配向右行进速度 u）
+    \draw[-{Stealth[length=3.6pt, width=2.6pt]}, line width=0.65pt]
+      ({0.26*cos(76)}, {0.26*sin(76)}) arc[start angle=76, end angle=14, radius=0.26];
 
     % 前进方向 u 与刀片标注
     \draw[->] (-0.88, {\a + 0.28}) -- (-0.44, {\a + 0.28});
     \node[above, inner sep=1pt] at (-0.66, {\a + 0.29}) {$u$};
     \node[above] at (0, {\a + 0.16}) {刀片};
 
-    % 四把刀片的长幅摆线轨迹（均从 t=0 各刀尖出发）
-    % 刀片 1
-    \draw[thick, curveblue, smooth, domain=0:{3.18*pi}, samples=120]
+    % 四把刀片的长幅摆线轨迹（均从 t=0 各刀尖出发，右端统一整齐收束于最后绕扣 1 对称轴 x=3*pi*r 附近）
+    % 刀片 1（90°上）：形成绕扣 1(pi), 1(3pi)，于自交点闭合
+    \draw[thick, curveblue, smooth, domain=0:{3.672*pi}, samples=130]
       plot ({\r*\x + \a*sin(\x r)}, {\a*cos(\x r)});
-    % 刀片 2
-    \draw[thick, curveblue, smooth, domain=0:{2.35*pi}, samples=100]
+    % 刀片 2（180°左）：形成绕扣 2(1.5pi)，于 x=3*pi*r 处与刀片 4 对称交汇
+    \draw[thick, curveblue, smooth, domain=0:{2.648*pi}, samples=100]
       plot ({\r*\x + \a*sin((\x - 0.5*pi) r)}, {\a*cos((\x - 0.5*pi) r)});
-    % 刀片 3
-    \draw[thick, curveblue, smooth, domain=0:{2.65*pi}, samples=110]
+    % 刀片 3（270°下）：形成绕扣 3(2pi)，于 x=3*pi*r 处到达波峰收束
+    \draw[thick, curveblue, smooth, domain=0:{3.00*pi}, samples=110]
       plot ({\r*\x + \a*sin((\x - pi) r)}, {\a*cos((\x - pi) r)});
-    % 刀片 4
-    \draw[thick, curveblue, smooth, domain=0:{2.95*pi}, samples=110]
+    % 刀片 4（0°右）：形成绕扣 4(0.5pi), 4(2.5pi)，于 x=3*pi*r 处与刀片 2 对称交汇
+    \draw[thick, curveblue, smooth, domain=0:{3.352*pi}, samples=120]
       plot ({\r*\x + \a*sin((\x - 1.5*pi) r)}, {\a*cos((\x - 1.5*pi) r)});
 
-    % 底部绕扣编号 1 2 3 4 1
-    \node[below] at ({\r*pi}, {-\a - 0.03}) {1};
+    % 刀片编号 1~4 置于所有蓝色轨迹之后，加白底遮罩放于刀盘内侧干净空白处
+    \node[fill=white, inner sep=0.8pt] at (0.16, 0.48) {1};
+    \node[fill=white, inner sep=0.8pt] at (-0.46, 0.16) {2};
+    \node[fill=white, inner sep=0.8pt] at (-0.16, -0.46) {3};
+    \node[fill=white, inner sep=0.8pt] at (0.45, -0.18) {4};
+
+    % 底部绕扣编号 4 1 2 3 4 1（与全部 6 个绕扣一一严格对应）
+    \node[below] at ({\r*0.5*pi}, {-\a - 0.03}) {4};
+    \node[below] at ({\r*1.0*pi}, {-\a - 0.03}) {1};
     \node[below] at ({\r*1.5*pi}, {-\a - 0.03}) {2};
     \node[below] at ({\r*2.0*pi}, {-\a - 0.03}) {3};
     \node[below] at ({\r*2.5*pi}, {-\a - 0.03}) {4};

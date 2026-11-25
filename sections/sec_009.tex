@@ -26,7 +26,7 @@
         \pgfmathsetmacro{\len}{sqrt(\tx*\tx + \ty*\ty)}
         \pgfmathsetmacro{\ux}{\tx/\len}
         \pgfmathsetmacro{\uy}{\ty/\len}
-        \draw[line width=0.45pt, black!75] ({\mx - 0.95*\ux}, {\my - 0.95*\uy}) -- ({\mx + 0.95*\ux}, {\my + 0.95*\uy});
+        \draw[line width=0.45pt, black!75] ({\mx - 0.30*\ux}, {\my - 0.30*\uy}) -- ({\mx + 0.95*\ux}, {\my + 0.95*\uy});
         \draw[line width=0.4pt, dashed, black!60] (F) -- (\mx, \my);
       }
 
@@ -47,7 +47,7 @@
       \draw[fill=white, line width=0.7pt] (O) circle (1.3pt) node[left=1pt] {\footnotesize $O$};
       \fill (F) circle (1.3pt) node[right=1pt] {\footnotesize $F$};
       \fill (M) circle (1.1pt) node[right=1pt] {\footnotesize $M$};
-      \node[above] at (L) {\footnotesize $L$};
+      \node[right=1.5pt, fill=white, inner sep=0.6pt] at (L) {\footnotesize $L$};
       \node[below left=-1pt] at (N) {\footnotesize $N$};
     \end{tikzpicture}
     \par\vspace{3pt}{\footnotesize 图\ 9.1}
@@ -95,7 +95,8 @@
       \fill (O) circle (1.2pt) node[above=1pt] {\footnotesize $O$};
       \fill (F) circle (1.2pt) node[above=1pt] {\footnotesize $F$};
       \fill (M) circle (1.2pt) node[right=1pt] {\footnotesize $M(M')$};
-      \fill (P) circle (1.2pt) node[below=2pt] {\footnotesize $P$};
+      \fill (P) circle (1.2pt);
+      \node[fill=white, inner sep=0.5pt] at ($(P)+(-0.22,0.09)$) {\footnotesize $P$};
       \fill (Q) circle (1.2pt) node[below right=-1pt] {\footnotesize $Q$};
       \node[below left=-1pt] at (N) {\footnotesize $N$};
     \end{tikzpicture}

@@ -54,19 +54,20 @@
 
 \medskip
 \noindent
-\begin{minipage}[t]{0.55\textwidth}
+\begin{minipage}[t]{0.53\textwidth}
   \vspace{0pt}
   \hspace*{2em}在图 71.2 中，点 $A$、$M$、$P$ 分别变成 $B$、$N$、$Q$，直线 $AM$ 变成以 $FB$ 为直径的圆 $FBN$，直线 $MP$ 变成以 $FN$ 为直径的圆 $FNQ$，抛物线变成心脏线。因为抛物线与两直线 $MA$、$MP$ 都相切，所以得到的心脏线与两圆 $FBN$、$FNQ$ 都相切。但 $MA$ 就是定直线 $b$，所以它的反形 $FBN$ 是定圆，其圆心 $G$ 是极轴上的定点。设圆 $FNQ$ 的圆心是 $H$，连 $BN$、$GH$，则从 $FG=GB$、$FH=HN$，得 $GH\parallel BN$，所以
 \end{minipage}
 \hfill
-\begin{minipage}[t]{0.42\textwidth}
+\begin{minipage}[t]{0.44\textwidth}
   \vspace{2pt}
   \centering
-  \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
-    % 心脏线参数 r=1.22 => B=(2.44,0), G=(1.22,0), 抛物线顶点 A=(0.28,0), p=2*xa=0.56, R^2 = r*p = 2*r*xa
-    \def\r{1.22}
-    \def\xa{0.28}
-    \def\tzero{40}      % M 极角 40 deg, 使 F, A, M, H, N 及 P, Q 各自清晰分离
+  \begin{tikzpicture}[scale=0.95, >=Stealth, line cap=round, line join=round]
+    % 增大抛物线顶点横坐标 xa=0.40 与比例 scale=0.95，彻底拉开 P、F、A、M 的空间
+    % 心脏线参数 r=1.20 => B=(2.40,0), G=(1.20,0), 抛物线顶点 A=(0.40,0), p=2*xa=0.80, R^2 = r*p = 0.96
+    \def\r{1.20}
+    \def\xa{0.40}
+    \def\tzero{40}
 
     \pgfmathsetmacro{\p}{2*\xa}
     \pgfmathsetmacro{\Rsq}{\r*\p}
@@ -87,14 +88,14 @@
     \coordinate (P) at ({\rp*cos(\tq)}, {\rp*sin(\tq)});
 
     % 极轴
-    \draw[->] (-0.82, 0) -- (2.72, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (-0.78, 0) -- (2.68, 0) node[below, font=\scriptsize] {$x$};
 
     % 直线 b (虚线)
     \draw[densely dashed] (\xa, -1.55) -- (\xa, 1.55);
     \node[left=1pt, font=\scriptsize] at (\xa, -1.42) {$b$};
 
     % 抛物线 (虚线)
-    \draw[densely dashed, domain=-1.12:1.12, samples=100, variable=\y]
+    \draw[densely dashed, domain=-1.28:1.28, samples=110, variable=\y]
       plot ({\xa - \y*\y/(2*\p)}, {\y});
 
     % 定圆 FBN (圆心 G, 半径 r)
@@ -116,16 +117,17 @@
     \draw[densely dashed] (G) -- (H);
     \draw (F) -- (Q);
 
-    % 标注点 (各自放置到清晰无压线方位)
-    \fill (F) circle (1.2pt) node[below right=1pt, font=\scriptsize] {$F$};
-    \fill (A) circle (1.2pt) node[below right=0pt, font=\scriptsize] {$A$};
-    \fill (B) circle (1.2pt) node[below left=0pt, font=\scriptsize] {$B$};
-    \fill (G) circle (1.2pt) node[below=1pt, font=\scriptsize] {$G$};
+    % 标注点（F 置于尖点正左开口纯空白 pocket 内，G 略向右下避开虚线小圆，N 移至蓝线外侧）
+    \fill (F) circle (1.2pt);
+    \node[font=\scriptsize] at (-0.18, 0.14) {$F$};
+    \fill (A) circle (1.2pt) node[below right=1pt, font=\scriptsize] {$A$};
+    \fill (B) circle (1.2pt) node[below left=1pt, font=\scriptsize] {$B$};
+    \fill (G) circle (1.2pt) node[below right=1pt, font=\scriptsize] {$G$};
     \fill (H) circle (1.2pt);
-    \node[font=\scriptsize] at ($(H)+(110:0.21)$) {$H$};
-    \fill (M) circle (1.2pt) node[below right=0pt, font=\scriptsize] {$M$};
-    \fill (N) circle (1.2pt) node[above right=0pt, font=\scriptsize] {$N$};
-    \fill (P) circle (1.2pt) node[left=1pt, font=\scriptsize] {$P$};
+    \node[font=\scriptsize] at ($(H)+(115:0.20)$) {$H$};
+    \fill (M) circle (1.2pt) node[right=1.5pt, yshift=-2pt, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[below right=1.5pt, font=\scriptsize] {$N$};
+    \fill (P) circle (1.2pt) node[above=2pt, xshift=-3pt, fill=white, inner sep=0.4pt, font=\scriptsize] {$P$};
     \fill (Q) circle (1.2pt) node[above left=0.5pt, font=\scriptsize] {$Q$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 71.2}

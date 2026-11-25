@@ -11,10 +11,10 @@
 \end{minipage}\hfill
 \begin{minipage}[c]{0.44\textwidth}
   \centering
-  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
     \def\a{1.12}
-    \def\b{0.36}
-    \def\tdeg{74}
+    \def\b{0.44}
+    \def\tdeg{70}
     \pgfmathsetmacro{\trad}{\tdeg*pi/180}
     \coordinate (O) at (0, 0);
     \coordinate (N) at (\tdeg:\a);
@@ -24,39 +24,39 @@
                         {(\a-\b)*sin(\tdeg) - \a*\trad*cos(\tdeg)});
 
     % 坐标轴
-    \draw[->] (-1.35, 0) -- (2.15, 0) node[below, font=\scriptsize] {$x$};
-    \draw[->] (0, -1.35) -- (0, 1.55) node[left, font=\scriptsize] {$y$};
+    \draw[->] (-1.32, 0) -- (2.28, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.32) -- (0, 1.58) node[left, font=\scriptsize] {$y$};
 
     % 定圆 O
     \draw[thick] (O) circle (\a);
 
-    % 切线 l 与连线
-    \draw[thick] ($(N)!-0.75!(P)$) -- ($(N)!1.28!(P)$);
-    \node[right=1pt, font=\scriptsize] at ($(N)!1.24!(P)$) {$l$};
+    % 切线 l（按原书向左上方伸出并标 l，右端止于 P 留空给角度 t-pi）与连线
+    \draw[thick] ($(N)!-0.82!(P)$) -- (P);
+    \node[above left=-1pt, font=\scriptsize] at ($(N)!-0.82!(P)$) {$l$};
     \draw (O) -- (N);
     \draw[thick] (P) -- (M);
     \draw[thick, curveblue] (O) -- (M);
 
     % 水平辅助射线与角度标注
-    \draw[thin] (N) -- ++(0.62, 0);
-    \draw[thin] (P) -- ++(0.55, 0);
+    \draw[thin] (N) -- ++(0.92, 0);
+    \draw[thin] (P) -- ++(0.72, 0);
 
     \draw (0.30, 0) arc (0:\tdeg:0.30);
     \node[font=\scriptsize] at ({\tdeg/2}:0.47) {$t$};
 
-    \draw ($(N)+(0.30,0)$) arc (0:{\tdeg-90}:0.30);
-    \node[right, font=\tiny] at ($(N)+(0.31,-0.10)$) {$t\!-\!\frac{\pi}{2}$};
+    \draw ($(N)+(0.36,0)$) arc (0:{\tdeg-90}:0.36);
+    \node[above right=-1pt, font=\tiny] at ($(N)+(0.44, 0.02)$) {$t\!-\!\frac{\pi}{2}$};
 
-    \draw ($(P)+(0.26,0)$) arc (0:{\tdeg-180}:0.26);
-    \node[right, font=\tiny] at ($(P)+(0.24,-0.16)$) {$t\!-\!\pi$};
+    \draw ($(P)+(0.28,0)$) arc (0:{\tdeg-180}:0.28);
+    \node[right, font=\tiny] at ($(P)+(0.31,-0.18)$) {$t\!-\!\pi$};
 
-    % 标点与标签
+    % 标点与标签（M 与 b 分置线段 PM 两侧，彻底清晰分离）
     \fill (O) circle (1.1pt) node[below left=-2pt, font=\scriptsize] {$O$};
     \fill (N) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$N$};
-    \fill (P) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$P$};
-    \fill (M) circle (1.3pt) node[above right=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$M$};
+    \fill (P) circle (1.2pt) node[above right=0.5pt, font=\scriptsize] {$P$};
+    \fill (M) circle (1.3pt) node[right=2pt, font=\scriptsize] {$M$};
     \node[above left=-2pt, font=\scriptsize] at ($(O)!0.52!(N)$) {$a$};
-    \node[above left=-2pt, font=\scriptsize] at ($(P)!0.50!(M)$) {$b$};
+    \node[left=1.5pt, font=\scriptsize] at ($(P)!0.52!(M)$) {$b$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 54.1}
 \end{minipage}

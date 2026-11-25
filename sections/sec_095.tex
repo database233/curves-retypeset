@@ -148,25 +148,21 @@
     \draw[line width=0.75pt] (0,0) circle (1.38);
     \draw[line width=0.75pt] (0,0) circle (0.98);
 
-    % 圆环文字 EADEM MUTATA RESURGO（从左下起顺时针环排）
+    % 圆环文字 EADEM MUTATA RESURGO（古典罗马衬线大写体，自左下起顺时针匀称环排）
     \def\Rtxt{1.18}
     \foreach \ch/\ang in {
-      E/212, A/198, D/184, E/170, M/155,
-      M/128, U/114, T/100, A/86,  T/72, A/58,
-      R/32,  E/18,  S/4,   U/-10, R/-24, G/-38, O/-52%
+      E/236, A/219, D/202, E/185, M/167,
+      M/135, U/118, T/102, A/86,  T/70,  A/54,
+      R/22,  E/6,   S/-10, U/-26, R/-42, G/-58, O/-74%
     } {
-      \node[rotate={\ang-90}, font=\scriptsize\sffamily\bfseries] at (\ang:\Rtxt) {\ch};
-    }
-    % 底部装饰刻纹
-    \foreach \ang in {230,235,...,300} {
-      \draw[line width=0.45pt] (\ang:1.05) -- (\ang:1.31);
+      \node[rotate={\ang-90}, font=\footnotesize\rmfamily] at (\ang:\Rtxt) {\ch};
     }
 
-    % 内圆中的正交轴与对数螺线
+    % 内圆中的正交轴与对数螺线（外端自然收于右下方内圆周）
     \draw[line width=0.55pt] (-0.98,0) -- (0.98,0);
     \draw[line width=0.55pt] (0,-0.98) -- (0,0.98);
-    \draw[line width=0.8pt, curveblue, domain=-11.5:0.35, samples=220, smooth]
-      plot ({0.88*exp(0.22*\x)*cos(\x r)}, {0.88*exp(0.22*\x)*sin(\x r)});
+    \draw[line width=0.8pt, curveblue, domain=-12.5:-0.45, samples=220, smooth]
+      plot ({1.08*exp(0.22*\x)*cos(\x r)}, {1.08*exp(0.22*\x)*sin(\x r)});
   \end{tikzpicture}
   \caption*{图\ 95.2}
 \end{figure}

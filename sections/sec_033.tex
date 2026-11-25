@@ -39,10 +39,10 @@
   \begin{minipage}[b]{0.49\textwidth}
     \centering
     \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
-      % l/2 = 0.65 => l = 1.30, r = 0.85, theta = 40 deg
-      \def\l{1.30}
-      \def\r{0.85}
-      \def\th{40}
+      % l/2 = 0.70 => l = 1.40, r = 0.80, theta = 48 deg (拉开 E 与 G 水平间距 > 3mm)
+      \def\l{1.40}
+      \def\r{0.80}
+      \def\th{48}
       \pgfmathsetmacro{\Cx}{\l*cos(\th)}
       \pgfmathsetmacro{\Cy}{\l*sin(\th)}
       \pgfmathsetmacro{\Gx}{\Cx - \Cy*cos(2*\th)/sin(2*\th)}
@@ -58,8 +58,8 @@
       \coordinate (P) at ({\Cx + \r*cos(2*\th)}, {\Cy + \r*sin(2*\th)});
 
       % 坐标轴
-      \draw[->] (-1.15, 0) -- (2.45, 0) node[below, font=\footnotesize] {$x$};
-      \draw[->] (0, -0.95) -- (0, 1.95) node[left, font=\footnotesize] {$y$};
+      \draw[->] (-1.10, 0) -- (2.50, 0) node[below, font=\footnotesize] {$x$};
+      \draw[->] (0, -0.95) -- (0, 2.05) node[left, font=\footnotesize] {$y$};
 
       % 定圆 O、初始圆 C0（虚线）与当前动圆 C
       \draw (O) circle (0.5*\l);
@@ -70,11 +70,11 @@
       \draw (O) -- (C) -- (P);
       \draw (O1) -- (P);
       \draw (C) -- (G);
-      \draw[densely dashed] (C) -- ++(0.72, 0);
+      \draw[densely dashed] (C) -- ++(0.76, 0);
 
       % 角度标注
       \draw (0.34, 0) arc (0:\th:0.34);
-      \node[font=\scriptsize] at ({0.5*\th}:0.49) {$\theta$};
+      \node[font=\scriptsize] at ({0.5*\th}:0.50) {$\theta$};
 
       \draw ($(C) + ({180+\th}:0.28)$) arc ({180+\th}:{180+2*\th}:0.28);
       \node[font=\scriptsize, fill=white, inner sep=0.4pt] at ($(C) + ({180+1.5*\th}:0.47)$) {$\theta$};
@@ -85,13 +85,13 @@
       % 关键点与标签
       \fill (O) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$O$};
       \fill (O1) circle (1.1pt) node[below, font=\scriptsize] {$O_1$};
-      \fill (E) circle (1.1pt) node[below right=-1.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$E$};
-      \fill (G) circle (1.1pt) node[below=-1pt, font=\scriptsize] {$G$};
-      \fill (C0) circle (1.1pt) node[below right=-2pt, font=\scriptsize] {$C_0$};
+      \fill (E) circle (1.1pt) node[below left=-1pt, font=\scriptsize] {$E$};
+      \fill (G) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$G$};
+      \fill (C0) circle (1.1pt) node[below right=-1pt, font=\scriptsize] {$C_0$};
       \fill (P0) circle (1.1pt) node[below, font=\scriptsize] {$P_0$};
       \fill (D) circle (1.1pt) node[above left=0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$D$};
-      \fill (C) circle (1.1pt) node[above left=-2pt, font=\scriptsize] {$C$};
-      \fill (F) circle (1.1pt) node[above right=-2pt, font=\scriptsize] {$F$};
+      \fill (C) circle (1.1pt) node[above left=-1pt, font=\scriptsize] {$C$};
+      \fill (F) circle (1.1pt) node[above right=-1pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$F$};
       \fill (P) circle (1.3pt) node[above, font=\scriptsize] {$P$};
     \end{tikzpicture}
     \caption*{图\ 33.2}

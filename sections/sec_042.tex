@@ -5,59 +5,83 @@
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.39\textwidth]{fig_042_1.png}
-  \par\vspace{1pt}
+  \includegraphics[width=0.48\textwidth]{fig_042_1.png}
+  \par\vspace{2pt}
   {\footnotesize (1)}
 
-  \vspace{3pt}
-  \begin{minipage}[b]{0.23\textwidth}
+  \vspace{6pt}
+  \begin{minipage}[b]{0.48\textwidth}
     \centering
-    \begin{tikzpicture}[scale=0.58]
-      \pgfmathsetmacro{\m}{25/91}
-      \def\h{0.44}
-      \foreach \j in {0,1,2,3} {
-        \draw[very thin, curveblue, domain=0:1800, samples=360, variable=\s]
-          plot ({(1-\m)*cos(\s)+\h*cos(72*\j + ((1-\m)/\m)*\s)},
-                {(1-\m)*sin(\s)-\h*sin(72*\j + ((1-\m)/\m)*\s)});
+    \begin{tikzpicture}[scale=1.48, line cap=round, line join=round]
+      % (2) 18 瓣四层套叠繁花规花环 (m = 5/18, 1-m = 13/18, k = 13/5 = 2.6)
+      \def\om{0.722222}
+      \def\kval{2.6}
+      \foreach \h/\ph in {0.56/0, 0.51/3, 0.46/6, 0.41/9} {
+        \foreach \n in {0,1,2,3,4} {
+          \pgfmathsetmacro{\ta}{360*\n}
+          \pgfmathsetmacro{\tb}{360*(\n+1)}
+          \draw[line width=0.55pt, curveblue!90!black, domain=\ta:\tb, samples=72, variable=\t]
+            plot ({\om*cos(\t)+\h*cos(\kval*\t+\ph)},
+                  {\om*sin(\t)-\h*sin(\kval*\t+\ph)});
+        }
       }
     \end{tikzpicture}
-    \par{\footnotesize (2)}
+    \par\vspace{2pt}{\footnotesize (2)}
   \end{minipage}
   \hfill
-  \begin{minipage}[b]{0.23\textwidth}
+  \begin{minipage}[b]{0.48\textwidth}
     \centering
-    \begin{tikzpicture}[scale=0.51]
-      \pgfmathsetmacro{\m}{9/32}
-      \def\h{0.715}
-      \draw[very thin, curveblue, domain=0:3240, samples=960, variable=\t]
-        plot ({(1-\m)*cos(\t)+\h*cos(((1-\m)/\m)*\t)},
-              {(1-\m)*sin(\t)-\h*sin(((1-\m)/\m)*\t)});
+    \begin{tikzpicture}[scale=1.51, line cap=round, line join=round]
+      % (3) 32 瓣细密放射菊花纹 (m = 11/32, 1-m = 21/32, k = 21/11)
+      \def\om{0.65625}
+      \def\kval{1.9090909}
+      \def\h{0.60}
+      \foreach \n in {0,1,...,10} {
+        \pgfmathsetmacro{\ta}{360*\n}
+        \pgfmathsetmacro{\tb}{360*(\n+1)}
+        \draw[line width=0.58pt, curveblue!90!black, domain=\ta:\tb, samples=72, variable=\t]
+          plot ({\om*cos(\t)+\h*cos(\kval*\t)},
+                {\om*sin(\t)-\h*sin(\kval*\t)});
+      }
     \end{tikzpicture}
-    \par{\footnotesize (3)}
+    \par\vspace{2pt}{\footnotesize (3)}
+  \end{minipage}
+
+  \vspace{6pt}
+  \begin{minipage}[b]{0.48\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=3.03, line cap=round, line join=round]
+      % (4) 28 瓣圆浑菱形编织网球 (m = 19/28, 1-m = 9/28, k = 9/19)
+      \def\om{0.3214286}
+      \def\kval{0.4736842}
+      \def\h{0.305}
+      \foreach \n in {0,1,...,18} {
+        \pgfmathsetmacro{\ta}{360*\n}
+        \pgfmathsetmacro{\tb}{360*(\n+1)}
+        \draw[line width=0.58pt, curveblue!90!black, domain=\ta:\tb, samples=56, variable=\t]
+          plot ({\om*cos(\t)+\h*cos(\kval*\t)},
+                {\om*sin(\t)-\h*sin(\kval*\t)});
+      }
+    \end{tikzpicture}
+    \par\vspace{2pt}{\footnotesize (4)}
   \end{minipage}
   \hfill
-  \begin{minipage}[b]{0.23\textwidth}
+  \begin{minipage}[b]{0.48\textwidth}
     \centering
-    \begin{tikzpicture}[scale=0.52]
-      \pgfmathsetmacro{\m}{7/29}
-      \def\h{0.62}
-      \draw[very thin, curveblue, domain=0:2520, samples=900, variable=\t]
-        plot ({(1-\m)*cos(\t)+\h*cos(((1-\m)/\m)*\t)},
-              {(1-\m)*sin(\t)-\h*sin(((1-\m)/\m)*\t)});
+    \begin{tikzpicture}[scale=1.45, line cap=round, line join=round]
+      % (5) 3 叶旋转丝带非闭合变幅内摆线 (m = 21/64, 1-m = 43/64, k = 43/21, 绘制 11 圈)
+      \def\om{0.671875}
+      \def\kval{2.047619}
+      \def\h{0.64}
+      \foreach \n in {0,1,...,10} {
+        \pgfmathsetmacro{\ta}{360*\n}
+        \pgfmathsetmacro{\tb}{360*(\n+1)}
+        \draw[line width=0.58pt, curveblue!90!black, domain=\ta:\tb, samples=72, variable=\t]
+          plot ({\om*cos(\t)+\h*cos(\kval*\t+18)},
+                {\om*sin(\t)-\h*sin(\kval*\t+18)});
+      }
     \end{tikzpicture}
-    \par{\footnotesize (4)}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[b]{0.23\textwidth}
-    \centering
-    \begin{tikzpicture}[scale=0.55]
-      \pgfmathsetmacro{\m}{21/64}
-      \def\h{0.62}
-      \draw[very thin, curveblue, domain=0:2880, samples=960, variable=\t]
-        plot ({(1-\m)*cos(\t)+\h*cos(((1-\m)/\m)*\t)},
-              {(1-\m)*sin(\t)-\h*sin(((1-\m)/\m)*\t)});
-    \end{tikzpicture}
-    \par{\footnotesize (5)}
+    \par\vspace{2pt}{\footnotesize (5)}
   \end{minipage}
   \caption*{图\ 42.1}
 \end{figure}

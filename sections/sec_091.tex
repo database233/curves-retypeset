@@ -30,84 +30,138 @@
   \centering
   \begin{minipage}[b]{0.45\textwidth}
     \centering
-    \begin{tikzpicture}[scale=1.08]
-      % 自然界螺壳（对数螺线外壳、内缘与放射状肋纹）
-      \def\bshell{0.165}
-      \def\rshell{0.34}
-      % 内部中心旋涡
-      \draw[line width=0.65pt, domain=-8.0:-1.8, samples=120, smooth]
-        plot ({\rshell*exp(\bshell*\x)*cos(\x r)}, {\rshell*exp(\bshell*\x)*sin(\x r)});
-      % 外廓螺线（从内向外绕至右上开口）
-      \draw[line width=0.9pt, domain=-1.8:8.05, samples=220, smooth]
-        plot ({\rshell*exp(\bshell*\x)*cos(\x r)}, {\rshell*exp(\bshell*\x)*sin(\x r)});
-      % 螺壳肋纹 / 隔膜线（沿生长方向略微前凸的弧线）
-      \foreach \th in {-3.5,-3.1,...,7.8} {
-        \pgfmathsetmacro{\rout}{\rshell*exp(\bshell*\th)}
-        \pgfmathsetmacro{\rin}{\rshell*exp(\bshell*(\th-6.28318))}
-        \pgfmathsetmacro{\rmid}{0.5*(\rout+\rin)}
-        \pgfmathsetmacro{\thmid}{\th + 0.16}
-        \pgfmathsetmacro{\xo}{\rout*cos(\th r)}
-        \pgfmathsetmacro{\yo}{\rout*sin(\th r)}
-        \pgfmathsetmacro{\xi}{\rin*cos(\th r)}
-        \pgfmathsetmacro{\yi}{\rin*sin(\th r)}
-        \pgfmathsetmacro{\xm}{\rmid*cos(\thmid r)}
-        \pgfmathsetmacro{\ym}{\rmid*sin(\thmid r)}
-        \draw[line width=0.45pt, black!85] (\xi,\yi) .. controls (\xm,\ym) .. (\xo,\yo);
-      }
-      % 最外圈壳口锯齿状闭合线
-      \pgfmathsetmacro{\tend}{8.05}
+    \begin{tikzpicture}[scale=1.08, line cap=round, line join=round]
+      % 鹦鹉螺壳：顺时针向外盘旋，壳口自然朝右下方卧放，具双线外壳厚度、隔室弧线与天然条纹质感
+      \def\bshell{0.175}
+      \def\rshell{0.285}
+      \def\phizero{0.78} % 使末端 t = 7.75 时极角 -(\phizero + t) 落在右下方约 -45°
+      \def\tend{7.75}
+
+      % 1) 壳体整体基底柔和渐变填充（摆脱单薄线框感）
+      \pgfmathsetmacro{\tstart}{\tend - 6.28318}
       \pgfmathsetmacro{\reout}{\rshell*exp(\bshell*\tend)}
-      \pgfmathsetmacro{\rein}{\rshell*exp(\bshell*(\tend-6.28318))}
-      \draw[line width=0.8pt]
-        ({\rein*cos(\tend r)}, {\rein*sin(\tend r)})
-        -- ({(0.75*\rein+0.25*\reout)*cos((\tend-0.06) r)}, {(0.75*\rein+0.25*\reout)*sin((\tend-0.06) r)})
-        -- ({(0.50*\rein+0.50*\reout)*cos((\tend+0.05) r)}, {(0.50*\rein+0.50*\reout)*sin((\tend+0.05) r)})
-        -- ({(0.25*\rein+0.75*\reout)*cos((\tend-0.04) r)}, {(0.25*\rein+0.75*\reout)*sin((\tend-0.04) r)})
-        -- ({\reout*cos(\tend r)}, {\reout*sin(\tend r)});
+      \pgfmathsetmacro{\rein}{\rshell*exp(\bshell*\tstart)}
+      \pgfmathsetmacro{\phiend}{-(\phizero + \tend)}
+      \shade[inner color=white, outer color=black!9]
+        plot[domain=\tstart:\tend, samples=160, smooth]
+          ({\rshell*exp(\bshell*\x)*cos((-\phizero-\x) r)}, {\rshell*exp(\bshell*\x)*sin((-\phizero-\x) r)})
+        -- ({\rein*cos(\phiend r)}, {\rein*sin(\phiend r)}) -- cycle;
+
+      % 2) 外圈隔室天然条纹与明暗过渡（外缘略深、近壳脐渐淡）
+      \foreach \th in {1.50, 1.92, ..., 7.45} {
+        \pgfmathsetmacro{\tha}{\th}
+        \pgfmathsetmacro{\thb}{\th + 0.16}
+        \pgfmathsetmacro{\roA}{0.94*\rshell*exp(\bshell*\tha)}
+        \pgfmathsetmacro{\roB}{0.94*\rshell*exp(\bshell*\thb)}
+        \pgfmathsetmacro{\riA}{\rshell*exp(\bshell*(\tha-6.28318))}
+        \pgfmathsetmacro{\riB}{\rshell*exp(\bshell*(\thb-6.28318))}
+        \pgfmathsetmacro{\pA}{-(\phizero + \tha)}
+        \pgfmathsetmacro{\pB}{-(\phizero + \thb)}
+        \pgfmathsetmacro{\rmA}{0.52*(\roA+\riA)}
+        \pgfmathsetmacro{\rmB}{0.52*(\roB+\riB)}
+        \fill[black!14]
+          ({\riA*cos(\pA r)}, {\riA*sin(\pA r)})
+          .. controls ({\rmA*cos((\pA+0.16) r)}, {\rmA*sin((\pA+0.16) r)}) ..
+          ({\roA*cos(\pA r)}, {\roA*sin(\pA r)})
+          -- ({\roB*cos(\pB r)}, {\roB*sin(\pB r)})
+          .. controls ({\rmB*cos((\pB+0.16) r)}, {\rmB*sin((\pB+0.16) r)}) ..
+          ({\riB*cos(\pB r)}, {\riB*sin(\pB r)}) -- cycle;
+      }
+
+      % 3) 双线外壳壁厚度填充与内壁细线
+      \fill[black!12]
+        plot[domain=1.46:\tend, samples=150, smooth]
+          ({\rshell*exp(\bshell*\x)*cos((-\phizero-\x) r)}, {\rshell*exp(\bshell*\x)*sin((-\phizero-\x) r)})
+        -- plot[domain=\tend:1.46, samples=150, smooth]
+          ({0.94*\rshell*exp(\bshell*\x)*cos((-\phizero-\x) r)}, {0.94*\rshell*exp(\bshell*\x)*sin((-\phizero-\x) r)})
+        -- cycle;
+      \draw[line width=0.45pt, black!75, domain=1.46:\tend, samples=160, smooth]
+        plot ({0.94*\rshell*exp(\bshell*\x)*cos((-\phizero-\x) r)}, {0.94*\rshell*exp(\bshell*\x)*sin((-\phizero-\x) r)});
+
+      % 4) 隔室弧线（沿生长反方向内凹的优雅隔膜线）
+      \foreach \th in {-3.0, -2.58, ..., 7.55} {
+        \pgfmathsetmacro{\rout}{0.94*\rshell*exp(\bshell*\th)}
+        \pgfmathsetmacro{\rin}{\rshell*exp(\bshell*(\th-6.28318))}
+        \pgfmathsetmacro{\rmid}{0.52*(\rout+\rin)}
+        \pgfmathsetmacro{\p}{-(\phizero + \th)}
+        \pgfmathsetmacro{\pmid}{\p + 0.18}
+        \draw[line width=0.46pt, black!85]
+          ({\rin*cos(\p r)}, {\rin*sin(\p r)})
+          .. controls ({\rmid*cos(\pmid r)}, {\rmid*sin(\pmid r)}) ..
+          ({\rout*cos(\p r)}, {\rout*sin(\p r)});
+      }
+
+      % 5) 内部中心旋涡与深色壳脐
+      \draw[line width=0.65pt, domain=-8.0:1.46, samples=140, smooth]
+        plot ({\rshell*exp(\bshell*\x)*cos((-\phizero-\x) r)}, {\rshell*exp(\bshell*\x)*sin((-\phizero-\x) r)});
+      \fill[black!80] (0,0) circle (0.04);
+
+      % 6) 外廓主螺线与右下方微凹壳口闭合线（附内侧轻阴影）
+      \draw[line width=0.95pt, black, domain=1.46:\tend, samples=180, smooth]
+        plot ({\rshell*exp(\bshell*\x)*cos((-\phizero-\x) r)}, {\rshell*exp(\bshell*\x)*sin((-\phizero-\x) r)});
+      \pgfmathsetmacro{\rmend}{0.52*(\reout+\rein)}
+      \fill[black!18]
+        ({\rein*cos(\phiend r)}, {\rein*sin(\phiend r)})
+        .. controls ({\rmend*cos((\phiend+0.15) r)}, {\rmend*sin((\phiend+0.15) r)}) ..
+        ({\reout*cos(\phiend r)}, {\reout*sin(\phiend r)})
+        -- ({0.94*\reout*cos((\phiend+0.09) r)}, {0.94*\reout*sin((\phiend+0.09) r)})
+        .. controls ({\rmend*cos((\phiend+0.22) r)}, {\rmend*sin((\phiend+0.22) r)}) ..
+        ({\rein*cos((\phiend+0.08) r)}, {\rein*sin((\phiend+0.08) r)}) -- cycle;
+      \draw[line width=0.85pt, black]
+        ({\rein*cos(\phiend r)}, {\rein*sin(\phiend r)})
+        .. controls ({\rmend*cos((\phiend+0.15) r)}, {\rmend*sin((\phiend+0.15) r)}) ..
+        ({\reout*cos(\phiend r)}, {\reout*sin(\phiend r)});
     \end{tikzpicture}
     \caption*{图\ 91.2}
   \end{minipage}
   \hfill
   \begin{minipage}[b]{0.50\textwidth}
     \centering
-    \begin{tikzpicture}[scale=0.95]
-      % 重瓣花朵：严格按黄金角 137.507764 度与指数半径 R_j = 0.22 * exp(0.033*j) 排布花瓣
-      % 从外向内 (j = 54 down to 0) 绘制并白底填充，自然形成层叠立体感
+    \begin{tikzpicture}[scale=0.96, line cap=round, line join=round]
+      % 重瓣花朵：严格按黄金角 137.507764 度与指数半径 R_j = 0.22 * exp(0.033*j) 排布饱满花瓣
+      % 从外向内 (j = 54 down to 0) 绘制并带柔和底影，自然形成层叠立体感
       \def\Rzero{0.22}
       \def\cval{0.033}
       \foreach \j in {54,53,...,0} {
         \pgfmathsetmacro{\ang}{\j * 137.507764}
         \pgfmathsetmacro{\rTip}{\Rzero * exp(\cval * \j)}
-        \pgfmathsetmacro{\rBase}{0.38 * \rTip}
+        \pgfmathsetmacro{\rBase}{0.36 * \rTip}
         \pgfmathsetmacro{\plen}{\rTip - \rBase}
-        \pgfmathsetmacro{\pwid}{0.36 * \plen + 0.04}
+        \pgfmathsetmacro{\pwid}{0.48 * \plen + 0.055}
         \begin{scope}[rotate=\ang]
-          \fill[white, draw=black, line width=0.52pt]
+          \path[draw=black, line width=0.52pt, top color=white, bottom color=black!7]
             (0,\rBase)
-            .. controls (-\pwid,{\rBase + 0.45*\plen}) and (-\pwid*0.85,{\rTip - 0.12*\plen}) ..
+            .. controls (-\pwid,{\rBase + 0.42*\plen}) and ({-\pwid*0.92},{\rTip - 0.14*\plen}) ..
             (0,\rTip)
-            .. controls (\pwid*0.85,{\rTip - 0.12*\plen}) and (\pwid,{\rBase + 0.45*\plen}) ..
+            .. controls ({\pwid*0.92},{\rTip - 0.14*\plen}) and (\pwid,{\rBase + 0.42*\plen}) ..
             (0,\rBase) -- cycle;
-          \draw[line width=0.22pt, black!60] (0,{\rBase + 0.12*\plen}) -- (0,{\rTip - 0.22*\plen});
+          \draw[line width=0.22pt, black!48] (0,{\rBase + 0.14*\plen}) -- (0,{\rTip - 0.24*\plen});
         \end{scope}
       }
       % 花心小蕊
-      \fill[white, draw=black, line width=0.5pt] (0,0) circle (0.09);
+      \fill[white, draw=black, line width=0.5pt] (0,0) circle (0.095);
       \foreach \a in {0,45,...,315} {
-        \fill (\a:0.045) circle (0.4pt);
+        \fill (\a:0.048) circle (0.42pt);
       }
-      % 两条严格贴合花瓣叶序 (8-斜列线与 5-斜列线) 的虚线对数螺线
-      % 1) 8-斜列线 (逆时针): j_0 = 2, theta_j = (2 + 8*t)*137.507764 deg,
-      %    有效角度变化 +20.0621 deg/步 = +0.35015 rad/步, m8 = 8*0.033/0.35015 = 0.75396
-      \draw[dashed, dash pattern=on 2.8pt off 1.8pt, line width=0.95pt, curveblue,
-            domain=0:6.5, samples=80, smooth]
-        plot ({ \Rzero*exp(\cval*(2 + 8*\x)) * cos( (2*137.507764 + \x*20.0621) ) },
-              { \Rzero*exp(\cval*(2 + 8*\x)) * sin( (2*137.507764 + \x*20.0621) ) });
-      % 2) 5-斜列线 (顺时针): j_0 = 4, 有效角度变化 -32.4612 deg/步
-      \draw[dashed, dash pattern=on 2.8pt off 1.8pt, line width=0.95pt, curveblue,
-            domain=0:9.8, samples=100, smooth]
-        plot ({ \Rzero*exp(\cval*(4 + 5*\x)) * cos( (4*137.507764 - \x*32.4612) ) },
-              { \Rzero*exp(\cval*(4 + 5*\x)) * sin( (4*137.507764 - \x*32.4612) ) });
+      % 两条严格串过花瓣尖端的虚线对数螺线（因花瓣尖端在 (0, rTip) 旋转 \ang 度，极角须补加 +90 度）
+      % 1) 8-斜列线 (逆时针, j = 2 + 8*t): 先绘轻微白边衬底，再绘深色加粗长虚线
+      \draw[line width=2.2pt, white, opacity=0.82,
+            domain=0:6.2, samples=90, smooth]
+        plot ({ \Rzero*exp(\cval*(2 + 8*\x)) * cos( (2*137.507764 + \x*20.062112 + 90) ) },
+              { \Rzero*exp(\cval*(2 + 8*\x)) * sin( (2*137.507764 + \x*20.062112 + 90) ) });
+      \draw[dashed, dash pattern=on 3.8pt off 2.2pt, line width=1.15pt, curveblue!85!black,
+            domain=0:6.2, samples=90, smooth]
+        plot ({ \Rzero*exp(\cval*(2 + 8*\x)) * cos( (2*137.507764 + \x*20.062112 + 90) ) },
+              { \Rzero*exp(\cval*(2 + 8*\x)) * sin( (2*137.507764 + \x*20.062112 + 90) ) });
+      % 2) 5-斜列线 (顺时针, j = 4 + 5*t): 同样白边衬底 + 深色加粗长虚线
+      \draw[line width=2.2pt, white, opacity=0.82,
+            domain=0:10.0, samples=110, smooth]
+        plot ({ \Rzero*exp(\cval*(4 + 5*\x)) * cos( (4*137.507764 - \x*32.461180 + 90) ) },
+              { \Rzero*exp(\cval*(4 + 5*\x)) * sin( (4*137.507764 - \x*32.461180 + 90) ) });
+      \draw[dashed, dash pattern=on 3.8pt off 2.2pt, line width=1.15pt, curveblue!85!black,
+            domain=0:10.0, samples=110, smooth]
+        plot ({ \Rzero*exp(\cval*(4 + 5*\x)) * cos( (4*137.507764 - \x*32.461180 + 90) ) },
+              { \Rzero*exp(\cval*(4 + 5*\x)) * sin( (4*137.507764 - \x*32.461180 + 90) ) });
     \end{tikzpicture}
     \caption*{图\ 91.3}
   \end{minipage}

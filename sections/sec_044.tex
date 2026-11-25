@@ -12,12 +12,13 @@
   % 公共参数与绘制单个状态的命令
   % #1: 刀盘顺时针转角 (相对于 M 在 196 deg), #2: 工件绘制代码
   \newcommand{\hexpanel}[2]{%
-    \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+    \begin{tikzpicture}[scale=0.90, >=Stealth, line cap=round, line join=round]
       \def\rw{0.38}
       \def\rd{0.72}
       \def\htip{0.84}
       \def\lOA{1.17}
       \def\phiA{#1}
+      \pgfmathsetmacro{\hexrot}{-(\phiA - 16)/2}
       \coordinate (O) at (0,0);
       \coordinate (A) at (\lOA, 0);
 
@@ -25,6 +26,11 @@
       \draw[densely dash dot, thin] (-0.54, 0) -- (2.06, 0);
       \draw[densely dash dot, thin] (0, -0.54) -- (0, 0.54);
       \draw[densely dash dot, thin] (\lOA, -0.90) -- (\lOA, 0.90);
+
+      % 工件内部浅虚线内接正六边形参考线（随工件同步顺时针旋转）
+      \draw[densely dashed, thin, black!45]
+        ({30+\hexrot}:\rw) -- ({90+\hexrot}:\rw) -- ({150+\hexrot}:\rw)
+        -- ({210+\hexrot}:\rw) -- ({270+\hexrot}:\rw) -- ({330+\hexrot}:\rw) -- cycle;
 
       % 工件轮廓
       #2
@@ -86,7 +92,7 @@
     \centering
     \hexpanel{36}{%
       \draw[densely dashed, thin, black!40] (O) circle (\rw);
-      \draw[thick, curveblue] (12:\rw) arc (12:312:\rw) -- cycle;
+      \draw[thick, curveblue] (20:\rw) arc (20:320:\rw) -- cycle;
     }
   \end{minipage}
   \hfill
@@ -94,7 +100,7 @@
     \centering
     \hexpanel{76}{%
       \draw[densely dashed, thin, black!40] (O) circle (\rw);
-      \draw[thick, curveblue] (-8:\rw) arc (-8:292:\rw) -- cycle;
+      \draw[thick, curveblue] (0:\rw) arc (0:300:\rw) -- cycle;
     }
   \end{minipage}
 
@@ -103,7 +109,7 @@
     \centering
     \hexpanel{120}{%
       \draw[densely dashed, thin, black!40] (O) circle (\rw);
-      \draw[thick, curveblue] (-30:\rw) arc (-30:90:\rw) -- (150:\rw) arc (150:270:\rw) -- cycle;
+      \draw[thick, curveblue] (-22:\rw) arc (-22:278:\rw) -- cycle;
     }
   \end{minipage}
   \hfill
@@ -111,7 +117,7 @@
     \centering
     \hexpanel{136}{%
       \draw[densely dashed, thin, black!40] (O) circle (\rw);
-      \draw[thick, curveblue] (-98:\rw) -- (-38:\rw) -- (-8:{\rw*cos(30)}) -- (-8:\rw) arc (-8:262:\rw) -- cycle;
+      \draw[thick, curveblue] (-90:\rw) -- (-30:\rw) -- ({\rw*cos(30)}, 0) -- (0:\rw) arc (0:270:\rw) -- cycle;
     }
   \end{minipage}
   \caption*{图\ 44.1}

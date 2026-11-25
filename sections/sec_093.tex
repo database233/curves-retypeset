@@ -7,26 +7,34 @@
   \centering
   \vspace*{3pt}
   \begin{tikzpicture}
-    % 多条紧密对数螺线黑带（致密同心环视觉幻觉，m = 0.048）
+    % 高对比黑白对数螺线视错觉盘（3 条粗黑螺带，总黑度约 65%，m = 0.12，顺时针向外展开，每圈 110 采样点）
     \def\Rlim{1.75}
-    \def\mval{0.048}
-    \def\rstart{0.06}
-    \def\dphi{18}
+    \def\mval{0.12}
+    \def\rstart{0.04}
+    \def\dphi{78}
     \begin{scope}
       \clip (0,0) circle (\Rlim);
-      \foreach \k in {0, 72, 144, 216, 288} {
+      \foreach \k in {0, 120, 240} {
+        % 单条连续闭路径分段串联采样（3×200=600点覆盖6.3圈，无任何内部接缝弦线；外封口位于 r=4.5 >> 1.75）
         \fill[black]
-          plot[domain=0:72, samples=260]
+          plot[domain=0:13.2, samples=200]
             ({\rstart*exp(\mval*\x)*cos(-\x r + \k)}, {\rstart*exp(\mval*\x)*sin(-\x r + \k)})
-          --
-          plot[domain=72:0, samples=260]
+          -- plot[domain=13.2:26.4, samples=200]
+            ({\rstart*exp(\mval*\x)*cos(-\x r + \k)}, {\rstart*exp(\mval*\x)*sin(-\x r + \k)})
+          -- plot[domain=26.4:39.6, samples=200]
+            ({\rstart*exp(\mval*\x)*cos(-\x r + \k)}, {\rstart*exp(\mval*\x)*sin(-\x r + \k)})
+          -- plot[domain=39.6:26.4, samples=200]
+            ({\rstart*exp(\mval*\x)*cos(-\x r + \k + \dphi)}, {\rstart*exp(\mval*\x)*sin(-\x r + \k + \dphi)})
+          -- plot[domain=26.4:13.2, samples=200]
+            ({\rstart*exp(\mval*\x)*cos(-\x r + \k + \dphi)}, {\rstart*exp(\mval*\x)*sin(-\x r + \k + \dphi)})
+          -- plot[domain=13.2:0, samples=200]
             ({\rstart*exp(\mval*\x)*cos(-\x r + \k + \dphi)}, {\rstart*exp(\mval*\x)*sin(-\x r + \k + \dphi)})
           -- cycle;
       }
     \end{scope}
-    \draw[line width=0.9pt] (0,0) circle (\Rlim);
+    \draw[line width=0.95pt, black] (0,0) circle (\Rlim);
     \fill[white] (0,0) circle (0.045);
-    \fill[black] (0,0) circle (0.015);
+    \fill[black] (0,0) circle (0.02);
   \end{tikzpicture}
   \caption*{图\ 93.1}
 \end{figure}
@@ -58,11 +66,6 @@
         plot ({\Rzero*exp(\mval*\x)*cos(\x r)}, {\Rzero*exp(\mval*\x)*sin(\x r)});
     \end{scope}
 
-    % 极轴 OA、射线 OP（过 B 点）与射线 OP'（过 D, B' 点）
-    \draw[line width=0.55pt] (0,0) -- (1.42,0);
-    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (0,0) -- (-22:1.85);
-    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (0,0) -- (-67:1.85);
-
     % 关键点坐标（弧度计算）
     \coordinate (A) at ({\Rzero}, 0);
     \pgfmathsetmacro{\rB}{\Rzero*exp(\mval*(-0.38397))}
@@ -74,16 +77,22 @@
     \coordinate (Ap) at (-45:\Rzero);
     \coordinate (Bp) at (-67:\rB);
 
-    \fill (0,0) circle (1.1pt) node[above right=0pt, fill=white, inner sep=0.4pt] {\footnotesize $O$};
-    \fill (A) circle (1.2pt) node[above=1pt] {\footnotesize $A$};
-    \fill (B) circle (1.2pt) node[below right=0pt, xshift=-1pt] {\footnotesize $B$};
-    \fill (C) circle (1.2pt) node[below left=-2pt] {\footnotesize $C$};
-    \fill (D) circle (1.2pt) node[above left=-1pt] {\footnotesize $D$};
-    \fill (Ap) circle (1.2pt) node[below right=-1pt] {\footnotesize $A'$};
-    \fill (Bp) circle (1.2pt) node[below left=-1pt] {\footnotesize $B'$};
+    % 水平极轴 OAP、连线 OB、位似对应射线 OCA' 与射线 ODB'P'
+    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (0,0) -- (1.78,0);
+    \draw[line width=0.55pt] (0,0) -- (B);
+    \draw[line width=0.55pt] (0,0) -- (Ap);
+    \draw[line width=0.6pt, -{Stealth[length=4pt]}] (0,0) -- (-67:1.72);
 
-    \node[right=1pt] at (-22:1.82) {\footnotesize $P$};
-    \node[right=1pt] at (-67:1.78) {\footnotesize $P'$};
+    \fill (0,0) circle (1.1pt) node[above=1.5pt, fill=white, inner sep=0.4pt] {\footnotesize $O$};
+    \fill (A) circle (1.2pt) node[above=1.5pt] {\footnotesize $A$};
+    \fill (B) circle (1.2pt) node[right=2pt] {\footnotesize $B$};
+    \fill (C) circle (1.2pt) node[above=1.5pt, fill=white, inner sep=0.4pt] {\footnotesize $C$};
+    \fill (D) circle (1.2pt) node[above left=0pt, fill=white, inner sep=0.3pt] {\footnotesize $D$};
+    \fill (Ap) circle (1.2pt) node[below right=0pt] {\footnotesize $A'$};
+    \fill (Bp) circle (1.2pt) node[below left=0.5pt] {\footnotesize $B'$};
+
+    \node[below=1pt] at (1.76,0) {\footnotesize $P$};
+    \node[right=1pt] at (-67:1.70) {\footnotesize $P'$};
     \node at (-135:0.58) {\footnotesize $C_1$};
     \node at (-172:1.05) {\footnotesize $C_2$};
   \end{tikzpicture}
@@ -134,17 +143,17 @@
         -- ($(C1)+(324:0.08)$) -- cycle;
     \end{scope}
 
-    % 2. 中间：旋转透明圆板（画有若干条深色对数螺线）
+    % 2. 中间：旋转透明圆板（画有若干条高对比纯黑顺时针向外展开的对数螺线，配合逆时针旋转使光芒外射）
     \begin{scope}[shift={(0.25,0.12)}]
       \begin{scope}[xscale=0.88]
         \clip (0,0) circle (0.95);
         \foreach \k in {0,60,120,180,240,300} {
-          \fill[black!85]
-            plot[domain=-2.5:3.8, samples=70]
-              ({0.14*exp(0.55*\x)*cos(\x r + \k)}, {0.14*exp(0.55*\x)*sin(\x r + \k)})
+          \fill[black]
+            plot[domain=-2.5:3.8, samples=100]
+              ({0.14*exp(0.55*\x)*cos(-\x r + \k)}, {0.14*exp(0.55*\x)*sin(-\x r + \k)})
             --
-            plot[domain=3.8:-2.5, samples=70]
-              ({0.14*exp(0.55*\x)*cos(\x r + \k + 25)}, {0.14*exp(0.55*\x)*sin(\x r + \k + 25)})
+            plot[domain=3.8:-2.5, samples=100]
+              ({0.14*exp(0.55*\x)*cos(-\x r + \k + 25)}, {0.14*exp(0.55*\x)*sin(-\x r + \k + 25)})
             -- cycle;
         }
       \end{scope}

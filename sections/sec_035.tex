@@ -13,12 +13,12 @@
 \begin{minipage}[t]{0.44\textwidth}
   \vspace{0pt}
   \centering
-  \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
-    % R = 1.45, r = 0.55, h = 0.30, angle(AON) = 45 deg
-    \def\R{1.45}
-    \def\r{0.55}
-    \def\h{0.30}
-    \def\angAON{45}
+  \begin{tikzpicture}[scale=0.84, >=Stealth, line cap=round, line join=round]
+    % R = 1.52, r = 0.66, h = 0.40, angle(AON) = 52 deg
+    \def\R{1.52}
+    \def\r{0.66}
+    \def\h{0.40}
+    \def\angAON{52}
     \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
     \pgfmathsetmacro{\alp}{\angAON - \tdeg}
     \coordinate (O) at (0,0);
@@ -26,28 +26,26 @@
     \coordinate (O1) at ({(\R-\r)*cos(\angAON)}, {(\R-\r)*sin(\angAON)});
     \coordinate (M) at ({(\R-\r)*cos(\angAON) + \h*cos(\alp)}, {(\R-\r)*sin(\angAON) + \h*sin(\alp)});
 
-    \draw[->] (-1.65, 0) -- (1.80, 0) node[below, font=\footnotesize] {$x$};
-    \draw[->] (0, -1.65) -- (0, 1.80) node[left, font=\footnotesize] {$y$};
+    \draw[->] (-1.70, 0) -- (1.88, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.70) -- (0, 1.88) node[left, font=\footnotesize] {$y$};
 
     \draw[thick] (O) circle (\R);
     \draw (O1) circle (\r);
-    \fill (\R-\r, 0) circle (1.2pt);
-    \fill (\R-\r+\h, 0) circle (1.2pt);
 
     \draw (O) -- (N);
     \draw (O1) -- (M);
-    \draw[thin] (O1) -- ++(0.65, 0);
+    \draw[thin] (O1) -- ++(0.72, 0);
 
     % 角 t 与 角 alpha
-    \draw ($(O1) + (\angAON:0.22)$) arc (\angAON:\alp:0.22);
-    \node[font=\scriptsize] at ($(O1) + (22:0.35)$) {$t$};
+    \draw ($(O1) + (\angAON:0.24)$) arc (\angAON:\alp:0.24);
+    \node[font=\scriptsize] at ($(O1) + (26:0.38)$) {$t$};
     \draw ($(O1) + (0:0.32)$) arc (0:\alp:0.32);
-    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.45)$) {$\alpha$};
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.48)$) {$\alpha$};
 
     \fill (O) circle (1.2pt) node[below left, font=\footnotesize] {$O$};
     \fill (N) circle (1.2pt) node[above right=-1pt, font=\footnotesize] {$N$};
-    \fill (O1) circle (1.2pt) node[above left=-2pt, font=\footnotesize] {$O_1$};
-    \fill (M) circle (1.3pt) node[below=-1pt, font=\footnotesize] {$M$};
+    \fill (O1) circle (1.2pt) node[above left=-1pt, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.3pt) node[right=2pt, font=\footnotesize] {$M$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 35.1}
 \end{minipage}

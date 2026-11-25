@@ -12,20 +12,21 @@
     \centering
     \begin{tikzpicture}[scale=1.1]
       % 圆心 O=(0,0), R=1.35, F=(-0.65, -0.25), M 在 135 度
+      % 折痕 l 为 MF 的垂直平分线，交外圆于 A(170.695度), B(37.695度)
       \def\R{1.35}
       \coordinate (O) at (0,0);
       \coordinate (F) at (-0.65,-0.25);
-      \coordinate (M) at ({1.35*cos(135)},{1.35*sin(135)});
-      \coordinate (A) at (-1.3322, 0.2183);
-      \coordinate (B) at (1.0682, 0.8255);
-      \coordinate (Op) at (-0.2640, 1.0437);
+      \coordinate (M) at ({\R*cos(135)},{\R*sin(135)});
+      \coordinate (A) at ({\R*cos(170.695)},{\R*sin(170.695)});
+      \coordinate (B) at ({\R*cos(37.695)},{\R*sin(37.695)});
 
-      % 外圆
-      \draw[line width=0.75pt] (O) circle (\R);
-      % 折痕 l
+      % 外圆周：保留部分为实线，A、B 之间被翻折走的左上圆弧为虚线
+      \draw[line width=0.75pt] (A) arc[start angle=170.695, end angle=397.695, radius=\R];
+      \draw[dashed, line width=0.6pt] (B) arc[start angle=37.695, end angle=170.695, radius=\R];
+      % 折起弓形区域：浅灰背面填充（与图 1.1 一致）及折痕、翻折弧
+      \fill[gray!6] (A) arc[start angle=-142.305, end angle=-9.305, radius=\R] -- (A) -- cycle;
       \draw[line width=0.7pt] (A) -- (B);
-      % 折起的弧
-      \draw[line width=0.65pt] (A) arc[start angle=-142.30, end angle=-9.30, radius=\R];
+      \draw[line width=0.65pt] (A) arc[start angle=-142.305, end angle=-9.305, radius=\R];
       % 虚线 MF
       \draw[dashed, line width=0.55pt] (M) -- (F);
 

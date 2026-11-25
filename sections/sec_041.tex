@@ -15,9 +15,10 @@
   \centering
   \begin{tikzpicture}[scale=0.82, >=Stealth, line cap=round, line join=round]
     \def\R{1.50}
-    \def\mt{65}
-    \def\tang{70}
-    \pgfmathsetmacro{\h}{\R/2}
+    \def\r{0.52}
+    \def\mt{58}
+    \def\tang{82}
+    \pgfmathsetmacro{\h}{\R-\r}
     \coordinate (O) at (0,0);
     \coordinate (O1) at ({\h*cos(\mt)}, {\h*sin(\mt)});
     \coordinate (N) at ({\R*cos(\mt)}, {\R*sin(\mt)});
@@ -27,31 +28,31 @@
     \draw[->] (-1.75, 0) -- (1.85, 0) node[below, font=\scriptsize] {$x$};
     \draw[->] (0, -1.75) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
 
-    % 定圆与动圆
+    % 定圆与动圆（r = 0.52 < h = R - r = 0.98，非奇异态，动圆既不过 O 也不过 M）
     \draw[thick] (O) circle (\R);
-    \draw[thick, curveblue] (O1) circle (\h);
+    \draw[thick, curveblue] (O1) circle (\r);
 
-    % 连线
+    % 连线（OO1 = O1M = h 构成严格等腰三角形）
     \draw (O) -- (N);
     \draw (O1) -- (M);
     \draw[thick] (O) -- (M);
 
-    % 角度弧
-    \draw (0.32, 0) arc (0:\mt:0.32);
-    \node[font=\scriptsize] at (35:0.48) {$mt$};
+    % 角度弧（mt、t、theta 彻底分离无压线）
+    \draw (0.28, 0) arc (0:\mt:0.28);
+    \node[font=\scriptsize, fill=white, inner sep=0.4pt] at (38:0.46) {$mt$};
 
     \draw ($(O1)+(\mt:0.22)$) arc (\mt:{\mt-\tang}:0.22);
-    \node[font=\scriptsize] at ($(O1)+({\mt-\tang/2}:0.35)$) {$t$};
+    \node[font=\scriptsize] at ($(O1)+({\mt-\tang/2}:0.36)$) {$t$};
 
     \pgfmathsetmacro{\th}{\mt-\tang/2}
-    \draw (0.58, 0) arc (0:\th:0.58);
-    \node[font=\scriptsize] at ({0.5*\th}:0.74) {$\theta$};
+    \draw (0.72, 0) arc (0:\th:0.72);
+    \node[font=\scriptsize] at ({0.5*\th}:0.94) {$\theta$};
 
-    % 标点与标签
+    % 标点与标签（O1 置于动圆内部左侧纯空白区，远离 y 轴与蓝圆）
     \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
-    \fill (O1) circle (1.3pt) node[left, font=\scriptsize] {$O_1$};
+    \fill (O1) circle (1.3pt) node[left=1.5pt, font=\scriptsize] {$O_1$};
     \fill (N) circle (1.2pt) node[above right=-1pt, font=\scriptsize] {$N$};
-    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+    \fill (M) circle (1.3pt) node[below=1pt, font=\scriptsize] {$M$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 41.1}
 \end{minipage}
@@ -73,15 +74,15 @@
     \def\R{0.75}
     \def\r{0.45}
     \pgfmathsetmacro{\h}{\R+\r}
-    \def\mt{62}
-    \def\tang{80}
+    \def\mt{66}
+    \def\tang{88}
     \coordinate (O) at (0,0);
     \coordinate (O1) at ({\h*cos(\mt)}, {\h*sin(\mt)});
-    \coordinate (M) at ($ (O1) + ({\mt+180-\tang}:\h) $);
+    \coordinate (M) at ($ (O1) + ({\mt+180+\tang}:\h) $);
 
     % 坐标轴
-    \draw[->] (-1.10, 0) -- (2.25, 0) node[below, font=\scriptsize] {$x$};
-    \draw[->] (0, -1.05) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
+    \draw[->] (-1.00, 0) -- (2.05, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.00) -- (0, 1.80) node[left, font=\scriptsize] {$y$};
 
     % 圆 O 与圆 O1 (外切)
     \draw[thick] (O) circle (\R);
@@ -91,21 +92,21 @@
     \draw (O) -- (O1) -- (M);
     \draw[thick] (O) -- (M);
 
-    % 角度弧
-    \draw (0.35, 0) arc (0:\mt:0.35);
-    \node[font=\scriptsize] at (34:0.52) {$mt$};
+    % 角度弧（与正文 theta = mt + t/2 - pi/2 严格一致）
+    \draw (0.32, 0) arc (0:\mt:0.32);
+    \node[font=\scriptsize, fill=white, inner sep=0.3pt] at (43:0.48) {$mt$};
 
     \pgfmathsetmacro{\th}{\mt+\tang/2-90}
-    \draw (0.75, 0) arc (0:\th:0.75);
-    \node[font=\scriptsize] at ({0.5*\th}:0.95) {$\theta$};
+    \draw (0.95, 0) arc (0:\th:0.95);
+    \node[font=\scriptsize] at ({0.5*\th}:1.15) {$\theta$};
 
-    \draw ($(O1)+({\mt+180}:0.24)$) arc ({\mt+180}:{\mt+180-\tang}:0.24);
-    \node[font=\scriptsize] at ($(O1)+({\mt+180-\tang/2}:0.38)$) {$t$};
+    \draw ($(O1)+({\mt+180}:0.22)$) arc ({\mt+180}:{\mt+180+\tang}:0.22);
+    \node[font=\scriptsize] at ($(O1)+({\mt+180+\tang/2}:0.34)$) {$t$};
 
     % 标点与标签
     \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
-    \fill (O1) circle (1.3pt) node[above, font=\scriptsize] {$O_1$};
-    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+    \fill (O1) circle (1.3pt) node[above=1pt, font=\scriptsize] {$O_1$};
+    \fill (M) circle (1.3pt) node[right=1pt, font=\scriptsize] {$M$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 41.2}
 \end{minipage}%

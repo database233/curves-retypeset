@@ -7,30 +7,35 @@
   \centering
   \begin{tikzpicture}[scale=0.86, >=Stealth, line cap=round, line join=round]
     % 底座圆盘（椭圆透视及厚度）
-    \draw[thick] (-0.75, -1.05) arc (180:360:0.75 and 0.25);
+    \draw[thick] (-0.75, -1.08) arc (180:360:0.75 and 0.25);
     \draw[thick, fill=white] (0, -0.96) ellipse (0.75 and 0.25);
-    \draw[thick] (-0.75, -0.96) -- (-0.75, -1.05);
-    \draw[thick] (0.75, -0.96) -- (0.75, -1.05);
+    \draw[thick] (-0.75, -0.96) -- (-0.75, -1.08);
+    \draw[thick] (0.75, -0.96) -- (0.75, -1.08);
 
-    % 藤圈后半段（内切于小圆柱右内侧，被圆柱遮挡部分先画）
-    \begin{scope}[shift={(-0.48, 0.35)}, rotate=-12]
-      \draw[very thick, curveblue] (20:0.60 and 0.24) arc (20:195:0.60 and 0.24);
+    % 藤圈后半段（厚实双线环带，内切于小圆柱右侧，被圆柱遮挡部分先画）
+    \begin{scope}[shift={(-0.49, 0.34)}, rotate=-6]
+      \draw[curveblue, line width=3.6pt] (0:0.62 and 0.24) arc (0:185:0.62 and 0.24);
+      \draw[curveblue!14, line width=1.8pt] (0:0.62 and 0.24) arc (0:185:0.62 and 0.24);
     \end{scope}
 
-    % 小圆柱（白底遮挡藤圈后段）
-    \fill[white] (-0.055, -0.96) rectangle (0.055, 1.38);
-    \draw[thick] (-0.055, -0.96) -- (-0.055, 1.38);
-    \draw[thick] (0.055, -0.96) -- (0.055, 1.38);
-    \draw[thick] (0, 1.38) ellipse (0.055 and 0.02);
-    \draw[thick] (-0.055, -0.96) arc (180:360:0.055 and 0.025);
+    % 小圆柱（木桩般厚实比例，白底遮挡藤圈后段并补柱面阴影线）
+    \fill[white] (-0.11, -0.96) rectangle (0.11, 1.38);
+    \draw[black!35, very thin] (0.045, -0.98) -- (0.045, 1.35);
+    \draw[black!45, very thin] (0.080, -0.97) -- (0.080, 1.36);
+    \draw[black!25, very thin] (-0.075, -0.97) -- (-0.075, 1.36);
+    \draw[thick] (-0.11, -0.96) -- (-0.11, 1.38);
+    \draw[thick] (0.11, -0.96) -- (0.11, 1.38);
+    \draw[thick, fill=white] (0, 1.38) ellipse (0.11 and 0.038);
+    \draw[thick] (-0.11, -0.96) arc (180:360:0.11 and 0.04);
 
-    % 藤圈前半段（在圆柱前方绕过）
-    \begin{scope}[shift={(-0.48, 0.35)}, rotate=-12]
-      \draw[very thick, curveblue] (195:0.60 and 0.24) arc (195:380:0.60 and 0.24);
+    % 藤圈前半段（在圆柱前方绕过，无缝衔接后半段）
+    \begin{scope}[shift={(-0.49, 0.34)}, rotate=-6]
+      \draw[curveblue, line width=3.6pt] (180:0.62 and 0.24) arc (180:362:0.62 and 0.24);
+      \draw[curveblue!14, line width=1.8pt] (178:0.62 and 0.24) arc (178:364:0.62 and 0.24);
     \end{scope}
 
-    % 旋转方向箭头（依原书在小圆柱右侧顺时针向下环绕）
-    \draw[->, thick] ($(0.05, 0.35) + (65:0.16 and 0.22)$) arc (65:-45:0.16 and 0.22);
+    % 旋转方向箭头（与藤圈共面的水平扁椭圆弧，表示绕柱水平旋转）
+    \draw[->, thick] ($(0, -0.28) + (15:0.35 and 0.11)$) arc (15:-170:0.35 and 0.11);
   \end{tikzpicture}
   \captionof*{figure}{图\ 37.1}
 \end{minipage}

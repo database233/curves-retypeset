@@ -10,33 +10,63 @@
 \begin{minipage}[t]{0.39\textwidth}
   \vspace{2pt}
   \centering
-  \begin{tikzpicture}[scale=0.84, line cap=round, line join=round]
-    \def\a{1.35}
-    % 底部椭圆 (t=90, r=a, z=0)
-    \draw[thick, curveblue] (-\a, 0) arc (180:360:{\a} and {0.26*\a});
-    \draw[densely dashed, curveblue!65] (\a, 0) arc (0:180:{\a} and {0.26*\a});
-
-    % 顶部小口椭圆 (t=8 deg)
+  \begin{tikzpicture}[scale=1.0, line cap=round, line join=round]
+    \def\a{1.32}
     \pgfmathsetmacro{\rt}{\a*sin(8)}
     \pgfmathsetmacro{\zt}{-\a*(ln(tan(4)) + cos(8))}
-    \draw[thick, curveblue] (0, \zt) ellipse ({\rt} and {0.25*\rt});
 
-    % 左右母线 (曳物线轮廓)
+    % 1) 伪球面外廓裁剪区内的立体明暗渐变着色（左侧高光、右侧柔和暗影）
+    \begin{scope}
+      \path[clip]
+        plot[domain=8:90, samples=80, variable=\t] ({-\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))})
+        arc (180:360:{\a} and {0.26*\a})
+        -- plot[domain=90:8, samples=80, variable=\t] ({\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))})
+        arc (0:180:{\rt} and {0.25*\rt}) -- cycle;
+      % 基础横向旋转面明暗过渡
+      \shade[left color=curveblue!14, middle color=curveblue!4, right color=curveblue!34]
+        ({-\a-0.1}, {-0.35*\a}) rectangle ({\a+0.1}, {\zt+0.15});
+      % 左前侧柔和高光带（沿经线 208°～246°）
+      \fill[white, opacity=0.48]
+        plot[domain=8:90, samples=60, variable=\t]
+          ({\a*sin(\t)*cos(208)}, {-\a*(ln(tan(\t/2)) + cos(\t)) + 0.26*\a*sin(\t)*sin(208)})
+        -- plot[domain=90:8, samples=60, variable=\t]
+          ({\a*sin(\t)*cos(246)}, {-\a*(ln(tan(\t/2)) + cos(\t)) + 0.26*\a*sin(\t)*sin(246)})
+        -- cycle;
+      % 右侧纵深暗影带（沿经线 310°～360°）
+      \fill[curveblue!42, opacity=0.28]
+        plot[domain=8:90, samples=60, variable=\t]
+          ({\a*sin(\t)*cos(310)}, {-\a*(ln(tan(\t/2)) + cos(\t)) + 0.26*\a*sin(\t)*sin(310)})
+        -- plot[domain=90:8, samples=60, variable=\t]
+          ({\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))})
+        -- cycle;
+    \end{scope}
+
+    % 2) 顶部小口内壁暗影（呈现中空喇叭管口纵深）
+    \shade[left color=curveblue!42, right color=curveblue!12]
+      (0, \zt) ellipse ({\rt} and {0.25*\rt});
+
+    % 3) 底部后半隐藏虚线椭圆
+    \draw[densely dashed, curveblue!60] (\a, 0) arc (0:180:{\a} and {0.26*\a});
+
+    % 4) 仅在前半可见区对称分布的经线（严格位于 180°～360° 前半面，不穿透背面）
+    \foreach \ang in {200, 220, 240, 260, 280, 300, 320, 340} {
+      \draw[thin, curveblue!42, domain=8:90, samples=65, variable=\t]
+        plot ({\a*sin(\t)*cos(\ang)}, {-\a*(ln(tan(\t/2)) + cos(\t)) + 0.26*\a*sin(\t)*sin(\ang)});
+    }
+    % 纬线（仅前半可见弧）
+    \foreach \tv in {22, 38, 56, 74} {
+      \pgfmathsetmacro{\rv}{\a*sin(\tv)}
+      \pgfmathsetmacro{\zv}{-\a*(ln(tan(\tv/2)) + cos(\tv))}
+      \draw[thin, curveblue!45] (-\rv, \zv) arc (180:360:{\rv} and {0.26*\rv});
+    }
+
+    % 5) 前半底缘、顶口椭圆与左右曳物线母线轮廓
+    \draw[thick, curveblue] (-\a, 0) arc (180:360:{\a} and {0.26*\a});
+    \draw[thick, curveblue] (0, \zt) ellipse ({\rt} and {0.25*\rt});
     \draw[very thick, curveblue, domain=8:90, samples=90, variable=\t]
       plot ({\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))});
     \draw[very thick, curveblue, domain=8:90, samples=90, variable=\t]
       plot ({-\a*sin(\t)}, {-\a*(ln(tan(\t/2)) + cos(\t))});
-
-    % 经线与纬线轻描，凸显三维喇叭曲面质感
-    \foreach \ang in {135, 160, 200, 225, 255, 285, 315, 340} {
-      \draw[thin, curveblue!38, domain=8:90, samples=60, variable=\t]
-        plot ({\a*sin(\t)*cos(\ang)}, {-\a*(ln(tan(\t/2)) + cos(\t)) + 0.26*\a*sin(\t)*sin(\ang)});
-    }
-    \foreach \tv in {22, 38, 56, 74} {
-      \pgfmathsetmacro{\rv}{\a*sin(\tv)}
-      \pgfmathsetmacro{\zv}{-\a*(ln(tan(\tv/2)) + cos(\tv))}
-      \draw[thin, curveblue!42] (-\rv, \zv) arc (180:360:{\rv} and {0.26*\rv});
-    }
   \end{tikzpicture}
   \captionof*{figure}{图\ 79.1}
 \end{minipage}

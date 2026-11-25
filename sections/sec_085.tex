@@ -9,21 +9,21 @@
   \centering
   \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
     % 坐标系
-    \draw[->] (-0.45, 0) -- (2.65, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (-0.45, 0) -- (2.75, 0) node[below, font=\footnotesize] {$x$};
     \draw[->] (0, -0.35) -- (0, 2.95) node[left, font=\footnotesize] {$y$};
     \node[below left, font=\footnotesize] at (0, 0) {$O$};
     % 曲率圆 Q(0.85, 1.48), r = 1.15
     \coordinate (Q) at (0.85, 1.48);
     \draw[thick] (Q) circle (1.15);
     \fill (Q) circle (1.2pt) node[left, font=\footnotesize] {$Q$};
-    % 圆上两点 M (angle -52 deg), M1 (angle -14 deg)
+    % 圆上两点 M (angle -52 deg), M1 (angle -14 deg)；标注置于圆弧与曲线内侧左上方
     \coordinate (M) at ({0.85 + 1.15*cos(-52)}, {1.48 + 1.15*sin(-52)});
     \coordinate (M1) at ({0.85 + 1.15*cos(-14)}, {1.48 + 1.15*sin(-14)});
-    \fill (M) circle (1.3pt) node[below right=0.5pt, font=\footnotesize] {$M$};
-    \fill (M1) circle (1.3pt) node[right=2pt, font=\footnotesize] {$M_1$};
-    % 半径 QM, QM1
-    \draw[thin] (Q) -- node[pos=0.48, left=1pt, font=\footnotesize] {$r$} (M);
-    \draw[thin] (Q) -- node[pos=0.52, above=1pt, font=\footnotesize] {$r$} (M1);
+    \fill (M) circle (1.3pt) node[left=2.5pt, yshift=0.5pt, font=\footnotesize] {$M$};
+    \fill (M1) circle (1.3pt) node[above left=1.5pt, font=\footnotesize] {$M_1$};
+    % 半径 QM, QM1（r 靠近 Q 置于 0.34 处上方空白，彻底远离 M1）
+    \draw[thin] (Q) -- node[pos=0.46, left=1pt, font=\footnotesize] {$r$} (M);
+    \draw[thin] (Q) -- node[pos=0.34, above=1.5pt, font=\footnotesize] {$r$} (M1);
     % 曲线 C (经过 M 与 M1, 在 M 处严格沿 38 度相切, 在 M1 处严格沿 76 度相切)
     \draw[very thick, curveblue]
       (-0.15, 0.22)
@@ -31,19 +31,19 @@
       .. controls ($(M) + ({0.28*cos(38)}, {0.28*sin(38)})$) and ($(M1) - ({0.28*cos(76)}, {0.28*sin(76)})$) .. (M1)
       .. controls ($(M1) + ({0.36*cos(76)}, {0.36*sin(76)})$) and (1.68, 2.08) .. (1.22, 2.34);
     \node[font=\footnotesize] at (1.10, 2.38) {$C$};
-    % M 处切线 MT: 过 M(1.558, 0.574)，方向 38 deg，交 x 轴于 A0(0.823, 0)
+    % M 处切线 MT: 过 M(1.558, 0.574)，方向 38 deg，交 x 轴于 A0(0.823, 0)，延长至 1.28
     % M1 处切线 M1T1: 过 M1(1.966, 1.202)，方向 76 deg，交 x 轴于 A1(1.666, 0)
     \coordinate (A0) at (0.823, 0);
     \coordinate (A1) at (1.666, 0);
-    \coordinate (T) at ({1.558 + 0.92*cos(38)}, {0.574 + 0.92*sin(38)});
-    \coordinate (T1) at ({1.966 + 0.52*cos(76)}, {1.202 + 0.52*sin(76)});
-    \draw[thin, name path=tanM] (A0) -- (T) node[right, font=\footnotesize] {$T$};
+    \coordinate (T) at ({1.558 + 1.28*cos(38)}, {0.574 + 1.28*sin(38)});
+    \coordinate (T1) at ({1.966 + 0.56*cos(76)}, {1.202 + 0.56*sin(76)});
+    \draw[thin, name path=tanM] (A0) -- (T) node[above right=-1pt, font=\footnotesize] {$T$};
     \draw[thin, name path=tanM1] (A1) -- (T1) node[above right=-1pt, font=\footnotesize] {$T_1$};
     \path[name intersections={of=tanM and tanM1, by=P}];
-    \fill (P) circle (1.1pt) node[right=2pt, font=\footnotesize] {$P$};
+    \fill (P) circle (1.1pt) node[above right=0.5pt, yshift=1pt, font=\footnotesize] {$P$};
     % 夹角 alpha 与 alpha1
-    \coordinate (Xright) at (2.6, 0);
-    \pic[draw, angle radius=9pt, angle eccentricity=1.55, font=\scriptsize, "$\alpha$"] {angle=Xright--A0--T};
+    \coordinate (Xright) at (2.7, 0);
+    \pic[draw, angle radius=10pt, angle eccentricity=1.55, font=\scriptsize, "$\alpha$"] {angle=Xright--A0--T};
     \pic[draw, angle radius=8pt, angle eccentricity=1.65, font=\scriptsize, "$\alpha_1$"] {angle=Xright--A1--T1};
   \end{tikzpicture}
   \captionof*{figure}{图\ 85.1}
@@ -74,6 +74,7 @@
   r = \frac{\dfrac{\Delta s}{\Delta x}}{\dfrac{\Delta\alpha}{\Delta x}}.
 \]
 上面的考虑只是近似的，存在一定误差。当所取的曲线弧越小，即 $\Delta x$ 越小时，误差也越小。令 $\Delta x \to 0$，取极限，就得到
+\phantomsection\label{eq:sec85_r}%
 \[
   r = \frac{\dfrac{ds}{dx}}{\dfrac{d\alpha}{dx}} = \frac{s'}{\alpha'},
 \]
@@ -103,4 +104,4 @@
 \[
   r = \frac{ds}{d\alpha}, \quad \varkappa = \frac{1}{r} = \frac{d\alpha}{ds}.
 \]
-公式的来源只需要看一看 153 页上面的式子就会明白。% 原书 153 页即本节前面的 $r = \frac{ds/dx}{d\alpha/dx} = \frac{s'}{\alpha'}$
+公式的来源只需要看一看第~\pageref{eq:sec85_r}~页上面的式子就会明白。% 原书作 153 页，改用 \pageref 自动对应本版实际页码

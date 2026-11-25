@@ -8,24 +8,18 @@
 \noindent
 \begin{minipage}[t]{31mm}
   \vspace{0pt}
-  % 矢量重绘“中学生文库”圆弧徽标
+  % 高保真纯矢量重绘“中学生文库”圆弧徽标
   \begin{tikzpicture}[x=1mm, y=1mm]
     \fill[black] (0, 0) rectangle (24, 24);
     % 上方弧形排列“中学生文库”
     \foreach \ang/\hanzi in {142/中, 116/学, 90/生, 64/文, 38/库} {
       \node[white, font=\sffamily\bfseries\fontsize{6.2}{6.2}\selectfont,
-            rotate={\ang-90}] at ({12 + 9.4*cos(\ang)}, {10.4 + 9.4*sin(\ang)}) {\hanzi};
+            rotate={\ang-90}] at ({12 + 9.6*cos(\ang)}, {10.9 + 9.6*sin(\ang)}) {\hanzi};
     }
-    % 顶部小花苞与花托
-    \draw[white, line width=0.8pt] (10.4, 15.6) .. controls (10.4, 17.8) and (13.6, 17.8) .. (13.6, 15.6);
-    \draw[white, line width=0.8pt] (12.0, 14.3) -- (12.0, 17.4);
-    \draw[white, line width=0.8pt] (9.8, 16.0) -- (12.0, 14.1) -- (14.2, 16.0);
-    % 下方三角形书本轮廓与 ZXS 徽记
-    \draw[white, line width=1.0pt] (3.4, 3.0) -- (12.0, 13.0) -- (20.6, 3.0) -- cycle;
-    \draw[white, line width=0.8pt] (5.3, 3.8) -- (12.0, 11.4) -- (18.7, 3.8) -- cycle;
-    \draw[white, line width=0.9pt] (12.0, 3.0) -- (12.0, 4.7);
-    \draw[white, line width=0.9pt] (12.0, 7.8) -- (12.0, 13.0);
-    \node[white, font=\scriptsize\sffamily\bfseries] at (12.0, 6.25) {ZXS};
+    % 下方经典 ZXS 郁金香书本徽标
+    \begin{scope}[shift={(12.0, 2.0)}, scale=1.80]
+      \drawZXSEmblem{white}
+    \end{scope}
   \end{tikzpicture}
 
   \vspace{5mm}

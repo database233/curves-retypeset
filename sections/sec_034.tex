@@ -11,43 +11,42 @@
 \begin{minipage}[t]{0.44\textwidth}
   \vspace{0pt}
   \centering
-  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
-    % R = 1.15, r = 0.55, h = 0.34, angle(AON) = 45 deg
-    \def\R{1.15}
-    \def\r{0.55}
-    \def\h{0.34}
-    \def\angAON{45}
+  \begin{tikzpicture}[scale=0.86, >=Stealth, line cap=round, line join=round]
+    % R = 1.10, r = 0.68, h = 0.45, angle(AON) = 48 deg
+    \def\R{1.10}
+    \def\r{0.68}
+    \def\h{0.45}
+    \def\angAON{48}
     \pgfmathsetmacro{\tdeg}{\R/\r*\angAON}
     \pgfmathsetmacro{\alp}{\angAON - 180 + \tdeg}
     \coordinate (O) at (0,0);
+    \coordinate (N) at ({\R*cos(\angAON)}, {\R*sin(\angAON)});
     \coordinate (O1) at ({(\R+\r)*cos(\angAON)}, {(\R+\r)*sin(\angAON)});
     \coordinate (M) at ({(\R+\r)*cos(\angAON) + \h*cos(\alp)}, {(\R+\r)*sin(\angAON) + \h*sin(\alp)});
 
-    \draw[->] (-1.35, 0) -- (2.45, 0) node[below, font=\footnotesize] {$x$};
-    \draw[->] (0, -1.35) -- (0, 2.05) node[left, font=\footnotesize] {$y$};
+    \draw[->] (-1.35, 0) -- (2.15, 0) node[below, font=\footnotesize] {$x$};
+    \draw[->] (0, -1.35) -- (0, 2.20) node[left, font=\footnotesize] {$y$};
 
-    % 定圆 O，当前动圆 O1，初始动圆（虚线）
+    % 定圆 O 与当前动圆 O1（忠实原书，不画多余初始虚线圆）
     \draw[thick] (O) circle (\R);
     \draw (O1) circle (\r);
-    \draw[densely dashed] (\R+\r, 0) circle (\r);
-    \fill (\R+\r, 0) circle (1.2pt);
-    \fill (\R+\r-\h, 0) circle (1.2pt);
 
-    % 连线与半径标示
-    \draw (O) -- (O1) node[midway, above left=-2pt, font=\scriptsize] {$R$};
+    % 连线与半径标示（R 严谨标于 ON 中点，r 指向左上方空旷区）
+    \draw (O) -- (N) node[midway, above left=-1pt, font=\scriptsize] {$R$};
+    \draw (N) -- (O1);
     \draw (O1) -- (M);
-    \draw[thin] (O1) -- ++(0.65, 0);
-    \draw (O1) -- ($(O1) + (75:\r)$) node[midway, left=-1pt, font=\scriptsize] {$r$};
+    \draw[thin] (O1) -- ++(0.76, 0);
+    \draw (O1) -- ($(O1) + (145:\r)$) node[midway, below left=-1pt, font=\scriptsize] {$r$};
 
     % 角 t 与 角 alpha
-    \draw ($(O1) + ({\angAON-180}:0.18)$) arc ({\angAON-180}:\alp:0.18);
-    \node[font=\scriptsize] at ($(O1) + ({0.5*(\angAON-180+\alp)}:0.29)$) {$t$};
-    \draw ($(O1) + (0:0.28)$) arc (0:\alp:0.28);
-    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.42)$) {$\alpha$};
+    \draw ($(O1) + ({\angAON-180}:0.24)$) arc ({\angAON-180}:\alp:0.24);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*(\angAON-180+\alp)}:0.38)$) {$t$};
+    \draw ($(O1) + (0:0.30)$) arc (0:\alp:0.30);
+    \node[font=\scriptsize] at ($(O1) + ({0.5*\alp}:0.46)$) {$\alpha$};
 
     \fill (O) circle (1.3pt) node[below left, font=\footnotesize] {$O$};
-    \fill (O1) circle (1.3pt) node[above left=-2pt, font=\footnotesize] {$O_1$};
-    \fill (M) circle (1.4pt) node[below=-1pt, font=\footnotesize] {$M$};
+    \fill (O1) circle (1.3pt) node[above=1pt, font=\footnotesize] {$O_1$};
+    \fill (M) circle (1.4pt) node[below right=2.5pt, font=\footnotesize] {$M$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 34.1}
 \end{minipage}

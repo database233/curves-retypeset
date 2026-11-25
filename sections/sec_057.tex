@@ -80,9 +80,9 @@
 尼哥米德大约是公元前 200 年的人，他研究这种形如蚌壳的曲线，是要解决三等分任意角问题。
 
 \noindent
-\begin{minipage}[c]{0.45\textwidth}
+\begin{minipage}[c]{0.47\textwidth}
   \centering
-  \begin{tikzpicture}[scale=0.80, >=Stealth, line cap=round, line join=round]
+  \begin{tikzpicture}[scale=0.76, >=Stealth, line cap=round, line join=round]
     \def\ll{0.92}
     \def\alp{50}
     \pgfmathsetmacro{\aa}{\ll*sin(\alp)}
@@ -92,40 +92,43 @@
     \coordinate (N) at ({\aa/tan(\angM)}, \aa);
     \coordinate (M) at ({\aa/tan(\angM) - \ll*cos(\angM)}, {\aa - \ll*sin(\angM)});
 
-    % 坐标轴与直线 c
-    \draw[->] (-1.45, 0) -- (2.15, 0) node[below, font=\scriptsize] {$x$};
+    % 坐标轴与直线 c（右端延伸以完整托住交点 N 及下支渐近段）
+    \draw[->] (-1.52, 0) -- (2.68, 0) node[below, font=\scriptsize] {$x$};
     \draw[->] (0, -0.45) -- (0, 1.85) node[left, font=\scriptsize] {$y$};
-    \draw[thin] (-1.45, \aa) -- (2.15, \aa);
-    \node[left=-1pt, font=\scriptsize] at (-1.45, \aa) {$c$};
+    \draw[thin] (-1.52, \aa) -- (2.68, \aa);
+    \node[left=-1pt, font=\scriptsize] at (-1.52, \aa) {$c$};
 
     % 以 C 为圆心、l 为半径的圆
     \draw[thin] (C) circle (\ll);
 
-    % 蚌线上下两支
-    \draw[thick, curveblue, domain=25:155, samples=80, variable=\t]
-      plot ({\aa/tan(\t) + \ll*cos(\t)}, {\aa + \ll*sin(\t)});
-    \draw[thick, curveblue, domain=25:155, samples=80, variable=\t]
-      plot ({\aa/tan(\t) - \ll*cos(\t)}, {\aa - \ll*sin(\t)});
+    % 蚌线上下两支（扩展下支绘制域至 11:168 并裁剪边界，确保严格穿过交点 M 并向右趋近渐近线）
+    \begin{scope}
+      \clip (-1.50, -0.45) rectangle (2.64, 1.85);
+      \draw[thick, curveblue, domain=18:162, samples=120, variable=\t]
+        plot ({\aa/tan(\t) + \ll*cos(\t)}, {\aa + \ll*sin(\t)});
+      \draw[thick, curveblue, domain=11:168, samples=160, variable=\t]
+        plot ({\aa/tan(\t) - \ll*cos(\t)}, {\aa - \ll*sin(\t)});
+    \end{scope}
 
     % 射线 OC、OMN 与线段 CM
     \draw (O) -- (C);
-    \draw (O) -- ($(O)!1.25!(N)$);
+    \draw (O) -- ($(O)!1.10!(N)$);
     \draw (C) -- (M);
 
-    % 角度 alpha
-    \draw (0.28, 0) arc (0:\alp:0.28);
-    \node[font=\tiny, fill=white, inner sep=0.2pt] at ({0.74*\alp}:0.45) {$\alpha$};
+    % 角度 alpha（避开射线 OM 与下支蚌线）
+    \draw (0.42, 0) arc (0:\alp:0.42);
+    \node[font=\scriptsize] at (34:0.58) {$\alpha$};
 
     % 标点
     \fill (O) circle (1.1pt) node[below left=0pt, font=\scriptsize] {$O$};
     \fill (C) circle (1.2pt) node[above right=-2pt, font=\scriptsize] {$C$};
-    \fill (M) circle (1.2pt) node[below right=0.5pt, fill=white, inner sep=0.2pt, font=\scriptsize] {$M$};
-    \fill (N) circle (1.2pt) node[above right=-2pt, font=\scriptsize] {$N$};
+    \fill (M) circle (1.2pt) node[below=2pt, font=\scriptsize] {$M$};
+    \fill (N) circle (1.2pt) node[above=1pt, font=\scriptsize] {$N$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 57.2}
 \end{minipage}%
 \hfill
-\begin{minipage}[c]{0.52\textwidth}
+\begin{minipage}[c]{0.50\textwidth}
 \hspace*{2em}如图 57.2，设 $\alpha$ 是任一已知角，要把它分成相等的三部分。为此，取角的一边 $Ox$ 为极轴，顶点 $O$ 为极点，在角的另一边上取一点 $C$，记 $OC = l$。过 $C$ 作直线 $c \parallel Ox$。以 $O$ 为定点、$c$ 为定直线、$l$ 为定长，作尼哥米德蚌线。以 $C$ 为圆心，$l$ 为半径画圆弧，与尼哥米德蚌线夹在角 $\alpha$ 内的部分交于点 $M$，则 $\angle xOM = \frac{\alpha}{3}$。
 \end{minipage}
 

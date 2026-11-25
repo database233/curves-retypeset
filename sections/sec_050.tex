@@ -43,10 +43,11 @@
 \hfill
 \begin{minipage}[c]{0.42\textwidth}
   \centering
-  \begin{tikzpicture}[scale=0.90, >=Stealth, line cap=round, line join=round]
-    \def\R{0.82}
-    \def\m{2.6}
-    \def\th{25} % m*th = 65 deg
+  \begin{tikzpicture}[scale=0.92, >=Stealth, line cap=round, line join=round]
+    % 增大外摆线外伸幅度，使整条切线 MT 位于定圆外部，T 清晰落在第四象限空白处
+    \def\R{0.76}
+    \def\m{2.8}
+    \def\th{27} % m*th = 75.6 deg
     \pgfmathsetmacro{\mth}{\m*\th}
     \coordinate (O) at (0,0);
     \coordinate (B) at (\R, 0);
@@ -61,39 +62,39 @@
     \pgfmathsetmacro{\uy}{\ty/\tlen}
 
     % 坐标轴
-    \draw[->] (-1.10, 0) -- (1.75, 0) node[below, font=\scriptsize] {$x$};
-    \draw[->] (0, -1.10) -- (0, 1.35) node[left, font=\scriptsize] {$y$};
+    \draw[->] (-1.02, 0) -- (1.72, 0) node[below, font=\scriptsize] {$x$};
+    \draw[->] (0, -1.02) -- (0, 1.32) node[left, font=\scriptsize] {$y$};
 
     % 定圆 O
     \draw[thick] (O) circle (\R);
 
-    % 外摆线弧 (theta from 0 to 46 deg)
-    \draw[very thick, curveblue, domain=0:46, samples=60, variable=\t]
+    % 外摆线弧 (theta from 0 to 44 deg)
+    \draw[very thick, curveblue, domain=0:44, samples=60, variable=\t]
       plot ({\R*((1-\m)*cos(\m*\t) + \m*cos(\t-\m*\t))},
             {\R*((1-\m)*sin(\m*\t) - \m*sin(\t-\m*\t))});
 
     % 半径 ON 与法线 MN 延长线
-    \draw (O) -- node[above left=-2pt, font=\scriptsize] {$R$} (N);
-    \draw (N) -- ($(M)!-0.45!(N)$);
+    \draw (O) -- node[left=-1pt, font=\scriptsize] {$R$} (N);
+    \draw (N) -- ($(M)!-0.38!(N)$);
 
-    % 切线 MT 穿过 M 与 M 处直角符号
-    \coordinate (T1) at ($(M) - 0.65*(\ux, \uy)$);
-    \coordinate (T2) at ($(M) + 0.55*(\ux, \uy)$);
+    % 切线 MT 穿过 M（T1 清晰伸至定圆外第四象限空白处）与 M 处直角符号
+    \coordinate (T1) at ($(M) - 0.90*(\ux, \uy)$);
+    \coordinate (T2) at ($(M) + 0.68*(\ux, \uy)$);
     \draw[thick] (T1) -- (T2);
-    \node[below, font=\scriptsize] at (T1) {$T$};
+    \node[below right=-1pt, font=\scriptsize] at (T1) {$T$};
     \coordinate (Mn) at ($(M)!0.10cm!(N)$);
     \coordinate (Mt) at ($(M)+0.10*({\ux},{\uy})$);
     \draw[thin] (Mn) -- ($(Mn)+(Mt)-(M)$) -- (Mt);
 
     % 角度 m*theta
-    \draw (0.24, 0) arc (0:\mth:0.24);
-    \node[font=\scriptsize, fill=white, inner sep=0.3pt] at ({\mth/2}:0.43) {$m\theta$};
+    \draw (0.22, 0) arc (0:\mth:0.22);
+    \node[font=\scriptsize, fill=white, inner sep=0.2pt] at ({\mth/2}:0.42) {$m\theta$};
 
     % 标点与标签
     \fill (O) circle (1.2pt) node[below left=-1pt, font=\scriptsize] {$O$};
-    \fill (B) circle (1.2pt) node[below right=0.5pt, xshift=-0.5pt, fill=white, inner sep=0.3pt, font=\scriptsize] {$B$};
-    \fill (N) circle (1.2pt) node[above, font=\scriptsize] {$N$};
-    \fill (M) circle (1.3pt) node[right, font=\scriptsize] {$M$};
+    \fill (B) circle (1.2pt) node[below left=0.5pt, font=\scriptsize] {$B$};
+    \fill (N) circle (1.2pt) node[above=1pt, font=\scriptsize] {$N$};
+    \fill (M) circle (1.3pt) node[right=1.5pt, font=\scriptsize] {$M$};
   \end{tikzpicture}
   \captionof*{figure}{图\ 50.1}
 \end{minipage}

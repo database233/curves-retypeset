@@ -7,15 +7,15 @@
   \centering
   \begin{minipage}[b]{0.46\textwidth}
     \centering
-    \begin{tikzpicture}[scale=0.88, >=Stealth, line cap=round, line join=round]
-      % 瓶盖（透视圆柱体，底面椭圆中心在 (0, 0.26)，半轴 rx=0.28, ry=0.10）
-      \def\rx{0.28}
-      \def\ry{0.10}
-      \def\h{0.16}
-      \def\yc{0.26}
+    \begin{tikzpicture}[scale=1.06, >=Stealth, line cap=round, line join=round]
+      % 瓶盖（透视圆柱体，放大图幅与透视高度）
+      \def\rx{0.26}
+      \def\ry{0.15}
+      \def\h{0.21}
+      \def\yc{0.35}
 
       % 透视展开的渐伸线（严格保持与底面椭圆相同的透视投影比例 rx, ry）
-      \draw[very thick, curveblue, domain=0:345, samples=140, variable=\t]
+      \draw[very thick, curveblue, domain=0:380, samples=160, variable=\t]
         plot ({\rx*(cos(\t)+(\t*pi/180)*sin(\t))},
               {\yc+\ry*(sin(\t)-(\t*pi/180)*cos(\t))});
 
@@ -24,37 +24,57 @@
         arc (180:360:{\rx} and {\ry}) -- (\rx, {\yc+\h});
       \draw[densely dashed] (-\rx, \yc) arc (180:0:{\rx} and {\ry});
       \draw[thick, fill=white] (0, {\yc+\h}) ellipse ({\rx} and {\ry});
+      \draw[thin, black!60] (0, {\yc+\h}) ellipse ({0.82*\rx} and {0.78*\ry});
 
-      % 位置 1（虚线铅笔，t = 205 deg，左上方切线严格等于弧长）
-      \pgfmathsetmacro{\ta}{205}
+      % 位置 1（左上方虚线斜执长铅笔，t = 228 deg，与瓶盖轮廓完全错开）
+      \pgfmathsetmacro{\ta}{228}
       \pgfmathsetmacro{\tar}{\ta*pi/180}
       \coordinate (Ba) at ({\rx*cos(\ta)}, {\yc+\ry*sin(\ta)});
       \coordinate (Pa) at ({\rx*(cos(\ta)+\tar*sin(\ta))}, {\yc+\ry*(sin(\ta)-\tar*cos(\ta))});
       \draw[densely dashed] (Ba) -- (Pa);
-      \draw[densely dashed] (Pa) -- ++(-0.06, 0.18) -- ++(0, 0.25) -- ++(0.12, 0) -- ++(0, -0.25) -- cycle;
+      \begin{scope}[shift={(Pa)}, rotate=16]
+        \draw[densely dashed] (0, 0) -- (-0.062, 0.24) -- (-0.062, 0.80)
+          .. controls (-0.02, 0.84) and (0.02, 0.76) .. (0.062, 0.80)
+          -- (0.062, 0.24) -- cycle;
+        \draw[densely dashed, thin] (-0.062, 0.24) -- (-0.020, 0.21) -- (0.020, 0.24) -- (0.062, 0.24);
+        \draw[densely dashed, thin] (-0.020, 0.21) -- (-0.020, 0.80);
+        \draw[densely dashed, thin] (0.020, 0.24) -- (0.020, 0.80);
+      \end{scope}
 
-      % 位置 2（虚线铅笔，t = 272 deg，左下方切线严格等于弧长）
-      \pgfmathsetmacro{\tb}{272}
+      % 位置 2（左下方虚线斜执长铅笔，t = 322 deg，与瓶盖轮廓完全错开）
+      \pgfmathsetmacro{\tb}{322}
       \pgfmathsetmacro{\tbr}{\tb*pi/180}
       \coordinate (Bb) at ({\rx*cos(\tb)}, {\yc+\ry*sin(\tb)});
       \coordinate (Pb) at ({\rx*(cos(\tb)+\tbr*sin(\tb))}, {\yc+\ry*(sin(\tb)-\tbr*cos(\tb))});
       \draw[densely dashed] (Bb) -- (Pb);
-      \draw[densely dashed] (Pb) -- ++(-0.06, 0.18) -- ++(0, 0.25) -- ++(0.12, 0) -- ++(0, -0.25) -- cycle;
+      \begin{scope}[shift={(Pb)}, rotate=24]
+        \draw[densely dashed] (0, 0) -- (-0.062, 0.24) -- (-0.062, 0.78)
+          .. controls (-0.02, 0.82) and (0.02, 0.74) .. (0.062, 0.78)
+          -- (0.062, 0.24) -- cycle;
+        \draw[densely dashed, thin] (-0.062, 0.24) -- (-0.020, 0.21) -- (0.020, 0.24) -- (0.062, 0.24);
+        \draw[densely dashed, thin] (-0.020, 0.21) -- (-0.020, 0.78);
+        \draw[densely dashed, thin] (0.020, 0.24) -- (0.020, 0.78);
+      \end{scope}
 
-      % 位置 3（当前实线铅笔，t = 345 deg，右下方切线严格等于弧长）
-      \pgfmathsetmacro{\tc}{345}
+      % 位置 3（当前右下方实线斜执长铅笔，t = 380 deg，与切线拉紧方向协调）
+      \pgfmathsetmacro{\tc}{380}
       \pgfmathsetmacro{\tcr}{\tc*pi/180}
       \coordinate (Bc) at ({\rx*cos(\tc)}, {\yc+\ry*sin(\tc)});
       \coordinate (Pc) at ({\rx*(cos(\tc)+\tcr*sin(\tc))}, {\yc+\ry*(sin(\tc)-\tcr*cos(\tc))});
       \draw[thick] (Bc) -- (Pc);
-      \draw[thick, fill=white] (Pc) -- ++(-0.07, 0.20) -- ++(0, 0.26) -- ++(0.14, 0) -- ++(0, -0.26) -- cycle;
-      \draw[thin] ($(Pc)+(-0.07, 0.20)$) -- ($(Pc)+(-0.025, 0.18)$) -- ($(Pc)+(0.025, 0.20)$) -- ($(Pc)+(0.07, 0.20)$);
-      \draw[thin] ($(Pc)+(-0.025, 0.18)$) -- ($(Pc)+(-0.025, 0.46)$);
-      \draw[thin] ($(Pc)+(0.025, 0.20)$) -- ($(Pc)+(0.025, 0.46)$);
+      \begin{scope}[shift={(Pc)}, rotate=-14]
+        \draw[thick, fill=white] (0, 0) -- (-0.068, 0.25) -- (-0.068, 0.84)
+          .. controls (-0.02, 0.88) and (0.02, 0.80) .. (0.068, 0.84)
+          -- (0.068, 0.25) -- cycle;
+        \fill[black] (0, 0) -- (-0.024, 0.088) -- (0.024, 0.088) -- cycle;
+        \draw[thin] (-0.068, 0.25) -- (-0.023, 0.22) -- (0.023, 0.25) -- (0.068, 0.25);
+        \draw[thin] (-0.023, 0.22) -- (-0.023, 0.84);
+        \draw[thin] (0.023, 0.25) -- (0.023, 0.84);
+      \end{scope}
 
-      % 方向箭头
-      \draw[->, thick] (0.48, 0.56) arc (25:65:0.45);
-      \draw[->, thick] (-1.22, -0.18) arc (205:240:0.95);
+      % 方向箭头（标示逆时针放线展开方向）
+      \draw[->, thick] (0.56, 0.62) arc (20:70:0.46);
+      \draw[->, thick] (-1.32, -0.04) arc (200:242:0.86);
     \end{tikzpicture}
     \caption*{图\ 47.1}
   \end{minipage}
